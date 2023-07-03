@@ -1,0 +1,250 @@
+# Internal Endpoints
+
+<Note title="caution" type="warning">
+	These endpoints are intended only for **internal use**, and should generally **not be used by developers**. They are
+	documented here to assist with development.
+</Note>
+
+## App endpoints
+
+The following endpoints are intended to be used only by the app's frontend. If you're looking to connect to the API, check out the [Authentication](/api/authentication) page.
+
+## Login {{ tag: "POST", label: "/v1/login" }}
+
+<Row><Col>
+
+This endpoint is used to authenticate a user and obtain a JWT token. The token is used to authenticate all other requests.
+
+### Required attributes
+
+<Properties>
+	<Property name="email" type="string">
+		The user's email address.
+	</Property>
+	<Property name="password" type="string">
+		The user's password.
+	</Property>
+</Properties>
+
+</Col><Col sticky>
+
+<CodeGroup>
+
+```bash {{ title: "cURL" }}
+curl -X POST '/api/v1/login' \
+    -H 'Content-Type: application/json' \
+    -d '{
+        "email": "alice@worldidbot.com",
+        "password": "12345678"
+    }'
+```
+
+```js
+fetch('/api/v1/login', {
+	method: 'POST',
+	headers: {
+		'Content-Type': 'application/json',
+	},
+	body: JSON.stringify({
+		email: 'alice@worldidbot.com',
+		password: '12345678',
+	}),
+})
+```
+
+</CodeGroup>
+
+<CodeGroup>
+
+```json {{ title: "200 OK" }}
+{
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFsaWNlIiwiaWF0IjoxNTE2MjM5MDIyfQ.HThTAuYC6RyvZgF5h2cJCVEUQZ9g8Y18Tf-IU2gaYBc"
+}
+```
+
+```json {{ title: "400 Bad Request" }}
+{
+	"code": "invalid_credentials",
+	"detail": "Invalid email or password.",
+	"attribute": null
+}
+```
+
+</CodeGroup>
+
+</Col></Row>
+
+## Register {{ tag: "POST", label: "/v1/signup" }}
+
+<Row><Col>
+
+This endpoint is used to register a new user. The user will receive an email with a verification link. The user must click the link to verify their email address.
+
+### Required attributes
+
+<Properties>
+	<Property name="email" type="string">
+		The user's email address.
+	</Property>
+	<Property name="password" type="string">
+		The user's password. Must be at least 8 characters long.
+	</Property>
+	<Property name="name" type="string">
+		The user's name.
+	</Property>
+	<Property name="team_name" type="string">
+		The name of the team the user is registering for.
+	</Property>
+</Properties>
+
+</Col><Col sticky>
+
+<CodeGroup title="Request" tag="POST" label="/api/v1/signup">
+
+```bash {{ title: "cURL" }}
+curl -X POST "/api/v1/signup" \
+     -H "Content-Type: application/json" \
+     -d '{
+         "email": "bob@worldidbot.com",
+         "password": "987654321",
+         "name": "Bob",
+         "team_name": "The Bob Project"
+     }'
+```
+
+```js
+fetch('/api/v1/signup', {
+	method: 'POST',
+	headers: {
+		'Content-Type': 'application/json',
+	},
+	body: JSON.stringify({
+		email: 'bob@worldidbot.com',
+		password: '987654321',
+		name: 'Bob',
+		team_name: 'The Bob Project',
+	}),
+})
+```
+
+</CodeGroup>
+
+{/* cSpell:disable */}
+
+<CodeGroup title="Response">
+
+```json {{ title: "201 Created" }}
+{
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFsaWNlIiwiaWF0IjoxNTE2MjM5MDIyfQ.HThTAuYC6RyvZgF5h2cJCVEUQZ9g8Y18Tf-IU2gaYBc"
+}
+```
+
+```json {{ title: "400 Bad Request" }}
+{
+	"code": "already_registered",
+	"detail": "This email address is already registered.",
+	"attribute": "email"
+}
+```
+
+</CodeGroup>
+
+{/* cSpell:enable */}
+
+</Col></Row>
+
+## Management endpoints
+
+<Note>
+	These endpoints can only be called from the Hasura backend and they require a special token which is only shared
+	between the two.
+</Note>
+
+## ENS Lookup {{ tag: "POST", label: "/_ens" }}
+
+<Row><Col>
+
+Fetches the Semaphore contract addresses from an ENS lookup and caches them locally.
+
+</Col><Col sticky>
+
+<CodeGroup title="Request" tag="POST" label="/api/_ens">
+
+```bash {{ title: "cURL" }}
+curl -X POST "/api/_ens" \
+     -H "Content-Type: application/json" \
+     -H "Authorization: Bearer <secret>"
+
+```
+
+```js
+fetch('/api/_ens', {
+	method: 'POST',
+	headers: {
+		'Content-Type': 'application/json',
+		Authorization: 'Bearer <secret>',
+	},
+})
+```
+
+</CodeGroup>
+
+<CodeGroup title="Response">
+
+```json {{ title: "200 OK" }}
+{
+	"success": true
+}
+```
+
+```json {{ title: "500 Server Error" }}
+{
+	"success": false,
+	"error": "Production address (0x) or staging address (0x) not found."
+}
+```
+
+</CodeGroup>
+
+</Col></Row>
+
+## JWK Generation {{ tag: "POST", label: "/_jwk-gen" }}
+
+<Row><Col>
+
+Generates a new JWK to use for signing verification JWTs. Old keys are not rotated automatically, they can still be used until they reach their expiration date. Expiration date may be updated directly through Hasura's portal.
+
+</Col><Col sticky>
+
+<CodeGroup title="Request" tag="POST" label="/api/_jwk-gen">
+
+```bash {{ title: "cURL" }}
+curl -X POST "/api/_jwk-gen" \
+     -H "Content-Type: application/json" \
+     -H "Authorization: Bearer <secret>"
+```
+
+```js
+fetch('/api/_jwk-gen', {
+	method: 'POST',
+	headers: {
+		'Content-Type': 'application/json',
+		Authorization: 'Bearer <secret>',
+	},
+})
+```
+
+</CodeGroup>
+
+```json { "title": "Response" }
+{
+	"success": true,
+	"jwk": {
+		"id": "jwk_4bce24487b429dff79c8cfee38483308",
+		"expires_at": "2023-06-14T06:29:35.794+00:00",
+		"__typename": "jwks"
+	}
+}
+```
+
+</Col></Row>
