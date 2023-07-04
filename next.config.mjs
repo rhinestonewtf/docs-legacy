@@ -59,7 +59,7 @@ const nextConfig = {
 			},
 			{
 				source: '/waitlist',
-				destination: 'https://toolsforhumanity.typeform.com/sdk-waitlist',
+				destination: 'https://rhinestone.wtf/',
 				permanent: true,
 			},
 		]
