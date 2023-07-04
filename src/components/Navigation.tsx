@@ -187,45 +187,19 @@ export const navigation = [
 		title: 'Introduction',
 		links: [
 			{ title: 'Home', href: '/' },
-			{ title: 'Quick Start', href: '/quick-start' },
-			{ title: 'Try it Out', href: '/try' },
-			{ title: 'Use Cases', href: '/use-cases' },
-			{ title: 'Apps & Integrations', href: '/apps' },
+			{ title: 'Core Principles', href: '/core-principles' },
+			{ title: 'Ressources', href: '/apps' },
 		],
 	},
 	{
-		title: 'World ID',
+		title: 'Architecture',
 		links: [
-			{ title: 'Overview', href: '/id' },
-			{ title: 'Proof of Personhood', href: '/id/proof-of-personhood' },
-			{ title: 'Sign In', href: '/id/sign-in' },
-			{ title: 'Anonymous Actions', href: '/id/anonymous-actions' },
-			{ title: 'Testing', href: '/id/testing' },
-		],
-	},
-	{
-		title: 'IDKit',
-		links: [
-			{ title: 'Introduction', href: '/idkit' },
-			{ title: 'Reference', href: '/idkit/reference' },
-		],
-	},
-	{
-		title: 'Advanced',
-		links: [
-			{ title: 'On-Chain', href: '/advanced/on-chain' },
-			{ title: 'Privacy', href: '/advanced/privacy' },
-			{ title: 'Zero-Knowledge Proofs', href: '/advanced/zero-knowledge-proofs' },
-			{ title: 'Protocol Internals', href: '/advanced/protocol-internals' },
-		],
-	},
-	{
-		title: 'API',
-		links: [
-			{ title: 'Introduction', href: '/api' },
-			{ title: 'Reference', href: '/api/reference' },
-			{ title: 'Sign In Reference', href: '/api/sign-in-reference' },
-			{ title: 'Internal Endpoints', href: '/api/internal-endpoints' },
+			{ title: 'Overview', href: '/architecture' },
+			{ title: 'Schema Registration', href: '/architecture/schema-registration' },
+			{ title: 'Module Registration', href: '/architecture/module-registration' },
+			{ title: 'Attestations', href: '/architecture/attestations' },
+			{ title: 'Querying', href: '/architecture/querying' },
+			{ title: 'Permissions', href: '/architecture/permissions' },
 		],
 	},
 ] as const

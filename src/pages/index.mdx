@@ -1,58 +1,8 @@
-export const sections = [
-	{ title: 'Core Principles', id: 'core-principles' },
-]
-
 # Rhinestone Registry {{ className: 'uppercase text-5xl' }}
 
 
 The Rhinestone Registry smart contract is a crucial element in advancing Ethereum's account abstraction capabilities. Modular account abstraction (or modular smart accounts) provides a platform for open innovation within the wallet stack. However, it also introduces a number of new security concerns and attack vectors. The goal of the Rhinestone Registry is to unleash open innovation within modular smart accounts through a decentralised trust delegation mechanism (as discussed in our recent blog post). The Rhinestone Registry looks to solve these new security concerns by facilitating an open, permissionless platform for registering, verifying, and propagating the security attestations of smart account modules across various EVM chains.
 
-<hr className="my-10" />
-
-
-## Introduction {{ className: 'mt-0 uppercase text-sm text-neutral-400 font-normal', anchor: false }}
-
-The Rhinestone Registry is instrumental in delivering enhanced user security, greater wallet extensibility, and improved UX to the Ethereum ecosystem. The registry aims to verify the legitimacy and security of independently built smart account modules for deployment and use across any integrated smart account. The interactions between the Rhinestone Registry, SchemaResolvers, and Hashi form the backbone of this system, paving the way for interoperability and composability amongst different attestation protocols and solutions.
-
-
-![Person using Sign In with Worldcoin](/images/docs/introduction/worldcoin-sign-in.jpg)
-
-<div className="grid gap-y-4">
-	<Steps
-		borders
-		steps={[
-			<span>
-        Entities you trust attest to the security posture of smart account modules.
-			</span>,
-			<span>
-      Select trust delegation in your smart account.
-      </span>,
-			<span>
-        Foobr
-			</span>,
-		]}
-	/>
-</div>
-
 <Note title="FYI">
-	World ID is currently in **Beta** and some functionality might change. Please help us improve by sharing
-	[feedback](https://worldcoin.org/discord). Join the waitlist for the SDK
-	[here](https://docs.worldcoin.org/waitlist).
+  Rhinestone Registry is currenty  in **Beta** and in active development. Do not use these contracts on production.
 </Note>
-
-## Core Principles
-
-### Attestations
-Attestations are digitally documented assertions made by an entity (attestor) about the security of account abstraction modules, serving as a seal of authenticity for the associated data. Each attestation consists of two primary elements: the schema and the attestation data. The schema acts as a standardized structure for creating and validating attestations, while the attestation data represents the actual information subject to attestation.
-
-### Schemas
-Schemas are predefined structures utilized for the formation and verification of attestations. They establish a shared format and structure for attestation data, facilitating the creation and verification of various attestations in a trustless fashion.
-
-### Attestors
-Attestors are individuals or organizations responsible for creating and signing attestations. They add the attestation to the Ethereum blockchain, making it universally accessible for verification.
-
-### Modules
-Modules are smart contracts that act as modular components that can be added to smart accounts. These modules and their deployment metadata are stored in the registry. The registry maintains cross-chain consistency, ensuring that users experience the same level of security and functionality, irrespective of the chain they're on.
-
-### Users
-Users represent entities that utilize the information enclosed within the attestations to inform decisions or initiate actions. They trust the attestations based on the reputation and trustworthiness of the attestor.

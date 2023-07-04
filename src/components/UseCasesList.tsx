@@ -46,31 +46,6 @@ export const UseCasesList: FC<{}> = () => {
 
 	return (
 		<div>
-			<div className="flex flex-col items-center">
-				<div className="mt-12 font-medium text-sm text-[#007fd3] leading-4 uppercase">
-          Registry Core Principles
-				</div>
-				<h1 className="m-0 mt-2 text-4xl text-center">
-					The protocol to bring trust into modular Account Abstraction.
-				</h1>
-				<p className="m-0 mt-4 text-base text-gray-400 leading-6">
-					Schemas. Attestions. Trust. 
-				</p>
-				<div className="mt-6 flex items-center gap-x-2">
-					<Link
-						className="px-4 py-3 bg-gray-900 text-white leading-4 no-underline rounded-[10px] hover:bg-gray-900/80"
-						href="/quick-start"
-					>
-						Start Building
-					</Link>
-					<Link
-						className="px-5 py-3 bg-gray-200 text-gray-900 leading-4 no-underline rounded-[10px] hover:bg-gray-200/80"
-						href="/apps"
-					>
-						Explore Apps
-					</Link>
-				</div>
-			</div>
 
 			<h2 className="m-0 mt-16 font-bold text-sm text-gray-400 leading-4 uppercase">
         Core principles
@@ -81,12 +56,12 @@ export const UseCasesList: FC<{}> = () => {
 					color="#4940E0"
 					image="/images/docs/use-cases/icons/voting-platforms.svg"
 					title="Attestations"
-					description="Attestations are digitally documented assertions made by an entity (attestor) about the security of account abstraction modules, serving as a seal of authenticity for the associated data. Each attestation consists of two primary elements: the schema and the attestation data. The schema acts as a standardized structure for creating and validating attestations, while the attestation data represents the actual information subject to attestation."
+					description="Attestations are onchain assertions made by an entity (attestor) about the security of account abstraction modules, serving as a seal of authenticity for the associated data. Each attestation consists of two primary elements: the schema and the attestation data. The schema acts as a standardized structure for creating and validating attestations, while the attestation data represents the actual information subject to attestation."
 					items={[
 						'Assertions of security posture',
 						'Permissionless attestations',
 					]}
-					linkHref="/use-cases/voting"
+					linkHref="architecture/attestations"
 				/>
 
 				<UseCasesListItem
@@ -99,7 +74,7 @@ export const UseCasesList: FC<{}> = () => {
 						'Permissionless schema creation',
 						'Extentibility through external Resolvers',
 					]}
-					linkHref="/use-cases/social-media"
+					linkHref="architecture/schema-registration"
 				/>
 
 				{/* TODO: uncomment after the use case is ready  */}
@@ -130,7 +105,7 @@ export const UseCasesList: FC<{}> = () => {
             'Reputation',
             'Trusted Entities'
 					]}
-					linkHref="/use-cases/wealth-distribution"
+					linkHref="architecture/attestations"
 				/>
 
 
@@ -146,7 +121,7 @@ export const UseCasesList: FC<{}> = () => {
 						'Ecosystem',
 						'Trusted Security Posture',
 					]}
-					linkHref="/use-cases/wealth-distribution"
+					linkHref="architecture/module-registration"
 				/>
 
 
@@ -162,7 +137,7 @@ export const UseCasesList: FC<{}> = () => {
 						'Smart Accounts',
 						'Vendor Agnostic',
 					]}
-					linkHref="/use-cases/wealth-distribution"
+					linkHref="architecture/querying"
 				/>
 
 				{/*<UseCasesListItem*/}

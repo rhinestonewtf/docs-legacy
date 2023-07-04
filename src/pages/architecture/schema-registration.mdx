@@ -1,0 +1,75 @@
+import { Tag } from '@/components/Tag'
+import { Link } from '@/components/Link'
+
+# Schema Registration
+
+> Schemas allow for flexible attestations, giving smart account developers and auditors to create attestations in the way that best fits their use case.
+
+The Schema Registration function is responsible for registering new schemas in the Rhinestone Registry. A schema is composed of an ABI (Application Binary Interface) description of data saved in attestations, as well as the resolver address. By allowing for flexible schemas, the Rhinestone Registry allows for extreme flexibility in the structure of the data stored in attestations, giving smart account developers and auditors to create attestations in the way that best fits their use case.
+
+<Fence className="bg-gray-100">
+![Schema Flow](/images/docs/introduction/schema-flow.png)
+</Fence>
+
+### Parameters
+
+<Note title="caution" type="info">
+  Schemas can be defined in typical ABI format.
+	[IDKit](/idkit/reference#parameters)).
+</Note>
+
+```solidity
+function registerSchema(
+    string calldata schema,
+    ISchemaResolver resolver,
+    bool revocable
+)
+    external
+    returns (bytes32);
+```
+
+
+```solidity
+struct SchemaRecord {
+    bytes32 uid; // The unique identifier of the schema.
+    ISchemaResolver resolver; // Optional schema resolver.
+    bool revocable; // Whether the schema allows revocations explicitly.
+    string schema; // Custom specification of the schema (e.g., an ABI).
+    address schemaOwner; // The address of the account used to register the schema.
+}
+```
+
+
+
+
+## Schema Resolver
+
+The SchemaResolver plays a vital role in the Rhinestone Registry's infrastructure, serving as a conduit for verifying and managing the attestations related to each registered schema. Essentially, the SchemaResolver is an interface definition that interacts with the Rhinestone Registry to register schemas and control how attestations are formed and validated.
+
+Entities that register schemas on the registry elect to provide a SchemaResolver. During attestations, revocations, and module registrations, the registry calls hooks on the provided SchemaResolver, allowing it to act on the associated operations. This interaction empowers the SchemaResolver to govern the integrity and correctness of the attestations.
+
+### Functionality
+
+A SchemaResolver is associated with a particular schema at the time of schema registration. The SchemaResolver provides an interface for the Rhinestone Registry to interact with the schema, specifically to encode, decode, and verify the attestation data against the schema. This ensures that the data being attested is in line with the schema and can be correctly interpreted by anyone accessing the attestation.
+
+### Responsibilities
+The primary responsibilities of the SchemaResolver include:
+
+- **Validation:** The SchemaResolver is responsible for ensuring that all attestations adhere to the associated schema. It performs validation on the data being attested, ensuring that it meets the requirements specified in the schema.
+- **Encoding and Decoding:** To manage the storage and retrieval of attestations, the SchemaResolver must be able to correctly encode and decode attestation data according to the schema. This enables the data to be stored compactly on-chain, while still maintaining its meaningfulness off-chain.
+- **Hook Calls:** During certain operations such as attestations, revocations, and module registrations, the Rhinestone Registry will call hooks on the SchemaResolver. These hooks allow the SchemaResolver to perform any necessary actions related to these operations. For example, an attestation hook might perform additional checks on the data or update some internal state.
+
+### Extensibility
+The SchemaResolver provides a extensibility to the Rhinestone Registry. By allowing entities to provide their own SchemaResolver when registering a schema, the Rhinestone Registry can support a wide variety of data formats and validation rules. This extensibility makes the Rhinestone Registry versatile enough to support the diverse needs of different smart account modules.
+
+
+<Note title="caution" type="info">
+The SchemaResolver is a critical component of the Rhinestone Registry, ensuring data integrity and consistency throughout the system. It guarantees that the data being attested meets the necessary validation criteria, while also maintaining a level of extensibility, thus enhancing the system's overall flexibility and robustness.
+	[IDKit](/idkit/reference#parameters)).
+</Note>
+
+
+
+
+
+
