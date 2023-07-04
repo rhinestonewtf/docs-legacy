@@ -48,13 +48,13 @@ export const UseCasesList: FC<{}> = () => {
 		<div>
 			<div className="flex flex-col items-center">
 				<div className="mt-12 font-medium text-sm text-[#007fd3] leading-4 uppercase">
-					World ID USE CASES & IDEAS
+          Registry Core Principles
 				</div>
 				<h1 className="m-0 mt-2 text-4xl text-center">
-					The protocol to bring global proof of personhood to the internet.
+					The protocol to bring trust into modular Account Abstraction.
 				</h1>
 				<p className="m-0 mt-4 text-base text-gray-400 leading-6">
-					Privacy First. Self Custodial. Decentralized
+					Schemas. Attestions. Trust. 
 				</p>
 				<div className="mt-6 flex items-center gap-x-2">
 					<Link
@@ -73,36 +73,31 @@ export const UseCasesList: FC<{}> = () => {
 			</div>
 
 			<h2 className="m-0 mt-16 font-bold text-sm text-gray-400 leading-4 uppercase">
-				Explore World ID uses cases
+        Core principles
 			</h2>
 
 			<div className="mt-2 grid grid-cols-1 gap-4 lg:grid-cols-2">
 				<UseCasesListItem
 					color="#4940E0"
 					image="/images/docs/use-cases/icons/voting-platforms.svg"
-					title="Voting"
-					description="Using World ID, and particularly relying on global proof of personhood, can be used to build a truly democratic, one person one vote, system as well as novel voting systems."
+					title="Attestations"
+					description="Attestations are digitally documented assertions made by an entity (attestor) about the security of account abstraction modules, serving as a seal of authenticity for the associated data. Each attestation consists of two primary elements: the schema and the attestation data. The schema acts as a standardized structure for creating and validating attestations, while the attestation data represents the actual information subject to attestation."
 					items={[
-						'Deduplication in government elections',
-						'Novel DAO governance including quadratic, and conviction voting',
-						'Anonymous online polls platform',
-						'Snapshot integration',
-						'Change.org integration',
+						'Assertions of security posture',
+						'Permissionless attestations',
 					]}
 					linkHref="/use-cases/voting"
 				/>
 
 				<UseCasesListItem
 					color="#487CA5"
-					image="/images/docs/use-cases/icons/social-media.svg"
-					title="Social Media"
-					description="Social networks where humans, not bots, engage. With World ID and progressive proof of personhood social networks can be enhanced and several abuse problems solved."
+					image="/images/docs/use-cases/icons/marketplaces.svg"
+					title="Schema"
+					description="Schemas are predefined structures utilized for the formation and verification of attestations. They establish a shared format and structure for attestation data, facilitating the creation and verification of various attestations in a trustless fashion."
 					items={[
-						'Bot protection for posting, views, likes',
-						'Filter posts, comments, replies, and notifications to verified accounts',
-						'Community moderation tools',
-						'Content attribution to prevent deep fakes & misinformation',
-						'Discord, Twitter, Lens, and Farcaster integrations',
+						'Predefined structures for attestation data',
+						'Permissionless schema creation',
+						'Extentibility through external Resolvers',
 					]}
 					linkHref="/use-cases/social-media"
 				/>
@@ -125,18 +120,51 @@ export const UseCasesList: FC<{}> = () => {
 
 				<UseCasesListItem
 					color="#00C313"
-					image="/images/docs/use-cases/icons/wealth-distribution.svg"
-					title="Wealth Distribution"
-					description="Using World ID’s proof of personhood, a system could be built to ensure aid from NGOs, non-profits, government programs, etc. is distributed equitably to recipients."
+					image="/images/docs/use-cases/icons/events.svg"
+					title="Attestors"
+					description="
+          Attestors are individuals or organizations responsible for creating and signing attestations. They add the attestation to the Ethereum blockchain, making it universally accessible for verification.
+          "
 					items={[
-						'Government welfare programs',
-						'Non-profit and refugee aid distribution',
-						'Privately or publicly funded Universal Basic Income',
+            'Permissionless',
+            'Reputation',
+            'Trusted Entities'
 					]}
 					linkHref="/use-cases/wealth-distribution"
 				/>
 
-				{/* TODO: uncomment after the use case is ready  */}
+
+				<UseCasesListItem
+					color="#8080FF"
+					image="/images/docs/use-cases/icons/wealth-distribution.svg"
+					title="Modules"
+					description="
+          Modules are smart contracts that act as modular components that can be added to smart accounts. These modules and their deployment metadata are stored in the registry. The registry maintains cross-chain consistency, ensuring that users experience the same level of security and functionality, irrespective of the chain they're on.
+          "
+					items={[
+						'Vendor Agnostic',
+						'Ecosystem',
+						'Trusted Security Posture',
+					]}
+					linkHref="/use-cases/wealth-distribution"
+				/>
+
+
+				<UseCasesListItem
+					color="#B65FCF"
+					image="/images/docs/use-cases/icons/social-media.svg"
+					title="Users"
+					description="
+          Users represent entities that utilize the information enclosed within the attestations to inform decisions or initiate actions. They trust the attestations based on the reputation and trustworthiness of the attestor.
+          "
+					items={[
+						'End Users',
+						'Smart Accounts',
+						'Vendor Agnostic',
+					]}
+					linkHref="/use-cases/wealth-distribution"
+				/>
+
 				{/*<UseCasesListItem*/}
 				{/*	color="#FFB11B"*/}
 				{/*	image="/images/docs/use-cases/icons/token-airdrops.svg"*/}
@@ -204,15 +232,12 @@ export const UseCasesList: FC<{}> = () => {
 				{/*/>*/}
 			</div>
 
-			<SoonUseCases/>
 
-			<h2 className="m-0 mt-16 font-bold text-xl text-black text-center">Join the Worldcoin builder community</h2>
+			<h2 className="m-0 mt-16 font-bold text-xl text-black text-center">Join the Rhinestone builder community</h2>
 
 			<Stats className="mt-6" />
 
 			<div className="mt-6 text-2xs text-black/50 text-center">
-				*as World ID is a fully open protocol and anyone can build their own implementations, it is not possible
-				to have numbers on all usage and holders.
 			</div>
 
 			<div className="grid gap-y-2 mt-24">
