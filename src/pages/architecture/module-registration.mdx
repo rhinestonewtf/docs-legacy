@@ -4,13 +4,11 @@ The Module Registration function is used to deploy new smart account modules ont
 <Fence className="bg-gray-100">
 ![Module Registration Flow](/images/docs/introduction/module-flow.svg)
 </Fence>
-## Inputs
 - **Module bytecode:** This is the compiled bytecode of the smart account module that will be deployed.
 - **Schema ID:** The schema ID of the associated schema that will be used for attestations in this module.
 
-Module address: The Ethereum address where the smart account module will be deployed.
-Attestations
 
+After deploying the module bytecode, the registry saves the deployment address as well as the chosen `schemaId`, in addition to the following metadata.
 ```solidity
 struct Module {
     address implementation; // The deployed contract address

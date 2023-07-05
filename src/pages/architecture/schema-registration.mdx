@@ -15,8 +15,9 @@ The Schema Registration function is responsible for registering new schemas in t
 
 <Note title="caution" type="info">
   Schemas can be defined in typical ABI format.
-	[IDKit](/idkit/reference#parameters)).
 </Note>
+
+When calling the `registerSchema` function on the Rhinestone Registry, the following parameters are required:
 
 ```solidity
 function registerSchema(
@@ -27,6 +28,8 @@ function registerSchema(
     external
     returns (bytes32);
 ```
+
+After a successful schema registry, the Rhinestone Registry will return a unique identifier for the schema. This identifier can be used to reference the schema in future operations. 
 
 
 ```solidity
