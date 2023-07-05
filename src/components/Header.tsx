@@ -69,7 +69,6 @@ export const Header: ForwardRefExoticComponent<{ className?: string }> = forward
 					<span className="text-xl font-bold ml-4">rhinestone</span>
 				</Link>
 			</div>
-			<Search />
 			<div className="flex items-center gap-5 lg:hidden">
 				<MobileNavigation />
 				<Link href="/" aria-label="Home">
@@ -90,7 +89,6 @@ export const Header: ForwardRefExoticComponent<{ className?: string }> = forward
 						</Button>
 					</ul>
 				</nav>
-				<MobileSearch />
 				<div className="hidden md:block md:h-5 md:w-px md:bg-zinc-900/10 md:dark:bg-white/15" />
 				<a href="https://github.com/rhinestonewtf" target="_blank" rel="noreferrer">
 					<GitHubIcon className="h-6 w-6 text-black" />

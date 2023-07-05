@@ -15,7 +15,7 @@ During the attestation's life cycle, the Rhinestone Registry can invoke hooks on
 
 
 <Fence className="bg-gray-100">
-![Attestation Flow](/images/docs/introduction/attestation-flow.png)
+![Attestation Flow](/images/docs/introduction/attestation-flow.svg)
 </Fence>
 
 
@@ -53,10 +53,6 @@ Attestations within the Rhinestone Registry play a fundamental role in endorsing
 
 Each attestation have the option to reference other attestations using the refUID parameter, which enables them to reference other attestations, creating a chain of attestations or a "chain of trust". This interlinking of attestations offers a powerful way to track the lineage of security evaluations, modifications, or any other relevant events over the lifetime of a smart account module.
 
-### RefUID and Trust Chains
-The refUID is a unique identifier associated with each attestation. This identifier allows an attestation to reference other attestations, thereby establishing a chain of trust. This means that each attestation doesn't stand alone but is part of a larger, interconnected structure of trust.
-
-When an attestation references another via its refUID, it inherently endorses the previous attestation's authenticity. This allows users and other parties to trace back through the chain of attestations, examining the history of endorsements for a particular smart account module. 
 
 ### Interactions with the SchemaResolver
 Attestations are deeply integrated with the SchemaResolver. As entities make attestations, the registry calls hooks on the associated SchemaResolver, ensuring that the attestation data is correctly structured and verified against the schema. Or any other logic the SchemaResolver might elect to implement.
@@ -75,3 +71,73 @@ Upon an attestation's revocation, the Rhinestone Registry might call hooks on th
 ### Editing Attestions
 Attestations can not be edited. Should attestation data change, a new attestation needs to be made, and the old attestation must be revoked.
 
+
+## Delegated Attestations
+All attestations leveraged within the Rhinestone Registry are designated as "delegated". 
+Such attestations empower an entity to sign an attestation while enabling another entity to 
+bear the transaction cost. With these attestations, the actual attestant and the one shouldering the 
+transaction fee can be separate entities, thus accommodating a variety of use cases. 
+This becomes particularly beneficial when:
+
+- A service opts to cover its users' attestation costs (taking care of gas expenses)
+- An entity wishes to execute multiple attestations but allows the recipient or a different party to handle the transaction fees for blockchain integration.
+
+
+
+```solidity
+/**
+ * @dev A struct representing the arguments of the attestation request.
+ */
+struct AttestationRequestData {
+    address recipient; // The recipient of the attestation.
+    uint48 expirationTime; // The time when the attestation expires (Unix timestamp).
+    bool revocable; // Whether the attestation is revocable.
+    bool propagateable; // Whether the attestation is propagateable to L2s.
+    bytes32 refUID; // The UID of the related attestation.
+    bytes data; // Custom attestation data.
+    uint256 value; // An explicit ETH amount to send to the resolver. This is important to prevent accidental user errors.
+}
+
+
+/**
+ * @dev A struct representing the full arguments of the full delegated attestation request.
+ */
+struct DelegatedAttestationRequest {
+    bytes32 schema; // The unique identifier of the schema.
+    AttestationRequestData data; // The arguments of the attestation request.
+    EIP712Signature signature; // The EIP712 signature data.
+    address attester; // The attesting account.
+}
+```
+
+
+### ERC1271 Support
+The Rhinestone Registry attestation process supports the ERC1271 standard, which allows smart contracts to implement a standard interface for contract ownership. This is particularly useful for smart account modules that are owned by a smart contract. The Rhinestone Registry supports the ERC1271 standard for delegated attestations.
+Should the attester in the DelegatedAttestationRequest be a contract, a ERC1271 validation call is made.
+
+
+## Chained Attestations
+The refUID is a unique identifier associated with each attestation. This identifier allows an attestation to reference other attestations, thereby establishing a chain of trust. This means that each attestation doesn't stand alone but is part of a larger, interconnected structure of trust.
+
+When an attestation references another via its refUID, it inherently endorses the previous attestation's authenticity. This allows users and other parties to trace back through the chain of attestations, examining the history of endorsements for a particular smart account module. 
+
+
+<div className="grid gap-y-4">
+	<Steps
+		Chain
+		steps={[
+			<span>
+      Deployed & Registered Module
+			</span>,
+			<span>
+      Attestation 1
+      </span>,
+			<span>
+      Attestation 2
+			</span>,
+			<span>
+      Attestation 3
+			</span>,
+		]}
+	/>
+</div>

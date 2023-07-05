@@ -189,6 +189,7 @@ export const navigation = [
 			{ title: 'Home', href: '/' },
 			{ title: 'Core Principles', href: '/core-principles' },
 			{ title: 'Ressources', href: '/apps' },
+			{ title: 'FAQ', href: '/faq' },
 		],
 	},
 	{
