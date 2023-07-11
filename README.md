@@ -1,8 +1,4 @@
-<a href="https://worldcoin.org/world-id">
-  <img src="/public/images/shared-readme/readme-header.png" alt="" />
-</a>
-
-# Worldcoin Documentation
+# rhinestone Documentation
 
 This repository contains the technical documentation for the Worldcoin SDK and the World ID Protocol.
 
