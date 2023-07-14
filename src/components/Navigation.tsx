@@ -187,8 +187,8 @@ export const navigation = [
 		title: 'Introduction',
 		links: [
 			{ title: 'Home', href: '/' },
-			{ title: 'Core Principles', href: '/core-principles' },
-			{ title: 'Ressources', href: '/apps' },
+			{ title: 'Core Concepts', href: '/core-concepts' },
+			{ title: 'Resources', href: '/apps' },
 			{ title: 'FAQ', href: '/faq' },
 		],
 	},

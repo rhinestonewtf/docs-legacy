@@ -1,11 +1,12 @@
 import useSWR from 'swr'
 import Image from 'next/image'
 import { Stats } from './Stats'
+import { Button } from './Button'
 import { FC, useState } from 'react'
 import { Link } from '@/components/Link'
 import RedirectIcon from './icons/RedirectIcon'
-import { UseCasesListItem } from '@/components/UseCasesListItem'
 import { SoonUseCases } from '@/components/SoonUseCases'
+import { UseCasesListItem } from '@/components/UseCasesListItem'
 
 type Stats = {
 	lastWeekCount: number
@@ -16,15 +17,24 @@ type Stats = {
 }
 
 // ANCHOR: LinkCard component for the links in the bottom of the page
-const LinkCard: FC<{ href: string; heading: string; description: string }> = ({ href, heading, description }) => {
+const LinkCard: FC<{ href: string; heading: string; description: string; disabled?: boolean }> = ({
+	href,
+	heading,
+	description,
+	disabled = false,
+}) => {
 	return (
 		<Link
-			className="grid gap-y-2 content-start py-6 px-5 bg-gray-50 border border-gray-100 rounded-xl relative no-underline hover:bg-gray-100/70 transition-colors"
+			className={
+				'grid gap-y-2 content-start py-6 px-5 bg-gray-50 border border-gray-100 rounded-xl relative no-underline transition-colors' +
+				(disabled ? ' pointer-events-none hover:cursor-not-allowed' : ' hover:bg-gray-100/70')
+			}
 			href={href}
+			disabled={disabled}
 		>
 			<span className="text-sm font-medium text-gray-900 !m-0 leading-none">{heading}</span>
 			<p className="text-sm text-gray-900/80 m-0 leading-[1.3]">{description}</p>
-			<RedirectIcon className="absolute top-4 right-4 h-5 w-5 text-gray-900" />
+			{disabled ? null : <RedirectIcon className="absolute top-4 right-4 h-5 w-5 text-gray-900" />}
 		</Link>
 	)
 }
@@ -46,10 +56,7 @@ export const UseCasesList: FC<{}> = () => {
 
 	return (
 		<div>
-
-			<h2 className="m-0 mt-16 font-bold text-sm text-gray-400 leading-4 uppercase">
-        Core principles
-			</h2>
+			<h2 className="m-0 mt-16 font-bold text-sm text-gray-400 leading-4 uppercase">Core concepts</h2>
 
 			<div className="mt-2 grid grid-cols-1 gap-4 lg:grid-cols-2">
 				<UseCasesListItem
@@ -57,10 +64,8 @@ export const UseCasesList: FC<{}> = () => {
 					image="/images/docs/use-cases/icons/voting-platforms.svg"
 					title="Attestations"
 					description="Attestations are onchain assertions made by an entity (attestor) about the security of account abstraction modules, serving as a seal of authenticity for the associated data. Each attestation consists of two primary elements: the schema and the attestation data. The schema acts as a standardized structure for creating and validating attestations, while the attestation data represents the actual information subject to attestation."
-					items={[
-						'Assertions of security posture',
-						'Permissionless attestations',
-					]}
+					// items={['Assertions of security posture', 'Permissionless attestations']}
+					items={[]}
 					linkHref="architecture/attestations"
 				/>
 
@@ -69,11 +74,12 @@ export const UseCasesList: FC<{}> = () => {
 					image="/images/docs/use-cases/icons/marketplaces.svg"
 					title="Schema"
 					description="Schemas are predefined structures utilized for the formation and verification of attestations. They establish a shared format and structure for attestation data, facilitating the creation and verification of various attestations in a trustless fashion."
-					items={[
-						'Predefined structures for attestation data',
-						'Permissionless schema creation',
-						'Extentibility through external Resolvers',
-					]}
+					// items={[
+					// 	'Predefined structures for attestation data',
+					// 	'Permissionless schema creation',
+					// 	'Extentibility through external Resolvers',
+					// ]}
+					items={[]}
 					linkHref="architecture/schema-registration"
 				/>
 
@@ -98,16 +104,12 @@ export const UseCasesList: FC<{}> = () => {
 					image="/images/docs/use-cases/icons/events.svg"
 					title="Attestors"
 					description="
-          Attestors are individuals or organizations responsible for creating and signing attestations. They add the attestation to the Ethereum blockchain, making it universally accessible for verification.
+          Attestors are individuals or organizations responsible for creating and signing attestations. They publish the attestation on-chain, making it universally accessible for verification.
           "
-					items={[
-            'Permissionless',
-            'Reputation',
-            'Trusted Entities'
-					]}
+					// items={['Permissionless', 'Reputation', 'Trusted Entities']}
+					items={[]}
 					linkHref="architecture/attestations"
 				/>
-
 
 				<UseCasesListItem
 					color="#8080FF"
@@ -116,14 +118,10 @@ export const UseCasesList: FC<{}> = () => {
 					description="
           Modules are smart contracts that act as modular components that can be added to smart accounts. These modules and their deployment metadata are stored in the registry. The registry maintains cross-chain consistency, ensuring that users experience the same level of security and functionality, irrespective of the chain they're on.
           "
-					items={[
-						'Vendor Agnostic',
-						'Ecosystem',
-						'Trusted Security Posture',
-					]}
+					// items={['Vendor Agnostic', 'Ecosystem', 'Trusted Security Posture']}
+					items={[]}
 					linkHref="architecture/module-registration"
 				/>
-
 
 				<UseCasesListItem
 					color="#B65FCF"
@@ -132,11 +130,8 @@ export const UseCasesList: FC<{}> = () => {
 					description="
           Users represent entities that utilize the information enclosed within the attestations to inform decisions or initiate actions. They trust the attestations based on the reputation and trustworthiness of the attestor.
           "
-					items={[
-						'End Users',
-						'Smart Accounts',
-						'Vendor Agnostic',
-					]}
+					// items={['End Users', 'Smart Accounts', 'Vendor Agnostic']}
+					items={[]}
 					linkHref="architecture/querying"
 				/>
 
@@ -207,34 +202,47 @@ export const UseCasesList: FC<{}> = () => {
 				{/*/>*/}
 			</div>
 
+			<h2 className="m-0 mt-16 font-bold text-xl text-black text-center">
+				Join the rhinestone builder community
+			</h2>
 
-			<h2 className="m-0 mt-16 font-bold text-xl text-black text-center">Join the Rhinestone builder community</h2>
+			{/* <Stats className="mt-6" /> */}
 
-			<Stats className="mt-6" />
+			{/* <div className="mt-6 text-2xs text-black/50 text-center"></div> */}
 
-			<div className="mt-6 text-2xs text-black/50 text-center">
+			<div className="flex justify-center mt-6">
+				<Button href="https://forms.gle/gLBg7EKUaxx8DpLi7" target="_blank">
+					Join the Waitlist
+				</Button>
 			</div>
 
-			<div className="grid gap-y-2 mt-24">
-				<h3 className="uppercase text-2xs m-0 font-medium text-gray-500">More Resources</h3>
+			<div className="grid gap-y-2 mt-12">
+				<h3 className="flex items-center uppercase text-2xs m-0 font-medium text-gray-500">
+					More Resources
+					<div className="ml-2 inline flex items-center normal-case h-4 px-1 font-normal text-3xs text-white bg-gray-400 rounded">
+						Coming soon
+					</div>
+				</h3>
 
 				<div className="grid lg:grid-cols-3 gap-2">
 					<LinkCard
 						href="/quick-start"
 						heading="Start building"
 						description="The Quick Start is the easiest place to start"
+						disabled
 					/>
 
 					<LinkCard
-						href="https://worldcoin.org/grants"
-						heading="Worldcoin Grants"
-						description="Grants by the Worldcoin Foundation are coming soon."
+						href="https://rhinestone.notion.site/Module-ideas-for-product-inspo-338100a2c99540f490472b8aa839da11"
+						heading="Module ideas"
+						description="Ideas for smart account modules you can build"
 					/>
 
 					<LinkCard
-						href="https://worldcoin.org/discord"
-						heading="Join our Discord community"
-						description="Jam on ideas, see what others are building, ask questions. Look for the #developers channel."
+						href="/"
+						heading="Join the developer community"
+						description="Jam on ideas, see what others are building and ask questions"
+						disabled
 					/>
 				</div>
 			</div>

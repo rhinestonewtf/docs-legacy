@@ -41,14 +41,16 @@ export const UseCasesListItem = (props: {
 					{props.title}
 				</h3>
 			</Link>
-			<p className="m-0 mt-2 font-medium text-sm leading-5">{props.description}</p>
-			<ul className="flex flex-col gap-y-1 m-0 mt-5 p-0 list-none">
-				{props.items.map((item, index) => (
-					<li key={index} className="m-0 p-0 text-sm text-gray-500 leading-5">
-						{item}
-					</li>
-				))}
-			</ul>
+			<p className="m-0 mt-2 text-sm">{props.description}</p>
+			{props.items.length > 0 ? (
+				<ul className="flex flex-col gap-y-1 m-0 mt-5 p-0 list-none">
+					{props.items.map((item, index) => (
+						<li key={index} className="m-0 p-0 text-sm text-gray-500 leading-5">
+							{item}
+						</li>
+					))}
+				</ul>
+			) : null}
 			<Link
 				className="inline-flex items-center gap-x-1 mt-5 text-accents-info-700 no-underline hover:text-accents-info-700/80"
 				href={props.linkHref}

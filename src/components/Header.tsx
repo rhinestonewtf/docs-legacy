@@ -67,6 +67,9 @@ export const Header: ForwardRefExoticComponent<{ className?: string }> = forward
 				<Link href="/" aria-label="Home" className="flex flex-row items-center">
 					<Image src={logo} className="h-10 w-10 rounded-xl" alt="rhinestone" />
 					<span className="text-xl font-bold ml-4">rhinestone</span>
+					<span className="flex ml-2 bg-primary/20 text-primary rounded-full px-3 py-0 text-[0.8rem] font-semibold">
+						alpha
+					</span>
 				</Link>
 			</div>
 			<div className="flex items-center gap-5 lg:hidden">
@@ -84,7 +87,7 @@ export const Header: ForwardRefExoticComponent<{ className?: string }> = forward
 						>
 							Apps & Integrations
 						</TopLevelNavItem> */}
-						<Button href="https://rhinestone.wtf/" target="_blank">
+						<Button href="https://forms.gle/gLBg7EKUaxx8DpLi7" target="_blank">
 							Join the Waitlist
 						</Button>
 					</ul>
