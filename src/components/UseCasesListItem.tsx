@@ -4,7 +4,8 @@ import DirectionRightIcon from '@/components/icons/DirectionRightIcon'
 
 export const UseCasesListItem = (props: {
 	color: string
-	image: string
+	image?: string
+	icon?: any
 	title: string
 	description: string
 	items: string[]
@@ -30,11 +31,16 @@ export const UseCasesListItem = (props: {
 						</radialGradient>
 					</defs>
 				</svg>
-				<div className="absolute inset-0 flex items-center justify-center">
-					<Link href={props.linkHref}>
-						<Image width={24} height={24} src={props.image} alt={props.title} />
-					</Link>
-				</div>
+				{props.image ? (
+					<div className="absolute inset-0 flex items-center justify-center">
+						<Link href={props.linkHref}>
+							<Image width={24} height={24} src={props.image} alt={props.title} />
+						</Link>
+					</div>
+				) : null}
+				{props.icon ? (
+					<div className="absolute inset-0 flex items-center justify-center">{props.icon}</div>
+				) : null}
 			</div>
 			<Link href={props.linkHref} className="no-underline">
 				<h3 className="m-0 mt-4 font-medium text-lg" style={{ color: props.color }}>
