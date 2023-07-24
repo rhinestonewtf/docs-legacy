@@ -187,13 +187,13 @@ export const navigation = [
 		title: 'Introduction',
 		links: [
 			{ title: 'Home', href: '/' },
-			{ title: 'Components', href: '/components' },
-			{ title: 'Resources', href: '/resources' },
+			// { title: 'Components', href: '/components' },
+			// { title: 'Resources', href: '/resources' },
 			{ title: 'FAQ', href: '/faq' },
 		],
 	},
 	{
-		title: '[Rhinestone Registry]',
+		title: '[Registry]',
 		links: [
 			{ title: 'Overview', href: '/registry' },
 			{ title: 'Core Concepts', href: '/registry/concepts' },

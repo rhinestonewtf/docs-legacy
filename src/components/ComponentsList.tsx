@@ -11,8 +11,8 @@ export const ComponentsList: FC<{}> = () => {
 				<UseCasesListItem
 					color="#4940E0"
 					image="/images/docs/use-cases/icons/voting-platforms.svg"
-					title="[Rhinestone Registry]"
-					description="The [Rhinestone Registry] aims to solve the security concerns of modular smart accounts by facilitating an open and permissionless platform for registering, verifying, and propagating the security attestations of smart account modules across various EVM chains."
+					title="[Registry]"
+					description="The [Registry] aims to solve the security concerns of modular smart accounts by facilitating an open and permissionless platform for registering, verifying, and propagating the security attestations of smart account modules across various EVM chains. It is a public good that is permissionless, ownerless and free to use and build on top of."
 					items={[]}
 					linkHref="/registry"
 				/>
