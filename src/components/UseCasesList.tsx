@@ -201,51 +201,6 @@ export const UseCasesList: FC<{}> = () => {
 				{/*	linkHref="/use-cases/events"*/}
 				{/*/>*/}
 			</div>
-
-			<h2 className="m-0 mt-16 font-bold text-xl text-black text-center">
-				Join the rhinestone builder community
-			</h2>
-
-			{/* <Stats className="mt-6" /> */}
-
-			{/* <div className="mt-6 text-2xs text-black/50 text-center"></div> */}
-
-			<div className="flex justify-center mt-6">
-				<Button href="https://forms.gle/gLBg7EKUaxx8DpLi7" target="_blank">
-					Join the Waitlist
-				</Button>
-			</div>
-
-			<div className="grid gap-y-2 mt-12">
-				<h3 className="flex items-center uppercase text-2xs m-0 font-medium text-gray-500">
-					More Resources
-					<div className="ml-2 inline flex items-center normal-case h-4 px-1 font-normal text-3xs text-white bg-gray-400 rounded">
-						Coming soon
-					</div>
-				</h3>
-
-				<div className="grid lg:grid-cols-3 gap-2">
-					<LinkCard
-						href="/quick-start"
-						heading="Start building"
-						description="The Quick Start is the easiest place to start"
-						disabled
-					/>
-
-					<LinkCard
-						href="https://rhinestone.notion.site/Module-ideas-for-product-inspo-338100a2c99540f490472b8aa839da11"
-						heading="Module ideas"
-						description="Ideas for smart account modules you can build"
-					/>
-
-					<LinkCard
-						href="/"
-						heading="Join the developer community"
-						description="Jam on ideas, see what others are building and ask questions"
-						disabled
-					/>
-				</div>
-			</div>
 		</div>
 	)
 }

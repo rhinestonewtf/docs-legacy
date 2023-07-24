@@ -1,0 +1,27 @@
+# Overview
+
+## Introduction {{ className: 'mt-0 uppercase text-sm text-neutral-400 font-normal', anchor: false }}
+
+The [Rhinestone Registry] (name pending) is a crucial element in advancing Ethereum's account abstraction capabilities. Modular account abstraction provides a platform for open innovation within the wallet stack. However, it also introduces a number of new security concerns and attack vectors.
+
+The goal of the [Rhinestone Registry] is to unleash open innovation within modular smart accounts through a decentralised trust delegation mechanism (as discussed in our recent [blog post](https://mirror.xyz/konradkopp.eth/7Q3TrMFgx2VbZRKa7UEaisIMjimpMABiqGYo00T9egA)). The [Rhinestone Registry] looks to solve these new security concerns by facilitating an open, permissionless platform for registering, verifying, and propagating the security attestations of smart account modules across various EVM chains.
+
+This allows users to easily verify the security of a smart account module before installation and thus allows smart account providers to securely tap into a marketplace for third party modules.
+
+<Note title="FYI">
+	The [Rhinestone Registry] is currenty in **alpha** and in active development. Do not use the contracts in
+	production.
+</Note>
+
+## Architecture walkthrough {{ className: 'mt-0 uppercase text-sm text-neutral-400 font-normal', anchor: false }}
+
+<EmbeddedVideo
+	url="https://www.loom.com/embed/f1daa7a8ce42432e94ffc89bf5394c81?sid=6588141e-5b27-44e4-8a5c-e5951d3a2cd4"
+	title="Registry walkthrough"
+/>
+
+The video above is a walkthrough of the [Rhinestone Registry] and its current capabilities. As explained, the interactions between the [Rhinestone Registry], SchemaResolvers, and Hashi form the backbone of this system, paving the way for interoperability and composability amongst different attestation protocols and solutions. The graph below shows these connections and interdependencies in detail.
+
+## Architecture chart {{ className: 'mt-0 uppercase text-sm text-neutral-400 font-normal', anchor: false }}
+
+<Fence className="bg-gray-100">![Attestation Flow](/images/docs/introduction/complete-flow.svg)</Fence>

@@ -1,6 +1,24 @@
 # Frequently Asked Questions
 
-### Why not use EAS?
+### Why is the [Rhinestone Registry] needed?
+
+The [Rhinestone Registry] allows modular smart accounts to tap into a marketplace of third-party modules. The problem that the registry solves is that allowing users to install arbitrary third-party modules into their smart accounts presents a huge security risk, very likely leading to accounts being compromised and funds being lost.
+
+The registry helps overcome these issues by allowing users to delegate their trust to different security entities that sit on top of the registry and verify that modules conform to certain standards and are secure.
+
+### Why is the registry a singleton instead of allowing anyone to spin up their own registry?
+
+A very important property for any entity that allows users to delegate their trust to it in order to gain security benefits is that it is permissionless. This means, that users should not be vernder-locked into specific trusted entities, but should be able to switch between different entities at any time.
+
+One solution to this would be to allow different actors to spin up their own registry with their own, specific security assumptions and processes. However, this leads to a few downsides:
+
+1. Fragmentation of "module liquidity": developers need to deploy modules across multiple registries
+2. Greater lock-in: users need to discover different registries and switching between them is likely to be costlier in terms of gas
+3. Lower security: determining whether a users account actually queries the right registry is more complex leading to a greater attack surface
+
+Instead, we believe that the registry should be a singleton, but that different entities should be able to plug into it and offer their own security guarantees. This way, users can switch between different security entities at querying-time without having to switch registries. As a result, this registry should be open, permissionless and free to use and build on top of.
+
+### How is the [Rhinestone Registry] different to the Ethereum Attestation Service?
 
 The Registry takes a lot of inspiration from EAS.
 However, EAS has a few shortcomings that make it unattractive as an attestation service for us.
