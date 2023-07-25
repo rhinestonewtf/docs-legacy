@@ -1,7 +1,17 @@
-# [Rhinestone Registry] {{ className: 'text-5xl' }}
+# rhinestone developer docs {{ className: 'text-5xl' }}
 
-The [Rhinestone Registry] (name pending) smart contract is a crucial element in advancing Ethereum's account abstraction capabilities. Modular account abstraction provides a platform for open innovation within the wallet stack. However, it also introduces a number of new security concerns and attack vectors. The goal of the [Rhinestone Registry] is to unleash open innovation within modular smart accounts through a decentralised trust delegation mechanism (as discussed in our recent [blog post](https://mirror.xyz/konradkopp.eth/7Q3TrMFgx2VbZRKa7UEaisIMjimpMABiqGYo00T9egA)). The [Rhinestone Registry] looks to solve these new security concerns by facilitating an open, permissionless platform for registering, verifying, and propagating the security attestations of smart account modules across various EVM chains.
+Building infrastructure for modular smart accounts. {{ className: 'text-2xl' }}
 
-<Note title="FYI">
-	[Rhinestone Registry] is currenty in **Alpha** and in active development. Do not use the contracts in production.
-</Note>
+## Introduction {{ className: 'mt-0 uppercase text-sm text-neutral-400 font-normal', anchor: false }}
+
+After multiple rejected or stalled proposals to add native support for smart contract wallets (smart accounts) to Ethereum, ERC-4337 has been accepted as the (interim) standard to implement account abstraction (AA) without protocol-level changes to the EVM.
+
+Over the last few months, there has been a surge in activity in a subset of AA which revolves around the modularization of smart accounts to make them more easily extensible for both users and developers. This general approach is termed modular account abstraction and rhinestone is building tools and infrastructure to propel this ecosystem forward.
+
+## Components
+
+In order to bring about this modular ecosystem, there are multiple key pieces that still need to be built. These include:
+
+1. A module registry that allows developers to register their modules, auditors to attest to their security and users to easily add them to their account
+2. Developer tooling to streamline to process of building and testing modules for different smart account implementations **(coming soon)**
+3. A wallet application that allows users to easily customise their account and act as a distribution platform for developers **(coming soon)**

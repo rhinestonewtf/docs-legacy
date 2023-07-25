@@ -13,7 +13,11 @@ export { UseCasePagination } from '@/components/UseCasePagination'
 export { UseCasePaginationItem } from '@/components/UseCasePaginationItem'
 export { UseCaseHeader } from '@/components/UseCaseHeader'
 export { ExploreUseCases } from '@/components/ExploreUseCases'
-export { UseCasesList } from '@/components/UseCasesList'
+export { RegistryConceptsList } from '@/components/RegistryConceptsList'
+export { ComponentsList } from '@/components/ComponentsList'
+export { EmbeddedVideo } from '@/components/EmbeddedVideo'
+export { BuilderCommunity } from '@/components/BuilderCommunity'
+export { Resources } from '@/components/Resources'
 export { Tabs, TabItem, Tab, Link as a }
 export const h2: FC<
 	PropsWithChildren<{
