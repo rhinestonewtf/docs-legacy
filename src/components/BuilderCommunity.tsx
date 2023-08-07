@@ -39,24 +39,23 @@ export const BuilderCommunity: FC<{}> = () => {
 
 			<div className="flex justify-center mt-6">
 				<Button href="https://forms.gle/gLBg7EKUaxx8DpLi7" target="_blank">
-					Join the Waitlist
+					Developer waitlist
 				</Button>
 			</div>
 
 			<div className="grid gap-y-2 mt-12">
 				<h3 className="flex items-center uppercase text-2xs m-0 font-medium text-gray-500">
 					More Resources
-					<div className="ml-2 inline flex items-center normal-case h-4 px-1 font-normal text-3xs text-white bg-gray-400 rounded">
+					{/* <div className="ml-2 inline flex items-center normal-case h-4 px-1 font-normal text-3xs text-white bg-gray-400 rounded">
 						Coming soon
-					</div>
+					</div> */}
 				</h3>
 
 				<div className="grid lg:grid-cols-3 gap-2">
 					<LinkCard
 						href="/quick-start"
 						heading="Start building"
-						description="Our quick start is the easiest place to start building a module"
-						disabled
+						description="Using our quick start is the easiest way to start building a module"
 					/>
 
 					<LinkCard

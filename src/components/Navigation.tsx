@@ -186,14 +186,26 @@ export const navigation = [
 	{
 		title: 'Introduction',
 		links: [
-			{ title: 'Home', href: '/' },
-			// { title: 'Components', href: '/components' },
-			// { title: 'Resources', href: '/resources' },
-			{ title: 'FAQ', href: '/faq' },
+			{ title: 'Overview', href: '/' },
+			{ title: 'Getting started', href: '/quick-start' },
+			{ title: 'Resources', href: '/resources' },
 		],
 	},
 	{
-		title: '[Registry]',
+		title: 'Modules',
+		links: [
+			{ title: 'Overview', href: '/modules' },
+			{ title: 'Core Concepts', href: '/modules/concepts' },
+			{ title: 'Module architecture', href: '/modules/module-architecture' },
+			{ title: 'Validators', href: '/modules/validators' },
+			{ title: 'Plugins', href: '/modules/plugins' },
+			{ title: 'Recovery', href: '/modules/recovery' },
+			{ title: 'Hooks', href: '/modules/hooks' },
+			{ title: 'Adapters', href: '/modules/adapters' },
+		],
+	},
+	{
+		title: 'Module registry',
 		links: [
 			{ title: 'Overview', href: '/registry' },
 			{ title: 'Core Concepts', href: '/registry/concepts' },
@@ -201,8 +213,17 @@ export const navigation = [
 			{ title: 'Module Registration', href: '/registry/module-registration' },
 			{ title: 'Attestations', href: '/registry/attestations' },
 			{ title: 'Querying', href: '/registry/querying' },
+			{ title: 'FAQ', href: '/registry/faq' },
 			// { title: 'Permissions', href: '/registry/permissions' },
 		],
+	},
+	{
+		title: 'Tutorials',
+		links: [{ title: 'Overview', href: '/registry' }],
+	},
+	{
+		title: 'Further reading',
+		links: [{ title: 'Overview', href: '/registry' }],
 	},
 ] as const
 

@@ -88,7 +88,7 @@ export const Header: ForwardRefExoticComponent<{ className?: string }> = forward
 							Apps & Integrations
 						</TopLevelNavItem> */}
 						<Button href="https://forms.gle/gLBg7EKUaxx8DpLi7" target="_blank">
-							Join the Waitlist
+							Developer waitlist
 						</Button>
 					</ul>
 				</nav>
