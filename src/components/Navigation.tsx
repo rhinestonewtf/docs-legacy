@@ -203,21 +203,21 @@ export const navigation = [
 		],
 	},
 	{
-		title: 'Managers',
+		title: 'Registry adapters',
 		links: [
-			{ title: 'Overview', href: '/managers' },
-			{ title: 'Reference implementations', href: '/managers/reference-implementations' },
+			{ title: 'Overview', href: '/adapters' },
+			{ title: 'Reference implementations', href: '/adapters/reference-implementations' },
 		],
 	},
 	{
 		title: 'Module registry',
 		links: [
 			{ title: 'Overview', href: '/registry' },
-			{ title: 'Core Concepts', href: '/registry/concepts' },
+			// { title: 'Core Concepts', href: '/registry/concepts' },
 			{ title: 'Schema Registration', href: '/registry/schema-registration' },
 			{ title: 'Module Registration', href: '/registry/module-registration' },
 			{ title: 'Attestations', href: '/registry/attestations' },
-			{ title: 'Querying', href: '/registry/querying' },
+			// { title: 'Querying', href: '/registry/querying' },
 			{ title: 'FAQ', href: '/registry/faq' },
 			// { title: 'Permissions', href: '/registry/permissions' },
 		],
@@ -231,10 +231,7 @@ export const navigation = [
 	},
 	{
 		title: 'Further reading',
-		links: [
-			{ title: 'Account abstraction 101', href: '/further-reading/account-abstraction' },
-			{ title: 'Account abstraction terms', href: '/further-reading/terminology' },
-		],
+		links: [{ title: 'Account abstraction 101', href: '/further-reading/account-abstraction' }],
 	},
 ] as const
 

@@ -5,7 +5,7 @@
 	suggestions!
 </Note>
 
-## Introduction {{ className: 'mt-0 uppercase text-sm text-neutral-400 font-normal', anchor: false }}
+## Introduction
 
 The [Registry] plays a crucial role in advancing Ethereum's account abstraction capabilities. Modular account abstraction provides a platform for open innovation within the wallet stack. However, it also introduces several new security concerns and attack vectors.
 
@@ -17,7 +17,11 @@ To prevent vendor-lock-in and module fragmentation, the [Registry] is a public g
 	The [Registry] is currently in **alpha** and active development. Do not use the contracts in production.
 </Note>
 
-## Architecture walkthrough {{ className: 'mt-0 uppercase text-sm text-neutral-400 font-normal', anchor: false }}
+## Core concepts
+
+<RegistryConceptsList />
+
+## Architecture walkthrough
 
 <EmbeddedVideo
 	url="https://www.loom.com/embed/f1daa7a8ce42432e94ffc89bf5394c81?sid=6588141e-5b27-44e4-8a5c-e5951d3a2cd4"
@@ -26,6 +30,6 @@ To prevent vendor-lock-in and module fragmentation, the [Registry] is a public g
 
 The video above is a walkthrough of the [Registry] and its current capabilities. As explained, the interactions between the [Registry], SchemaResolvers, and Hashi form the backbone of this system, paving the way for interoperability and composability amongst different attestation protocols and solutions. The graph below shows these connections and interdependencies in detail.
 
-## Architecture chart {{ className: 'mt-0 uppercase text-sm text-neutral-400 font-normal', anchor: false }}
+## Architecture chart
 
 <Fence className="bg-gray-100">![Attestation Flow](/images/docs/introduction/complete-flow.svg)</Fence>

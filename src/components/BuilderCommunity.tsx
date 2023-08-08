@@ -59,16 +59,15 @@ export const BuilderCommunity: FC<{}> = () => {
 					/>
 
 					<LinkCard
-						href="https://rhinestone.notion.site/Module-ideas-for-product-inspo-338100a2c99540f490472b8aa839da11"
-						heading="Module ideas"
-						description="Ideas for smart account modules you can build"
+						href="/resources"
+						heading="Resources"
+						description="Explore resources, tooling and guides that help you get started"
 					/>
 
 					<LinkCard
-						href="/"
-						heading="Join the developer community"
-						description="Jam on ideas, see what others are building and ask questions"
-						disabled
+						href="/tutorials"
+						heading="Tutorials"
+						description="Follow a tutorial to learn how to build a module from scratch"
 					/>
 				</div>
 			</div>
