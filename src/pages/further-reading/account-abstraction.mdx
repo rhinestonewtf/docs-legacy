@@ -1,5 +1,36 @@
 # Account abstraction 101
 
-## Intro to AA
+Account abstraction is an umbrella term that refers to adding more flexibility to the validation phase of Ethereum transactions. Currently, externally owned accounts (EOAs) are “active” in that they can initiate transactions and pay gas for execution. Contract accounts are “passive” — they can be triggered by an EOA, which pays the gas for execution. However, the upside of contract accounts is that they are programmable and can execute arbitrary logic stored in the code of the account. Therefore, account abstraction refers to the transition of contract accounts from being passive to becoming active, allowing a smart contract to become the user account and initiate transactions without reliance on an EOA for triggering the transaction or paying the gas for execution.
 
-## Intro to modular AA
+Until recently, smart accounts relied on an EOA relay to initiate transactions – for example, the Gelato Network relay used by Safe’s smart account. ERC-4337 removes the reliance on EOA relays by introducing the concept of userOperations (smart account transactions), an EntryPoint contract for userOperations and Bundlers (entities that take userOperations and submit them to the entrypoint contract). ERC-4337 also introduces the concept of a Paymaster, an entity that funds gas for EVM execution and has the flexibility to define bespoke pay-back mechanisms for the user. For example, the Paymaster could allow the user to pay gas in any ERC-20 or create unique gas subsidy policies.
+
+For more on ERC-4337 please refer to the [official proposal](https://eips.ethereum.org/EIPS/eip-4337) or check out our partners:
+
+-   [Pimlico](http://pimlico.io)
+-   [Stackup](https://www.stackup.sh/)
+-   [Candide](https://www.candidewallet.com/)
+
+## The layers of account abstraction
+
+There are three layers to account abstraction:
+
+-   Infrastructure for smart account execution [(ERC-4337)](https://eips.ethereum.org/EIPS/eip-4337)
+-   Smart accounts and modules [(ERC-6900)](https://eips.ethereum.org/EIPS/eip-4337)
+-   User interface for controlling a smart account (wallets)
+
+## Motivation for account abstraction
+
+We can’t say it better than Vitalik himself – [The Three Transitions]()
+
+## Account abstraction terminology
+
+-   Contract account – A smart contract used for the user’s account.
+-   Smart account – A contract account that is modular (existing implementations include Safe’s core account and ZeroDev’s Kernel).
+-   UserOperation – A structure that describes a transaction to be sent on behalf of a user. To avoid confusion, it is not named “transaction”.
+-   EntryPoint – A singleton contract to execute bundles of UserOperations. Bundlers / Clients whitelist the supported entryPoint.
+-   Bundler – A node (block builder) that can handle UserOperations, create a valid an EntryPoint.handleOps() transaction, and add it to the block while it is still valid.
+-   Paymaster – A contract that can define specific gas policies for specific user operations.
+
+## Account abstraction vs. MPC
+
+MPC ≠ Account abstraction. See this article by Lit Protocol, a distributed key management platform.
