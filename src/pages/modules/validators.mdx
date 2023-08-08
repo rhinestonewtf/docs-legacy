@@ -1,0 +1,22 @@
+# Validators
+
+Validators are smart account modules that are called during the validation phase of a UserOperation. This means that their primary function is to verify the signature of a UserOperation and determine whether it is valid and should be executed.
+
+## Building a validator
+
+Walk through IValidator
+
+## Validator restrictions
+
+### Storage access
+
+ERC-4337 restricts storage access during the validation phase. As a results, the only storage slots that a validator can access are slots that are accessed through a mapping of the address of the account to non-dynamic data. We’re working on solutions that allow developers to use dynamic data in validators.
+
+### Forbidden Opcodes
+
+See here
+
+## Validator examples
+
+Webauthn validator
+Session key validator

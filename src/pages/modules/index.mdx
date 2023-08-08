@@ -1,0 +1,32 @@
+# Overview
+
+Modules are smart contracts that extend the functionality of smart accounts. Combined with modular accounts, this allows either users or developers to easily change how a smart account works. In order to understand more deeply what is possible with modules (spoiler: a lot), let’s quickly recap the transaction flow of a smart account.
+
+## ERC-4337 UserOperation flow
+
+While there are many different ways of implementing Account Abstraction on Ethereum, rhinestone is built on top of ERC-4337, which is a standard for implementing Account Abstraction using an alternative mempool and without requiring protocol changes. If you want to read up more about this ERC, view the specs here and an excellent blog post here.
+
+In order to achieve Account Abstraction, ERC-4337 specifies a new type of transaction for this alternative mempool, termed a UserOperation. On a high level, this UserOperation goes through two distinct phases: validation and execution.
+
+## Validation Phase
+
+During the validation phase, the ERC-4337 Entrypoint calls the `validateUserOp` function on the smart account in order for it to determine whether a UserOperation is valid and should be executed. If this function returns 0, then the Entrypoint will consider it valid, if it returns 1 or reverts then the Entrypoint will halt execution there and move on to the next UserOperation.
+
+How exactly signature validation occurs is entirely up to the developer to decide, which enables the possibility of modular validation logic that can be added and replaced at any point.
+
+<Note>
+	ERC-4337 places some storage and opcode restrictions on accounts during the validation phase, which impacts how
+	validation modules can be built. Read more about these in the [validators](/modules/validators) section.
+</Note>
+
+## Execution Phase
+
+If the validation phase was successful, then the Entrypoint will call the smart account again, this time with the calldata provided in the UserOperation. While the Entrypoint always calls the `validateUserOp` function during the validation phase, there is no such restriction during execution, meaning that accounts can implement any number of execution functions and the wallet client can choose which exact one to call depending on the transaction intent.
+
+Similar to the validation phase, ERC-4337 does not stipulate how execution occurs, enabling the possibility to build smart account modules for the execution phase.
+
+## Module typology
+
+ERC-4337 breaks down the flow of a UserOperation into two distinct phases, validation and execution. The account functionality that is required in either of these two phases differs to that of the other, so there are at least two different types of modules: validators and executors. However, there are at least two more distinct types of modules that perform different functions to the aforementioned: hooks and recovery modules.
+
+To learn more about each type of module and how to build them, visit the relevant pages below.

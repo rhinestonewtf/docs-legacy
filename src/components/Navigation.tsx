@@ -186,8 +186,8 @@ export const navigation = [
 	{
 		title: 'Introduction',
 		links: [
-			{ title: 'Overview', href: '/' },
-			{ title: 'Getting started', href: '/quick-start' },
+			{ title: 'Overview', href: '/overview' },
+			{ title: 'Quickstart', href: '/quick-start' },
 			{ title: 'Resources', href: '/resources' },
 		],
 	},
@@ -195,13 +195,18 @@ export const navigation = [
 		title: 'Modules',
 		links: [
 			{ title: 'Overview', href: '/modules' },
-			{ title: 'Core Concepts', href: '/modules/concepts' },
-			{ title: 'Module architecture', href: '/modules/module-architecture' },
 			{ title: 'Validators', href: '/modules/validators' },
-			{ title: 'Plugins', href: '/modules/plugins' },
+			{ title: 'Executors', href: '/modules/executors' },
 			{ title: 'Recovery', href: '/modules/recovery' },
 			{ title: 'Hooks', href: '/modules/hooks' },
-			{ title: 'Adapters', href: '/modules/adapters' },
+			{ title: 'Libraries', href: '/modules/libraries' },
+		],
+	},
+	{
+		title: 'Managers',
+		links: [
+			{ title: 'Overview', href: '/managers' },
+			{ title: 'Reference implementations', href: '/managers/reference-implementations' },
 		],
 	},
 	{
@@ -219,11 +224,17 @@ export const navigation = [
 	},
 	{
 		title: 'Tutorials',
-		links: [{ title: 'Overview', href: '/registry' }],
+		links: [
+			{ title: 'Overview', href: '/tutorials' },
+			{ title: 'Building a Safe module', href: '/tutorials/building-a-safe-module' },
+		],
 	},
 	{
 		title: 'Further reading',
-		links: [{ title: 'Overview', href: '/registry' }],
+		links: [
+			{ title: 'Account abstraction 101', href: '/further-reading/account-abstraction' },
+			{ title: 'Account abstraction terms', href: '/further-reading/terminology' },
+		],
 	},
 ] as const
 

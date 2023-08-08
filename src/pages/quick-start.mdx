@@ -1,63 +1,38 @@
 # Quick Start
 
-Fastest way to integrate and use World ID. Find instructions below for both **Sign in with Worldcoin** and **Anonymous Actions**.
+The quickest way to get started with building a smart account module. This guide will walk you through building and testing a smart account module built on top of the Safe.
 
-1. Sign up to the [Developer Portal](https://developer.worldcoin.org).
+1. Clone [this repo]() and install dependencies:
 
-2. Create your first app and configure it (initial config cannot be changed, but you can always create more apps):
-
--   Select the environment to use, staging or production. If you are trying things out, select staging. If you are ready to go live, select production.
--   Select whether you want this action to be cloud-based or on-chain.
+```bash
+git clone XYZ
+cd XYZ
+forge install
+```
 
 <Note>
-	Most use cases use the **cloud** engine. Select **on-chain only** if you are using a **smart contract** to verify a
-	user's World ID.
+	If you do not have foundry installed, run the following command and follow the onscreen instructions: ```bash curl
+	-L https://foundry.paradigm.xyz | bash ```
 </Note>
 
-You'll need your app ID (also called client ID) later. It looks something like {/* cSpell:disable */}`app_GBkZ1KlVUdFTjeMXskrX`{/* cSpell:enable */}.
-
 <Tabs>
-  <TabItem label="Sign in with Worldcoin">
-    The default way of using World ID is an authentication mechanism. If you already have an OIDC-compatible authentication engine, you can connect as follows:
+  <TabItem label="Validator">
+    Validators are smart account modules that are called during the validation phase of a UserOperation. This means that their primary function is to verify the signature of a UserOperation and determine whether it is valid and should be executed.
 
-    <Note>
-      Typical OIDC-compatible authentication engines include
-      [Auth0](https://auth0.com/), [Okta](https://okta.com/), [AWS
-      Cognito](https://aws.amazon.com/cognito/), [CloudFlare
-      Access](https://www.cloudflare.com/products/zero-trust/access/),
-      [OneLogin](https://www.onelogin.com/) and many more. Most languages and
-      frameworks have simple open source packages for this too. A few examples: For
-      [Next.JS](https://next-auth.js.org/), for
-      [Django](https://github.com/python-social-auth/social-app-django), for
-      [Go](https://github.com/coreos/go-oidc).
-    </Note>
+    This guide will run you through building a multi-signature validator.
 
-    3. Configure your OIDC authentication engine to use World ID as an Identity Provider (IdP), you will need the following information:
+    2. Create a new file under src/modules/XYZ/XYZ.sol
 
-    - **Discovery endpoint**: `https://id.worldcoin.org/.well-known/openid-configuration` (if supported by your OIDC client engine, this will set everything automatically, continue below otherwise)
-
-    #### Required inputs
-
-    - **Client ID**: your app id from the Developer Portal (e.g. {/* cSpell:disable */}`app_GBkZ1KlVUdFTjeMXskrX`{/* cSpell:enable */}).
-    - **Client secret**: app secret, obtained from the "Sign In" tab in the Developer Portal (e.g. `sk_6f07e1566ee4b765fe23d8c8`).
-    - **Authorize endpoint**: `https://id.worldcoin.org/authorize`
-    - **Response type**: depends on how you want to authenticate, follow the recommendations of your engine. We recommend auth code flow for server-side apps and implicit flow for client-side apps
-    - Supported response types: `code` (authorization flow), `id_token` (implicit flow), `token`, or a combination of them (hybrid flow).
-
-    #### Optional inputs
-
-    - **(Optional for implicit flow). Token endpoint**: `https://id.worldcoin.org/token`
-    - **(Optional). User info endpoint**: `https://id.worldcoin.org/userinfo`
-    - **(Optional). Introspect endpoint**: `https://id.worldcoin.org/introspect`
-
-    This will use the default World ID login page. If you instead want to build your own authentication page, check out the [Sign In](/id/sign-in) docs.
-
-    4. Once you have configured this, you can start the authentication flow from your app or authentication engine.
+    3. Write the module
+    4. Create a new file under test/modules/XYZ/XYZ.t.sol
+    5. Inherit from SafeIntegrationBoilerplate
+    6. Write the test
+    7. Run forge test
 
   </TabItem>
 
-  <TabItem label="Anonymous Actions">
-    Anonymous Actions unlock a set of other use cases beyond verifying accounts (which is enabled by Sign In with World ID). With Anonymous Actions, you can verify a person is doing something only once, for a particular context.
+  <TabItem label="Executor">
+    Executors are smart account modules that are called during the execution phase of a UserOperation. They extend the execution logic of the account and thus allow for a more diverse set of actions that the account can natively perform.
 
     <Note>
       For example, you can verify a person is claiming a particular promotional
@@ -148,9 +123,6 @@ You'll need your app ID (also called client ID) later. It looks something like {
   </TabItem>
 </Tabs>
 
-## Testing your integration
+## Deploying your module
 
-Last step is test your entire integration. Open the widget where you'll see a QR code (or "Open Worldcoin app" button if on mobile).
-
--   If you created a **Production** action, use the [World App](https://worldcoin.org/download) from the App Store or Google Play to scan the QR code.
--   If you created a **Staging** action, use the [Simulator](https://simulator.worldcoin.org) to scan the QR code.
+tbd
