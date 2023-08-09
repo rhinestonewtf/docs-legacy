@@ -1,12 +1,12 @@
 # Attestations
 
-The Attestations function is responsible for creating attestations. Attestations are a representation of a statement or condition that has been verified to be true. In the [Registry], attestations are used to verify the validity, correctness, and security of smart account modules.
+The Attestations function is responsible for creating attestations. Attestations are a representation of a statement or condition that has been verified to be true. In the Module Registry, attestations are used to verify the validity, correctness, and security of smart account modules.
 
 ## Attestation Lifecycle
 
-The life cycle of an attestation begins when an attester creates it. The attestation data, structured according to the schema provided by the SchemaResolver, is then added to the [Registry]. The attestation can also reference previous attestations using the refUID, creating a chain of trust.
+The life cycle of an attestation begins when an attester creates it. The attestation data, structured according to the schema provided by the SchemaResolver, is then added to the Module Registry. The attestation can also reference previous attestations using the refUID, creating a chain of trust.
 
-During the attestation's life cycle, the [Registry] can invoke hooks on the SchemaResolver during specific events like attestation creation and revocation. This allows the SchemaResolver to ensure the integrity and correctness of the attestation throughout its life cycle.
+During the attestation's life cycle, the Module Registry can invoke hooks on the SchemaResolver during specific events like attestation creation and revocation. This allows the SchemaResolver to ensure the integrity and correctness of the attestation throughout its life cycle.
 
 <Fence className="bg-gray-100">![Attestation Flow](/images/docs/introduction/attestation-flow.svg)</Fence>
 
@@ -34,7 +34,7 @@ struct Attestation {
 
 ### Building Trust
 
-Attestations within the [Registry] play a fundamental role in endorsing the authenticity and security of smart account modules. In essence, attestations are digitally documented claims made by an entity about the security posture of an account abstraction module. Attestations provide a seal of authenticity for the associated data and serve as a testament to the module's security and legitimacy.
+Attestations within the Module Registry play a fundamental role in endorsing the authenticity and security of smart account modules. In essence, attestations are digitally documented claims made by an entity about the security posture of an account abstraction module. Attestations provide a seal of authenticity for the associated data and serve as a testament to the module's security and legitimacy.
 
 Each attestation have the option to reference other attestations using the refUID parameter, which enables them to reference other attestations, creating a chain of attestations or a "chain of trust". This interlinking of attestations offers a powerful way to track the lineage of security evaluations, modifications, or any other relevant events over the lifetime of a smart account module.
 
@@ -44,7 +44,7 @@ Attestations are deeply integrated with the SchemaResolver. As entities make att
 
 ### The Revocation Process
 
-In the event that an attester decides to revoke an attestation, they issue a revocation call to the [Registry]. Upon receiving this call, the registry updates the revocationTime field within the attestation record. This timestamp acts as a clear indication that the attestation has been revoked, and any trust or claims that stem from it should be reconsidered.
+In the event that an attester decides to revoke an attestation, they issue a revocation call to the Module Registry. Upon receiving this call, the registry updates the revocationTime field within the attestation record. This timestamp acts as a clear indication that the attestation has been revoked, and any trust or claims that stem from it should be reconsidered.
 
 It's important to note that apart from the revocationTime, the rest of the attestation's metadata and data remains unchanged. This design choice is critical as it preserves the history of the attestation. Even if an attestation is revoked, its presence in the chain of trust is not erased. This allows for full transparency and traceability, which are key principles in the blockchain domain.
 
@@ -54,7 +54,7 @@ When an attestation is revoked, it can impact the validity of the entire chain o
 
 ### Interaction with the SchemaResolver
 
-Upon an attestation's revocation, the [Registry] might call hooks on the associated SchemaResolver, allowing the SchemaResolver to update its internal state or perform other necessary actions. This maintains the consistency and accuracy of data across the registry.
+Upon an attestation's revocation, the Module Registry might call hooks on the associated SchemaResolver, allowing the SchemaResolver to update its internal state or perform other necessary actions. This maintains the consistency and accuracy of data across the registry.
 
 ### Editing Attestions
 
@@ -62,7 +62,7 @@ Attestations can not be edited. Should attestation data change, a new attestatio
 
 ## Delegated Attestations
 
-All attestations leveraged within the [Registry] are designated as "delegated".
+All attestations leveraged within the Module Registry are designated as "delegated".
 Such attestations empower an entity to sign an attestation while enabling another entity to
 bear the transaction cost. With these attestations, the actual attestant and the one shouldering the
 transaction fee can be separate entities, thus accommodating a variety of use cases.
@@ -99,7 +99,7 @@ struct DelegatedAttestationRequest {
 
 ### ERC1271 Support
 
-The [Registry] attestation process supports the ERC1271 standard, which allows smart contracts to implement a standard interface for contract ownership. This is particularly useful for smart account modules that are owned by a smart contract. The [Registry] supports the ERC1271 standard for delegated attestations.
+The Module Registry attestation process supports the ERC1271 standard, which allows smart contracts to implement a standard interface for contract ownership. This is particularly useful for smart account modules that are owned by a smart contract. The Module Registry supports the ERC1271 standard for delegated attestations.
 Should the attester in the DelegatedAttestationRequest be a contract, a ERC1271 validation call is made.
 
 ## Chained Attestations

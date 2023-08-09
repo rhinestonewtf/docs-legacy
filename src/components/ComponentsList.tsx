@@ -24,7 +24,7 @@ export const ComponentsList: FC<{}> = () => {
 					color="#487CA5"
 					icon={<LuNetwork size={20} color="white" />}
 					title="Rhinestone Protocol"
-					description="A series of smart contracts that a) connect smart accounts to the registry and allow users to easily install secure modules, and b) provides on-chain mechanisms for module monetisation and revenue sharing."
+					description="A series of smart contracts that connect smart accounts to the registry in order to allow users to easily install secure modules and provides on-chain mechanisms for module monetisation and revenue sharing."
 					items={[]}
 				/>
 

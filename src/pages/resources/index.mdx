@@ -20,6 +20,44 @@ An overview of the common terms used in the account abstraction space and these 
 				A smart contract that is used as a user's account (e.g. to store their assets).
 			</td>
 		</tr>
+		<tr>
+			<td className="align-middle">Smart wallet</td>
+			<td className="align-middle">The application used to interface with the contract account.</td>
+		</tr>
+		<tr>
+			<td className="align-middle">Smart account</td>
+			<td className="align-middle">A contract account is extensible by external contracts.</td>
+		</tr>
+		<tr>
+			<td className="align-middle">Module</td>
+			<td className="align-middle">A smart contract that extends the functionality of a smart account.</td>
+		</tr>
+		<tr>
+			<td className="align-middle">Executor</td>
+			<td className="align-middle">
+				A module that is called during the execution flow of the smart account to implement custom execution
+				behavior.
+			</td>
+		</tr>
+		<tr>
+			<td className="align-middle">Validator</td>
+			<td className="align-middle">
+				A module that validates authentication and authorization of a caller to the account.
+			</td>
+		</tr>
+		<tr>
+			<td className="align-middle">Hook</td>
+			<td className="align-middle">
+				A module that is executed before or after another function, with the ability to modify state or cause
+				the entire call to revert.
+			</td>
+		</tr>
+		<tr>
+			<td className="align-middle">Fallback</td>
+			<td className="align-middle">
+				A "catch all" component to allow modular accounts to respond to arbitrary function calls.
+			</td>
+		</tr>
 	</tbody>
 </table>
 
@@ -51,7 +89,7 @@ View all addresses for the rhinestone contracts.
 			</thead>
 			<tbody>
 				<tr>
-					<td className="align-middle">[Registry]</td>
+					<td className="align-middle">Module Registry</td>
 					<td className="align-middle">still in alpha</td>
 					<td className="align-middle">still in alpha</td>
 				</tr>
