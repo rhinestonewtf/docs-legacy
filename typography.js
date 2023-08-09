@@ -100,13 +100,13 @@ module.exports = ({ theme }) => ({
 			},
 			ul: {
 				listStyleType: 'disc',
-				marginTop: theme('spacing.5'),
-				marginBottom: theme('spacing.5'),
+				marginTop: theme('spacing.2'),
+				marginBottom: theme('spacing.2'),
 				paddingLeft: '1.625rem',
 			},
 			li: {
-				marginTop: theme('spacing.2'),
-				marginBottom: theme('spacing.2'),
+				marginTop: theme('spacing.1'),
+				marginBottom: theme('spacing.1'),
 			},
 			':is(ol, ul) > li': {
 				paddingLeft: theme('spacing[1.5]'),
