@@ -2,11 +2,11 @@
 
 The quickest way to get started with building a smart account module. This guide will walk you through building and testing a smart account module built on top of the Safe.
 
-1. Clone [this repo]() and install dependencies:
+1. Clone [this repo](https://github.com/rhinestonewtf/module-boilerplate) and install dependencies:
 
 ```bash
-git clone XYZ
-cd XYZ
+git clone git@github.com:rhinestonewtf/module-boilerplate.git
+cd module-boilerplate
 forge install
 ```
 
@@ -21,108 +21,53 @@ forge install
 
     This guide will run you through building a multi-signature validator.
 
-    2. Create a new file under src/modules/XYZ/XYZ.sol
+    2. Open the file `src/modules/validators/ValidatorTemplate.sol` and rename it to `SimpleValidator.sol`.
 
-    3. Write the module
-    4. Create a new file under test/modules/XYZ/XYZ.t.sol
-    5. Inherit from SafeIntegrationBoilerplate
-    6. Write the test
-    7. Run forge test
+    3. Edit the function `validateUserOp` to the following code:
 
-  </TabItem>
-
-  <TabItem label="Executor">
-    Executors are smart account modules that are called during the execution phase of a UserOperation. They extend the execution logic of the account and thus allow for a more diverse set of actions that the account can natively perform.
-
-    <Note>
-      For example, you can verify a person is claiming a particular promotional
-      campaign just once. If you later have a new promotional campaign, users from
-      campaign 1 will always be delinked from users from campaign 2, providing
-      higher privacy.
-    </Note>
-
-    3. Create an action for your app in the Developer Portal. Each action has a unique identifier which you set (e.g. `vote_1`).
-
-    <Note>
-      An action scopes uniqueness for users, which means users will always have the
-      same ID (nullifier hash) for each action.
-    </Note>
-
-    4. Install [IDKit](/idkit) in your frontend.
-
-    <CodeGroup title="Install IDKit">
-
-    ```bash {{ title: "npm" }}
-    npm install @worldcoin/idkit
-    ```
-
-    ```bash {{ title: "yarn" }}
-    yarn add @worldcoin/idkit
-    ```
-
-    ```bash {{ title: "pnpm" }}
-    pnpm add @worldcoin/idkit
-    ```
-
-    </CodeGroup>
-
-    5.  Import and render IDKit. You'll want to do this on the screen where the user executes the protected action (e.g. before they click "Claim airdrop" or "Vote on proposal").
-
-    ```tsx
-    import { WorldIDWidget } from '@worldcoin/id'
-
-    <IDKitWidget
-      app_id="app_GBkZ1KlVUdFTjeMXKlVUdFT" // obtained from the Developer Portal
-      action="vote_1" // this is your action identifier from the Developer Portal (can also be created on the fly)
-      signal="user_value" // any arbitrary value the user is committing to, e.g. for a voting app this could be the vote
-      onSuccess={onSuccess}
-      credential_types={['orb', 'phone']} // the credentials you want to accept
-      walletConnectProjectId="get_this_from_walletconnect_portal" // optional, obtain from WalletConnect Portal
-      enableTelemetry
-    >
-      {({ open }) => <button onClick={open}>Verify</button>}
-    </IDKitWidget>
-    ```
-
-    More configuration options can be found in the [IDKit reference](/idkit/reference). We generally recommend looking at the `handleVerify` method for better UX.
-
-    6. Verify your action by sending the zero knowledge proof to the **Developer Portal API**. Please check the [API reference](/api/reference#verify) for details on anticipated error responses.
-
-    <Note>
-      If you want to verify proofs on-chain, check out the
-      [on-chain](/advanced/on-chain) section.
-    </Note>
-
-    <CodeGroup title="API Verification" tag="POST" label="/api/v1/verify/app_GBkZ1KlVUdFTjeMXKlVUdFT">
-
-    ```json {{ title: "Request" }}
+    ```solidity
+    function validateUserOp(
+        UserOperation calldata userOp,
+        bytes32 userOpHash
+    )
+        external
+        view
+        virtual
+        returns (uint256)
     {
-        "action": "vote_1",
-        "signal": "user_value",
-        "credential_type": "orb",
-        "merkle_root": "0x1f38b57f3bdf96f05ea62fa68814871bf0ca8ce4dbe073d8497d5a6b0a53e5e0",
-        "nullifier_hash": "0x0339861e70a9bdb6b01a88c7534a3332db915d3d06511b79a5724221a6958fbe",
-        "proof": "0x063942fd7ea1616f17787d2e3374c1826ebcd2d41d2394d915098c73482fa59516145cee11d59158b4012a463f487725cb3331bf90a0472e17385832eeaec7a713164055fc43cc0f873d76752de0e35cc653346ec42232649d40f5b8ded28f202793c4e8d096493dc34b02ce4252785df207c2b76673924502ab56b7e844baf621025148173fc74682213753493e8c90e5c224fc43786fcd09b624115bee824618e57bd28caa301f6b21606e7dce789090de053e641bce2ce0999b64cdfdfb0a0734413914c21e4e858bf38085310d47cd4cc6570ed634faa2246728ad64c49f1f720a39530d82e1fae1532bd7ad389978b6f337fcd6fa6381869637596e63a1"
+        // TODO
+        return VALIDATION_SUCCESS;
     }
     ```
 
-    {/* cSpell:enable */}
+    4. Create a new file in `test/modules/validators/SimpleValidator.t.sol`.
 
-    ```json {{ title: 'Response' }}
-    {
-      "success": true,
-      "nullifier_hash": "0x2bf8406809dcefb1486dadc96c0a897db9bab002053054cf64272db512c6fbd8",
-      "action": "vote_1",
-      "created_at": "2023-01-01T12:12:12.000Z"
+    5. Add the following code:
+
+    ```solidity
+    // SPDX-License-Identifier: MIT
+    pragma solidity ^0.8.19;
+
+    import { SafeIntegrationBoilerplate } from "../utils/setup/SafeIntegrationBoilerplate.t.sol";
+
+    /// @title SimpleValidator
+    contract SimpleValidator is SafeIntegrationBoilerplate {
+
+        function setUp() public override {
+            super.setUp();
+        }
+
+        // TODO
+
     }
-    ```
-    </CodeGroup>
 
-    7. The user is a unique human! Execute your action on your backend (e.g. claim the user promotion).
+    ```
+
+    6. Run `forge test`
 
   </TabItem>
 </Tabs>
 
 ## Deploying your module
 
-tbd
+Coming soon
