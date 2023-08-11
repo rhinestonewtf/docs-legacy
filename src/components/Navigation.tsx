@@ -226,7 +226,7 @@ export const navigation = [
 		title: 'Tutorials',
 		links: [
 			{ title: 'Overview', href: '/tutorials' },
-			{ title: 'Building a Safe module', href: '/tutorials/building-a-safe-module' },
+			{ title: 'Building a validator', href: '/tutorials/building-a-validator' },
 		],
 	},
 	{

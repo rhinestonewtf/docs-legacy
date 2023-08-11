@@ -1,6 +1,6 @@
 # Validators
 
-Validators are smart account modules that are called during the validation phase of a UserOperation. This means that their primary function is to verify the signature of a UserOperation and determine whether it is valid and should be executed.
+Validators are smart account modules that are called during the [validation phase of a UserOperation](/modules#validation-phase). This means that their primary function is to verify the signature of a UserOperation and determine whether it is valid and should be executed. As a result, validators are the primary mechanism for enforcing access control on a smart account and are highly security critical.
 
 ## Building a validator
 
@@ -10,11 +10,26 @@ Coming soon
 
 ### Storage access
 
-ERC-4337 restricts storage access during the validation phase. As a results, the only storage slots that a validator can access are slots that are accessed through a mapping of the address of the account to non-dynamic data. We’re working on solutions that allow developers to use dynamic data in validators. Read more [here](https://eips.ethereum.org/EIPS/eip-4337#storage-associated-with-an-address).
+ERC-4337 restricts storage access during the validation phase in order to protect bundlers from denial-of-service attacks. More specifically, the only storage slots that can be accesses are:
+
+1. All slots of the account `A` itself.
+2. Slot `A` (address of the account) on any other contract.
+3. Slots of type `keccak256(A || X) + n` on any other address. (to cover `mapping(address => value)`, which is usually used for balance in ERC-20 tokens). `n` is an offset value up to 128, to allow accessing fields in the format `mapping(address => struct)`.
+
+For validators that are executed using `CALL`, this means that the only storage slots that can be accessed are slots of type `mapping(address => value)` or `mapping(address => struct)`. By using `DELEGATECALL`, these storage restrictions could be bypassed since the validator would be accessing storage slots on the account itself. However, as of now, using `DELEGATECALL` is highly discouraged because of the security vulnerabilities that it introduces.
+
+We are currently working on different solutions to make it easier for validator developers to use dynamic data types. To read more about these storage restirctions, visit the [section on the ERC-4337 specs](https://eips.ethereum.org/EIPS/eip-4337#storage-associated-with-an-address).
 
 ### Forbidden Opcodes
 
-See more information [here](https://eips.ethereum.org/EIPS/eip-4337#specification-1).
+ERC-4337 also restricts the use of certain opcodes during the validation phase. They are: `GASPRICE`, `GASLIMIT`, `DIFFICULTY`, `TIMESTAMP`, `BASEFEE`, `BLOCKHASH`, `NUMBER`, `SELFBALANCE`, `BALANCE`, `ORIGIN`, `GAS`, `CREATE`, `COINBASE` and `SELFDESTRUCT`. These opcodes are forbidden because their outputs may differ between simulation and execution, so simulation of calls using these opcodes does not reliably tell what would happen if these calls are later done on-chain. Learn more about these opcodes and what they do using [this reference](https://evm.codes).
+
+Exceptions to the forbidden opcodes include:
+
+-   A single `CREATE2` is allowed if `op.initcode.length != 0` and must result in the deployment of a previously-undeployed `UserOperation.sender`.
+-   `GAS` is allowed if followed immediately by one of { `CALL`, `DELEGATECALL`, `CALLCODE`, `STATICCALL` }. This means that making calls is allowed, using `gasleft()` or `GAS` opcode directly is forbidden.
+
+See more information in the [ERC-4337 specs](https://eips.ethereum.org/EIPS/eip-4337#forbidden-opcodes).
 
 ## Validator examples
 
