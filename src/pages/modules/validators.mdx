@@ -4,13 +4,63 @@ Validators are smart account modules that are called during the [validation phas
 
 ## Building a validator
 
-Coming soon
+In order to build a compliant validator you need to ensure that it:
+
+-   Inherits from the `BaseAuthorizationModule` contract.
+-   Implements the following functions:
+    -   `validateUserOp(UserOperation calldata userOp, bytes32 userOpHash)`
+    -   `isValidSignature(bytes32 signedDataHash, bytes memory moduleSignature)`
+
+The template for a compliant validator (without actual logic) looks like this:
+
+```solidity
+contract ValidatorTemplate is BaseAuthorizationModule {
+    /**
+     * @dev validates userOperation
+     * @param userOp User Operation to be validated.
+     * @param userOpHash Hash of the User Operation to be validated.
+     * @return sigValidationResult 0 if signature is valid, 1 otherwise.
+     */
+    function validateUserOp(
+        UserOperation calldata userOp,
+        bytes32 userOpHash
+    )
+        external
+        view
+        virtual
+        returns (uint256)
+    {
+        // Add validation logic here
+        return VALIDATION_SUCCESS;
+    }
+
+    /**
+     * @dev validates a 1271 signature request
+     * @param signedDataHash Hash of the signed data.
+     * @param moduleSignature Signature to be validated.
+     * @return eip1271Result 0x1626ba7e if signature is valid, 0xffffffff otherwise.
+     */
+    function isValidSignature(
+        bytes32 signedDataHash,
+        bytes memory moduleSignature
+    )
+        public
+        view
+        virtual
+        override
+        returns (bytes4)
+    {
+        // Add signature validation logic here
+        return EIP1271_MAGIC_VALUE;
+    }
+}
+```
 
 ## Validator restrictions
 
 ### Storage access
 
-ERC-4337 restricts storage access during the validation phase in order to protect bundlers from denial-of-service attacks. More specifically, the only storage slots that can be accesses are:
+ERC-4337 restricts storage access during the validation phase in order to protect bundlers from denial-of-service attacks. More specifically, the only storage slots that can be accessed are:
 
 1. All slots of the account `A` itself.
 2. Slot `A` (address of the account) on any other contract.

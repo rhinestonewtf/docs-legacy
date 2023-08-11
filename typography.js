@@ -67,8 +67,8 @@ module.exports = ({ theme }) => ({
 			// Lists
 			ol: {
 				listStyleType: 'decimal',
-				marginTop: theme('spacing.5'),
-				marginBottom: theme('spacing.5'),
+				marginTop: theme('spacing.2'),
+				marginBottom: theme('spacing.2'),
 				paddingLeft: '1.625rem',
 			},
 			'ol[type="A"]': {

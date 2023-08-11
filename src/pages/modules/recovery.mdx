@@ -4,7 +4,26 @@ Recovery modules are smart account modules that can reset the storage of validat
 
 ## Building a recovery module
 
-Coming soon
+In order to build a compliant recovery module you need to ensure that it:
+
+-   Inherits from the `IRecovery` interface.
+-   Implements the following functions:
+    -   `validateRecoveryProof(bytes calldata recoveryProof)`
+    -   `getRecoverySchema()`
+
+The template for a compliant executor (without actual logic) looks like this:
+
+```solidity
+contract RecoveryTemplate is IRecovery {
+    function validateRecoveryProof(bytes calldata recoveryProof) external override returns (bool) {
+        return true;
+    }
+
+    function getRecoverySchema() external view returns (string memory) {
+        return "";
+    }
+}
+```
 
 ## Recovery examples
 
