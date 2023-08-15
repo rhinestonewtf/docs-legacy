@@ -68,7 +68,7 @@ ERC-4337 restricts storage access during the validation phase in order to protec
 
 For validators that are executed using `CALL`, this means that the only storage slots that can be accessed are slots of type `mapping(address => value)` or `mapping(address => struct)`. By using `DELEGATECALL`, these storage restrictions could be bypassed since the validator would be accessing storage slots on the account itself. However, as of now, using `DELEGATECALL` is highly discouraged because of the security vulnerabilities that it introduces.
 
-We are currently working on different solutions to make it easier for validator developers to use dynamic data types. To read more about these storage restirctions, visit the [section on the ERC-4337 specs](https://eips.ethereum.org/EIPS/eip-4337#storage-associated-with-an-address).
+We are currently working on different solutions to make it easier for validator developers to use dynamic data types. To read more about these storage restrictions, visit the [section on the ERC-4337 specs](https://eips.ethereum.org/EIPS/eip-4337#storage-associated-with-an-address).
 
 ### Forbidden Opcodes
 

@@ -77,7 +77,7 @@ export const UseCasesList: FC<{}> = () => {
 					// items={[
 					// 	'Predefined structures for attestation data',
 					// 	'Permissionless schema creation',
-					// 	'Extentibility through external Resolvers',
+					// 	'Extensibility through external Resolvers',
 					// ]}
 					items={[]}
 					linkHref="architecture/schema-registration"
