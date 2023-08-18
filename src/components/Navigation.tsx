@@ -199,6 +199,7 @@ export const navigation = [
 			{ title: 'Executors', href: '/modules/executors' },
 			{ title: 'Recovery', href: '/modules/recovery' },
 			{ title: 'Hooks', href: '/modules/hooks' },
+			{ title: 'ModuleKit', href: '/modules/modulekit' },
 			{ title: 'Libraries', href: '/modules/libraries' },
 		],
 	},
@@ -226,7 +227,7 @@ export const navigation = [
 		title: 'Tutorials',
 		links: [
 			{ title: 'Overview', href: '/tutorials' },
-			{ title: 'Building a validator', href: '/tutorials/building-a-validator' },
+			{ title: 'Building and testing a validator', href: '/tutorials/building-a-validator' },
 		],
 	},
 	{
