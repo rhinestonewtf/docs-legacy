@@ -195,12 +195,12 @@ export const navigation = [
 		title: 'Modules',
 		links: [
 			{ title: 'Overview', href: '/modules' },
+			{ title: 'ModuleKit', href: '/modules/modulekit' },
 			{ title: 'Validators', href: '/modules/validators' },
 			{ title: 'Executors', href: '/modules/executors' },
 			{ title: 'Recovery', href: '/modules/recovery' },
 			{ title: 'Hooks', href: '/modules/hooks' },
-			{ title: 'ModuleKit', href: '/modules/modulekit' },
-			{ title: 'Libraries', href: '/modules/libraries' },
+			// { title: 'Libraries', href: '/modules/libraries' },
 		],
 	},
 	{

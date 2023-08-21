@@ -29,4 +29,13 @@ Similar to the validation phase, ERC-4337 does not stipulate how execution occur
 
 ERC-4337 breaks down the flow of a UserOperation into two distinct phases, validation and execution. The account functionality that is required in either of these two phases differs to that of the other, so there are at least two different types of modules: validators and executors. However, there are at least two more distinct types of modules that perform different functions to the aforementioned: hooks and recovery modules.
 
-To learn more about each type of module and how to build them, visit the relevant pages below.
+To learn more about each type of module and how to build them, visit the relevant pages below:
+
+-   [Validators](/modules/validators)
+-   [Executors](/modules/executors)
+-   [Recovery Modules](/modules/recovery-modules)
+-   [Hooks](/modules/hooks)
+
+## Building a module
+
+Building a module is as simple as implementing the relevant interface and adhering to additional module requirements (if any). In order to simplify this experience, we have built the ModuleKit, which is a development kit for building and testing modules. To find out how to use the kit, visit the [ModuleKit docs](/modules/modulekit). For hands-on guides, visit the [tutorials](/tutorials) section, where we will walk you through building and testing different module types.
