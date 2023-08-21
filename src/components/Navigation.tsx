@@ -204,14 +204,14 @@ export const navigation = [
 		],
 	},
 	{
-		title: 'Registry adapters',
+		title: 'Registry Adapters',
 		links: [
 			{ title: 'Overview', href: '/adapters' },
 			{ title: 'Reference implementations', href: '/adapters/reference-implementations' },
 		],
 	},
 	{
-		title: 'Module registry',
+		title: 'Module Registry',
 		links: [
 			{ title: 'Overview', href: '/registry' },
 			// { title: 'Core Concepts', href: '/registry/concepts' },
