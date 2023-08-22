@@ -63,7 +63,7 @@ export const UseCasesList: FC<{}> = () => {
 					color="#4940E0"
 					image="/images/docs/use-cases/icons/voting-platforms.svg"
 					title="Attestations"
-					description="Attestations are onchain assertions made by an entity (attestor) about the security of account abstraction modules, serving as a seal of authenticity for the associated data. Each attestation consists of two primary elements: the schema and the attestation data. The schema acts as a standardized structure for creating and validating attestations, while the attestation data represents the actual information subject to attestation."
+					description="Attestations are onchain assertions made by an entity (attestor) about the security of Account Abstraction modules, serving as a seal of authenticity for the associated data. Each attestation consists of two primary elements: the schema and the attestation data. The schema acts as a standardized structure for creating and validating attestations, while the attestation data represents the actual information subject to attestation."
 					// items={['Assertions of security posture', 'Permissionless attestations']}
 					items={[]}
 					linkHref="architecture/attestations"
@@ -77,7 +77,7 @@ export const UseCasesList: FC<{}> = () => {
 					// items={[
 					// 	'Predefined structures for attestation data',
 					// 	'Permissionless schema creation',
-					// 	'Extentibility through external Resolvers',
+					// 	'Extensibility through external Resolvers',
 					// ]}
 					items={[]}
 					linkHref="architecture/schema-registration"

@@ -1,0 +1,17 @@
+# Overview
+
+A registry adapter is a piece of functionality that allows smart accounts to query the [module registry](/registry) before using a module.
+
+## Motivation
+
+[ERC-4337](https://eips.ethereum.org/EIPS/eip-4337) standardises the execution flow of contract accounts and [ERC-6900](https://eips.ethereum.org/EIPS/eip-6900) aims to standardise the modular implementation of these accounts, allowing any developer to build modules for these modular accounts (hereafter smart accounts). However, adding third-party modules into smart accounts unchecked opens up a wide range of attack vectors on these accounts.
+
+A proposed solution to these security considerations is a permission framework that allows module developers to define the permissions that their modules require. The counterpiece of these permissions are attestations that assert statements about the security of modules and can be queried onchain.
+
+Adapters aim to standardise a flexible way to create onchain attestations and how these attestations are queried by the smart account during module installation or execution, independently of the exact implementation of the permissioning framework.
+
+## ERC-7484
+
+In attempt to standardise the implementation of these adapters, we proposed [ERC-7484](https://github.com/ethereum/EIPs/pull/7484). This proposal standardises the registry adapter for modular smart contract accounts that allows the account to query and verify security attestations about a module through an attestation registry. The adapter is responsible for querying the registry and correctly handling the return values.
+
+The ERC is currently still in draft and open to discussion and feedback on [Ethereum Magicians](https://ethereum-magicians.org/t/erc-7484-registry-adapters-for-smart-accounts/15434).

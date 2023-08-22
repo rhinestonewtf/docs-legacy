@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { Button } from './Button'
 import { Link } from '@/components/Link'
 import RedirectIcon from './icons/RedirectIcon'
 
@@ -26,26 +25,12 @@ const LinkCard: FC<{ href: string; heading: string; description: string; disable
 	)
 }
 
-export const BuilderCommunity: FC<{}> = () => {
+export const LandingButtons: FC<{}> = () => {
 	return (
 		<div>
-			<h2 className="m-0 mt-16 font-bold text-xl text-black text-center">
-				Join the Rhinestone builder community
-			</h2>
-
-			{/* <Stats className="mt-6" /> */}
-
-			{/* <div className="mt-6 text-2xs text-black/50 text-center"></div> */}
-
-			<div className="flex justify-center mt-6">
-				<Button href="https://forms.gle/gLBg7EKUaxx8DpLi7" target="_blank">
-					Developer waitlist
-				</Button>
-			</div>
-
 			<div className="grid gap-y-2 mt-12">
 				<h3 className="flex items-center uppercase text-2xs m-0 font-medium text-gray-500">
-					More Resources
+					Getting started
 					{/* <div className="ml-2 inline flex items-center normal-case h-4 px-1 font-normal text-3xs text-white bg-gray-400 rounded">
 						Coming soon
 					</div> */}
@@ -53,21 +38,21 @@ export const BuilderCommunity: FC<{}> = () => {
 
 				<div className="grid lg:grid-cols-3 gap-2">
 					<LinkCard
+						href="/overview"
+						heading="Overview"
+						description="Learn more about Rhinestone and modular smart accounts"
+					/>
+
+					<LinkCard
 						href="/getting-started"
 						heading="Start building"
 						description="Using our getting started guide is the easiest way to start building a module"
 					/>
 
 					<LinkCard
-						href="/resources"
-						heading="Resources"
-						description="Explore resources, tooling and guides that help you get started"
-					/>
-
-					<LinkCard
 						href="/tutorials"
 						heading="Tutorials"
-						description="Follow a tutorial to learn how to build a module from scratch"
+						description="Follow a tutorial to learn how to build and test a module from scratch"
 					/>
 				</div>
 			</div>

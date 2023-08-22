@@ -67,8 +67,8 @@ module.exports = ({ theme }) => ({
 			// Lists
 			ol: {
 				listStyleType: 'decimal',
-				marginTop: theme('spacing.5'),
-				marginBottom: theme('spacing.5'),
+				marginTop: theme('spacing.2'),
+				marginBottom: theme('spacing.2'),
 				paddingLeft: '1.625rem',
 			},
 			'ol[type="A"]': {
@@ -100,13 +100,13 @@ module.exports = ({ theme }) => ({
 			},
 			ul: {
 				listStyleType: 'disc',
-				marginTop: theme('spacing.5'),
-				marginBottom: theme('spacing.5'),
+				marginTop: theme('spacing.2'),
+				marginBottom: theme('spacing.2'),
 				paddingLeft: '1.625rem',
 			},
 			li: {
-				marginTop: theme('spacing.2'),
-				marginBottom: theme('spacing.2'),
+				marginTop: theme('spacing.1'),
+				marginBottom: theme('spacing.1'),
 			},
 			':is(ol, ul) > li': {
 				paddingLeft: theme('spacing[1.5]'),
@@ -190,7 +190,7 @@ module.exports = ({ theme }) => ({
 				fontWeight: '600',
 				fontSize: theme('fontSize.lg')[0],
 				...theme('fontSize.lg')[1],
-				marginTop: theme('spacing.16'),
+				marginTop: theme('spacing.10'),
 				marginBottom: theme('spacing.2'),
 			},
 			h3: {

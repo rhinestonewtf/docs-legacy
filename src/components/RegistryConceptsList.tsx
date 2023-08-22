@@ -8,7 +8,7 @@ import { PiSignatureBold, PiUsersThreeBold } from 'react-icons/pi'
 export const RegistryConceptsList: FC<{}> = () => {
 	return (
 		<div>
-			<h2 className="m-0 mt-16 font-bold text-sm text-gray-400 leading-4 uppercase">Core concepts</h2>
+			{/* <h2 className="m-0 mt-16 font-bold text-sm text-gray-400 leading-4 uppercase">Core concepts</h2> */}
 
 			<div className="mt-2 grid grid-cols-1 gap-4 lg:grid-cols-2">
 				<UseCasesListItem
@@ -16,7 +16,7 @@ export const RegistryConceptsList: FC<{}> = () => {
 					// image="/images/docs/use-cases/icons/voting-platforms.svg"
 					icon={<PiSignatureBold size={20} color="white" />}
 					title="Attestations"
-					description="Attestations are onchain assertions made by an entity (attestor) about the security of account abstraction modules, serving as a seal of authenticity for the associated data. Each attestation consists of two primary elements: the schema and the attestation data. The schema acts as a standardized structure for creating and validating attestations, while the attestation data represents the actual information subject to attestation."
+					description="Attestations are onchain assertions made by an entity (attester) about the security of Account Abstraction modules, serving as a seal of authenticity for the associated data. Each attestation consists of two primary elements: the schema and the attestation data."
 					items={[]}
 					linkHref="/registry/attestations"
 				/>
@@ -35,9 +35,9 @@ export const RegistryConceptsList: FC<{}> = () => {
 					color="#00C313"
 					// image="/images/docs/use-cases/icons/events.svg"
 					icon={<TbUserShield size={20} color="white" />}
-					title="Attestors"
+					title="Attesters"
 					description="
-          Attestors are individuals or organizations responsible for creating and signing attestations. They publish the attestation on-chain, making it universally accessible for verification.
+          Attesters are individuals or organizations responsible for creating and signing attestations. They publish the attestation on-chain, making it universally accessible for verification.
           "
 					items={[]}
 					linkHref="/registry/attestations"
@@ -55,17 +55,17 @@ export const RegistryConceptsList: FC<{}> = () => {
 					linkHref="/registry/module-registration"
 				/>
 
-				<UseCasesListItem
+				{/* <UseCasesListItem
 					color="#B65FCF"
 					// image="/images/docs/use-cases/icons/social-media.svg"
 					icon={<PiUsersThreeBold size={20} color="white" />}
 					title="Users"
 					description="
-          Users represent entities that utilize the information enclosed within the attestations to inform decisions or initiate actions. They trust the attestations based on the reputation and trustworthiness of the attestor.
+          Users represent entities that utilize the information enclosed within the attestations to inform decisions or initiate actions. They trust the attestations based on the reputation and trustworthiness of the attester.
           "
 					items={[]}
 					linkHref="/registry/querying"
-				/>
+				/> */}
 			</div>
 		</div>
 	)

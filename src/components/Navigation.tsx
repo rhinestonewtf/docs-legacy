@@ -186,23 +186,53 @@ export const navigation = [
 	{
 		title: 'Introduction',
 		links: [
-			{ title: 'Home', href: '/' },
-			// { title: 'Components', href: '/components' },
-			// { title: 'Resources', href: '/resources' },
-			{ title: 'FAQ', href: '/faq' },
+			{ title: 'Overview', href: '/overview' },
+			{ title: 'Getting started', href: '/getting-started' },
+			{ title: 'Rhinestone Protocol', href: '/rhinestone-protocol' },
+			{ title: 'Resources', href: '/resources' },
 		],
 	},
 	{
-		title: '[Registry]',
+		title: 'ModuleKit',
+		links: [
+			{ title: 'Overview', href: '/modulekit' },
+			{ title: 'Quickstart', href: '/modulekit/quick-start' },
+			{ title: 'Modules', href: '/modulekit/modules' },
+			// { title: 'ModuleKit', href: '/modules/modulekit' },
+			// { title: 'Validators', href: '/modules/validators' },
+			// { title: 'Executors', href: '/modules/executors' },
+			// { title: 'Recovery', href: '/modules/recovery' },
+			// { title: 'Hooks', href: '/modules/hooks' },
+			// { title: 'Libraries', href: '/modules/libraries' },
+		],
+	},
+	{
+		title: 'WalletKit',
+		links: [{ title: 'Overview', href: '/walletkit' }],
+	},
+	{
+		title: 'Module Registry',
 		links: [
 			{ title: 'Overview', href: '/registry' },
-			{ title: 'Core Concepts', href: '/registry/concepts' },
+			// { title: 'Core Concepts', href: '/registry/concepts' },
 			{ title: 'Schema Registration', href: '/registry/schema-registration' },
 			{ title: 'Module Registration', href: '/registry/module-registration' },
 			{ title: 'Attestations', href: '/registry/attestations' },
-			{ title: 'Querying', href: '/registry/querying' },
+			// { title: 'Querying', href: '/registry/querying' },
+			{ title: 'FAQ', href: '/registry/faq' },
 			// { title: 'Permissions', href: '/registry/permissions' },
 		],
+	},
+	{
+		title: 'Tutorials',
+		links: [
+			{ title: 'Overview', href: '/tutorials' },
+			{ title: 'Building and testing a validator', href: '/tutorials/building-a-validator' },
+		],
+	},
+	{
+		title: 'Further reading',
+		links: [{ title: 'Account abstraction 101', href: '/further-reading/account-abstraction' }],
 	},
 ] as const
 

@@ -6,7 +6,7 @@
 				"sm": "/images/apps/auth0.svg",
 				"lg": "/images/apps/auth0-lg.png"
 			},
-			"title": "WTF is modular account abstraction",
+			"title": "WTF is modular Account Abstraction",
 			"subtitle": "marketplace.auth0.com",
 			"description": "Add Sign In with Worldcoin to your Auth0 tenant in under 5 minutes. No code required.",
 			"tags": ["Integration", "Sign In"],

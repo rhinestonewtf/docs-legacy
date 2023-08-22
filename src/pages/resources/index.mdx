@@ -1,5 +1,84 @@
 # Resources
 
-Explore resources, tooling and guides that help you get started in the modular account abstraction ecosystem.
+Explore resources, tooling and guides that help you get started in the modular Account Abstraction ecosystem.
+
+## Module ideas
+
+There is a broad range of module categories and concrete module ideas that developers can build to enable specific product experiences for end users. We’ve compiled a [non-exhaustive list](https://rhinestone.notion.site/Module-ideas-for-product-inspo-338100a2c99540f490472b8aa839da11) of some modules that we think can greatly improve web3 UX and enable novel product features.
+
+## Wallet demo
+
+We are currently building a wallet application that allows users to easily customise their account and act as a testing ground and, later, distribution platform for developers. Watch [the demo](https://rhinestone.wtf/demo) to get a sense of how we imagine this reference implementation to look.
+
+## Blog
+
+We regularly post overviews, technical deep-dives and product-idea explorations on [our blog](https://blog.rhinestone.wtf). Check it out in order to get information and inspiration and follow us to stay up-to-date with our latest content.
+
+## Terminology
+
+An overview of the common terms used in the Account Abstraction space and these docs together with their definitions.
+
+<table>
+	<thead>
+		<tr>
+			<th className="min-w-[140px]">Term</th>
+			<th>Definition</th>
+		</tr>
+	</thead>
+	<tbody>
+    	<tr>
+    		<td className="align-middle font-semibold">Smart Account</td>
+    		<td className="not-prose align-middle">
+    			A smart contract that is used as a user's account. Smart accounts can be modular or not.
+    		</td>
+    	</tr>
+    	<tr>
+    		<td className="align-middle font-semibold">Smart Wallet</td>
+    		<td className="not-prose align-middle">The application used to interface with the contract account.</td>
+    	</tr>
+    	<tr>
+    		<td className="align-middle font-semibold">Modular Smart Account</td>
+    		<td className="not-prose align-middle">A smart account that is extensible by external contracts. *We see this as a transitional term until all smart accounts eventually become modular.*</td>
+    	</tr>
+    	<tr>
+    		<td className="align-middle font-semibold">Module</td>
+    		<td className="not-prose align-middle">A smart contract that extends the functionality of a smart account.</td>
+    	</tr>
+    	<tr>
+    		<td className="align-middle font-semibold">Validator</td>
+    		<td className="not-prose align-middle">
+    			A module that validates authentication and authorization of a caller to the account.
+    		</td>
+    	</tr>
+    	<tr>
+    		<td className="align-middle font-semibold">Executor</td>
+    		<td className="not-prose align-middle">
+    			A module that is called during the execution flow of the smart account to implement custom execution
+    			behavior.
+    		</td>
+    	</tr>
+    	<tr>
+    		<td className="align-middle font-semibold">Recovery</td>
+    		<td className="not-prose align-middle">
+    			A module that helps the storage of validators through a different process, such as after losing a
+    			validator key.
+    		</td>
+    	</tr>
+    	<tr>
+    		<td className="align-middle font-semibold">Hook</td>
+    		<td className="not-prose align-middle">
+    			A module that is executed before or after another function, with the ability to modify state or cause
+    			the entire call to revert.
+    		</td>
+    	</tr>
+    	<tr>
+    		<td className="align-middle font-semibold">Handler</td>
+    		<td className="not-prose align-middle">
+    			A "catch all" component to allow modular accounts to respond to arbitrary function calls.
+    		</td>
+    	</tr>
+    </tbody>
+
+</table>
 
 [comment]: <Resources />
