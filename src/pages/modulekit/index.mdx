@@ -10,10 +10,20 @@ The ModuleKit is a development kit for building and testing smart account module
 -   **Unit test** your modules using a dedicated helper library
 -   **Integration test** your modules using modular ERC-4337 accounts and a helper library that abstracts away almost all the complexity
 
-## Installation with Foundry
+## Installation
 
-```sh
+### With Foundry
+
+```bash
 forge install rhinestonewtf/modulekit
+```
+
+### Using our template
+
+```bash
+git clone https://github.com/rhinestonewtf/module-template.git
+cd module-template
+forge install
 ```
 
 ## Helper utilities
@@ -25,6 +35,10 @@ forge install rhinestonewtf/modulekit
 -   `IPluginBase`: Interface for Plugins to inherit from.
 -   `BaseValidator`: Interface for Validator Modules to inherit from.
 -   `IRecoveryModule`: Interface for Recovery Modules to inherit from.
+
+#### Templates
+
+-   [Validator](https://github.com/rhinestonewtf/module-template/blob/main/src/validators/ValidatorTemplate.sol): Template implementation for Validators.
 
 ### Testing modules
 

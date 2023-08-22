@@ -12,37 +12,31 @@ export const ComponentsList: FC<{}> = () => {
 
 			<div className="mt-2 grid grid-cols-1 gap-4 lg:grid-cols-2">
 				<UseCasesListItem
+					color="#00C313"
+					icon={<LuCode2 size={20} color="white" />}
+					title="ModuleKit"
+					description="Development framework to streamline the process of building, testing and deploying modules for different smart account implementations"
+					items={[]}
+					linkHref="/modulekit"
+				/>
+
+				<UseCasesListItem
+					color="#8080FF"
+					icon={<TbSdk size={20} color="white" />}
+					title="WalletKit"
+					description="Integration kit that allows wallets to use third-party modular components in their UI"
+					items={[]}
+					linkHref="/walletkit"
+					soon
+				/>
+
+				<UseCasesListItem
 					color="#4940E0"
 					icon={<CgDatabase size={20} color="white" />}
 					title="Module Registry"
 					description="A registry that allows developers to register their modules and auditors to attest to their security."
 					items={[]}
 					linkHref="/registry"
-				/>
-
-				<UseCasesListItem
-					color="#487CA5"
-					icon={<LuNetwork size={20} color="white" />}
-					title="Rhinestone Protocol"
-					description="A series of smart contracts that connect smart accounts to the registry in order to allow users to easily install secure modules and provides on-chain mechanisms for module monetisation and revenue sharing."
-					items={[]}
-				/>
-
-				<UseCasesListItem
-					color="#00C313"
-					icon={<LuCode2 size={20} color="white" />}
-					title="Developer Platform"
-					description="Tooling to streamline the process of building, testing and deploying modules for different smart account implementations"
-					items={[]}
-				/>
-
-				<UseCasesListItem
-					color="#8080FF"
-					icon={<TbSdk size={20} color="white" />}
-					title="Wallet SDK"
-					description="A wallet application and tooling that allows users to easily install third-party developer modules and custom UI (coming soon)"
-					items={[]}
-					soon
 				/>
 			</div>
 		</div>

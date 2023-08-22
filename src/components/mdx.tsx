@@ -17,6 +17,7 @@ export { RegistryConceptsList } from '@/components/RegistryConceptsList'
 export { ComponentsList } from '@/components/ComponentsList'
 export { EmbeddedVideo } from '@/components/EmbeddedVideo'
 export { BuilderCommunity } from '@/components/BuilderCommunity'
+export { LandingButtons } from '@/components/LandingButtons'
 export { Resources } from '@/components/Resources'
 export { Tabs, TabItem, Tab, Link as a }
 export const h2: FC<
