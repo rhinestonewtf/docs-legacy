@@ -1,0 +1,40 @@
+# Getting started
+
+The fastest way to start building a smart account module is by using ModuleKit, a development kit for building and testing modules. This guide will walk you through installing ModuleKit and setting yourself up to start building innovative modules.
+
+ModuleKit is based on Foundry, a toolchain to simplify and speed up smart contract development. If you are not familiar with Foundry, feel free to check out [their docs](https://book.getfoundry.sh/).
+
+<Note>
+	If you do not have foundry installed, run the following command and follow the onscreen instructions: ```bash curl
+	-L https://foundry.paradigm.xyz | bash ```
+</Note>
+
+## Installation
+
+1. Install ModuleKit by using our template or adding it into an existing foundry project:
+
+<CodeGroup title="Installation">
+
+    ```bash {{ title: "template" }}
+    git clone https://github.com/rhinestonewtf/module-template.git
+    cd module-template
+    forge install
+    ````
+
+    ```bash {{ title: "existing foundry project" }}
+    forge install rhinestonewtf/modulekit
+    ```
+
+</CodeGroup>
+
+## Building a module
+
+The ModuleKit makes building a module a straightforward process. Simply create a new contract in `src/[MODULE_TYPE]` and inherit from the correct interface for that module type. Learn more about module types and their interfaces [here](/modulekit/modules#module-types). Apart from that, the only thing you need to do is adhere to the interface by implementing all required functions and,if building a validator, adhere to the [additional requirements](/modulekit/modules#module-types). For hands-on guides to building modules, visit the [tutorials](/tutorials) section of the docs.
+
+## Testing a module
+
+The ModuleKit provides an end-to-end testing framework to make it easy for you to test your modules and abstract away all the complexities. To start testing a module simply create a `.t.sol` file under `test/[MODULE_TYPE]` and inherit from the `RhinestoneModuleKit` as well as Foundry's `Test`. Learn more about testing using Foundry [here](https://book.getfoundry.sh/forge/tests). Now you can use the provided [helper utilities](/modulekit#helper-utilities) in order to simplify and accelerate the testing of your module. For hands-on guides to testing modules, visit the [tutorials](/tutorials) section of the docs.
+
+## Deploying a module
+
+Coming soon

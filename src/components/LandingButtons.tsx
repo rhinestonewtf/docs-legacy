@@ -44,9 +44,9 @@ export const LandingButtons: FC<{}> = () => {
 					/>
 
 					<LinkCard
-						href="/quick-start"
+						href="/getting-started"
 						heading="Start building"
-						description="Using our quick start is the easiest way to start building a module"
+						description="Using our getting started guide is the easiest way to start building a module"
 					/>
 
 					<LinkCard

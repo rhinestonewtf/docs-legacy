@@ -209,7 +209,7 @@ contract SimpleValidatorTest is Test, RhinestoneModuleKit {
     function test1271Signature() public {
         // Create signature
         (address owner, uint256 key) = makeAddrAndKey("owner");
-        bytes32 hash = keccak256("Test sinature");
+        bytes32 hash = keccak256("Test signature");
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(
             key,
             hash.toEthSignedMessageHash()

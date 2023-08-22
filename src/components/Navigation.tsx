@@ -187,8 +187,8 @@ export const navigation = [
 		title: 'Introduction',
 		links: [
 			{ title: 'Overview', href: '/overview' },
+			{ title: 'Getting started', href: '/getting-started' },
 			{ title: 'Rhinestone Protocol', href: '/rhinestone-protocol' },
-			{ title: 'Quickstart', href: '/quick-start' },
 			{ title: 'Resources', href: '/resources' },
 		],
 	},

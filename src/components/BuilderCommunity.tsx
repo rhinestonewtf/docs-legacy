@@ -53,9 +53,9 @@ export const BuilderCommunity: FC<{}> = () => {
 
 				<div className="grid lg:grid-cols-3 gap-2">
 					<LinkCard
-						href="/quick-start"
+						href="/getting-started"
 						heading="Start building"
-						description="Using our quick start is the easiest way to start building a module"
+						description="Using our getting started guide is the easiest way to start building a module"
 					/>
 
 					<LinkCard

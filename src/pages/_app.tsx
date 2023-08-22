@@ -2,7 +2,6 @@ import 'focus-visible'
 import Head from 'next/head'
 import '@/styles/styles.css'
 import posthog from 'posthog-js'
-import Clippy from 'clippy-widget'
 import { FC, useMemo } from 'react'
 import { AppProps } from 'next/app'
 import { Sora } from 'next/font/google'
@@ -37,7 +36,7 @@ const sora = Sora({
 // }
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
-	usePostHog()
+	// usePostHog()
 	let router = useRouter()
 
 	const title = useMemo(() => {
@@ -45,7 +44,7 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
 		return `${pageProps.title} | rhinestone Docs`
 	}, [pageProps.title, router.pathname])
 
-	const pagesWithoutLayout = useMemo(() => ['/try-callback'], [])
+	const pagesWithoutLayout:any = useMemo(() => [], [])
 
 	const hasLayout = useMemo(() => {
 		if (pagesWithoutLayout.includes(router.pathname)) {
@@ -67,7 +66,6 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
 				<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
 				<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
 			</Head>
-			{process.env.NODE_ENV === 'production' && <Clippy theme="light" />}
 			{/* @ts-ignore */}
 			<MDXProvider components={mdxComponents}>
 				{hasLayout && (
