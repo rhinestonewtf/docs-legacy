@@ -16,7 +16,7 @@ export const RegistryConceptsList: FC<{}> = () => {
 					// image="/images/docs/use-cases/icons/voting-platforms.svg"
 					icon={<PiSignatureBold size={20} color="white" />}
 					title="Attestations"
-					description="Attestations are onchain assertions made by an entity (attester) about the security of account abstraction modules, serving as a seal of authenticity for the associated data. Each attestation consists of two primary elements: the schema and the attestation data."
+					description="Attestations are onchain assertions made by an entity (attester) about the security of Account Abstraction modules, serving as a seal of authenticity for the associated data. Each attestation consists of two primary elements: the schema and the attestation data."
 					items={[]}
 					linkHref="/registry/attestations"
 				/>
