@@ -30,7 +30,7 @@ export const BuilderCommunity: FC<{}> = () => {
 	return (
 		<div>
 			<h2 className="m-0 mt-16 font-bold text-xl text-black text-center">
-				Join the rhinestone builder community
+				Join the Rhinestone builder community
 			</h2>
 
 			{/* <Stats className="mt-6" /> */}

@@ -15,7 +15,7 @@ export const ComponentsList: FC<{}> = () => {
 					color="#00C313"
 					icon={<LuCode2 size={20} color="white" />}
 					title="ModuleKit"
-					description="Development framework to streamline the process of building, testing and deploying modules for different smart account implementations"
+					description="Development framework to streamline the process of building, testing and deploying modules for different smart account implementations."
 					items={[]}
 					linkHref="/modulekit"
 				/>
@@ -24,7 +24,7 @@ export const ComponentsList: FC<{}> = () => {
 					color="#8080FF"
 					icon={<TbSdk size={20} color="white" />}
 					title="WalletKit"
-					description="Integration kit that allows wallets to use third-party modular components in their UI"
+					description="Integration kit that allows wallets to use third-party modular components in their UI."
 					items={[]}
 					linkHref="/walletkit"
 					soon
