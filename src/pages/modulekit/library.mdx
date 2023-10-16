@@ -1,0 +1,95 @@
+# Helper utilities
+
+## Building modules
+
+### Interfaces
+
+-   `ValidatorBase`: Interface for Validators to inherit from.
+-   `ExecutorBase`: Interface for Executors to inherit from.
+
+### Templates
+
+-   [Validator](https://github.com/rhinestonewtf/module-template/blob/main/src/validators/ValidatorTemplate.sol): Template implementation for Validators.
+-   [Executor](https://github.com/rhinestonewtf/module-template/blob/main/src/executors/ExecutorTemplate.sol): Template implementation for Executors.
+
+### Conditions
+
+tbd
+
+### Integrations
+
+tbd
+
+## Testing modules
+
+### Execute ERC-4337 flow
+
+```solidity
+instance.exec4337(address target, bytes memory data);
+```
+
+```solidity
+instance.exec4337(address target, uint256 value, bytes memory data);
+```
+
+<CodeGroup>
+
+```solidity {{ title: 'Safe' }}
+instance.exec4337(address target, uint256 value, bytes memory data, uint8 operation, bytes memory signature);
+```
+
+```solidity {{ title: 'Biconomy' }}
+instance.exec4337(address target, uint256 value, bytes memory data, bytes memory signature);
+```
+
+</CodeGroup>
+
+### Add and remove modules to the account
+
+```solidity
+instance.addValidator(address validator);
+```
+
+```solidity
+instance.removeValidator(address validator);
+```
+
+```solidity
+instance.addExecutor(address executor);
+```
+
+```solidity
+instance.removeExecutor(address executor);
+```
+
+```solidity
+instance.addFallback(bytes4 handleFunctionSig, bool isStatic, address handler);
+```
+
+### ERC-4337 utils
+
+<CodeGroup>
+
+    ```solidity {{ title: 'Safe' }}
+    instance.getUserOpHash(address target, uint256 value, bytes memory callData, uint8 operation);
+    ```
+
+    ```solidity {{ title: 'Biconomy' }}
+    instance.getUserOpHash(address target, uint256 value, bytes memory callData);
+    ```
+
+</CodeGroup>
+
+## Deploying modules
+
+```solidity
+deployModule(bytes memory code, bytes memory deployParams, bytes32 salt, bytes memory data);
+```
+
+```solidity
+deployModuleCreate3(bytes memory code, bytes memory deployParams, bytes32 salt, bytes memory data);
+```
+
+```solidity
+deployModuleViaFactory(address factory, bytes memory callOnFactory, bytes memory data);
+```

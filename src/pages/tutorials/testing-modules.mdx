@@ -1,0 +1,85 @@
+# Testing modules
+
+This tutorial will walk you through testing a module. You can choose what kind of account you want to test the module on.
+
+This tutorial uses Foundry, a toolchain to simplify and speed up smart contract development. If you are not familiar with Foundry, feel free to check out [their docs](https://book.getfoundry.sh/).
+
+<Note>
+	If you do not have foundry installed, run the following command and follow the onscreen instructions: ```bash curl
+	-L https://foundry.paradigm.xyz | bash ```
+</Note>
+
+## Installation
+
+1. Get started with ModuleKit by using our template or adding it into an existing foundry project:
+
+<CodeGroup title="Installation">
+
+    ```bash {{ title: "template" }}
+    git clone https://github.com/rhinestonewtf/module-template.git
+    cd module-template
+    forge install
+    ````
+
+    ```bash {{ title: "existing foundry project" }}
+    forge install rhinestonewtf/modulekit
+    ```
+
+</CodeGroup>
+
+## Testing the module
+
+<Tabs>
+    <TabItem label="Safe">
+    In this section, we will walk you through testing your module using the Safe.
+
+2. Create a new file in `test/validators/SimpleValidator.t.sol`.
+
+3. Add the following code:
+
+```solidity
+tbd
+```
+
+The code above tests the validator module that you just built. It does this using four different functions:
+
+-   `setUp` sets up the testing library by creating an instance of the account, deploying and initialising the validator, and adding the validator to the account.
+-   `testSendEth` tests that the validator is setup and called correctly during the `validateUserOp` function by creating a UserOperation, signing it, and then executing it.
+-   `testRecoverValidator` tests that the validator behaves correctly during the `recoverValidator` function by recovering the validator and then checking that the validator has been recovered.
+-   `test1271Signature` tests that the validator behaves correctly during the `isValidSignature` function by creating a signature and then checking that the signature is validated by the validator.
+
+</TabItem>
+
+<TabItem label="Biconomy">
+ In this section, we will walk you through testing your module using the Biconomy Smart Account.
+
+2. Create a new file in `test/validators/SimpleValidator.t.sol`.
+
+3. Add the following code:
+
+```solidity
+tbd
+```
+
+The code above tests the validator module that you just built. It does this using four different functions:
+
+-   `setUp` sets up the testing library by creating an instance of the account, deploying and initialising the validator, and adding the validator to the account.
+-   `testSendEth` tests that the validator is setup and called correctly during the `validateUserOp` function by creating a UserOperation, signing it, and then executing it.
+-   `testRecoverValidator` tests that the validator behaves correctly during the `recoverValidator` function by recovering the validator and then checking that the validator has been recovered.
+-   `test1271Signature` tests that the validator behaves correctly during the `isValidSignature` function by creating a signature and then checking that the signature is validated by the validator.
+
+</TabItem>
+
+</Tabs>
+
+4. Run `forge test` to run the tests and ensure that they pass. You should see the following message:
+
+```bash {{title: "response"}}
+Running 3 tests for test/validators/SimpleValidator.t.sol:SimpleValidatorTest
+[PASS] test1271Signature() (gas: 19852)
+[PASS] testRecoverValidator() (gas: 19877)
+[PASS] testSendEth() (gas: 189121)
+Test result: ok. 3 passed; 0 failed; 0 skipped; finished in 18.85ms
+```
+
+**Congratulations, you just wrote your first module test!**

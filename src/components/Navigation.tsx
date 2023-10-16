@@ -198,12 +198,7 @@ export const navigation = [
 			{ title: 'Overview', href: '/modulekit' },
 			{ title: 'Quickstart', href: '/modulekit/quick-start' },
 			{ title: 'Modules', href: '/modulekit/modules' },
-			// { title: 'ModuleKit', href: '/modules/modulekit' },
-			// { title: 'Validators', href: '/modules/validators' },
-			// { title: 'Executors', href: '/modules/executors' },
-			// { title: 'Recovery', href: '/modules/recovery' },
-			// { title: 'Hooks', href: '/modules/hooks' },
-			// { title: 'Libraries', href: '/modules/libraries' },
+			{ title: 'Library overview', href: '/modulekit/library' },
 		],
 	},
 	{
@@ -227,7 +222,9 @@ export const navigation = [
 		title: 'Tutorials',
 		links: [
 			{ title: 'Overview', href: '/tutorials' },
-			{ title: 'Building and testing a validator', href: '/tutorials/building-a-validator' },
+			{ title: 'Building modules', href: '/tutorials/building-modules' },
+			{ title: 'Testing modules', href: '/tutorials/testing-modules' },
+			{ title: 'Deploying modules', href: '/tutorials/deploying-modules' },
 		],
 	},
 	{

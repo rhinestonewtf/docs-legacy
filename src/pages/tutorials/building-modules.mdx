@@ -1,10 +1,8 @@
-# ModuleKit Quick Start
+# Building modules
 
-The quickest way to get started with building a smart account module. This quickstart guide will walk you through building a simple validator module. To learn more about validators, check out the [validators](/modules/validators) section of the docs.
+This tutorial will walk you through building a simple module. You can choose what kind of module you want to build. For more information about the different kinds of modules, check out the [modules section](/modulekit/modules) of the docs.
 
-The high-level explanation is that validators are smart account modules that are called during the validation phase of a UserOperation. This means that their primary function is to verify the signature of a UserOperation and determine whether it is valid and should be executed.
-
-This tutorial uses Foundry, a toolchain to simplify and speed up smart contract development, and ModuleKit, a framework to build and test smart account modules. If you are not familiar with Foundry, feel free to check out [their docs](https://book.getfoundry.sh/).
+This tutorial uses Foundry, a toolchain to simplify and speed up smart contract development. If you are not familiar with Foundry, feel free to check out [their docs](https://book.getfoundry.sh/).
 
 <Note>
 	If you do not have foundry installed, run the following command and follow the onscreen instructions: ```bash curl
@@ -13,19 +11,35 @@ This tutorial uses Foundry, a toolchain to simplify and speed up smart contract 
 
 ## Installation
 
-1. Get started with ModuleKit by using our template:
+1. Get started with ModuleKit by using our template or adding it into an existing foundry project:
 
-```bash
-git clone https://github.com/rhinestonewtf/module-template.git
-cd module-template
-forge install
-```
+<CodeGroup title="Installation">
 
-## Building the validator
+    ```bash {{ title: "template" }}
+    git clone https://github.com/rhinestonewtf/module-template.git
+    cd module-template
+    forge install
+    ````
 
+    ```bash {{ title: "existing foundry project" }}
+    forge install rhinestonewtf/modulekit
+    ```
+
+</CodeGroup>
+
+## Building a module
+
+<Tabs>
+    <TabItem label="Validator">
 In this section, we will walk you through building a simple validator module.
 
 2. Rename the file `src/validators/ValidatorTemplate.sol` to `SimpleValidator.sol` and the contract to `SimpleValidator`.
+
+<Note>
+	If you added the ModuleKit to an existing project, you will need to create the `SimpleValidator.sol` file yourself
+	and copy the code from
+	[here](https://github.com/rhinestonewtf/module-template/tree/main/src/validators/ValidatorTemplate.sol).
+</Note>
 
 3. Add the following import statement to the top of the file:
 
@@ -93,12 +107,27 @@ This function checks that the signature is valid and made by the owner of the ac
 
 **Congratulations, you just built your first validator!**
 
-To continue on your journey, follow the steps below or head into our [tutorials](/tutorials) section for more walkthroughs, such as how to build different kinds of modules.
+</TabItem>
+<TabItem label="Executor">
+In this section, we will walk you through building a simple executor module.
 
-## Testing the validator
+2. Rename the file `src/executors/ExecutorTemplate.sol` to `SimpleExecutor.sol` and the contract to `SimpleExecutor`.
 
-The Rhinestone ModuleKit provides a testing framework to make it easy to test your modules. To learn how to test the `SimpleValidator`, continue with [this tutorial](/tutorials/building-a-validator#testing-the-validator). To learn more about the other helpers that are part of the ModuleKit, check out the [Library](/modulekit/library) section of the docs.
+<Note>
+	If you added the ModuleKit to an existing project, you will need to create the `SimpleExecutor.sol` file yourself
+	and copy the code from
+	[here](https://github.com/rhinestonewtf/module-template/tree/main/src/executors/ExecutorTemplate.sol).
+</Note>
 
-## Deploying the validator
+3. Add the following import statement to the top of the file:
 
-After testing your validator, you can use a dedicated helper component of the ModuleKit to easily deploy the Module and register it on the [Module Registry](/registry) in order to make it available to users. For a walkthrough of how to do this, continue with [this tutorial](/tutorials/deploying-modules).
+todo
+
+4. Edit the contract functions to match the following code:
+
+todo
+
+**Congratulations, you just built your first executor!**
+
+</TabItem>
+</Tabs>

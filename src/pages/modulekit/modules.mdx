@@ -33,15 +33,6 @@ ERC-4337 breaks down the flow of a UserOperation into two distinct phases, valid
 
 Validators are smart account modules that are called during the [validation phase of a UserOperation](/modules#validation-phase). This means that their primary function is to verify the signature of a UserOperation and determine whether it is valid and should be executed. As a result, validators are the primary mechanism for enforcing access control on a smart account and are highly security critical.
 
-**Building a validator**
-
-In order to build a compliant validator you need to ensure that it:
-
--   Inherits from the `BaseAuthorizationModule` contract.
--   Implements the following functions:
-    -   `validateUserOp(UserOperation calldata userOp, bytes32 userOpHash)`
-    -   `isValidSignature(bytes32 signedDataHash, bytes memory moduleSignature)`
-
 **Validator restrictions**
 
 _Storage access_
@@ -74,20 +65,11 @@ See more information in the [ERC-4337 specs](https://eips.ethereum.org/EIPS/eip-
 
 ### Executors
 
-Executors are smart account modules that are called during the execution phase of a UserOperation. They extend the execution logic of the account and thus allow for a more diverse set of actions that the account can natively perform.
+Executors are smart account modules that are called during the execution phase of a UserOperation. They extend the execution logic of the account and thus allow for a more diverse set of actions that the account can natively perform. On top of this, Executors can also be used to automate certain actions that are triggered outside of the regular ERC-4337 execution flow on the account. For example, a user could set up an executor that automatically swaps their tokens when the price of a token reaches a certain threshold.
 
-**Building an executor**
+**Conditional Executors**
 
-In order to build a compliant executor you need to ensure that it:
-
--   Inherits from the `PluginBase` contract.
--   Implements the following functions:
-    -   `name()`
-    -   `version()`
-    -   `metadataProvider()`
-    -   `requiresRootAccess()`
-    -   `rhinestonePluginId()`
-    -   `grantsPluginAccess()`
+tbd
 
 **Executor examples**
 
@@ -97,15 +79,6 @@ In order to build a compliant executor you need to ensure that it:
 
 Recovery modules are smart account modules that can reset the storage of validators through a different process. Since validators are crucial to the functioning of a smart account, they also present a big attack surface through which to attempt to compromise the account. Thus, users can use different kinds of recovery mechanisms to ensure that they are able to reset validators if they get compromised or a user loses access to their account.
 
-**Building a recovery module**
-
-In order to build a compliant recovery module you need to ensure that it:
-
--   Inherits from the `IRecovery` interface.
--   Implements the following functions:
-    -   `validateRecoveryProof(bytes calldata recoveryProof)`
-    -   `getRecoverySchema()`
-
 **Recovery examples**
 
 -   Social recovery
@@ -113,9 +86,6 @@ In order to build a compliant recovery module you need to ensure that it:
 ### Hooks
 
 Hooks are smart account modules that are triggered either before or after execution and can be used to determine whether certain invariants are violated.
-
-**Building a hook**
-Hooks are currently still in development
 
 **Hook examples**
 
