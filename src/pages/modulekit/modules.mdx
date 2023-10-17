@@ -69,11 +69,11 @@ Executors are smart account modules that are called during the execution phase o
 
 **Conditional Executors**
 
-tbd
+Conditional executors extend the capabilities of normal executors, by allowing transactions to be executed based on checks performed by the ComposableConditionManager. This allows for more complex logic to be implemented in executors, such as the ability to execute transactions based on the price of a token or the current gas price. Importantly, these conditions are verified on-chain meaning that a user can be sure that the transaction will be executed only if the condition is met and does not need to trust a third party.
 
 **Executor examples**
 
--   Swap module
+-   Flashloan executor
 
 ### Recovery
 

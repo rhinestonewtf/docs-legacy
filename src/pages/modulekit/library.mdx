@@ -24,13 +24,19 @@ tbd
 
 ### Execute ERC-4337 flow
 
+Execute an ERC-4337 transaction on the account with and `address` target and `bytes` calldata.
+
 ```solidity
 instance.exec4337(address target, bytes memory data);
 ```
 
+Execute an ERC-4337 transaction on the account with and `address` target, a `uint256` value and `bytes` calldata.
+
 ```solidity
 instance.exec4337(address target, uint256 value, bytes memory data);
 ```
+
+Execute an ERC-4337 transaction on the account with and `address` target, a `uint256` value, `bytes` calldata and `bytes` signature.
 
 <CodeGroup>
 
@@ -46,27 +52,39 @@ instance.exec4337(address target, uint256 value, bytes memory data, bytes memory
 
 ### Add and remove modules to the account
 
+Add a validator to the account by providing the `address` of the validator.
+
 ```solidity
 instance.addValidator(address validator);
 ```
+
+Remove a validator to the account by providing the `address` of the validator.
 
 ```solidity
 instance.removeValidator(address validator);
 ```
 
+Add an executor to the account by providing the `address` of the executor.
+
 ```solidity
 instance.addExecutor(address executor);
 ```
 
+Remove an executor to the account by providing the `address` of the executor.
+
 ```solidity
 instance.removeExecutor(address executor);
 ```
+
+Add a fallback handler to the account by providing the `bytes4` function signature, a `bool` whether the method is static (view) or not and the `address` of the handler.
 
 ```solidity
 instance.addFallback(bytes4 handleFunctionSig, bool isStatic, address handler);
 ```
 
 ### ERC-4337 utils
+
+Get the hash of the UserOperation in order to, for example, sign it.
 
 <CodeGroup>
 
@@ -82,13 +100,19 @@ instance.addFallback(bytes4 handleFunctionSig, bool isStatic, address handler);
 
 ## Deploying modules
 
+Deterministically deploy a module using the `CREATE2` opcode, by providing the `bytes` creation code of the module, `bytes` constructor parameters for the module, `bytes32` salt vakue to create uniqueness and `bytes` additional data to be stored on the Module Registry.
+
 ```solidity
 deployModule(bytes memory code, bytes memory deployParams, bytes32 salt, bytes memory data);
 ```
 
+Deterministically deploy a module using `CREATE3`, by providing the `bytes` creation code of the module, `bytes` constructor parameters for the module, `bytes32` salt vakue to create uniqueness and `bytes` additional data to be stored on the Module Registry.
+
 ```solidity
 deployModuleCreate3(bytes memory code, bytes memory deployParams, bytes32 salt, bytes memory data);
 ```
+
+Deploy a module using an external factory contract, by providing the `address` of the factory, `bytes` encoded calldata to be sent to the factory and `bytes` additional data to be stored on the Module Registry.
 
 ```solidity
 deployModuleViaFactory(address factory, bytes memory callOnFactory, bytes memory data);
