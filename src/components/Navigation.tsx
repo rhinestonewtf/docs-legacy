@@ -4,8 +4,8 @@ import { useRouter } from 'next/router'
 import { remToPx } from '@/lib/remToPx'
 import { Link } from '@/components/Link'
 import { Button } from '@/components/Button'
-import { FC, PropsWithChildren, useRef } from 'react'
 import { useSectionStore } from '@/components/SectionProvider'
+import { FC, PropsWithChildren, useEffect, useRef } from 'react'
 import { AnimatePresence, motion, useIsPresent } from 'framer-motion'
 import { useIsInsideMobileNavigation } from '@/components/MobileNavigation'
 
@@ -102,6 +102,13 @@ const ActivePageMarker: FC<{
 	let activePageIndex = group.links.findIndex(link => link.href === pathname)
 	let top = offset + activePageIndex * itemHeight
 
+	useEffect(() => {
+		if (!document) return
+		document.getElementById('activePageMarker')?.scrollIntoView({
+			behavior: 'smooth',
+		})
+	}, [activePageIndex])
+
 	return (
 		<motion.div
 			layout
@@ -110,6 +117,7 @@ const ActivePageMarker: FC<{
 			animate={{ opacity: 1, transition: { delay: 0.2 } }}
 			exit={{ opacity: 0 }}
 			style={{ top }}
+			id="activePageMarker"
 		/>
 	)
 }
@@ -123,7 +131,7 @@ const NavigationGroup: FC<{
 	// The state will still update when we re-open (re-render) the navigation.
 	let isInsideMobileNavigation = useIsInsideMobileNavigation()
 	let [router, sections] = useInitialValue([useRouter(), useSectionStore(s => s.sections)], isInsideMobileNavigation)
-	const pathname = router.pathname.replace('/api-docs', '/api')
+	const pathname = router.pathname
 
 	let isActiveGroup = group.links.findIndex(link => link.href === pathname) !== -1
 

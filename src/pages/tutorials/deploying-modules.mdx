@@ -31,20 +31,35 @@ This tutorial uses Foundry, a toolchain to simplify and speed up smart contract 
 
 In this section, we will deploy the module.
 
-2. Create the script
-
-3. Add the following code:
+2. Open the file `script/DeployModule.s.sol` and change the following code:
 
 ```solidity
-tbd
+bytes memory bytecode = type(ValidatorTemplate).creationCode;
+bytes memory deployParams = "";
+bytes memory data = "";
 ```
 
-4. Configure the network etc
+Change `ValidatorTemplate` to the name of your module and `deployParams` to the parameters you want to pass to the constructor (if any). Finally, change `data` to the data you want to be stored additionally on the Registry (you will likely want to leave this empty for now).
 
-5. Run `forge script` to run the tests and ensure that they pass. You should see the following message:
+3. Create a `.env` file in the root directory and add the following variables:
+
+```shell
+PK=[YOUR_PRIVATE_KEY]
+```
+
+3. Replace the following variables in the command below and then run it in your terminal:
+
+-   `RPC_URL` is the URL of the RPC node you want to use to broadcast the transaction.
+-   `SENDER_ADDRESS` is the address of the account you want to use to deploy the module (the address of the private key you added to your `.env` file).
+
+```shell
+forge script script/DeployModule.s.sol:DeployModuleScript --rpc-url [RPC_URL] --sender [SENDER_ADDRESS] --broadcast
+```
+
+4. You should see the following message:
 
 ```bash {{title: "response"}}
-tbd
+Module deployed at: 0x...
 ```
 
-**Congratulations, you just deployed your first module!**
+### Congratulations, you just deployed your first module!

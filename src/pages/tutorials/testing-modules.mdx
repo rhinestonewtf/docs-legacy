@@ -30,56 +30,210 @@ This tutorial uses Foundry, a toolchain to simplify and speed up smart contract 
 ## Testing the module
 
 <Tabs>
-    <TabItem label="Safe">
-    In this section, we will walk you through testing your module using the Safe.
+    <TabItem label="Validator">
+    In this section, we will walk you through testing a simple validator.
 
-2. Create a new file in `test/validators/SimpleValidator.t.sol`.
+2. Rename the file `test/validators/ValidatorTemplate.t.sol` to `SimpleValidator.t.sol` and the contract to `SimpleValidatorTest`.
 
-3. Add the following code:
+<Note>
+	If you added the ModuleKit to an existing project, you will need to create the `SimpleValidator.t.sol` file yourself
+	and copy the code from
+	[here](https://github.com/rhinestonewtf/module-template/tree/main/test/validators/ValidatorTemplate.t.sol).
+</Note>
+
+3. Add the following import statement to the top of the file:
 
 ```solidity
-tbd
+import { ECDSA } from "solady/utils/ECDSA.sol";
 ```
 
-The code above tests the validator module that you just built. It does this using four different functions:
+and change the code above the `setup` function to the following:
 
--   `setUp` sets up the testing library by creating an instance of the account, deploying and initialising the validator, and adding the validator to the account.
--   `testSendEth` tests that the validator is setup and called correctly during the `validateUserOp` function by creating a UserOperation, signing it, and then executing it.
--   `testRecoverValidator` tests that the validator behaves correctly during the `recoverValidator` function by recovering the validator and then checking that the validator has been recovered.
--   `test1271Signature` tests that the validator behaves correctly during the `isValidSignature` function by creating a signature and then checking that the signature is validated by the validator.
+```solidity
+contract SimpleValidatorTest is Test, RhinestoneModuleKit {
+    using RhinestoneModuleKitLib for RhinestoneAccount;
+    using ECDSA for bytes32;
+
+    RhinestoneAccount instance;
+    SimpleValidator simpleValidator;
+
+    ...
+}
+```
+
+4. Edit the contract functions to match the following code:
+
+**setUp**
+
+```solidity
+function setUp() public {
+    // Setup account
+    instance = makeRhinestoneAccount("1");
+    vm.deal(instance.account, 10 ether);
+
+    // Setup validator
+    simpleValidator = new SimpleValidator();
+    (address owner,) = makeAddrAndKey("owner");
+    vm.prank(instance.account);
+    simpleValidator.setOwner(owner);
+
+    // Add validator to account
+    instance.addValidator(address(simpleValidator));
+}
+```
+
+This function sets up the tests by creating an instance of the account, deploying and initialising the validator, and adding the validator to the account.
+
+**testSendEth**
+
+```solidity
+function testSendEth() public {
+    // Create userOperation fields
+    address receiver = makeAddr("receiver");
+    uint256 value = 10 gwei;
+    bytes memory callData = "";
+
+    // Create signature
+    (, uint256 key) = makeAddrAndKey("owner");
+    bytes32 hash =
+        instance.getUserOpHash({ target: receiver, value: value, callData: callData });
+    (uint8 v, bytes32 r, bytes32 s) = vm.sign(key, hash.toEthSignedMessageHash());
+    bytes memory signature = abi.encode(abi.encodePacked(r, s, v), address(simpleValidator));
+
+    // Create userOperation
+    instance.exec4337({
+        target: receiver,
+        value: value,
+        callData: callData,
+        signature: signature
+    });
+
+    // Validate userOperation
+    assertEq(receiver.balance, 10 gwei, "Receiver should have 10 gwei");
+}
+```
+
+This function tests that the validator is setup and called correctly during the `validateUserOp` function by creating a UserOperation, signing it, and then executing it.
+
+**test1271Signature**
+
+```solidity
+function test1271Signature() public {
+    // Create signature
+    (, uint256 key) = makeAddrAndKey("owner");
+    bytes32 hash = keccak256("signature");
+    (uint8 v, bytes32 r, bytes32 s) = vm.sign(key, hash.toEthSignedMessageHash());
+    bytes memory signature = abi.encodePacked(r, s, v);
+
+    // Validate signature
+    vm.prank(instance.account);
+    bytes4 returnValue = simpleValidator.isValidSignature(hash, signature);
+
+    // Validate signature success
+    assertEq(
+        returnValue,
+        ERC1271_MAGICVALUE, // EIP1271_MAGIC_VALUE
+        "Signature should be valid"
+    );
+}
+```
+
+This function tests that the validator behaves correctly during the `isValidSignature` function by creating a signature and then checking that the signature is validated by the validator.
 
 </TabItem>
 
-<TabItem label="Biconomy">
- In this section, we will walk you through testing your module using the Biconomy Smart Account.
+<TabItem label="Executor">
+In this section, we will walk you through testing a simple executor.
 
-2. Create a new file in `test/validators/SimpleValidator.t.sol`.
+2. Rename the file `test/executors/ExecutorTemplate.t.sol` to `SimpleExecutor.t.sol` and the contract to `SimpleExecutorTest`.
 
-3. Add the following code:
+<Note>
+	If you added the ModuleKit to an existing project, you will need to create the `SimpleExecutor.sol` file yourself
+	and copy the code from
+	[here](https://github.com/rhinestonewtf/module-template/tree/main/test/executors/ExecutorTemplate.t.sol).
+</Note>
+
+3. Add the following import statements to the top of the file:
 
 ```solidity
-tbd
+import { SimpleExecutor, IERC20, IExecutorManager } from "../../src/executors/SimpleExecutor.sol";
+import { MockERC20 } from "solmate/test/utils/mocks/MockERC20.sol";
 ```
 
-The code above tests the validator module that you just built. It does this using four different functions:
+and change the code above the `setup` function to the following:
 
--   `setUp` sets up the testing library by creating an instance of the account, deploying and initialising the validator, and adding the validator to the account.
--   `testSendEth` tests that the validator is setup and called correctly during the `validateUserOp` function by creating a UserOperation, signing it, and then executing it.
--   `testRecoverValidator` tests that the validator behaves correctly during the `recoverValidator` function by recovering the validator and then checking that the validator has been recovered.
--   `test1271Signature` tests that the validator behaves correctly during the `isValidSignature` function by creating a signature and then checking that the signature is validated by the validator.
+```solidity
+contract SimpleExecutorTest is Test, RhinestoneModuleKit {
+    using RhinestoneModuleKitLib for RhinestoneAccount;
+
+    RhinestoneAccount instance;
+    SimpleExecutor simpleExecutor;
+    MockERC20 token;
+
+    ...
+}
+```
+
+4. Edit the contract functions to match the following code:
+
+**setUp**
+
+```solidity
+function setUp() public {
+    // Setup account
+    instance = makeRhinestoneAccount("1");
+    vm.deal(instance.account, 10 ether);
+
+    // Setup executor
+    simpleExecutor = new SimpleExecutor();
+
+    // Add executor to account
+    instance.addExecutor(address(simpleExecutor));
+
+    // Setting up mock token
+    token = new MockERC20("", "", 18);
+    token.mint(instance.account, 10_000_000 ether);
+}
+```
+
+This function sets up the tests by creating an instance of the account, deploying and initialising the executor, and adding the executor to the account.
+
+**testExecuteSchedule**
+
+```solidity
+function testExecuteSchedule() public {
+    // Setup recipient
+    address recipient = makeAddr("recipient");
+
+    // Add schedule
+    vm.prank(instance.account);
+    simpleExecutor.addSchedule(recipient, IERC20(address(token)), 100, 1);
+
+    // Execute schedule
+    vm.warp(block.timestamp + 1 days);
+    simpleExecutor.executeSchedule(
+        IExecutorManager(address(instance.aux.executorManager)), instance.account, 0
+    );
+
+    // Assert
+    assertEq(token.balanceOf(recipient), 100);
+}
+```
+
+This function tests that the executor is setup and called correctly during the `executeSchedule` function by creating a schedule, changing the block timestamp so that the schedule becomes due, and then executing the schedule.
 
 </TabItem>
 
 </Tabs>
 
-4. Run `forge test` to run the tests and ensure that they pass. You should see the following message:
+4. Run `forge test` to run the tests and ensure that they pass. You should see something like the following message:
 
 ```bash {{title: "response"}}
-Running 3 tests for test/validators/SimpleValidator.t.sol:SimpleValidatorTest
-[PASS] test1271Signature() (gas: 19852)
-[PASS] testRecoverValidator() (gas: 19877)
-[PASS] testSendEth() (gas: 189121)
-Test result: ok. 3 passed; 0 failed; 0 skipped; finished in 18.85ms
+Running 1 test for ...
+[PASS] ...() (gas: ...)
+Test result: ok. 1 passed; 0 failed; 0 skipped; finished in 18.85ms
+
+Ran 2 test suites: 5 tests passed, 0 failed, 0 skipped (5 total tests)
 ```
 
-**Congratulations, you just wrote your first module test!**
+### Congratulations, you just wrote your first module test!
