@@ -33,7 +33,7 @@ This tutorial uses Foundry, a toolchain to simplify and speed up smart contract 
     <TabItem label="Validator">
     In this section, we will walk you through testing a simple validator.
 
-2. Rename the file `test/validators/ValidatorTemplate.t.sol` to `SimpleValidator.t.sol` and the contract to `SimpleValidatorTest`.
+2. Duplicate the file `test/validators/ValidatorTemplate.t.sol` and rename to `SimpleValidator.t.sol` and the contract to `SimpleValidatorTest`.
 
 <Note>
 	If you added the ModuleKit to an existing project, you will need to create the `SimpleValidator.t.sol` file yourself
@@ -47,7 +47,19 @@ This tutorial uses Foundry, a toolchain to simplify and speed up smart contract 
 import { ECDSA } from "solady/utils/ECDSA.sol";
 ```
 
-and change the code above the `setup` function to the following:
+and change the following import
+
+```solidity
+import { ValidatorTemplate, ERC1271_MAGICVALUE } from "../../src/validators/ValidatorTemplate.sol";
+```
+
+to the following:
+
+```solidity
+import { SimpleValidator, ERC1271_MAGICVALUE } from "../../src/validators/SimpleValidator.sol";
+```
+
+and then change the code above the `setup` function to the following:
 
 ```solidity
 contract SimpleValidatorTest is Test, RhinestoneModuleKit {
@@ -145,7 +157,7 @@ This function tests that the validator behaves correctly during the `isValidSign
 <TabItem label="Executor">
 In this section, we will walk you through testing a simple executor.
 
-2. Rename the file `test/executors/ExecutorTemplate.t.sol` to `SimpleExecutor.t.sol` and the contract to `SimpleExecutorTest`.
+2. Duplicate the file `test/executors/ExecutorTemplate.t.sol` and rename it to `SimpleExecutor.t.sol` and the contract to `SimpleExecutorTest`.
 
 <Note>
 	If you added the ModuleKit to an existing project, you will need to create the `SimpleExecutor.sol` file yourself
@@ -160,7 +172,13 @@ import { SimpleExecutor, IERC20, IExecutorManager } from "../../src/executors/Si
 import { MockERC20 } from "solmate/test/utils/mocks/MockERC20.sol";
 ```
 
-and change the code above the `setup` function to the following:
+and remove the following import:
+
+```solidity
+import { ExecutorTemplate } from "../../src/executors/ExecutorTemplate.sol";
+```
+
+and then change the code above the `setup` function to the following:
 
 ```solidity
 contract SimpleExecutorTest is Test, RhinestoneModuleKit {
@@ -174,7 +192,7 @@ contract SimpleExecutorTest is Test, RhinestoneModuleKit {
 }
 ```
 
-4. Edit the contract functions to match the following code:
+4. Remove the `testExecuteAction` function and edit the contract to hold the following two functions:
 
 **setUp**
 

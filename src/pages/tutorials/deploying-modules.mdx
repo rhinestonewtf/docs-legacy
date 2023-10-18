@@ -50,15 +50,16 @@ PK=[YOUR_PRIVATE_KEY]
 3. Replace the following variables in the command below and then run it in your terminal:
 
 -   `RPC_URL` is the URL of the RPC node you want to use to broadcast the transaction.
--   `SENDER_ADDRESS` is the address of the account you want to use to deploy the module (the address of the private key you added to your `.env` file).
+-   `SENDER_ADDRESS` is the address of the account you want to use to deploy the module (the address of the private key you added to your `.env` file). Hint: use `cast wallet address --private-key [YOUR_PRIVATE_KEY]` to get the address of your private key in your command line.
 
 ```shell
 forge script script/DeployModule.s.sol:DeployModuleScript --rpc-url [RPC_URL] --sender [SENDER_ADDRESS] --broadcast
 ```
 
-4. You should see the following message:
+4. If you scroll up to the top of your command, you should see the following message:
 
 ```bash {{title: "response"}}
+== Logs ==
 Module deployed at: 0x...
 ```
 

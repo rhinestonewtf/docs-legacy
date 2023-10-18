@@ -33,7 +33,7 @@ This tutorial uses Foundry, a toolchain to simplify and speed up smart contract 
     <TabItem label="Validator">
 In this section, we will walk you through building a simple validator module. This validator module allows the owner of an account to sign transactions using an EOA.
 
-2. Rename the file `src/validators/ValidatorTemplate.sol` to `SimpleValidator.sol` and the contract to `SimpleValidator`.
+2. Duplicate the file `src/validators/ValidatorTemplate.sol` and rename it to `SimpleValidator.sol` and the contract to `SimpleValidator`.
 
 <Note>
 	If you added the ModuleKit to an existing project, you will need to create the `SimpleValidator.sol` file yourself
@@ -111,7 +111,7 @@ This function checks that the signature is valid and made by the owner of the ac
 <TabItem label="Executor">
 In this section, we will walk you through building a simple executor module. This executor module allows the owner of an account to define a schedule that will send a specified amount of tokens to a specified address at a specified frequency.
 
-2. Rename the file `src/executors/ExecutorTemplate.sol` to `SimpleExecutor.sol` and the contract to `SimpleExecutor`.
+2. Duplicate the file `src/executors/ExecutorTemplate.sol` and rename it to `SimpleExecutor.sol` and the contract to `SimpleExecutor`.
 
 <Note>
 	If you added the ModuleKit to an existing project, you will need to create the `SimpleExecutor.sol` file yourself
@@ -134,11 +134,11 @@ struct SendSchedule {
 }
 ```
 
-and add the following code to the top of the contract:
+and add the following code before the first function in your contract:
 
 ```solidity
 contract SimpleExecutor is ExecutorBase {
-    using ModuleExecLib for IExecutorManager;
+    ...
 
     mapping(address account => SendSchedule[] schedules) public schedules;
 
@@ -146,7 +146,7 @@ contract SimpleExecutor is ExecutorBase {
 }
 ```
 
-4. Add the following functions:
+4. Remove the `executeAction` function (it is not needed anymore) and then add the following functions:
 
 **addSchedule**
 
@@ -212,6 +212,17 @@ function _scheduleIsDue(SendSchedule memory schedule) internal view returns (boo
 ```
 
 This function checks if a schedule is due.
+
+Finally, add the following event and errors to the bottom of the contract:
+
+```solidity
+event DCAExecuted(address account, uint256 scheduleIndex);
+
+error InvalidTokenAddress();
+error InvalidRecipientAddress();
+error InvalidAmount(uint256 amount);
+error ScheduleNotDueYet(address account, uint256 scheduleIndex);
+```
 
 ### Congratulations, you just built your first executor!
 
