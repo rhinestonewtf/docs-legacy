@@ -3,7 +3,6 @@ import { Tag } from '@/components/Tag'
 import { useRouter } from 'next/router'
 import { remToPx } from '@/lib/remToPx'
 import { Link } from '@/components/Link'
-import { Button } from '@/components/Button'
 import { useSectionStore } from '@/components/SectionProvider'
 import { FC, PropsWithChildren, useEffect, useRef } from 'react'
 import { AnimatePresence, motion, useIsPresent } from 'framer-motion'
@@ -206,7 +205,7 @@ export const navigation = [
 			{ title: 'Overview', href: '/modulekit' },
 			{ title: 'Quickstart', href: '/modulekit/quick-start' },
 			{ title: 'Modules', href: '/modulekit/modules' },
-			{ title: 'Library overview', href: '/modulekit/library' },
+			{ title: 'Toolkit', href: '/modulekit/toolkit' },
 		],
 	},
 	{

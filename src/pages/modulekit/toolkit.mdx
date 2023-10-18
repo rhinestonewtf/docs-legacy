@@ -1,4 +1,4 @@
-# Helper utilities
+# Toolkit
 
 ## Building modules
 
@@ -14,11 +14,61 @@
 
 ### Conditions
 
-tbd
+Executors can be extended to become conditional executors, by validating conditions for when the executor should be executed using the `ComposableConditionManager`. The ModuleKit currently has conditions for:
+
+-   Gas price
+-   Token price
+
+... and more to come! View all conditions [here](https://github.com/rhinestonewtf/modulekit/blob/main/src/modulekit/conditions).
+
+Users can select different conditions and in order to support any existing condition, the executor needs to call the `ComposableConditionManager`.
+
+```solidity
+...
+import { ComposableConditionManager, ConditionConfig } from "modulekit/core/ComposableCondition.sol";
+
+contract GasPriceExecutor is ExecutorBase {
+    ...
+
+    mapping(address account => ConditionConfig[] conditions) conditions;
+
+    function execute(address account) external {
+        if (!ComposableConditionManager(manager).checkCondition(account, conditions[account])) revert NotExecutable();
+        ...
+    }
+
+    ...
+}
+```
 
 ### Integrations
 
-tbd
+Integrations are Solidity libraries that can easily be integrated into modules to simplify the developer experience for common use cases. The ModuleKit currently has integrations for:
+
+-   Yearn
+-   ERC-4626 Vaults
+-   ChainLink
+-   Uniswap
+
+... and more to come! View all integrations [here](https://github.com/rhinestonewtf/modulekit/blob/main/src/modulekit/integrations).
+
+To use an integration, simply import it into your module and call the functions that you need.
+
+```solidity
+...
+import {YearnWithdraw} from "modulekit/modulekit/integrations/yearn/YearnWidthdraw.sol";
+
+contract YearnModule is ExecutorBase {
+    ...
+
+    function withdrawFromYearn(IExecutorManager manager, address account, address yToken) external {
+        ...
+        YearnWithdraw.withdraw(manager, account, yToken);
+    }
+
+    ...
+}
+```
 
 ## Testing modules
 
