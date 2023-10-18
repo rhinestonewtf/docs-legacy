@@ -205,7 +205,7 @@ export const navigation = [
 			{ title: 'Overview', href: '/modulekit' },
 			{ title: 'Quickstart', href: '/modulekit/quick-start' },
 			{ title: 'Modules', href: '/modulekit/modules' },
-			{ title: 'Toolkit', href: '/modulekit/toolkit' },
+			{ title: 'Tools', href: '/modulekit/tools' },
 		],
 	},
 	{
