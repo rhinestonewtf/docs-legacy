@@ -14,10 +14,13 @@
 
 ### Conditions
 
+To allow for high flexibility, moduleKit allows users to configure and set their own conditions on when a executor is due to be triggered.
+
 Executors can be extended to become conditional executors, by validating conditions for when the executor should be executed using the `ComposableConditionManager`. The ModuleKit currently has conditions for:
 
 -   Gas price
 -   Token price
+-   Time based schedules
 
 ... and more to come! View all conditions [here](https://github.com/rhinestonewtf/modulekit/blob/main/src/modulekit/conditions).
 
