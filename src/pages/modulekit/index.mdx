@@ -1,14 +1,21 @@
-# ModuleKit
+# Overview
 
-The ModuleKit is a development kit for building and testing smart account modules. ModuleKit allows you to:
+ModuleKit is a development kit for building and testing smart account modules. The goal of ModuleKit is to make the module developer's life as simple as possible by removing the need for deep ERC-4337 knowledge or an understanding of every modular smart account implementation out there. ModuleKit also provides a library of tools that supercharges development, allowing developers to unlock the full potential of modules. Within this tool kit, there are four key abstraction layers:
 
--   **Easily build smart account modules** with interfaces for:
-    -   Validators
-    -   Executors
-    -   Recovery modules
-    -   Hooks
--   **Unit test** your modules using a dedicated helper library
--   **Integration test** your modules using modular ERC-4337 accounts and a helper library that abstracts away almost all the complexity
+-   **Templates and testing frameworks**: Get started with simple templates to build a module and use preset frameworks to run unit and integration tests against different ERC-4337 accounts.
+-   **Standardized interfaces**: These ensure that your module is compatible with all the major modular smart account implementations.
+-   **Third-party integrations**: To supercharge building modules, ModuleKit has a library of integrations (such as with DeFi protocols) and pre-built conditions for execution to make building powerful modules seamless.
+-   **Security automation**: These tools parse your module code and flag security vulnerabilities to be resolved before passing it on for a manual audit.
+
+IMG
+
+Current module types supported by ModuleKit include:
+
+-   Validators
+-   Executors
+-   Hooks
+
+Refer to the [Modules section](/modulekit/modules) for an overview of these module types and their functionality.
 
 ## Installation
 
@@ -26,28 +33,60 @@ cd module-template
 forge install
 ```
 
-## Helper utilities
+## Updating
 
-### Building modules
+To update the ModuleKit, run:
 
-#### Interfaces
+```bash
+forge update rhinestonewtf/modulekit
+```
 
--   `IExecutorBase`: Interface for Executors to inherit from.
--   `BaseValidator`: Interface for Validator Modules to inherit from.
--   `IRecoveryModule`: Interface for Recovery Modules to inherit from.
+## Templates and testing frameworks
 
-#### Templates
+Rhinestone maintains a library of generalised module templates that can be used as a base layer for more complicated functions. This includes templates for basic validator and executor functions. A set of example modules can also be found in the[ modulekit-examples repo](https://github.com/rhinestonewtf/modulekit-examples). For a list of open-source modules and resources visit the [awesome-modular-accounts repo](https://github.com/rhinestonewtf/awesome-modular-accounts).
+ModuleKit also contains frameworks for running unit and integration tests against various 4337-account implementations. Today, this includes a 4337-enabled Safe and the Biconomy account, with more on the way.
 
--   [Validator](https://github.com/rhinestonewtf/module-template/blob/main/src/validators/ValidatorTemplate.sol): Template implementation for Validators.
+## Standardized interfaces
 
-### Testing modules
+Certain account implementations may interface with modules differently. We abstract this away when building modules by providing standardised interfaces for different module types that work across all supported accounts.
 
-#### RhinestoneModuleKitLib
+## Executors and third-party integrations
 
--   `function exec4337(RhinestoneAccount memory instance, address target, uint256 value, bytes memory callData) internal returns (bool, bytes memory)`: Executes a UserOperation from the account using a `target`, a `value` and an already-encoded `callData`. Can only use use `CALL` from the account and calculates a default signature.
--   `function exec4337(RhinestoneAccount memory instance, address target, uint256 value, bytes memory callData, uint8 operation, bytes memory signature) internal returns (bool, bytes memory)`: Executes a UserOperation from the account using a `target`, a `value` and an already-encoded `callData`. Can use either `CALL` or `DELEGATECALL` from the account and uses the provided `signature`.
--   `function addValidator(RhinestoneAccount memory instance, address validator) internal returns (bool)`: Adds a validator to the account.
--   `function addRecovery(RhinestoneAccount memory instance, address validator, address recovery) internal returns (bool)`: Adds a recovery module to the account.
--   `function addExecutor(RhinestoneAccount memory instance, address executor) internal returns (bool)`: Adds a executor to the account.
--   `function removeExecutor(RhinestoneAccount memory instance, address executor) internal returns (bool)`: Removes a executor from the account.
--   `function getUserOpHash(RhinestoneAccount memory instance, address target, uint256 value, bytes memory callData, uint8 operation) internal returns (bytes32)`: Calculates the hash of a UserOperation in order to be signed for a custom signature.
+Executors open up a new paradigm for account automations. For example, an executor could enable something as simple as a limit order or as powerful as a P2P flashloan with agreement terms and execution restrictions calibrated by the end user.
+
+To make these automations fully extensible without compromising user security, ModuleKit utilises the Rhinestone ConditionManager. The Condition Manager allows users to create conditions for when an executor should be triggered. ModuleKit comes with a set of [pre-built conditions](https://github.com/rhinestonewtf/modulekit/tree/main/src/modulekit/conditions), but it’s simple for developers to create conditions from new data sources or third-party integrations.
+
+### Third-party integrations
+
+<table>
+	<thead>
+		<tr>
+			<th className="min-w-[140px]">Integration</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td className="align-middle font-semibold">Yearn</td>
+			<td className="not-prose align-middle">Deposit and withdraws to yearn vaults</td>
+		</tr>
+		<tr>
+			<td className="align-middle font-semibold">ERC-4626 (tokenized vaults)</td>
+			<td className="not-prose align-middle">Deposit and withdraw to ERC-4626 compliant vaults</td>
+		</tr>
+		<tr>
+			<td className="align-middle font-semibold">Uniswap V3</td>
+			<td className="not-prose align-middle">Swaps via Uniswap V3</td>
+		</tr>
+		<tr>
+			<td className="align-middle font-semibold">Chainlink</td>
+			<td className="not-prose align-middle">Easy access to Chainlink price oracles</td>
+		</tr>
+	</tbody>
+</table>
+
+View all third party integrations of the ModuleKit [here](https://github.com/rhinestonewtf/modulekit/tree/main/src/modulekit/integrations)
+
+## Security automation
+
+Audits are expensive and security is paramount to the end user. Rhinestone is building a suite of tools to automate security checks to ensure baseline security standards are met and reduce the cost associated with manual audits. **Coming soon.**

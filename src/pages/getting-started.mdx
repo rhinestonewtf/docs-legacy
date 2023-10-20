@@ -19,7 +19,7 @@ ModuleKit is based on Foundry, a toolchain to simplify and speed up smart contra
     git clone https://github.com/rhinestonewtf/module-template.git
     cd module-template
     forge install
-    ````
+    ```
 
     ```bash {{ title: "existing foundry project" }}
     forge install rhinestonewtf/modulekit
@@ -33,8 +33,8 @@ The ModuleKit makes building a module a straightforward process. Simply create a
 
 ## Testing a module
 
-The ModuleKit provides an end-to-end testing framework to make it easy for you to test your modules and abstract away all the complexities. To start testing a module simply create a `.t.sol` file under `test/[MODULE_TYPE]` and inherit from the `RhinestoneModuleKit` as well as Foundry's `Test`. Learn more about testing using Foundry [here](https://book.getfoundry.sh/forge/tests). Now you can use the provided [helper utilities](/modulekit#helper-utilities) in order to simplify and accelerate the testing of your module. For hands-on guides to testing modules, visit the [tutorials](/tutorials) section of the docs.
+The ModuleKit provides an end-to-end testing framework to make it easy for you to test your modules and abstract away all the complexities. To start testing a module simply create a `.t.sol` file under `test/[MODULE_TYPE]` and inherit from the right `RhinestoneModuleKit` library depending on which account you want to test your Module against, as well as Foundry's `Test`. Now you can use the provided [tools](/modulekit/tools) in order to simplify and accelerate the testing of your module. For hands-on guides to testing modules, visit the [tutorials](/tutorials) section of the docs.
 
 ## Deploying a module
 
-Coming soon
+The ModuleKit allows you to easily deploy and register your Module on the [Module Registry](/registry). To do so, simply create a script in the `script/` folder and inherit from the provided `RegistryDeployer` library. Learn more about deploying and registering modules [here](/modulekit/tools#deploying-modules). For hands-on guides to deploying modules, visit the [deployment tutorial](/tutorials/deploying-modules).

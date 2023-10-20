@@ -3,9 +3,8 @@ import { Tag } from '@/components/Tag'
 import { useRouter } from 'next/router'
 import { remToPx } from '@/lib/remToPx'
 import { Link } from '@/components/Link'
-import { Button } from '@/components/Button'
-import { FC, PropsWithChildren, useRef } from 'react'
 import { useSectionStore } from '@/components/SectionProvider'
+import { FC, PropsWithChildren, useEffect, useRef } from 'react'
 import { AnimatePresence, motion, useIsPresent } from 'framer-motion'
 import { useIsInsideMobileNavigation } from '@/components/MobileNavigation'
 
@@ -102,6 +101,13 @@ const ActivePageMarker: FC<{
 	let activePageIndex = group.links.findIndex(link => link.href === pathname)
 	let top = offset + activePageIndex * itemHeight
 
+	useEffect(() => {
+		if (!document) return
+		document.getElementById('activePageMarker')?.scrollIntoView({
+			behavior: 'smooth',
+		})
+	}, [activePageIndex])
+
 	return (
 		<motion.div
 			layout
@@ -110,6 +116,7 @@ const ActivePageMarker: FC<{
 			animate={{ opacity: 1, transition: { delay: 0.2 } }}
 			exit={{ opacity: 0 }}
 			style={{ top }}
+			id="activePageMarker"
 		/>
 	)
 }
@@ -123,7 +130,7 @@ const NavigationGroup: FC<{
 	// The state will still update when we re-open (re-render) the navigation.
 	let isInsideMobileNavigation = useIsInsideMobileNavigation()
 	let [router, sections] = useInitialValue([useRouter(), useSectionStore(s => s.sections)], isInsideMobileNavigation)
-	const pathname = router.pathname.replace('/api-docs', '/api')
+	const pathname = router.pathname
 
 	let isActiveGroup = group.links.findIndex(link => link.href === pathname) !== -1
 
@@ -198,12 +205,7 @@ export const navigation = [
 			{ title: 'Overview', href: '/modulekit' },
 			{ title: 'Quickstart', href: '/modulekit/quick-start' },
 			{ title: 'Modules', href: '/modulekit/modules' },
-			// { title: 'ModuleKit', href: '/modules/modulekit' },
-			// { title: 'Validators', href: '/modules/validators' },
-			// { title: 'Executors', href: '/modules/executors' },
-			// { title: 'Recovery', href: '/modules/recovery' },
-			// { title: 'Hooks', href: '/modules/hooks' },
-			// { title: 'Libraries', href: '/modules/libraries' },
+			{ title: 'Tools', href: '/modulekit/tools' },
 		],
 	},
 	{
@@ -227,7 +229,9 @@ export const navigation = [
 		title: 'Tutorials',
 		links: [
 			{ title: 'Overview', href: '/tutorials' },
-			{ title: 'Building and testing a validator', href: '/tutorials/building-a-validator' },
+			{ title: 'Building modules', href: '/tutorials/building-modules' },
+			{ title: 'Testing modules', href: '/tutorials/testing-modules' },
+			{ title: 'Deploying modules', href: '/tutorials/deploying-modules' },
 		],
 	},
 	{
