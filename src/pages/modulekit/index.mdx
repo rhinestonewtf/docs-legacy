@@ -7,7 +7,7 @@ ModuleKit is a development kit for building and testing smart account modules. T
 -   **Third-party integrations**: To supercharge building modules, ModuleKit has a library of integrations (such as with DeFi protocols) and pre-built conditions for execution to make building powerful modules seamless.
 -   **Security automation**: These tools parse your module code and flag security vulnerabilities to be resolved before passing it on for a manual audit.
 
-IMG
+<Fence className="max-w-[800px] border-white">![ModuleKit overview](/images/docs/modulekit/overview.png)</Fence>
 
 Current module types supported by ModuleKit include:
 
@@ -33,7 +33,7 @@ cd module-template
 forge install
 ```
 
-## Updating
+### Updating
 
 To update the ModuleKit, run:
 
@@ -41,22 +41,22 @@ To update the ModuleKit, run:
 forge update rhinestonewtf/modulekit
 ```
 
-## Templates and testing frameworks
+### Templates and testing frameworks
 
 Rhinestone maintains a library of generalised module templates that can be used as a base layer for more complicated functions. This includes templates for basic validator and executor functions. A set of example modules can also be found in the[ modulekit-examples repo](https://github.com/rhinestonewtf/modulekit-examples). For a list of open-source modules and resources visit the [awesome-modular-accounts repo](https://github.com/rhinestonewtf/awesome-modular-accounts).
 ModuleKit also contains frameworks for running unit and integration tests against various 4337-account implementations. Today, this includes a 4337-enabled Safe and the Biconomy account, with more on the way.
 
-## Standardized interfaces
+### Standardized interfaces
 
 Certain account implementations may interface with modules differently. We abstract this away when building modules by providing standardised interfaces for different module types that work across all supported accounts.
 
-## Executors and third-party integrations
+### Executors and third-party integrations
 
 Executors open up a new paradigm for account automations. For example, an executor could enable something as simple as a limit order or as powerful as a P2P flashloan with agreement terms and execution restrictions calibrated by the end user.
 
 To make these automations fully extensible without compromising user security, ModuleKit utilises the Rhinestone ConditionManager. The Condition Manager allows users to create conditions for when an executor should be triggered. ModuleKit comes with a set of [pre-built conditions](https://github.com/rhinestonewtf/modulekit/tree/main/src/modulekit/conditions), but it’s simple for developers to create conditions from new data sources or third-party integrations.
 
-### Third-party integrations
+#### Third-party integrations
 
 <table>
 	<thead>
@@ -87,6 +87,6 @@ To make these automations fully extensible without compromising user security, M
 
 View all third party integrations of the ModuleKit [here](https://github.com/rhinestonewtf/modulekit/tree/main/src/modulekit/integrations)
 
-## Security automation
+### Security automation
 
 Audits are expensive and security is paramount to the end user. Rhinestone is building a suite of tools to automate security checks to ensure baseline security standards are met and reduce the cost associated with manual audits. **Coming soon.**
