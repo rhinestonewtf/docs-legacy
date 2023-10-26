@@ -89,17 +89,9 @@ instance.exec4337(address target, uint256 value, bytes memory data);
 
 Execute an ERC-4337 transaction on the account with and `address` target, a `uint256` value, `bytes` calldata and `bytes` signature.
 
-<CodeGroup>
-
-```solidity {{ title: 'Safe' }}
-instance.exec4337(address target, uint256 value, bytes memory data, uint8 operation, bytes memory signature);
-```
-
-```solidity {{ title: 'Biconomy' }}
+```solidity
 instance.exec4337(address target, uint256 value, bytes memory data, bytes memory signature);
 ```
-
-</CodeGroup>
 
 ### Add and remove modules to the account
 
@@ -137,17 +129,9 @@ instance.addFallback(bytes4 handleFunctionSig, bool isStatic, address handler);
 
 Get the hash of the UserOperation in order to, for example, sign it.
 
-<CodeGroup>
-
-    ```solidity {{ title: 'Safe' }}
-    instance.getUserOpHash(address target, uint256 value, bytes memory callData, uint8 operation);
-    ```
-
-    ```solidity {{ title: 'Biconomy' }}
-    instance.getUserOpHash(address target, uint256 value, bytes memory callData);
-    ```
-
-</CodeGroup>
+```solidity
+instance.getUserOpHash(address target, uint256 value, bytes memory callData);
+```
 
 ## Deploying modules
 
