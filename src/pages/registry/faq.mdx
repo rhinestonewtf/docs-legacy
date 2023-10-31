@@ -2,9 +2,13 @@
 
 ### Why is the Module Registry needed?
 
-The Module Registry allows modular smart accounts to tap into a marketplace of third-party modules. The problem that the registry solves is that allowing users to install arbitrary third-party modules into their smart accounts presents a huge security risk, very likely leading to accounts being compromised and funds being lost.
+The Module Registry allows modular smart accounts to tap into a marketplace of third-party modules in a secure way. The problem that the Registry solves is that allowing users to install arbitrary third-party modules into their smart accounts presents a huge security risk, very likely leading to accounts being compromised and funds being lost.
 
 The Module Registry helps overcome these issues by allowing users to delegate their trust to different security entities that sit on top of the Module Registry and verify that modules conform to certain standards and are secure.
+
+### How does the Module Registry relate to ERC-6900?
+
+[ERC-6900](https://eips.ethereum.org/EIPS/eip-6900) is an attempt to standardize modular smart accounts. In particular, module interfaces and how different module functions are called. In a world where ERC-6900 is finalised and fully adopted, we will still require a solution for module security to ensure that if a user installs a module built by a third-party developer they are able to gain assurances (without needing to inspect the code) that the module is not malicious.
 
 ### Why are we proposing that the Module Registry is a singleton that others build on top of instead of spinning up their own registry?
 
@@ -14,9 +18,9 @@ One solution to this would be to allow different actors to spin up their own reg
 
 1. **Fragmentation of "module liquidity":** Developers need to deploy across multiple registries, security entities need to audit multiple versions of the same code and wallets need to manage a greater number of registry integrations.
 2. **Vendor lock-in:** Multiple registries will likely lead to higher switching costs for users in the form of search (discovery) and gas fees.
-3. **Reduced security:** Determining whether a user's account actually queries the right registry is more complex leading to a greater attack surface.
+3. **Reduced security:** Determining whether a user's account actually queries the right registry is more complex leading to a greater attack surface and ongoing security will take longer to propagate across different registries.
 
-We believe that the registry should be a singleton that allows different entities to plug in and offer their own security guarantees. This way, users can switch between different security entities at querying-time without having to switch registries. Developers can deploy to one place and maximise distribution. Switching costs, and therefore vendor-lockin, can be minimised to ensure all smart account users have access to the best modules. As a result, this registry should be open, permissionless and free to build on top of.
+We believe that the Registry should be a singleton that allows different entities to plug in and offer their own security guarantees. This way, users can switch between different security entities at querying-time without having to switch registries. Developers can deploy to one place and maximise distribution. Switching costs, and therefore vendor-lockin, can be minimised to ensure all smart account users have access to the best modules. As a result, this registry should be open, permissionless and free to build on top of.
 
 ### How is the Module Registry different to the Ethereum Attestation Service?
 
@@ -24,13 +28,14 @@ The Module Registry takes a lot of inspiration from EAS.
 However, EAS has a few shortcomings that make it unattractive as an attestation service for smart account modules.
 
 -   missing ERC1271 support
--   no hard link between deployed modules and schemas
--   no native crosschain attestation propagation
+-   no hard link between deployed modules, schemas and resolvers
+-   expensive to query at Module installation or runtime
+-   unable to deploy Modules through EAS
 
-Further, the Module Registry does not aim to build a general-purpose attestations service. The goal is to build a service that is flexible and able to serve many different opinions about the lifecycle of a smart account module from development to installation, yet is opinionated enough to add value and help push the modular AA ecosystem forward.
+Further, the Module Registry does not aim to build a general-purpose attestations service. The goal is to build a service that is flexible and able to serve many different opinions about the lifecycle of a smart account module from development to installation, yet is opinionated enough to add value and help push the modular smart account ecosystem forward.
 
 ### How is the on-going development of the Module Registry managed?
 
-The Module Registry is a public good for the Ethereum ecosystem. Built with the intention of benefiting all AA builders across both the infra and application layer. Therefore, the intention is for the Module Registry to be ownerless and community operated from the outset.
+The Module Registry is a public good for the Ethereum ecosystem. Built with the intention of benefiting all smart account builders across both the infra and application layer. Therefore, the intention is for the Module Registry to be ownerless and community operated from the outset. We are also supported by the ERC-4337 team at the Ethereum Foundation through a grant to continue building out and improving the Registry.
 
-The Module Registry is currently under development and will be launched as a singleton. We welcome any feedback and invite all teams to assist with the development of V1.
+The Module Registry is currently under development and we welcome any feedback and contributions. In order to find out how best to contribute, view the guide on the [Registry Github](https://github.com/rhinestonewtf/registry/).

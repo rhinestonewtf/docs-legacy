@@ -216,13 +216,11 @@ export const navigation = [
 		title: 'Module Registry',
 		links: [
 			{ title: 'Overview', href: '/registry' },
-			// { title: 'Core Concepts', href: '/registry/concepts' },
-			{ title: 'Schema Registration', href: '/registry/schema-registration' },
-			{ title: 'Module Registration', href: '/registry/module-registration' },
+			{ title: 'Schemas and Resolvers', href: '/registry/schemas-and-resolvers' },
+			{ title: 'Modules', href: '/registry/modules' },
 			{ title: 'Attestations', href: '/registry/attestations' },
-			// { title: 'Querying', href: '/registry/querying' },
+			{ title: 'Querying', href: '/registry/querying' },
 			{ title: 'FAQ', href: '/registry/faq' },
-			// { title: 'Permissions', href: '/registry/permissions' },
 		],
 	},
 	{

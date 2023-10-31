@@ -12,47 +12,39 @@ export const RegistryConceptsList: FC<{}> = () => {
 
 			<div className="mt-2 grid grid-cols-1 gap-4 lg:grid-cols-2">
 				<UseCasesListItem
+					color="#8080FF"
+					icon={<LuCode2 size={20} color="white" />}
+					title="Modules"
+					description="Modules are smart contracts that hold self-contained features for smart accounts. These module addresses and their deployment metadata are stored on the Registry, allowing attesters to make onchain assertions about the modules that can then be queried by integrated accounts."
+					items={[]}
+					linkHref="/registry/module-registration"
+				/>
+
+				<UseCasesListItem
 					color="#4940E0"
-					// image="/images/docs/use-cases/icons/voting-platforms.svg"
 					icon={<PiSignatureBold size={20} color="white" />}
 					title="Attestations"
-					description="Attestations are onchain assertions made by an entity (attester) about the security of Account Abstraction modules, serving as a seal of authenticity for the associated data. Each attestation consists of two primary elements: the schema and the attestation data."
+					description="Attestations are onchain assertions made by an entity (attester) about modules. Each attestation consists of two primary elements: the schema and the attestation data."
 					items={[]}
 					linkHref="/registry/attestations"
 				/>
 
 				<UseCasesListItem
 					color="#487CA5"
-					// image="/images/docs/use-cases/icons/marketplaces.svg"
 					icon={<CgDatabase size={20} color="white" />}
 					title="Schema"
-					description="Schemas are predefined structures utilized for the formation and verification of attestations. They establish a shared format and structure for attestation data, facilitating the creation and verification of various attestations in a trustless fashion."
+					description="Schemas are predefined structures utilized for the creation and verification of attestation data. They allow attesters to use different attestation formats for different use cases, making the Module Registry unopinionated towards how attestation data needs to look."
 					items={[]}
 					linkHref="/registry/schema-registration"
 				/>
 
 				<UseCasesListItem
 					color="#00C313"
-					// image="/images/docs/use-cases/icons/events.svg"
 					icon={<TbUserShield size={20} color="white" />}
 					title="Attesters"
-					description="
-          Attesters are individuals or organizations responsible for creating and signing attestations. They publish the attestation on-chain, making it universally accessible for verification.
-          "
+					description="Attesters are individuals or organizations responsible for creating and signing attestations. They publish the attestation on-chain to be stored on the Registry and queried by users."
 					items={[]}
 					linkHref="/registry/attestations"
-				/>
-
-				<UseCasesListItem
-					color="#8080FF"
-					// image="/images/docs/use-cases/icons/wealth-distribution.svg"
-					icon={<LuCode2 size={20} color="white" />}
-					title="Modules"
-					description="
-          Modules are smart contracts that act as modular components that can be added to smart accounts. These modules and their deployment metadata are stored in the registry. The registry maintains cross-chain consistency, ensuring that users experience the same level of security and functionality, irrespective of the chain they're on.
-          "
-					items={[]}
-					linkHref="/registry/module-registration"
 				/>
 
 				{/* <UseCasesListItem
