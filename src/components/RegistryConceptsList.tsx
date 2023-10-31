@@ -15,7 +15,7 @@ export const RegistryConceptsList: FC<{}> = () => {
 					color="#8080FF"
 					icon={<LuCode2 size={20} color="white" />}
 					title="Modules"
-					description="Modules are smart contracts that hold self-contained features for smart accounts. These modules and their deployment metadata are stored on the Registry, allowing others to attest to them in order for users to find out whether a module is secure or not."
+					description="Modules are smart contracts that hold self-contained features for smart accounts. These module addresses and their deployment metadata are stored on the Registry, allowing attesters to make onchain assertions about the modules that can then be queried by integrated accounts."
 					items={[]}
 					linkHref="/registry/module-registration"
 				/>
@@ -24,7 +24,7 @@ export const RegistryConceptsList: FC<{}> = () => {
 					color="#4940E0"
 					icon={<PiSignatureBold size={20} color="white" />}
 					title="Attestations"
-					description="Attestations are onchain assertions made by an entity (attester) about the security of modules. Each attestation consists of two primary elements: the schema and the attestation data."
+					description="Attestations are onchain assertions made by an entity (attester) about modules. Each attestation consists of two primary elements: the schema and the attestation data."
 					items={[]}
 					linkHref="/registry/attestations"
 				/>
@@ -33,7 +33,7 @@ export const RegistryConceptsList: FC<{}> = () => {
 					color="#487CA5"
 					icon={<CgDatabase size={20} color="white" />}
 					title="Schema"
-					description="Schemas are predefined structures utilized for the creation and verification of attestation data. They allow attesters to use different attestation formats for different use cases, making the Registry unopinionated towards how attestation data needs to look."
+					description="Schemas are predefined structures utilized for the creation and verification of attestation data. They allow attesters to use different attestation formats for different use cases, making the Module Registry unopinionated towards how attestation data needs to look."
 					items={[]}
 					linkHref="/registry/schema-registration"
 				/>

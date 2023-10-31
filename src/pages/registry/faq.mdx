@@ -6,6 +6,10 @@ The Module Registry allows modular smart accounts to tap into a marketplace of t
 
 The Module Registry helps overcome these issues by allowing users to delegate their trust to different security entities that sit on top of the Module Registry and verify that modules conform to certain standards and are secure.
 
+### How does the Module Registry relate to ERC-6900?
+
+[ERC-6900](https://eips.ethereum.org/EIPS/eip-6900) is an attempt to standardize modular smart accounts. In particular, module interfaces and how different module functions are called. In a world where ERC-6900 is finalised and fully adopted, we will still require a solution for module security to ensure that if a user installs a module built by a third-party developer they are able to gain assurances (without needing to inspect the code) that the module is not malicious.
+
 ### Why are we proposing that the Module Registry is a singleton that others build on top of instead of spinning up their own registry?
 
 A very important property for any entity that allows users to delegate trust is that it is permissionless. This means, that users should not be vendor-locked into specific trusted entities. They should be able to switch between different entities at any time.

@@ -1,10 +1,10 @@
-# Querying the Registry
+# Querying
 
-In order for a smart account to check the security of a Module, it will need to query the Registry either during the installation of the Module or during the execution of the Module (or both). The Registry provides a simple interface for querying attestations, which is compliant with [ERC-7484](https://eips.ethereum.org/EIPS/eip-7484).
+In order for a smart account to check the security of a Module, it will need to query the Module Registry either during the installation or execution of the module (or both). The Registry provides a simple interface for querying attestations, which is compliant with [ERC-7484](https://eips.ethereum.org/EIPS/eip-7484).
 
 ## Querying Attestations
 
-A smart account adapter (as defined by ERC-7484) can quey the Registry using one of two functions:
+A registry adapter (as defined by ERC-7484) can quey the Module Registry using one of two functions:
 
 `check` - Returns the timestamp of the attestation for a given Module and attester. It also verifies that the attestation exists and has not been revoked and reverts otherwise.
 
@@ -31,7 +31,7 @@ function checkN(
     returns (uint256[] memory attestedAtArray);
 ```
 
-Additionally, the Registry also exposes a function that is not mandated by ERC-7484: `checkNUnsafe`. This function is identical to `checkN` except that it does not revert if an attestation by an attester in the list does not exist or has been revoked. Instead, it only counts them as a non-existent attestation and returns the timestamp of the attestation as 0. As the name says, this function is less safe than `checkN` and should only be used if there is sufficient reason, such as when an adapter wants to perform custom validation logic.
+Additionally, the Module Registry also exposes a function that is not mandated by ERC-7484: `checkNUnsafe`. This function is identical to `checkN` except that it does not revert if an attestation by an attester in the list does not exist or has been revoked. Instead, it only counts them as a non-existent attestation and returns the timestamp of the attestation as 0. As the name says, this function is less safe than `checkN` and should only be used if there is sufficient reason, such as when an adapter wants to perform custom validation logic.
 
 ```solidity
 function checkNUnsafe(

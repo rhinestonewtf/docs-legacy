@@ -1,12 +1,8 @@
-# Modules
+# Module Registration
 
-Modules are smart contracts that hold self-contained features for smart accounts. These modules and their deployment metadata are stored on the Registry, allowing others to attest to them in order for users to find out whether a module is secure or not.
+Modules are smart contracts that hold self-contained features for smart accounts. These modules and their deployment metadata are stored on the Registry, allowing others to attest to them in order for users to find out whether a module is secure or not. Modules can be registered on the Registry in two different ways: during and after deployment.
 
-## Module Registration
-
-Modules can be registered on the Registry in two different ways: during and after deployment.
-
-### During Deployment
+## During Deployment
 
 You can register a Module on the Registry by deploying it through one of the Registry's deployment functions. These functions are:
 
@@ -57,7 +53,7 @@ function deployViaFactory(
     returns (address moduleAddr);
 ```
 
-### After Deployment
+## After Deployment
 
 Modules can also be registered after they have already been deployed. This is done by calling the `register` function on the Registry.
 
