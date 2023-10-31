@@ -1,4 +1,4 @@
-# rhinestone documentation
+# Rhinestone documentation
 
 This repository contains the technical documentation for rhinestone and the rhinestone registry.
 
