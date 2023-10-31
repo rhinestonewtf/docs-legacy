@@ -1,17 +1,10 @@
 # Overview
 
-<Note title="FYI">
-	We are still brainstorming a name for this entity, Module Registry is a temporary placeholder. We'd appreciate any
-	suggestions!
-</Note>
-
 ## Introduction
 
-The Module Registry plays a crucial role in advancing Ethereum's Account Abstraction capabilities. Modular Account Abstraction provides a platform for open innovation within the wallet stack. However, it also introduces several new security concerns and attack vectors.
+The goal of the Module Registry is to unleash open innovation within modular smart accounts through a decentralised trust delegation mechanism (as discussed in our recent [blog post](https://mirror.xyz/konradkopp.eth/7Q3TrMFgx2VbZRKa7UEaisIMjimpMABiqGYo00T9egA)). It looks to solve the new security concerns that arise from modularising smart accounts by allowing trusted entities, like auditors, to make statements about the security of smart account modules. Users can then query these statements on-chain in order to be sure that a module they are about to install or use is still secure.
 
-The goal of the Module Registry is to unleash open innovation within modular smart accounts through a decentralised trust delegation mechanism (as discussed in our recent [blog post](https://mirror.xyz/konradkopp.eth/7Q3TrMFgx2VbZRKa7UEaisIMjimpMABiqGYo00T9egA)). The Module Registry looks to solve these new security concerns by facilitating an open, permissionless platform for registering, verifying, and propagating the security attestations of smart account modules across various EVM chains. This allows users to easily verify the security of a smart account module before installation and thus allows smart account providers to securely tap into a marketplace for third-party modules.
-
-To prevent vendor-lock-in and module fragmentation, the Module Registry is a public good that is open, permissionless and free to use and build on top of.
+Specifically, the Module Registry is a store of security statements about modules, which we call attestations. These attestations are made by trusted entities, called attesters, and are stored on-chain. The Module Registry also provides a way for users to query these attestations on-chain in a cheap way in order to use them to make decisions about whether to install or use a module. To prevent vendor-lock-in and module fragmentation, the Module Registry is a public good that is open, permissionless and free to use and build on top of.
 
 <Note title="FYI">
 	The Module Registry is currently in **alpha** and active development. Do not use the contracts in production.
@@ -21,15 +14,6 @@ To prevent vendor-lock-in and module fragmentation, the Module Registry is a pub
 
 <RegistryConceptsList />
 
-## Architecture walkthrough
+## High level architecture
 
-<EmbeddedVideo
-	url="https://www.loom.com/embed/f1daa7a8ce42432e94ffc89bf5394c81?sid=6588141e-5b27-44e4-8a5c-e5951d3a2cd4"
-	title="Registry walkthrough"
-/>
-
-The video above is a walkthrough of the Module Registry and its current capabilities. As explained, the interactions between the Module Registry, SchemaResolvers, and Hashi form the backbone of this system, paving the way for interoperability and composability amongst different attestation protocols and solutions. The graph below shows these connections and interdependencies in detail.
-
-## Architecture chart
-
-<Fence className="bg-gray-100">![Attestation Flow](/images/docs/introduction/complete-flow.svg)</Fence>
+@Kurt do you think we should have a high level overview here
