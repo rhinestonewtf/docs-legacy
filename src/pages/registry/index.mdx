@@ -16,11 +16,11 @@ Specifically, the Module Registry is a list of (security) statements about modul
 
 ## High level architecture
 
-The Registry is a single contract that can be extended to support custom flows. For example, a Schema Validator can extend the Registry to verify that Attestations made on a specific Schema adhere to its' definitions. A Resolver can introduce custom logic to, for example, enforce monetization when making an Attestation or pay out a bounty when revoking an Attestation. For readability, the Registry contract is broken down into multiple sub-contracts that are grouped by their domains. The 4 key domains are:
+The Module Registry is a single contract that can be extended to support custom flows. For example, a Schema Validator can extend the Module Registry to verify that Attestations made on a specific Schema adhere to its' definitions. A Resolver can introduce custom logic to, for example, enforce monetization when making an Attestation or pay out a bounty when revoking an Attestation. For readability, the Module Registry contract is broken down into multiple sub-contracts that are grouped by their domains. The 4 key domains are:
 
 -   **Schema**: Manages Schemas and Resolvers.
 -   **Module**: Manages module deployment, registration and fetching.
 -   **Attestation**: Manages attestations and revocations for modules.
--   **Query**: Manages the querying of the Registry for attestations.
+-   **Query**: Manages the querying of the Module Registry for attestations.
 
 This section of the documentation has been set up to mirror these domains, so that each domain has its' own page. Read on for an exaplanation of each domain and or check out the [Module Registry repository](https://github.com/rhinestonewtf/registry/) to jump right into the code.
