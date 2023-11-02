@@ -1,8 +1,9 @@
 import clsx from 'clsx'
 import Image from 'next/image'
 import { Button } from './Button'
+// import logo from 'public/rhinestone.png'
+import logo from 'public/logo_full.svg'
 import { Link } from '@/components/Link'
-import logo from 'public/rhinestone.png'
 import GitHubIcon from './icons/GitHubIcon'
 import { MobileSearch, Search } from './Search'
 import { useMobileNavigationStore } from '@/components/MobileNavigation'
@@ -65,17 +66,17 @@ export const Header: ForwardRefExoticComponent<{ className?: string }> = forward
 			/>
 			<div className="hidden lg:flex">
 				<Link href="/" aria-label="Home" className="flex flex-row items-center">
-					<Image src={logo} className="h-10 w-10 rounded-xl" alt="rhinestone" />
-					<span className="text-xl font-bold ml-4">rhinestone</span>
-					<span className="flex ml-2 bg-primary/20 text-primary rounded-full px-3 py-0 text-[0.8rem] font-semibold">
+					<Image src={logo} className="h-12 w-full rounded-xl" alt="rhinestone" />
+					{/* <span className="text-xl font-bold ml-4">rhinestone</span> */}
+					{/* <span className="flex ml-2 bg-primary text-white rounded-full px-3 py-0 text-[0.8rem] font-semibold">
 						alpha
-					</span>
+					</span> */}
 				</Link>
 			</div>
-			<div className="flex items-center gap-5 lg:hidden">
+			<div className="flex items-center gap-2 lg:hidden">
 				<MobileNavigation />
 				<Link href="/" aria-label="Home">
-					<Image src={logo} className="h-6 w-6 rounded-lg" alt="rhinestone" />
+					<Image src={logo} className="h-10 w-full rounded-lg" alt="rhinestone" />
 				</Link>
 			</div>
 			<div className="flex items-center gap-5">

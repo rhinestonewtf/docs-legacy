@@ -44,11 +44,11 @@ module.exports = {
 			gridTemplateRows: gridTemplates,
 
 			colors: {
-				primary: '#4940E0',
+				primary: '#4f41ef',
 				accents: {
 					info: {
 						700: '#506DFF',
-					}
+					},
 				},
 				gray: {
 					25: '#FBFBFC',
