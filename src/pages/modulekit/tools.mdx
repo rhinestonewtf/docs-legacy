@@ -107,6 +107,30 @@ Remove a validator to the account by providing the `address` of the validator.
 instance.removeValidator(address validator);
 ```
 
+Check if a validator is enabled on the account by providing the `address` of the validator.
+
+```solidity
+instance.isValidatorEnabled(address validator);
+```
+
+Add a session key using the session key manager, by providing the session key config data.
+
+```solidity
+instance.addSessionKey(uint256 validUntil, uint256 validAfter, address sessionValidationModule, bytes memory sessionKeyData);
+```
+
+Add a hook to the account by providing the `address` of the hook. (Note: this is not supported on all accounts yet)
+
+```solidity
+instance.addHook(address hook);
+```
+
+Check if a hook is enabled on the account by providing the `address` of the hook. (Note: this is not supported on all accounts yet)
+
+```solidity
+instance.isHookEnabled(address hook);
+```
+
 Add an executor to the account by providing the `address` of the executor.
 
 ```solidity
@@ -119,7 +143,19 @@ Remove an executor to the account by providing the `address` of the executor.
 instance.removeExecutor(address executor);
 ```
 
-Add a fallback handler to the account by providing the `bytes4` function signature, a `bool` whether the method is static (view) or not and the `address` of the handler.
+Check if an executor is enabled on the account by providing the `address` of the executor.
+
+```solidity
+instance.isExecutorEnabled(address executor);
+```
+
+Set a condition on the ConditionManager by providing the `address` of the executor and the `ConditionConfig[]` condition data.
+
+```solidity
+instance.setCondition(address executor, ConditionConfig[] conditions);
+```
+
+Add a fallback handler to the account by providing the `bytes4` function signature, a `bool` whether the method is static (view) or not and the `address` of the handler. (Note: this is not supported on all accounts yet)
 
 ```solidity
 instance.addFallback(bytes4 handleFunctionSig, bool isStatic, address handler);
@@ -131,6 +167,24 @@ Get the hash of the UserOperation in order to, for example, sign it.
 
 ```solidity
 instance.getUserOpHash(address target, uint256 value, bytes memory callData);
+```
+
+Gets the formatted UserOperation with calldata.
+
+```solidity
+instance.getFormattedUserOp(address target, uint256 value, bytes memory callData);
+```
+
+Encodes the chosen validator for a UserOperation.
+
+```solidity
+instance.encodeValidator(bytes memory signature, address validator);
+```
+
+Expects an ERC-4337 transaction to revert, similar to Foundry's `vm.expectRevert()`.
+
+```solidity
+instance.expect4337Revert();
 ```
 
 ## Deploying modules
