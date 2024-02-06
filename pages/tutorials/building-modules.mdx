@@ -1,0 +1,213 @@
+# Building modules
+
+This tutorial will walk you through building a simple module. You can choose what kind of module you want to build. For more information about the different kinds of modules, check out the [modules section](/modulekit/modules) of the docs.
+
+This tutorial uses Foundry, a toolchain to simplify and speed up smart contract development. If you are not familiar with Foundry, feel free to check out [their docs](https://book.getfoundry.sh/).
+
+    If you do not have foundry installed, run the following command and follow the onscreen instructions: ```bash curl
+    -L https://foundry.paradigm.xyz | bash ```
+
+## Installation
+
+1. Get started with ModuleKit by using our template or adding it into an existing foundry project:
+
+   ```bash {{ title: "template" }}
+   git clone https://github.com/rhinestonewtf/module-template.git
+   cd module-template
+   forge install
+   ```
+
+   ```bash {{ title: "existing foundry project" }}
+   forge install rhinestonewtf/modulekit
+   ```
+
+## Building a module
+
+In this section, we will walk you through building a simple validator module. This validator module allows the owner of an account to sign transactions using an EOA.
+
+2. Duplicate the file `src/validators/ValidatorTemplate.sol` and rename it to `SimpleValidator.sol` and the contract to `SimpleValidator`.
+
+   If you added the ModuleKit to an existing project, you will need to create the `SimpleValidator.sol` file yourself
+   and copy the code from
+   [here](https://github.com/rhinestonewtf/module-template/tree/main/src/validators/ValidatorTemplate.sol).
+
+3. Add the following import statement to the top of the file:
+
+```solidity
+import {ECDSA} from "solady/utils/ECDSA.sol";
+```
+
+and add the following code to the top of the contract:
+
+```solidity
+contract SimpleValidator is BaseValidator {
+    using ECDSA for bytes32;
+
+    mapping(address => address) public owners;
+
+    function setOwner(address owner) external {
+        owners[msg.sender] = owner;
+    }
+
+    ...
+}
+```
+
+4. Edit the contract functions to match the following code:
+
+**validateUserOp**
+
+```solidity
+function validateUserOp(UserOperation calldata userOp, bytes32 userOpHash)
+    external
+    view
+    override
+    returns (uint256)
+{
+    bytes32 hash = userOpHash.toEthSignedMessageHash();
+    (bytes memory sig, ) = abi.decode(userOp.signature, (bytes, address));
+
+    if (owners[msg.sender] != hash.recover(sig)) {
+        return VALIDATION_FAILED;
+    }
+    return VALIDATION_SUCCESS;
+}
+```
+
+This function validates the userOperation by checking that the signature is valid and made by the owner of the account.
+
+**isValidSignature**
+
+```solidity
+function isValidSignature(bytes32 signedDataHash, bytes memory moduleSignature)
+    public
+    view
+    override
+    returns (bytes4)
+{
+    bytes32 hash = signedDataHash.toEthSignedMessageHash();
+    if (owners[msg.sender] != hash.recover(moduleSignature)) {
+        return 0xffffffff;
+    }
+    return ERC1271_MAGICVALUE;
+}
+```
+
+This function checks that the signature is valid and made by the owner of the account. This allows the validator to be used as an [EIP-1271](https://eips.ethereum.org/EIPS/eip-1271) validator.
+
+### Congratulations, you just built your first validator!
+
+In this section, we will walk you through building a simple executor module. This executor module allows the owner of an account to define a schedule that will send a specified amount of tokens to a specified address at a specified frequency.
+
+2. Duplicate the file `src/executors/ExecutorTemplate.sol` and rename it to `SimpleExecutor.sol` and the contract to `SimpleExecutor`.
+
+   If you added the ModuleKit to an existing project, you will need to create the `SimpleExecutor.sol` file yourself
+   and copy the code from
+   [here](https://github.com/rhinestonewtf/module-template/tree/main/src/executors/ExecutorTemplate.sol).
+
+3. Add the following import statements and struct to the top of the file:
+
+```solidity
+import { ERC20ModuleKit } from "modulekit/modulekit/integrations/ERC20Actions.sol";
+import { IERC20 } from "forge-std/interfaces/IERC20.sol";
+
+struct SendSchedule {
+    address recipient;
+    IERC20 token;
+    uint256 amount;
+    uint16 frequency; // in days
+    uint48 lastExecuted;
+}
+```
+
+and add the following code before the first function in your contract:
+
+```solidity
+contract SimpleExecutor is ExecutorBase {
+    ...
+
+    mapping(address account => SendSchedule[] schedules) public schedules;
+
+    ...
+}
+```
+
+4. Remove the `executeAction` function (it is not needed anymore) and then add the following functions:
+
+**addSchedule**
+
+```solidity
+function addSchedule(
+    address recipient,
+    IERC20 token,
+    uint256 amount,
+    uint16 frequency
+)
+    public
+    returns (uint256 index)
+{
+    if (address(token) == address(0)) revert InvalidTokenAddress();
+    if (recipient == address(0)) revert InvalidRecipientAddress();
+    if (amount == 0) revert InvalidAmount(amount);
+
+    index = schedules[msg.sender].length;
+    schedules[msg.sender].push(SendSchedule(recipient, token, amount, frequency, 0));
+}
+```
+
+This function adds a new schedule to the executor.
+
+**executeSchedule**
+
+```solidity
+function executeSchedule(
+    IExecutorManager manager,
+    address account,
+    uint256 scheduleIndex
+)
+    public
+{
+    SendSchedule memory schedule = schedules[account][scheduleIndex];
+
+    if (!_scheduleIsDue(schedule)) {
+        revert ScheduleNotDueYet(account, scheduleIndex);
+    }
+
+    schedule.lastExecuted = uint48(block.timestamp);
+
+    ExecutorAction memory sendAction = ERC20ModuleKit.transferAction({
+        token: schedule.token,
+        to: schedule.recipient,
+        amount: schedule.amount
+    });
+
+    manager.exec(account, sendAction);
+
+    emit DCAExecuted(account, scheduleIndex);
+}
+```
+
+This function executes a schedule.
+
+**\_scheduleIsDue**
+
+```solidity
+function _scheduleIsDue(SendSchedule memory schedule) internal view returns (bool) {
+    return block.timestamp > schedule.lastExecuted + schedule.frequency * 1 days;
+}
+```
+
+This function checks if a schedule is due.
+
+Finally, add the following event and errors to the bottom of the contract:
+
+```solidity
+event DCAExecuted(address account, uint256 scheduleIndex);
+
+error InvalidTokenAddress();
+error InvalidRecipientAddress();
+error InvalidAmount(uint256 amount);
+error ScheduleNotDueYet(address account, uint256 scheduleIndex);
+```
+
+### Congratulations, you just built your first executor!

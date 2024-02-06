@@ -1,6 +1,10 @@
 {
   "index": "Introduction",
-  "tooling": "Tooling",
-  "extensions": "Extensions",
-  "resources": "Resources"
+  "overview": "Overview",
+  "getting-started": "Getting started",
+  "rhinestone-protocol": "Rhinestone Protocol",
+  "modulekit": "ModuleKit",
+  "registry": "Registry",
+  "tutorials": "Tutorials",
+  "further-reading": "Resources"
 }

@@ -1,0 +1,25 @@
+# Rhinestone Protocol
+
+The Rhinestone Protocol is an open and permissionless system of smart contracts that enables a modular ecosystem for smart accounts.
+
+## Architecture
+
+The Rhinestone Protocol consists of several key components that facilitates the lifecycle of smart account modules from development through to account installation and monetization. The protocol is account implementation agnostic, with the primary objective of being a credibly neutral middleware layer that solves user security, account portability and account extensibility.
+
+![Protocol overview](/protocol.png)
+
+## Accounts
+
+Accounts are smart contracts that are used as the user’s account (“smart accounts”). These smart accounts are module enabled. The protocol is account-agnostic with the goal of being interoperable with all modular smart account implementations.
+
+## Modules
+
+Modules are smart contracts that extend the functionality of a user’s account. We categorize modules into four different types; validators, executors, hooks and recovery (explored in detail [here](/modulekit/modules)). Rhinestone will add additional module types as they are formulated.
+
+## Module Registry
+
+The Module Registry is the foundational layer to the module marketplace. It’s primary function is to enforces standards and security guarantees. Importantly, the Module Registry is ownerless, permissionless and free, giving developers, auditors, vendors and users maximum flexibility within the module marketplace.
+
+## Adapters
+
+Adapters are the communication layer that exist between Accounts and the Module Registry. The Adapter allows vendors or users to specify their security postures and ensure that modules meet a prescribed set of security rules and guidelines. Learn more about Registry Adapters by reading [ERC-7484](https://eips.ethereum.org/EIPS/eip-7484), which we recently drafted and shared to get feedback from the community.

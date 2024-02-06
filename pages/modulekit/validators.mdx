@@ -1,0 +1,87 @@
+# Validators
+
+Validators are smart account modules that are called during the [validation phase of a UserOperation](/modules#validation-phase). This means that their primary function is to verify the signature of a UserOperation and determine whether it is valid and should be executed. As a result, validators are the primary mechanism for enforcing access control on a smart account and are highly security critical.
+
+## Building a validator
+
+In order to build a compliant validator you need to ensure that it:
+
+-   Inherits from the `BaseAuthorizationModule` contract.
+-   Implements the following functions:
+    -   `validateUserOp(UserOperation calldata userOp, bytes32 userOpHash)`
+    -   `isValidSignature(bytes32 signedDataHash, bytes memory moduleSignature)`
+
+The template for a compliant validator (without actual logic) looks like this:
+
+```solidity
+contract ValidatorTemplate is BaseAuthorizationModule {
+    /**
+     * @dev validates userOperation
+     * @param userOp User Operation to be validated.
+     * @param userOpHash Hash of the User Operation to be validated.
+     * @return sigValidationResult 0 if signature is valid, 1 otherwise.
+     */
+    function validateUserOp(
+        UserOperation calldata userOp,
+        bytes32 userOpHash
+    )
+        external
+        view
+        virtual
+        returns (uint256)
+    {
+        // Add validation logic here
+        return VALIDATION_SUCCESS;
+    }
+
+    /**
+     * @dev validates a 1271 signature request
+     * @param signedDataHash Hash of the signed data.
+     * @param moduleSignature Signature to be validated.
+     * @return eip1271Result 0x1626ba7e if signature is valid, 0xffffffff otherwise.
+     */
+    function isValidSignature(
+        bytes32 signedDataHash,
+        bytes memory moduleSignature
+    )
+        public
+        view
+        virtual
+        override
+        returns (bytes4)
+    {
+        // Add signature validation logic here
+        return EIP1271_MAGIC_VALUE;
+    }
+}
+```
+
+## Validator restrictions
+
+### Storage access
+
+ERC-4337 restricts storage access during the validation phase in order to protect bundlers from denial-of-service attacks. More specifically, the only storage slots that can be accessed are:
+
+1. All slots of the account `A` itself.
+2. Slot `A` (address of the account) on any other contract.
+3. Slots of type `keccak256(A || X) + n` on any other address. (to cover `mapping(address => value)`, which is usually used for balance in ERC-20 tokens). `n` is an offset value up to 128, to allow accessing fields in the format `mapping(address => struct)`.
+
+For validators that are executed using `CALL`, this means that the only storage slots that can be accessed are slots of type `mapping(address => value)` or `mapping(address => struct)`. By using `DELEGATECALL`, these storage restrictions could be bypassed since the validator would be accessing storage slots on the account itself. However, as of now, using `DELEGATECALL` is highly discouraged because of the security vulnerabilities that it introduces.
+
+We are currently working on different solutions to make it easier for validator developers to use dynamic data types. To read more about these storage restrictions, visit the [section on the ERC-4337 specs](https://eips.ethereum.org/EIPS/eip-4337#storage-associated-with-an-address).
+
+### Forbidden Opcodes
+
+ERC-4337 also restricts the use of certain opcodes during the validation phase. They are: `GASPRICE`, `GASLIMIT`, `DIFFICULTY`, `TIMESTAMP`, `BASEFEE`, `BLOCKHASH`, `NUMBER`, `SELFBALANCE`, `BALANCE`, `ORIGIN`, `GAS`, `CREATE`, `COINBASE` and `SELFDESTRUCT`. These opcodes are forbidden because their outputs may differ between simulation and execution, so simulation of calls using these opcodes does not reliably tell what would happen if these calls are later done on-chain. Learn more about these opcodes and what they do using [this reference](https://evm.codes).
+
+Exceptions to the forbidden opcodes include:
+
+-   A single `CREATE2` is allowed if `op.initcode.length != 0` and must result in the deployment of a previously-undeployed `UserOperation.sender`.
+-   `GAS` is allowed if followed immediately by one of { `CALL`, `DELEGATECALL`, `CALLCODE`, `STATICCALL` }. This means that making calls is allowed, using `gasleft()` or `GAS` opcode directly is forbidden.
+
+See more information in the [ERC-4337 specs](https://eips.ethereum.org/EIPS/eip-4337#forbidden-opcodes).
+
+## Validator examples
+
+-   Webauthn validator
+-   Session key validator

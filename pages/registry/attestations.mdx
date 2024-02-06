@@ -1,0 +1,206 @@
+# Attestations
+
+Attestations are onchain assertions made by an entity, the attester, about modules. Each attestation consists of two primary elements: the schema and the attestation data. The Schema defines the format of the attestaion data in the form of an ABI specification. The attestation data is the actual data being attested, which is ABI-encoded according to the schema.
+
+After an Attestation has been created, it can later be revoked by the original attester or another permitted party. This is to ensure ongoing security for Modules. Generally, attestations can be created or revoked in three different ways:
+
+-   **Directly** - The attester directly creates or revokes an attestation.
+-   **Delegated** - The attester delegates the creation or revocation of an attestation to another entity.
+-   **List** - The attester creates a list of attestations or revocations that are submitted in one go (this is useful for gas efficiency and can also be used in conjunction with delegation).
+
+## Creating Attestations
+
+The Module Registry provides a simple interface for creating attestations. The general struct for creating attestations is:
+
+```solidity
+struct AttestationRequestData {
+    address subject; // The subject of the attestation.
+    uint48 expirationTime; // The time when the attestation expires (Unix timestamp).
+    uint256 value; // An explicit ETH amount to send to the resolver. This is important to prevent accidental user errors.
+    bytes data; // Custom attestation data.
+}
+```
+
+The functions for creating attestations are:
+
+### Direct Attestations
+
+`attest` - Creates a single attestation by the caller.
+
+```solidity
+function attest(
+    AttestationRequest calldata request
+)
+    external
+    payable;
+```
+
+where `AttestationRequest` is:
+
+```solidity
+struct AttestationRequest {
+    SchemaUID schemaUID; // The unique identifier of the schema.
+    AttestationRequestData data; // The arguments of the attestation request.
+}
+```
+
+`multiAttest` - Creates multiple attestations by the caller.
+
+```solidity
+function multiAttest(
+    MultiAttestationRequest[] calldata requests
+)
+    external
+    payable;
+```
+
+where `MultiAttestationRequest` is:
+
+```solidity
+struct MultiAttestationRequest {
+    SchemaUID schemaUID; // The unique identifier of the schema.
+    AttestationRequestData[] data; // The arguments of the attestation request.
+}
+```
+
+### Delegated Attestations
+
+`attest` - Creates a single attestation by a delegate.
+
+```solidity
+function attest(
+    DelegatedAttestationRequest calldata delegatedRequest
+)
+    external
+    payable;
+```
+
+where `DelegatedAttestationRequest` is:
+
+```solidity
+struct DelegatedAttestationRequest {
+    SchemaUID schemaUID; // The unique identifier of the schema.
+    AttestationRequestData data; // The arguments of the attestation request.
+    address attester; // The attesting account.
+    bytes signature; // The signature data.
+}
+```
+
+`multiAttest` - Creates multiple attestations by a delegate.
+
+```solidity
+function multiAttest(
+    MultiDelegatedAttestationRequest[] calldata multiDelegatedRequests
+)
+    external
+    payable;
+```
+
+where `MultiDelegatedAttestationRequest` is:
+
+```solidity
+struct MultiDelegatedAttestationRequest {
+    SchemaUID schemaUID; // The unique identifier of the schema.
+    AttestationRequestData[] data; // The arguments of the attestation requests.
+    bytes[] signatures; // The signatures data. Please note that the signatures are assumed to be signed with increasing nonces.
+    address attester; // The attesting account.
+}
+```
+
+## Revoking Attestations
+
+The Module Registry provides a simple interface for revoking attestations. The general struct for revoking attestations is:
+
+```solidity
+struct RevocationRequestData {
+    address subject; // The module address.
+    address attester; // The attesting account.
+    uint256 value; // An explicit ETH amount to send to the resolver. This is important to prevent accidental user errors.
+}
+```
+
+The functions for revoking attestations are:
+
+### Direct Attestations
+
+`revoke` - Revokes a single attestation by the caller.
+
+```solidity
+function revoke(
+    RevocationRequest calldata request
+)
+    external
+    payable;
+```
+
+where `RevocationRequest` is:
+
+```solidity
+struct RevocationRequest {
+    SchemaUID schemaUID; // The unique identifier of the schema.
+    RevocationRequestData data; // The arguments of the revocation request.
+}
+```
+
+`multiRevoke` - Revokes multiple attestations by the caller.
+
+```solidity
+function multiRevoke(
+    MultiRevocationRequest[] calldata multiRequests
+)
+    external
+    payable;
+```
+
+where `MultiRevocationRequest` is:
+
+```solidity
+struct MultiRevocationRequest {
+    SchemaUID schemaUID; // The unique identifier of the schema.
+    RevocationRequestData[] data; // The arguments of the revocation request.
+}
+```
+
+### Delegated Attestations
+
+`revoke` - Revokes a single attestation by a delegate.
+
+```solidity
+function revoke(
+    DelegatedRevocationRequest calldata delegatedRequest
+)
+    external
+    payable;
+```
+
+where `DelegatedRevocationRequest` is:
+
+```solidity
+struct DelegatedRevocationRequest {
+    SchemaUID schemaUID; // The unique identifier of the schema.
+    RevocationRequestData data; // The arguments of the revocation request.
+    address revoker; // The revoking account.
+    bytes signature; // The signature data.
+}
+```
+
+`multiRevoke` - Revokes multiple attestations by a delegate.
+
+```solidity
+function multiRevoke(
+    MultiDelegatedRevocationRequest[] calldata multiDelegatedRequests
+)
+    external
+    payable;
+```
+
+where `MultiDelegatedRevocationRequest` is:
+
+```solidity
+struct MultiDelegatedRevocationRequest {
+    SchemaUID schemaUID; // The unique identifier of the schema.
+    RevocationRequestData[] data; // The arguments of the revocation requests.
+    address revoker; // The revoking account.
+    bytes[] signatures; // The signatures data. Please note that the signatures are assumed to be signed with increasing nonces.
+}
+```

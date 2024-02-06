@@ -4,47 +4,32 @@ import { LiaTelegram } from "react-icons/lia";
 import { useRouter } from "next/router";
 
 const config: DocsThemeConfig = {
-  logo: <span style={{ fontWeight: "bold" }}>ERC-7579</span>,
+  logo: <span style={{ fontWeight: "bold" }}>Rhinestone Docs</span>,
   useNextSeoProps: () => {
     const { asPath } = useRouter();
     if (asPath !== "/") {
       return {
-        titleTemplate: "%s – ERC-7579",
+        titleTemplate: "%s – Rhinestone Docs",
       };
     } else {
       return {
-        titleTemplate: "ERC-7579",
+        titleTemplate: "Rhinestone Docs",
       };
     }
   },
   head: (
     <>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta property="og:title" content="ERC-7579" />
-      <meta
-        property="og:description"
-        content="Minimal Modular Smart Accounts"
-      />
+      <meta property="og:title" content="Rhinestone Docs" />
+      <meta property="og:description" content="Documentation for Rhinestone" />
     </>
   ),
   project: {
-    link: "https://github.com/erc7579",
+    link: "https://github.com/rhinestonewtf",
   },
-  chat: {
-    link: "https://t.me/+KfB9WuhKDgk5YzIx",
-    icon: <LiaTelegram size={24} style={{ marginLeft: "-10px" }} />,
-  },
-  docsRepositoryBase: "https://github.com/erc7579/erc7579.github.io/tree/main",
+  docsRepositoryBase: "https://github.com/rhinestonewtf/docs/",
   footer: {
-    text: "ERC-7579 Docs",
-  },
-  banner: {
-    key: "initial-release",
-    text: (
-      <a href="https://eips.ethereum.org/EIPS/eip-7579" target="_blank">
-        Check out the first draft of ERC-7579 →
-      </a>
-    ),
+    text: "Rhinestone Docs",
   },
   faviconGlyph: "📝",
 };

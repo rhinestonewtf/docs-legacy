@@ -1,0 +1,90 @@
+# Modules explained
+
+Modules are smart contracts that extend the functionality of smart accounts. Modular smart accounts allow users and developers to easily change how a smart account works. In order to understand more deeply what is possible with modules (spoiler: a lot), let’s quickly recap the transaction flow of a smart account.
+
+## ERC-4337 UserOperation flow
+
+While there are many different ways of implementing Account Abstraction on Ethereum, Rhinestone is built on top of ERC-4337, which is a standard for implementing Account Abstraction using an alternative mempool and without requiring protocol changes. If you want to read up more about this ERC, view the specs here and an excellent blog post here.
+
+In order to achieve Account Abstraction, ERC-4337 specifies a new type of transaction for this alternative mempool, termed a UserOperation. On a high level, this UserOperation goes through two distinct phases: validation and execution.
+
+### Validation Phase
+
+During the validation phase, the ERC-4337 Entrypoint calls the `validateUserOp` function on the smart account in order for it to determine whether a UserOperation is valid and should be executed. If this function returns 0, then the Entrypoint will consider it valid, if it returns 1 or reverts then the Entrypoint will halt execution there and move on to the next UserOperation.
+
+How exactly signature validation occurs is entirely up to the developer to decide, which enables the possibility of modular validation logic that can be added and replaced at any point.
+
+    ERC-4337 places some storage and opcode restrictions on accounts during the validation phase, which impacts how
+    validation modules can be built. Read more about these below.
+
+### Execution Phase
+
+If the validation phase was successful, then the Entrypoint will call the smart account again, this time with the calldata provided in the UserOperation. While the Entrypoint always calls the `validateUserOp` function during the validation phase, there is no such restriction during execution, meaning that accounts can implement any number of execution functions and the wallet client can choose which exact one to call depending on the transaction intent.
+
+Similar to the validation phase, ERC-4337 does not stipulate how execution occurs, enabling the possibility to build smart account modules for the execution phase.
+
+## Module types
+
+ERC-4337 breaks down the flow of a UserOperation into two distinct phases, validation and execution. The account functionality that is required in either of these two phases differs to that of the other, so there are at least two different types of modules: validators and executors. However, there are at least two more distinct types of modules that perform different functions to the aforementioned: hooks and recovery modules.
+
+### Validators
+
+Validators are smart account modules that are called during the [validation phase of a UserOperation](/modules#validation-phase). This means that their primary function is to verify the signature of a UserOperation and determine whether it is valid and should be executed. As a result, validators are the primary mechanism for enforcing access control on a smart account and are highly security critical.
+
+**Validator restrictions**
+
+_Storage access_
+
+ERC-4337 restricts storage access during the validation phase in order to protect bundlers from denial-of-service attacks. More specifically, the only storage slots that can be accessed are:
+
+1. All slots of the account `A` itself.
+2. Slot `A` (address of the account) on any other contract.
+3. Slots of type `keccak256(A || X) + n` on any other address. (to cover `mapping(address => value)`, which is usually used for balance in ERC-20 tokens). `n` is an offset value up to 128, to allow accessing fields in the format `mapping(address => struct)`.
+
+For validators that are executed using `CALL`, this means that the only storage slots that can be accessed are slots of type `mapping(address => value)` or `mapping(address => struct)`. By using `DELEGATECALL`, these storage restrictions could be bypassed since the validator would be accessing storage slots on the account itself. However, as of now, using `DELEGATECALL` is highly discouraged because of the security vulnerabilities that it introduces.
+
+We are currently working on different solutions to make it easier for validator developers to use dynamic data types. To read more about these storage restrictions, visit the [section on the ERC-4337 specs](https://eips.ethereum.org/EIPS/eip-4337#storage-associated-with-an-address).
+
+_Forbidden Opcodes_
+
+ERC-4337 also restricts the use of certain opcodes during the validation phase. They are: `GASPRICE`, `GASLIMIT`, `DIFFICULTY`, `TIMESTAMP`, `BASEFEE`, `BLOCKHASH`, `NUMBER`, `SELFBALANCE`, `BALANCE`, `ORIGIN`, `GAS`, `CREATE`, `COINBASE` and `SELFDESTRUCT`. These opcodes are forbidden because their outputs may differ between simulation and execution, so simulation of calls using these opcodes does not reliably tell what would happen if these calls are later done on-chain. Learn more about these opcodes and what they do using [this reference](https://evm.codes).
+
+Exceptions to the forbidden opcodes include:
+
+- A single `CREATE2` is allowed if `op.initcode.length != 0` and must result in the deployment of a previously-undeployed `UserOperation.sender`.
+- `GAS` is allowed if followed immediately by one of { `CALL`, `DELEGATECALL`, `CALLCODE`, `STATICCALL` }. This means that making calls is allowed, using `gasleft()` or `GAS` opcode directly is forbidden.
+
+See more information in the [ERC-4337 specs](https://eips.ethereum.org/EIPS/eip-4337#forbidden-opcodes).
+
+**Validator examples**
+
+- Webauthn validator
+- Session key validator
+
+### Executors
+
+Executors are smart account modules that are called during the execution phase of a UserOperation. They extend the execution logic of the account and thus allow for a more diverse set of actions that the account can natively perform. On top of this, Executors can also be used to automate certain actions that are triggered outside of the regular ERC-4337 execution flow on the account. For example, a user could set up an executor that automatically swaps their tokens when the price of a token reaches a certain threshold.
+
+**Conditional Executors**
+
+Conditional executors extend the capabilities of normal executors, by allowing transactions to be executed based on checks performed by the ComposableConditionManager. This allows for more complex logic to be implemented in executors, such as the ability to execute transactions based on the price of a token or the current gas price. Importantly, these conditions are verified on-chain meaning that a user can be sure that the transaction will be executed only if the condition is met and does not need to trust a third party.
+
+**Executor examples**
+
+- Flashloan executor
+
+### Recovery
+
+Recovery modules are smart account modules that can reset the storage of validators through a different process. Since validators are crucial to the functioning of a smart account, they also present a big attack surface through which to attempt to compromise the account. Thus, users can use different kinds of recovery mechanisms to ensure that they are able to reset validators if they get compromised or a user loses access to their account.
+
+**Recovery examples**
+
+- Social recovery
+
+### Hooks
+
+Hooks are smart account modules that are triggered either before or after execution and can be used to determine whether certain invariants are violated.
+
+**Hook examples**
+
+- Contract blacklist

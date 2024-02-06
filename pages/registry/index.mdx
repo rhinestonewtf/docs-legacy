@@ -1,0 +1,20 @@
+# Overview
+
+## Introduction
+
+The goal of the Module Registry is to unlock open innovation within modular smart accounts through a decentralised trust delegation mechanism (as discussed in our [blog post](https://mirror.xyz/konradkopp.eth/7Q3TrMFgx2VbZRKa7UEaisIMjimpMABiqGYo00T9egA)). It looks to solve the new security concerns that arise from modularising smart accounts by allowing trusted entities, like auditors, to make statements about the security of smart account modules. Users can then query these statements on-chain in order to be sure that a module they are about to install or use is still secure.
+
+Specifically, the Module Registry is a list of (security) statements about modules, which we call attestations. These attestations are made by trusted entities, called attesters, and are stored on-chain. The Module Registry also provides a gas efficient way for users to query these attestations on-chain in order to use them to make decisions about whether to install or use a module. The Module Registry is a public good that is open, permissionless and free to use and build on top of.
+
+## Core concepts
+
+## High level architecture
+
+The Module Registry is a single contract that can be extended to support custom flows. For example, a Schema Validator can extend the Module Registry to verify that Attestations made on a specific Schema adhere to its' definitions. A Resolver can introduce custom logic to, for example, enforce monetization when making an Attestation or pay out a bounty when revoking an Attestation. For readability, the Module Registry contract is broken down into multiple sub-contracts that are grouped by their domains. The 4 key domains are:
+
+- **Schema**: Manages Schemas and Resolvers.
+- **Module**: Manages module deployment, registration and fetching.
+- **Attestation**: Manages attestations and revocations for modules.
+- **Query**: Manages the querying of the Module Registry for attestations.
+
+This section of the documentation has been set up to mirror these domains, so that each domain has its' own page. Read on for an exaplanation of each domain and or check out the [Module Registry repository](https://github.com/rhinestonewtf/registry/) to jump right into the code.

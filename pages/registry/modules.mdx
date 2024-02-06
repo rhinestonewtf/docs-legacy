@@ -1,0 +1,88 @@
+# Module Registration
+
+Modules are smart contracts that hold self-contained features for smart accounts. These modules and their deployment metadata are stored on the Registry, allowing others to attest to them in order for users to find out whether a module is secure or not. Modules can be registered on the Registry in two different ways: during and after deployment.
+
+## During Deployment
+
+You can register a Module on the Registry by deploying it through one of the Registry's deployment functions. These functions are:
+
+`deploy` - Deploys a module using `CREATE2` and registers it on the Registry.
+
+```solidity
+function deploy(
+    bytes calldata code,
+    bytes calldata deployParams,
+    bytes32 salt,
+    bytes calldata metadata,
+    ResolverUID resolverUID
+)
+    external
+    payable
+    nonReentrant
+    returns (address moduleAddr);
+```
+
+`deployC3` - Deploys a module using [`CREATE3`](https://github.com/0xsequence/create3) and registers it on the Registry.
+
+```solidity
+function deployC3(
+    bytes calldata code,
+    bytes calldata deployParams,
+    bytes32 salt,
+    bytes calldata metadata,
+    ResolverUID resolverUID
+)
+    external
+    payable
+    nonReentrant
+    returns (address moduleAddr);
+```
+
+`deployViaFactory` - Deploys a module using a developer-supplied factory and registers it on the Registry.
+
+```solidity
+function deployViaFactory(
+    address factory,
+    bytes calldata callOnFactory,
+    bytes calldata metadata,
+    ResolverUID resolverUID
+)
+    external
+    payable
+    nonReentrant
+    returns (address moduleAddr);
+```
+
+## After Deployment
+
+Modules can also be registered after they have already been deployed. This is done by calling the `register` function on the Registry.
+
+```solidity
+function register(
+    ResolverUID resolverUID,
+    address moduleAddress,
+    bytes calldata metadata
+)
+    external;
+```
+
+After a successful Module registration, the Module Registry will store the Module in a `ModuleRecord`, that looks like this:
+
+```solidity
+struct ModuleRecord {
+    ResolverUID resolverUID; // The unique identifier of the resolver.
+    address implementation; // The deployed contract address
+    address sender; // The address of the sender who deployed the contract
+    bytes metadata; // Additional data related to the contract deployment
+}
+```
+
+You can query the Module Registry for a Module by using the `getModule` function.
+
+```solidity
+function _getModule(address moduleAddress)
+    internal
+    view
+    virtual
+    returns (ModuleRecord storage)
+```
