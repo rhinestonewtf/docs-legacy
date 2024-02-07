@@ -1,14 +1,14 @@
-# ERC-7579 Documentation
+# Rhinestone Documentation
 
-This repository contains the documentation for the ERC-7579 standard.
+This repository contains the Rhinestone docs.
 
 ## Getting Started
 
 To get started, clone this repository and run the following commands:
 
 ```bash
-yarn
-yarn dev
+pnpm
+pnpm dev
 ```
 
 ## Contributing

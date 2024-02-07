@@ -1,10 +1,9 @@
 {
-  "index": "Introduction",
-  "overview": "Overview",
-  "getting-started": "Getting started",
-  "rhinestone-protocol": "Rhinestone Protocol",
-  "modulekit": "ModuleKit",
-  "registry": "Registry",
-  "tutorials": "Tutorials",
-  "further-reading": "Resources"
+  "index": {
+    "display": "hidden"
+  },
+  "overview": { "title": "Overview", "type": "page" },
+  "modulekit": { "title": "ModuleKit", "type": "page" },
+  "sandbox": { "title": "Sandbox", "type": "page" },
+  "sdk": { "title": "SDK", "type": "page" }
 }
