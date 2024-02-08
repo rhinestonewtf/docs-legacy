@@ -1,7 +1,14 @@
 {
   "index": "Overview",
-  "quick-start": "Quick Start",
-  "modules": "Modules",
-  "tools": "Tools",
+  "quick-start": "Getting Started",
+  "-": {
+    "type": "separator"
+  },
+  "build": "Build",
+  "test": "Test",
+  "deploy": "Deploy",
+  "--": {
+    "type": "separator"
+  },
   "tutorials": "Tutorials"
 }

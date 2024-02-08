@@ -1,0 +1,28 @@
+# Integrations
+
+Integrations are Solidity libraries that can easily be integrated into modules to simplify the developer experience for common use cases. The ModuleKit currently has integrations for:
+
+- Yearn
+- ERC-4626 Vaults
+- ChainLink
+- Uniswap
+
+... and more to come! View all integrations [here](https://github.com/rhinestonewtf/modulekit/blob/main/src/modulekit/integrations).
+
+To use an integration, simply import it into your module and call the functions that you need.
+
+```solidity
+...
+import {YearnWithdraw} from "modulekit/modulekit/integrations/yearn/YearnWidthdraw.sol";
+
+contract YearnModule is ExecutorBase {
+    ...
+
+    function withdrawFromYearn(IExecutorManager manager, address account, address yToken) external {
+        ...
+        YearnWithdraw.withdraw(manager, account, yToken);
+    }
+
+    ...
+}
+```

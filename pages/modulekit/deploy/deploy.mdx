@@ -1,0 +1,19 @@
+# Deploying modules
+
+Deterministically deploy a module using the `CREATE2` opcode, by providing the `bytes` creation code of the module, `bytes` constructor parameters for the module, `bytes32` salt vakue to create uniqueness and `bytes` additional data to be stored on the Module Registry.
+
+```solidity
+deployModule(bytes memory code, bytes memory deployParams, bytes32 salt, bytes memory data);
+```
+
+Deterministically deploy a module using `CREATE3`, by providing the `bytes` creation code of the module, `bytes` constructor parameters for the module, `bytes32` salt vakue to create uniqueness and `bytes` additional data to be stored on the Module Registry.
+
+```solidity
+deployModuleCreate3(bytes memory code, bytes memory deployParams, bytes32 salt, bytes memory data);
+```
+
+Deploy a module using an external factory contract, by providing the `address` of the factory, `bytes` encoded calldata to be sent to the factory and `bytes` additional data to be stored on the Module Registry.
+
+```solidity
+deployModuleViaFactory(address factory, bytes memory callOnFactory, bytes memory data);
+```

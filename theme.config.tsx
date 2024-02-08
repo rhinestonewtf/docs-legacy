@@ -27,6 +27,9 @@ const config: DocsThemeConfig = {
   project: {
     link: "https://github.com/rhinestonewtf",
   },
+  sidebar: {
+    defaultMenuCollapseLevel: 1,
+  },
   docsRepositoryBase: "https://github.com/rhinestonewtf/docs/",
   footer: {
     text: "Rhinestone Docs",

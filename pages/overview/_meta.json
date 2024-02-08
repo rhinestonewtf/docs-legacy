@@ -1,7 +1,13 @@
 {
-  "index": "Overview",
+  "index": "What is Rhinestone",
   "getting-started": "Getting started",
+  "-": {
+    "type": "separator"
+  },
   "rhinestone-protocol": "Rhinestone Protocol",
-  "registry": "Registry",
+  "modules": "Modules explained",
+  "--": {
+    "type": "separator"
+  },
   "resources": "Resources"
 }

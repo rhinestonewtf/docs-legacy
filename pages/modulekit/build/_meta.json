@@ -1,0 +1,7 @@
+{
+  "validators": "Validators",
+  "executors": "Executors",
+  "hooks": "Hooks",
+  "fallbacks": "Fallbacks",
+  "integrations": "Integrations"
+}
