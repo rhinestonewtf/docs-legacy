@@ -1,25 +1,47 @@
+import { Callout } from "nextra/components";
+
 # Validators
 
-Validators are smart account modules that are called during the [validation phase of a UserOperation](/modules#validation-phase). This means that their primary function is to verify the signature of a UserOperation and determine whether it is valid and should be executed. As a result, validators are the primary mechanism for enforcing access control on a smart account and are highly security critical.
+Validators are modules that are called during the validation phase of a UserOperation. This means that their primary function is to verify the signature of a UserOperation and determine whether it is valid and should be executed. As a result, validators are the primary mechanism for enforcing access control on a smart account and are highly security critical.
+
+A module can be broken down into three different domains:
+
+1. Config: handles configurations on the module, such as getter and setter functions
+2. Business logic: handles the core logic of the module, depending on the module type
+3. Metadata: additional data that is used to identify and correctly use a module
+
+This page only aims to cover domain 2 in the specific case of a Validator Module. For more information on the other two, read through the [Module](./module.mdx) page.
 
 ## Building a validator
 
 In order to build a compliant validator you need to ensure that it:
 
--   Inherits from the `BaseAuthorizationModule` contract.
--   Implements the following functions:
-    -   `validateUserOp(UserOperation calldata userOp, bytes32 userOpHash)`
-    -   `isValidSignature(bytes32 signedDataHash, bytes memory moduleSignature)`
+- Inherits from the `ERC7579ValidatorBase` contract.
+- Implements the required functions of the interface.
 
-The template for a compliant validator (without actual logic) looks like this:
+An example of a compliant validator (without actual logic) looks like this:
 
 ```solidity
-contract ValidatorTemplate is BaseAuthorizationModule {
+contract ValidatorExample is ERC7579ValidatorBase {
+    /*//////////////////////////////////////////////////////////////////////////
+                                     CONFIG
+    //////////////////////////////////////////////////////////////////////////*/
+
+    ...
+
+    /*//////////////////////////////////////////////////////////////////////////
+                                     MODULE LOGIC
+    //////////////////////////////////////////////////////////////////////////*/
+
     /**
-     * @dev validates userOperation
-     * @param userOp User Operation to be validated.
-     * @param userOpHash Hash of the User Operation to be validated.
-     * @return sigValidationResult 0 if signature is valid, 1 otherwise.
+     * Validates UserOperation
+     * @param userOp UserOperation to be validated.
+     * @param userOpHash Hash of the UserOperation to be validated.
+     * @return sigValidationResult the result of the signature validation, which can be:
+     *  - 0 if the signature is valid
+     *  - 1 if the signature is invalid
+     *  - <20-byte> aggregatorOrSigFail, <6-byte> validUntil and <6-byte> validAfter (see ERC-4337
+     * for more details)
      */
     function validateUserOp(
         UserOperation calldata userOp,
@@ -27,61 +49,111 @@ contract ValidatorTemplate is BaseAuthorizationModule {
     )
         external
         view
-        virtual
-        returns (uint256)
+        override
+        returns (ValidationData)
     {
-        // Add validation logic here
-        return VALIDATION_SUCCESS;
+        return ValidationData.wrap(0);
     }
 
     /**
-     * @dev validates a 1271 signature request
-     * @param signedDataHash Hash of the signed data.
-     * @param moduleSignature Signature to be validated.
-     * @return eip1271Result 0x1626ba7e if signature is valid, 0xffffffff otherwise.
+     * Validates an ERC-1271 signature
+     * @param sender The sender of the ERC-1271 call to the account
+     * @param hash The hash of the message
+     * @param signature The signature of the message
+     * @return sigValidationResult the result of the signature validation, which can be:
+     *  - EIP1271_SUCCESS if the signature is valid
+     *  - EIP1271_FAILED if the signature is invalid
      */
-    function isValidSignature(
-        bytes32 signedDataHash,
-        bytes memory moduleSignature
+    function isValidSignatureWithSender(
+        address sender,
+        bytes32 hash,
+        bytes calldata signature
     )
-        public
+        external
         view
         virtual
         override
-        returns (bytes4)
+        returns (bytes4 sigValidationResult)
     {
-        // Add signature validation logic here
-        return EIP1271_MAGIC_VALUE;
+        return EIP1271_FAILED;
     }
+
+    /*//////////////////////////////////////////////////////////////////////////
+                                     METADATA
+    //////////////////////////////////////////////////////////////////////////*/
+
+    ...
 }
 ```
 
-## Validator restrictions
+### `validateUserOp`
 
-### Storage access
+This function is called by the account during the validation phase of ERC-4337. Its goal is to determine whether a `UserOperation` should be executed. It returns a `uint256` signalling whether to accept or reject a `UserOperation`. The main way that this will happen in practice is that the `userOp.signature` will be recovered using the `userOpHash` and checked against some owner or set of owners stored on the module. The module may also return the variable `VALIDATION_FAILED` for added convenience.
 
-ERC-4337 restricts storage access during the validation phase in order to protect bundlers from denial-of-service attacks. More specifically, the only storage slots that can be accessed are:
+Additionally, the `ERC7579ValidatorBase` includes a function `_packValidationData(bool sigFailed, uint48 validUntil, uint48 validAfter)`, which packs the return data according to the ERC-4337 specifications on more complex return data. The schema of this return data is: `<20-byte> aggregatorOrSigFail`, `<6-byte> validUntil` and `<6-byte> validAfter`. This can be used to either use an aggregator or to ensure that a `UserOperation` can only be executed before `validUntil` or after `validAfter`. To easily format the return data to use this schema, use `_packValidationData`.
 
-1. All slots of the account `A` itself.
-2. Slot `A` (address of the account) on any other contract.
-3. Slots of type `keccak256(A || X) + n` on any other address. (to cover `mapping(address => value)`, which is usually used for balance in ERC-20 tokens). `n` is an offset value up to 128, to allow accessing fields in the format `mapping(address => struct)`.
+<Callout type="info">
+  Note that the in the `ERC7579ValidatorBase` interface, the return value of
+  `validateUserOp` is not of type `uint256` but of type `ValidationData`. This
+  is a custom Solidity type for increased type safety. For the purposes of
+  building a Module, it suffices to know that you can move between `uint256` and
+  `ValidationData` simply by calling either `ValidationData.wrap(uint256)` or
+  `ValidationData.unwrap(ValidationData)`. To learn more about custom types,
+  read through [this
+  article](https://soliditylang.org/blog/2021/09/27/user-defined-value-types/).
+</Callout>
 
-For validators that are executed using `CALL`, this means that the only storage slots that can be accessed are slots of type `mapping(address => value)` or `mapping(address => struct)`. By using `DELEGATECALL`, these storage restrictions could be bypassed since the validator would be accessing storage slots on the account itself. However, as of now, using `DELEGATECALL` is highly discouraged because of the security vulnerabilities that it introduces.
+### `isValidSignatureWithSender`
 
-We are currently working on different solutions to make it easier for validator developers to use dynamic data types. To read more about these storage restrictions, visit the [section on the ERC-4337 specs](https://eips.ethereum.org/EIPS/eip-4337#storage-associated-with-an-address).
-
-### Forbidden Opcodes
-
-ERC-4337 also restricts the use of certain opcodes during the validation phase. They are: `GASPRICE`, `GASLIMIT`, `DIFFICULTY`, `TIMESTAMP`, `BASEFEE`, `BLOCKHASH`, `NUMBER`, `SELFBALANCE`, `BALANCE`, `ORIGIN`, `GAS`, `CREATE`, `COINBASE` and `SELFDESTRUCT`. These opcodes are forbidden because their outputs may differ between simulation and execution, so simulation of calls using these opcodes does not reliably tell what would happen if these calls are later done on-chain. Learn more about these opcodes and what they do using [this reference](https://evm.codes).
-
-Exceptions to the forbidden opcodes include:
-
--   A single `CREATE2` is allowed if `op.initcode.length != 0` and must result in the deployment of a previously-undeployed `UserOperation.sender`.
--   `GAS` is allowed if followed immediately by one of { `CALL`, `DELEGATECALL`, `CALLCODE`, `STATICCALL` }. This means that making calls is allowed, using `gasleft()` or `GAS` opcode directly is forbidden.
-
-See more information in the [ERC-4337 specs](https://eips.ethereum.org/EIPS/eip-4337#forbidden-opcodes).
+This function is called by the account during an [ERC-1271](https://eips.ethereum.org/EIPS/eip-1271) call on the account. Because this call is forwarded to the module, the module implements `isValidSignatureWithSender` as opposed to the ERC-1271 function `isValidSignature`, where the additional parameter is the `msg.sender` that called the account. The function should return `EIP1271_SUCCESS` if the signature is valid and `EIP1271_FAILED` otherwise, which will on most cases be determined using the `signature` and the `hash`.
 
 ## Validator examples
 
--   Webauthn validator
--   Session key validator
+- [WebAuthn Validator](https://github.com/rhinestonewtf/modulekit-examples/blob/main/src/webauthn-validator/WebauthnValidator.sol)
+- [Farcaster Frame Validator](https://github.com/kopy-kat/frame-validator/blob/main/src/FrameValidator.sol)
+
+## ERC-4337 restrictions
+
+ERC-4337 stipulates some restrictions for what can and cannot occur during the validation phase of a `UserOperation`. These restrictions are enforced by bundlers and aim to protect the alt mempool from Denial-of-Service attacks. These restrictions are laid out by [ERC-7562](https://github.com/eth-infinitism/account-abstraction/blob/develop/erc/ERCS/erc-7562.md) and there is a summary of the rules that apply to modules below. Additionally, the ModuleKit allows you to check that your modules are compliant with these rules and you can find out more about this in the [utilites](../test/utilities.mdx) section.
+
+### Storage accesses
+
+A module may only use the following two patterns for storage access (read/write):
+
+1. Slot `A` where `A` is the address of the account (ie sender of the `UserOperation`)
+2. Slots of type `keccak256(A || X) + n` where `A` is the address of the account, `||` means concatenation, `X` is any value and `n` is an integer up to 128. More practically, this means that a module can use mappings (including nested mappings) but only if the final key that is used is the account address. Further, this mapping can point to a struct that can use up to 128 storage slots.
+
+<Callout type="info">
+  These same rules also apply to `TSTORE` and `TLOAD`.
+</Callout>
+
+### Forbidden Opcodes
+
+A module is not allowed to use the following opcodes:
+
+- `BALANCE` (`0x31`)
+- `ORIGIN` (`0x32`)
+- `GASPRICE` (`0x3A`)
+- `BLOCKHASH` (`0x40`)
+- `COINBASE` (`0x41`)
+- `TIMESTAMP` (`0x42`)
+- `NUMBER` (`0x43`)
+- `PREVRANDAO`/`DIFFICULTY` (`0x44`)
+- `GASLIMIT` (`0x45`)
+- `SELFBALANCE` (`0x47`)
+- `BASEFEE` (`0x48`)
+- `GAS` (`0x5A`)
+- `CREATE` (`0xF0`)
+- `CREATE2` (`0xF5`)
+- `INVALID` (`0xFE`)
+- `SELFDESTRUCT` (`0xFF`)
+
+One exception to this is that `GAS` may be used if immediately followed by a `*CALL`.
+
+### Further restrictions
+
+Additionally, the following restrictions apply:
+
+- Module cannot `*CALL` or `EXTCODE*` to an address that has no deployed code (excluding precompiles)
+- Module cannot perform a `*CALL` with value
+- Module cannot call the EntryPoint

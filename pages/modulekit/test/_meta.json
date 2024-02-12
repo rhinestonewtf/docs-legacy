@@ -1,1 +1,5 @@
-{}
+{
+  "unit": "Unit testing",
+  "integration": "Integration testing",
+  "utilities": "Utilities"
+}

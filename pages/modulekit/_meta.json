@@ -1,12 +1,13 @@
 {
   "index": "Overview",
-  "quick-start": "Getting Started",
+  "getting-started": "Getting Started",
   "-": {
     "type": "separator"
   },
   "build": "Build",
   "test": "Test",
   "deploy": "Deploy",
+  "advanced": "Advanced",
   "--": {
     "type": "separator"
   },

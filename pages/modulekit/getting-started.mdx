@@ -1,0 +1,53 @@
+import { Tabs } from "nextra/components";
+
+# Getting started
+
+ModuleKit is built on top of [Foundry](https://book.getfoundry.sh/), a toolchain to simplify and speed up smart contract development. If you are not familiar with Foundry, feel free to check out their docs and install it by running:
+
+```bash copy
+curl -L https://foundry.paradigm.xyz | bash
+```
+
+## Installation
+
+### Using a package manager
+
+<Tabs items={["npm", "yarn", "pnpm"]}>
+  <Tabs.Tab>
+
+    ```bash copy
+    npm i rhinestonewtf/modulekit
+    ```
+
+  </Tabs.Tab>
+  <Tabs.Tab>
+    
+    ```bash copy
+    yarn add rhinestonewtf/modulekit
+    ```
+
+  </Tabs.Tab>
+  <Tabs.Tab>
+  
+    ```bash copy
+    pnpm i rhinestonewtf/modulekit
+    ```
+
+  </Tabs.Tab>
+</Tabs>
+
+### Using git submodules
+
+```bash copy
+forge install rhinestonewtf/modulekit
+```
+
+### Using our template
+
+Fork our [module-template](https://github.com/rhinestonewtf/module-template) and install it by running:
+
+```bash copy
+git clone https://github.com/[YOUR_GITHUB_HANDLE]/module-template.git
+cd module-template
+pnpm install
+```

@@ -1,11 +1,83 @@
-# Hooks
+import { Callout } from "nextra/components";
 
-Hooks are smart account modules that are triggered either before or after execution and can be used to determine whether certain invariants are violated.
+# Fallbacks
 
-## Building a hook
+Fallbacks are modules that can add additional functionality into the account. They are called by the fallback function of the account.
 
-Hooks are currently still in development
+A module can be broken down into three different domains:
 
-## Hook examples
+1. Config: handles configurations on the module, such as getter and setter functions
+2. Business logic: handles the core logic of the module, depending on the module type
+3. Metadata: additional data that is used to identify and correctly use a module
 
-- Contract blacklist
+This page only aims to cover domain 2 in the specific case of a Fallback Module. For more information on the other two, read through the [Module](./module.mdx) page.
+
+<Callout type="warning">
+  Fallback modules are still in development and we expect some breaking changes
+  to the interface.
+</Callout>
+
+## Building a fallback module
+
+In order to build a compliant fallback module you need to ensure that it:
+
+- Inherits from the `ERC7579FallbackBase` contract.
+- Implements the required functions of the interface.
+
+An example of a compliant fallback module (without actual logic) looks like this:
+
+```solidity
+contract FallbackExample is ERC7579FallbackBase {
+    /*//////////////////////////////////////////////////////////////////////////
+                                     CONFIG
+    //////////////////////////////////////////////////////////////////////////*/
+
+    ...
+
+    /*//////////////////////////////////////////////////////////////////////////
+                                     MODULE LOGIC
+    //////////////////////////////////////////////////////////////////////////*/
+
+    /**
+     * ERC-7579 does not define any specific interface for fallbacks, so the
+     * fallback can implement any logic that is required for the specific usecase.
+     */
+
+    /*
+     * Handles a fallback call
+     * @dev This is an example function that can be used to handle a fallback call
+     * @dev This function is not part of the ERC-7579 standard
+     * @param account The account that received the call
+     * @param sender The sender of the call
+     * @param value The value of the call
+     * @param data The data of the call
+     * @return result The result of the fallback call
+     */
+    function handle(
+        address account,
+        address sender,
+        uint256 value,
+        bytes calldata data
+    )
+        external
+        override
+        returns (bytes memory result)
+    {
+        result = abi.encode(true);
+    }
+
+    /*//////////////////////////////////////////////////////////////////////////
+                                     METADATA
+    //////////////////////////////////////////////////////////////////////////*/
+
+    ...
+}
+```
+
+### `handle`
+
+This function is called when the account receives a call that does not match any of the other modules. It can be used to implement custom logic for handling these calls.
+
+## Fallback examples
+
+- [Flashloan lender](https://github.com/rhinestonewtf/modulekit-examples/blob/main/src/coldstorage-subaccount/FlashloanLender.sol)

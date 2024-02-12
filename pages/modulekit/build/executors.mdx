@@ -1,55 +1,66 @@
 # Executors
 
-Executors are smart account modules that are called during the execution phase of a UserOperation. They extend the execution logic of the account and thus allow for a more diverse set of actions that the account can natively perform.
+Executors are modules that are called during the execution phase of a UserOperation. They extend the execution logic of the account and thus allow for a more diverse set of actions that the account can natively perform.
+
+A module can be broken down into three different domains:
+
+1. Config: handles configurations on the module, such as getter and setter functions
+2. Business logic: handles the core logic of the module, depending on the module type
+3. Metadata: additional data that is used to identify and correctly use a module
+
+This page only aims to cover domain 2 in the specific case of an Executor Module. For more information on the other two, read through the [Module](./module.mdx) page.
 
 ## Building an executor
 
 In order to build a compliant executor you need to ensure that it:
 
--   Inherits from the `PluginBase` contract.
--   Implements the following functions:
-    -   `name()`
-    -   `version()`
-    -   `metadataProvider()`
-    -   `requiresRootAccess()`
-    -   `rhinestonePluginId()`
-    -   `grantsPluginAccess()`
+- Inherits from the `ERC7579ExecutorBase` contract.
+- Implements the required functions of the interface.
 
-The template for a compliant executor (without actual logic) looks like this:
+An example of a compliant executor (without actual logic) looks like this:
 
 ```solidity
-contract ExecutorTemplate is PluginBase {
-    function name() external view override returns (string memory name) {
-        return "ExecutorTemplate";
+contract ExecutorExample is ERC7579ExecutorBase {
+    /*//////////////////////////////////////////////////////////////////////////
+                                     CONFIG
+    //////////////////////////////////////////////////////////////////////////*/
+
+    ...
+
+    /*//////////////////////////////////////////////////////////////////////////
+                                     MODULE LOGIC
+    //////////////////////////////////////////////////////////////////////////*/
+
+    /**
+     * ERC-7579 does not define any specific interface for executors, so the
+     * executor can implement any logic that is required for the specific usecase.
+     */
+
+    /*
+     * Execute the given data
+     * @dev This is an example function that can be used to execute arbitrary data
+     * @dev This function is not part of the ERC-7579 standard
+     * @param data The data to execute
+     */
+    function execute(bytes calldata data) external {
+        IERC7579Account(msg.sender).executeFromExecutor(ModeLib.encodeSimpleSingle(), data);
     }
 
-    function version() external view override returns (string memory version) {
-        return "0.0.1";
-    }
+    /*//////////////////////////////////////////////////////////////////////////
+                                     METADATA
+    //////////////////////////////////////////////////////////////////////////*/
 
-    function metadataProvider()
-        external
-        view
-        override
-        returns (uint256 providerType, bytes memory location)
-    {
-        return (0, "");
-    }
-
-    function requiresRootAccess() external view override returns (bool requiresRootAccess) {
-        return false;
-    }
-
-    function rhinestonePluginId() external pure virtual override returns (bytes32) {
-        return keccak256("ExecutorTemplate");
-    }
-
-    function grantsPluginAccess() external view virtual override returns (bool) {
-        return false;
-    }
+    ...
 }
 ```
 
+### Execution function
+
+As mentioned in the example contract above, ERC-7579 does not specify an interface for executors beyond the general Module interface. This means that executors can implement any kind of function in their business logic.
+
+In the example above, the function `execute` simply forwards its calldata and executes it on the account. Note that executors can only call the `executeFromExecutor` function of the account and not the `execute` function. Unlike the example above, the executor can also execute a batch of executions on the account.
+
 ## Executor examples
 
--   Swap module
+- [AutoSavings](https://github.com/rhinestonewtf/modulekit-examples/blob/main/src/auto-savings/AutoSavings.sol)
+- [Scheduled Orders](https://github.com/rhinestonewtf/modulekit-examples/blob/main/src/smartactions/ScheduledOrders.sol)

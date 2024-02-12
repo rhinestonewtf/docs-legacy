@@ -1,4 +1,5 @@
 {
+  "module-basics": "Module Basics",
   "validators": "Validators",
   "executors": "Executors",
   "hooks": "Hooks",

@@ -1,11 +1,165 @@
 # Hooks
 
-Hooks are smart account modules that are triggered either before or after execution and can be used to determine whether certain invariants are violated.
+Hooks are modules that are triggered either before or after execution and can be used to enforce certain behavior.
+
+A module can be broken down into three different domains:
+
+1. Config: handles configurations on the module, such as getter and setter functions
+2. Business logic: handles the core logic of the module, depending on the module type
+3. Metadata: additional data that is used to identify and correctly use a module
+
+This page only aims to cover domain 2 in the specific case of a Hook Module. For more information on the other two, read through the [Module](./module.mdx) page.
 
 ## Building a hook
 
-Hooks are currently still in development
+In order to build a compliant validator you need to ensure that it:
+
+- Inherits from the `ERC7579HookBase` contract.
+- Implements the required functions of the interface.
+
+An example of a compliant hook (without actual logic) looks like this:
+
+```solidity
+contract HookExample is ERC7579HookBase {
+    /*//////////////////////////////////////////////////////////////////////////
+                                     CONFIG
+    //////////////////////////////////////////////////////////////////////////*/
+
+    ...
+
+    /*//////////////////////////////////////////////////////////////////////////
+                                     MODULE LOGIC
+    //////////////////////////////////////////////////////////////////////////*/
+
+    /**
+     * Pre-checks an execution
+     * @param msgSender The sender of the execution to the account
+     * @param msgData The data of the execution
+     * @return hookData The data to be used in the post-check
+     */
+    function preCheck(
+        address msgSender,
+        bytes calldata msgData
+    )
+        external
+        override
+        returns (bytes memory hookData)
+    {
+        hookData = abi.encode(true);
+    }
+
+    /**
+     * Post-checks an execution
+     * @param hookData The data from the pre-check
+     * @return success true if the execution is successful, false otherwise
+     */
+    function postCheck(bytes calldata hookData) external override returns (bool success) {
+        (success) = abi.decode(hookData, (bool));
+    }
+
+    /*//////////////////////////////////////////////////////////////////////////
+                                     METADATA
+    //////////////////////////////////////////////////////////////////////////*/
+
+    ...
+}
+```
+
+### `preCheck`
+
+This function is called before a single or batched execution and contains the `msg.sender` to the account as well as the `msg.data` to the account. The hook can perform any arbitrary computations on this data. Optionally, the function can revert if the hook wants to disallow this execution. The function may also return data which is then passed on to the `postCheck` function.
+
+### `postCheck`
+
+This function is called after a single or batched execution and is given the return value of the `preCheck` function. This function returns a boolean signifying success. If the function returns false, the account will halt the execution and revert.
+
+### `ERC7579HookDestruct`
+
+The ModuleKit also contains a contract called `ERC7579HookDestruct`, which is a more advanced base component for hooks. Specifically, it decodes the execution on the account and gives the Module developer some functions they can override to make it easier to build a hook that checks the calldata or only allows certain entrypoints into the account. Specifically, these functions are:
+
+```solidity
+abstract contract ERC7579HookDestruct is ERC7579HookBase {
+    /*//////////////////////////////////////////////////////////////////////////
+                                CALLDATA DECODING
+    //////////////////////////////////////////////////////////////////////////*/
+    ...
+
+    /*//////////////////////////////////////////////////////////////////////////
+                                     EXECUTION
+    //////////////////////////////////////////////////////////////////////////*/
+
+    function onExecute(
+        address msgSender,
+        address target,
+        uint256 value,
+        bytes calldata callData
+    )
+        internal
+        virtual
+        returns (bytes memory hookData);
+
+    function onExecuteBatch(
+        address msgSender,
+        Execution[] calldata
+    )
+        internal
+        virtual
+        returns (bytes memory hookData);
+
+    function onExecuteFromExecutor(
+        address msgSender,
+        address target,
+        uint256 value,
+        bytes calldata callData
+    )
+        internal
+        virtual
+        returns (bytes memory hookData);
+
+    function onExecuteBatchFromExecutor(
+        address msgSender,
+        Execution[] calldata
+    )
+        internal
+        virtual
+        returns (bytes memory hookData);
+
+    /*//////////////////////////////////////////////////////////////////////////
+                                     CONFIG
+    //////////////////////////////////////////////////////////////////////////*/
+
+    function onInstallModule(
+        address msgSender,
+        uint256 moduleType,
+        address module,
+        bytes calldata initData
+    )
+        internal
+        virtual
+        returns (bytes memory hookData);
+
+    function onUninstallModule(
+        address msgSender,
+        uint256 moduleType,
+        address module,
+        bytes calldata deInitData
+    )
+        internal
+        virtual
+        returns (bytes memory hookData);
+
+    /*//////////////////////////////////////////////////////////////////////////
+                                     POSTCHECK
+    //////////////////////////////////////////////////////////////////////////*/
+
+    function onPostCheck(bytes calldata hookData) internal virtual returns (bool success);
+
+}
+```
+
+These functions must be overriden by the developer to implement the hook logic. If a developer chooses to not allow certain entrypoints into the account, they can revert the function call. If the developer chooses to allow the entrypoint, they can return some data that is then passed on to the `postCheck` function and then routed into the `onPostCheck` function which can be overriden to implement the post-check logic.
 
 ## Hook examples
 
--   Contract blacklist
+- [Virtual Cold Storage](https://github.com/rhinestonewtf/modulekit-examples/blob/main/src/coldstorage-subaccount/ColdStorageHook.sol)
+- [Deadmans Switch](https://github.com/rhinestonewtf/modulekit-examples/blob/main/src/deadman-switch/DeadmanSwitch.sol)
