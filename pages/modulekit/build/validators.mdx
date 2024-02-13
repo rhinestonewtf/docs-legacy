@@ -6,7 +6,7 @@ Validators are modules that are called during the validation phase of a UserOper
 
 A module can be broken down into three different domains:
 
-1. **Config:** Handles configurations on the module, such as getter and setter functions
+1. **Config:** Handles configurations on the module, such as installation and uninstallation
 2. **Business logic:** Handles the core logic of the module, depending on the module type
 3. **Metadata:** Additional data that is used to identify and correctly use a module
 
@@ -90,7 +90,7 @@ contract ValidatorExample is ERC7579ValidatorBase {
 
 This function is called by the account during the validation phase of ERC-4337. Its goal is to determine whether a `UserOperation` should be executed. It returns a `uint256` signalling whether to accept or reject a `UserOperation`. The main way that this will happen in practice is that the `userOp.signature` will be recovered using the `userOpHash` and checked against some owner or set of owners stored on the module. The module may also return the variable `VALIDATION_FAILED` for added convenience.
 
-Additionally, the `ERC7579ValidatorBase` includes a function `_packValidationData(bool sigFailed, uint48 validUntil, uint48 validAfter)`, which packs the return data according to the ERC-4337 specifications on more complex return data. The schema of this return data is: `<20-byte> aggregatorOrSigFail`, `<6-byte> validUntil` and `<6-byte> validAfter`. This can be used as either an aggregator or to ensure that a `UserOperation` can only be executed before `validUntil` or after `validAfter`. To easily format the return data to use this schema, use `_packValidationData`.
+Additionally, the `ERC7579ValidatorBase` includes a function `_packValidationData(bool sigFailed, uint48 validUntil, uint48 validAfter)`, which packs the return data according to the ERC-4337 specifications on more complex return data. The schema of this return data is: `<20-byte> aggregatorOrSigFail`, `<6-byte> validUntil` and `<6-byte> validAfter`. This is to use either an aggregator or to ensure that a `UserOperation` can only be executed before `validUntil` or after `validAfter`. To easily format the return data to use this schema, use `_packValidationData`.
 
 <Callout type="info">
   Note that the in the `ERC7579ValidatorBase` interface, the return value of
