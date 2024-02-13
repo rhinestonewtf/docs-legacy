@@ -2,15 +2,15 @@
 
 A module can be broken down into three different domains:
 
-1. Config: handles configurations on the module, such as getter and setter functions
-2. Business logic: handles the core logic of the module, depending on the module type
-3. Metadata: additional data that is used to identify and correctly use a module
+1. **Config:** Handles configurations on the module, such as getter and setter functions
+2. **Business logic:** Handles the core logic of the module, depending on the module type
+3. **Metadata:** Additional data that is used to identify and correctly use a module
 
-This page aims to cover domains 1 and 3, since these are the same across different module types. For more information on domain 2, read through the specific module type pages.
+This page covers domains 1 and 3 since they are the same across different module types. For more information on domain 2, read through the specific module type pages.
 
 ## Building a module
 
-In order to build a compliant module you need to ensure that it:
+To build a compliant module you need to ensure that it:
 
 - Inherits from the right module base, depending on its type.
 - Implements the required functions of the interface.
