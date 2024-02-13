@@ -6,11 +6,11 @@ Fallbacks are modules that can add additional functionality into the account. Th
 
 A module can be broken down into three different domains:
 
-1. Config: handles configurations on the module, such as getter and setter functions
-2. Business logic: handles the core logic of the module, depending on the module type
-3. Metadata: additional data that is used to identify and correctly use a module
+1. **Config:** Handles configurations on the module, such as getter and setter functions
+2. **Business logic:** Handles the core logic of the module, depending on the module type
+3. **Metadata:** Additional data that is used to identify and correctly use a module
 
-This page only aims to cover domain 2 in the specific case of a Fallback Module. For more information on the other two, read through the [Module](./module.mdx) page.
+This page only covers domain 2 in the specific case of a Fallback Module. For more information on domains 1 and 3, read through the [Module](./module.mdx) page.
 
 <Callout type="warning">
   Fallback modules are still in development and we expect some breaking changes
@@ -19,7 +19,7 @@ This page only aims to cover domain 2 in the specific case of a Fallback Module.
 
 ## Building a fallback module
 
-In order to build a compliant fallback module you need to ensure that it:
+To build a compliant fallback module you need to ensure that it:
 
 - Inherits from the `ERC7579FallbackBase` contract.
 - Implements the required functions of the interface.
