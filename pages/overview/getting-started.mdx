@@ -1,34 +1,11 @@
 # Getting started
 
-The fastest way to start building a smart account module is by using ModuleKit, a development kit for building and testing modules. This guide will walk you through installing ModuleKit and setting yourself up to start building innovative modules.
+Rhinestone is building a number of different tools that help either build, test, deploy and distribute modules or to use them in applications and wallets. Of course, many developers will build their own modules and use them in their own applications. In either case, the following sections will help you get started.
 
-ModuleKit is based on Foundry, a toolchain to simplify and speed up smart contract development. If you are not familiar with Foundry, feel free to check out [their docs](https://book.getfoundry.sh/).
+## Module developers
 
-    If you do not have foundry installed, run the following command and follow the onscreen instructions: ```bash curl
-    -L https://foundry.paradigm.xyz | bash ```
+The fastest way to start building a smart account module is by using ModuleKit, a development kit for building and testing modules. ModuleKit simplifies the entire lifecycle of a module, including the building, testing and deploying phases. To learn out more about ModuleKit, check out the [ModuleKit documentation](../modulekit/).
 
-## Installation
+## Application developers
 
-1. Install ModuleKit by using our template or adding it into an existing foundry project:
-
-   ```bash {{ title: "template" }}
-   git clone https://github.com/rhinestonewtf/module-template.git
-   cd module-template
-   forge install
-   ```
-
-   ```bash {{ title: "existing foundry project" }}
-   forge install rhinestonewtf/modulekit
-   ```
-
-## Building a module
-
-The ModuleKit makes building a module a straightforward process. Simply create a new contract in `src/[MODULE_TYPE]` and inherit from the correct interface for that module type. Learn more about module types and their interfaces [here](/modulekit/modules#module-types). Apart from that, the only thing you need to do is adhere to the interface by implementing all required functions and, if building a validator, adhere to the [additional requirements](/modulekit/modules#module-types). For hands-on guides to building modules, visit the [tutorials](/tutorials) section of the docs.
-
-## Testing a module
-
-The ModuleKit provides an end-to-end testing framework to make it easy for you to test your modules and abstract away all the complexities. To start testing a module simply create a `.t.sol` file under `test/[MODULE_TYPE]` and inherit from the right `RhinestoneModuleKit` library depending on which account you want to test your Module against, as well as Foundry's `Test`. Now you can use the provided [tools](/modulekit/tools) in order to simplify and accelerate the testing of your module. For hands-on guides to testing modules, visit the [tutorials](/tutorials) section of the docs.
-
-## Deploying a module
-
-The ModuleKit allows you to easily deploy and register your Module on the [Module Registry](/registry). To do so, simply create a script in the `script/` folder and inherit from the provided `RegistryDeployer` library. Learn more about deploying and registering modules [here](/modulekit/tools#deploying-modules). For hands-on guides to deploying modules, visit the [deployment tutorial](/tutorials/deploying-modules).
+If you are an application developer and want to use modules in your application, you can use the Module Store to find and install modules. The Module Store, together with our SDK, will allow you to easily integrate modules into your application. To learn more about the SDK, check out the [SDK documentation](../sdk/) (coming soon).
