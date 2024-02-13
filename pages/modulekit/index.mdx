@@ -1,12 +1,12 @@
 # Overview
 
-ModuleKit is a development kit for building, testing and deploying smart account modules. The goal of ModuleKit is to make the module developer's life as simple as possible by removing the need for deep knowledge of smart accounts and their different implementations. ModuleKit also provides a library of tools, templates and integrations that supercharges development, allowing developers to unlock the full potential of modules. Within this toolkit, there are five key abstraction layers:
+ModuleKit is a development kit for building, testing, and deploying smart account modules. ModuleKit makes the developer's life as simple as possible by removing the need for deep knowledge of ERC-4337, smart accounts, and the different implementations of smart accounts that exist today (e.g. Safe, Biconomy, and ZeroDev). ModuleKit also provides a library of tools, templates, and integrations that supercharge development, allowing developers to unlock the full potential of smart accounts. Within this toolkit, there are five key abstraction layers:
 
-- **Standardized interfaces and templates**: These ensure that your module is compatible with all the major modular smart account implementations and that it is extremely easy to get started.
-- **Third-party integrations**: To supercharge building modules, ModuleKit has a library of integrations (such as with DeFi protocols) and pre-built conditions for execution to make building powerful modules seamless.
-- **Testing frameworks**: To allow for easy testing of modules, the ModuleKit has in-build unit and integration tests that abstract the complexity of smart accounts away and give devs an out-of-the-box testing setup.
-- **Helper utilities**: The ModuleKit includes various helper utilities, such as for accurately calculating gas consumption (including on L2s) and validataing that a module conforms to the ERC-4337 rules.
-- **Security automation**: These tools parse your module code and flag security vulnerabilities to be resolved before passing it on for a manual audit.
+- **Standardized interfaces and templates**: These ensure that your module is compatible with all the major account implementations and that it's extremely easy to get started.
+- **Third-party integrations**: ModuleKit has a [library of integrations](https://github.com/rhinestonewtf/modulekit/tree/main/src/integrations) and pre-built conditions for execution to make building powerful modules seamless.
+- **Testing frameworks**: An out-of-the-box testing setup with in-build unit and integration tests. This allows developers to easily test modules against different account implementations and abstracts away the complexities of the entire ERC-4337 flow.
+- **Helper utilities**: Various utilities to improve the developer experience, such as calculating gas consumption (including on L2s) and validataing that a module conforms to the ERC-4337 rules.
+- **Security automation**: These tools parse your module code and flag security vulnerabilities to be resolved before moving to a manual audit.
 
 Current module types supported by ModuleKit include:
 
@@ -18,30 +18,11 @@ Current module types supported by ModuleKit include:
 Current accounts supported by ModuleKit include:
 
 - [ERC-7579](https://erc7579.com/)
-- Safe (+ 4337 module)
-- Biconomy (soon ERC-7579 compatible)
-- Kernel (ZeroDev) (soon ERC-7579 compatible)
+- Safe
+- Biconomy
+- Kernel (ZeroDev)
 
-## Components
+### Useful starting resources
 
-### Standardized interfaces and templates
-
-Certain account implementations may interface with modules differently. We abstract this away when building modules by providing standardised interfaces for different module types that work across all supported accounts.
-
-The ModuleKit also includes a library of generalised module templates that can be used as a base layer for more complicated functions. This includes templates for basic validator, executors, hooks and fallbacks as well as more advanced ones, like session keys and destructured hooks. A set of example modules can also be found in the [modulekit-examples repo](https://github.com/rhinestonewtf/modulekit-examples). For a list of open-source modules and resources visit the [awesome-modular-accounts repo](https://github.com/rhinestonewtf/awesome-modular-accounts).
-
-### Third-party integrations
-
-Executors open up a new paradigm for account automations. For example, an executor could enable something as simple as a limit order or as powerful as a P2P flashloan with agreement terms and execution restrictions calibrated by the end user. To allow developers to more easily build these automations and use existing infrastructure, like DeFi protocols, ModuleKit has a [library of integrations](https://github.com/rhinestonewtf/modulekit/tree/main/src/integrations).
-
-### Testing frameworks
-
-The perhaps hardest part of building a module is testing, to ensure that a module is secure, behaves as expected and is compatible with the accounts it is intended to be used with. ModuleKit provides a testing framework that abstracts away the complexities of smart accounts and gives developers an out-of-the-box testing setup. Especially powerful is the integration testing suite, which allows developers to test their modules against different account implementations and abstracts away the complexities of the entire ERC-4337 flow.
-
-### Helper utilities
-
-ModuleKit includes various helper utilities, such as for accurately calculating gas consumption (including on L2s) and validating that a module conforms to the ERC-4337 rules. We are also working on further utilities to make building modules even easier.
-
-### Security automation
-
-Audits are expensive and security is paramount to the end user. Rhinestone is building a suite of tools to automate security checks to ensure baseline security standards are met and reduce the cost associated with manual audits. **Coming soon.**
+- [modulekit-examples repo](https://github.com/rhinestonewtf/modulekit-examples). 
+- List of open-source modules and resources: [awesome-modular-accounts repo](https://github.com/rhinestonewtf/awesome-modular-accounts).
