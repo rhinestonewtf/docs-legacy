@@ -1,8 +1,18 @@
 {
   "index": {
-    "display": "hidden"
+    "display": "hidden",
+    "theme": {
+      "breadcrumb": false,
+      "footer": true,
+      "sidebar": false,
+      "toc": false,
+      "pagination": false
+    }
   },
-  "overview": { "title": "Overview", "type": "page" },
+  "overview": {
+    "title": "Overview",
+    "type": "page"
+  },
   "modulekit": { "title": "ModuleKit", "type": "page" },
   "sandbox": { "title": "Sandbox", "type": "page" },
   "sdk": { "title": "SDK", "type": "page" }

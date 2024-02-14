@@ -1,13 +1,19 @@
 {
-  "index": "Why Rhinestone",
+  "index": {
+    "title": "Why Rhinestone"
+  },
   "getting-started": "Getting started",
   "-": {
-    "type": "separator"
+    "type": "separator",
+    "title": "Learn more"
   },
   "rhinestone-protocol": "Rhinestone Protocol",
   "modules": "Modules explained",
   "--": {
-    "type": "separator"
+    "type": "separator",
+    "title": "Resources"
   },
-  "resources": "Resources"
+  "account-abstraction": "Account Abstraction",
+  "erc-7484": "ERC-7484",
+  "erc-7579": "ERC-7579"
 }

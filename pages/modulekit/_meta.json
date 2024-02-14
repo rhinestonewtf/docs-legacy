@@ -2,14 +2,16 @@
   "index": "Overview",
   "getting-started": "Getting Started",
   "-": {
-    "type": "separator"
+    "type": "separator",
+    "title": "Module development"
   },
   "build": "Build",
   "test": "Test",
   "deploy": "Deploy",
   "advanced": "Advanced",
   "--": {
-    "type": "separator"
+    "type": "separator",
+    "title": "Tutorials"
   },
-  "tutorials": "Tutorials"
+  "build-multi-owner-validator": "Multi-Owner Validator"
 }
