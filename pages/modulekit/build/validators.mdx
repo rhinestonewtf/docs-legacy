@@ -35,7 +35,7 @@ contract ValidatorExample is ERC7579ValidatorBase {
 
     /**
      * Validates UserOperation
-     * @param userOp UserOperation to be validated.
+     * @param userOp PackedUserOperation to be validated.
      * @param userOpHash Hash of the UserOperation to be validated.
      * @return sigValidationResult the result of the signature validation, which can be:
      *  - 0 if the signature is valid
@@ -44,7 +44,7 @@ contract ValidatorExample is ERC7579ValidatorBase {
      * for more details)
      */
     function validateUserOp(
-        UserOperation calldata userOp,
+        PackedUserOperation calldata userOp,
         bytes32 userOpHash
     )
         external
@@ -88,9 +88,9 @@ contract ValidatorExample is ERC7579ValidatorBase {
 
 ### `validateUserOp`
 
-This function is called by the account during the validation phase of ERC-4337. Its goal is to determine whether a `UserOperation` should be executed. It returns a `uint256` signalling whether to accept or reject a `UserOperation`. The main way that this will happen in practice is that the `userOp.signature` will be recovered using the `userOpHash` and checked against some owner or set of owners stored on the module. The module may also return the variable `VALIDATION_FAILED` for added convenience.
+This function is called by the account during the validation phase of ERC-4337. Its goal is to determine whether a `PackedUserOperation` should be executed. It returns a `uint256` signalling whether to accept or reject a `PackedUserOperation`. The main way that this will happen in practice is that the `userOp.signature` will be recovered using the `userOpHash` and checked against some owner or set of owners stored on the module. The module may also return the variable `VALIDATION_FAILED` for added convenience.
 
-Additionally, the `ERC7579ValidatorBase` includes a function `_packValidationData(bool sigFailed, uint48 validUntil, uint48 validAfter)`, which packs the return data according to the ERC-4337 specifications on more complex return data. The schema of this return data is: `<20-byte> aggregatorOrSigFail`, `<6-byte> validUntil` and `<6-byte> validAfter`. This is to use either an aggregator or to ensure that a `UserOperation` can only be executed before `validUntil` or after `validAfter`. To easily format the return data to use this schema, use `_packValidationData`.
+Additionally, the `ERC7579ValidatorBase` includes a function `_packValidationData(bool sigFailed, uint48 validUntil, uint48 validAfter)`, which packs the return data according to the ERC-4337 specifications on more complex return data. The schema of this return data is: `<20-byte> aggregatorOrSigFail`, `<6-byte> validUntil` and `<6-byte> validAfter`. This is to use either an aggregator or to ensure that a `PackedUserOperation` can only be executed before `validUntil` or after `validAfter`. To easily format the return data to use this schema, use `_packValidationData` which is prt of the `ERC7579ValidatorBase`.
 
 <Callout type="info">
   Note that the in the `ERC7579ValidatorBase` interface, the return value of

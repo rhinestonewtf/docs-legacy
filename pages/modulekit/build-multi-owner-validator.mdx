@@ -11,7 +11,7 @@ To get started building the validator, we will first of all create a new contrac
 pragma solidity ^0.8.23;
 
 import { ERC7579ValidatorBase } from "modulekit/Modules.sol";
-import { UserOperation } from "modulekit/external/ERC4337.sol";
+import { PackedUserOperation } from "modulekit/external/ERC4337.sol";
 import { EncodedModuleTypes } from "erc7579/lib/ModuleTypeLib.sol";
 
 import { SignatureCheckerLib } from "solady/src/utils/SignatureCheckerLib.sol";
@@ -93,7 +93,7 @@ contract MultiOwnerValidator is ERC7579ValidatorBase {
 
     /**
      * Validates UserOperation
-     * @param userOp UserOperation to be validated.
+     * @param userOp PackedUserOperation to be validated.
      * @param userOpHash Hash of the UserOperation to be validated.
      * @return sigValidationResult the result of the signature validation, which can be:
      *  - 0 if the signature is valid
@@ -102,7 +102,7 @@ contract MultiOwnerValidator is ERC7579ValidatorBase {
      * for more details)
      */
     function validateUserOp(
-        UserOperation calldata userOp,
+        PackedUserOperation calldata userOp,
         bytes32 userOpHash
     )
         external
@@ -235,9 +235,10 @@ import {
     RhinestoneModuleKit,
     ModuleKitHelpers,
     ModuleKitUserOp,
-    RhinestoneAccount,
+    AccountInstance,
     UserOpData
 } from "modulekit/ModuleKit.sol";
+import { MODULE_TYPE_VALIDATOR } from "modulekit/external/ERC7579.sol";
 import { MultiOwnerValidator } from "src/MultiOwnerValidator.sol";
 import { ECDSA } from "solady/src/utils/ECDSA.sol";
 
@@ -257,7 +258,7 @@ contract MultiOwnerValidatorTest is RhinestoneModuleKit, Test {
     using ECDSA for bytes32;
 
     // account and modules
-    RhinestoneAccount internal instance;
+   AccountInstance internal instance;
     MultiOwnerValidator internal validator;
 
     Account owner1;
@@ -275,9 +276,13 @@ contract MultiOwnerValidatorTest is RhinestoneModuleKit, Test {
         owner2 = makeAccount("owner2");
 
         // Create the account and install the validator
-        instance = makeRhinestoneAccount("MultiOwnerValidator");
+        instance = makeAccountInstance("MultiOwnerValidator");
         vm.deal(address(instance.account), 10 ether);
-        instance.installValidator(address(validator), abi.encodePacked(owner1.addr));
+        instance.installModule({
+            moduleTypeId: MODULE_TYPE_VALIDATOR,
+            module: address(validator),
+            data: abi.encodePacked(owner1.addr)
+        });
     }
 }
 ```

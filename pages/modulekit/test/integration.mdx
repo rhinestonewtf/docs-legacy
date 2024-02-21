@@ -11,12 +11,12 @@ import {
     RhinestoneModuleKit,
     ModuleKitHelpers,
     ModuleKitUserOp,
-    RhinestoneAccount,
+    AccountInstance,
     UserOpData
 } from "modulekit/ModuleKit.sol";
 ```
 
-Then, you should set up your test contract to inherit from `RhinestoneModuleKit` and the Foundry `Test` contract. Use the `ModuleKitHelpers` and `ModuleKitUserOp` libraries to simplify the testing process. You should also create an instance of the account you want to test. Here's an example of how to set up your test contract to test a `Validator` module on a `RhinestoneAccount` instance:
+Then, you should set up your test contract to inherit from `RhinestoneModuleKit` and the Foundry `Test` contract. Use the `ModuleKitHelpers` and `ModuleKitUserOp` libraries to simplify the testing process. You should also create an instance of the account you want to test. Here's an example of how to set up your test contract to test a `Validator` module on an `AccountInstance` instance:
 
 ```solidity
 contract IntegrationTestExample is RhinestoneModuleKit, Test {
@@ -24,7 +24,7 @@ contract IntegrationTestExample is RhinestoneModuleKit, Test {
     using ModuleKitUserOp for *;
 
     // account instance
-    RhinestoneAccount internal instance;
+    AccountInstance internal instance;
 
     function setUp() public {
         init();
@@ -32,7 +32,7 @@ contract IntegrationTestExample is RhinestoneModuleKit, Test {
         // Your test setup
 
         // Create the account and deal it some ether
-        instance = makeRhinestoneAccount("IntegrationTestExample");
+        instance = makeAccountInstance("IntegrationTestExample");
         vm.deal(address(instance.account), 10 ether);
     }
 
@@ -40,7 +40,7 @@ contract IntegrationTestExample is RhinestoneModuleKit, Test {
 }
 ```
 
-If you want more custom control over the initial Modules on your account instance, you can use the `makeRhinestoneAccount(bytes32 salt, ERC7579BootstrapConfig[] memory validators, ERC7579BootstrapConfig[] memory executors, ERC7579BootstrapConfig memory hook, ERC7579BootstrapConfig memory fallBack)` function. This requires you to import `ERC7579BootstrapConfig` from `"modulekit/external/ERC7579.sol";` For example:
+If you want more custom control over the initial Modules on your account instance, you can use the `makeAccountInstance(bytes32 salt, ERC7579BootstrapConfig[] memory validators, ERC7579BootstrapConfig[] memory executors, ERC7579BootstrapConfig memory hook, ERC7579BootstrapConfig memory fallBack)` function. This requires you to import `ERC7579BootstrapConfig` from `"modulekit/external/ERC7579.sol";` For example:
 
 ```solidity
 function _setupAccount() public {
@@ -51,7 +51,7 @@ function _setupAccount() public {
     ERC7579BootstrapConfig memory hook = _emptyConfig();
     ERC7579BootstrapConfig memory fallBack =
         _makeBootstrapConfig(address(auxiliary.fallbackHandler), abi.encode(params));
-    instance = makeRhinestoneAccount("mainAccount", validators, executors, hook, fallBack);
+    instance = makeAccountInstance("mainAccount", validators, executors, hook, fallBack);
 }
 ```
 
@@ -104,7 +104,7 @@ instance.unInstallModule(uint256 moduleTypeId, address module, bytes memory data
 instance.isModuleInstalled(uint256 moduleTypeId, address module, bytes memory data);
 ```
 
-You can also use the imported `TYPE_[MODULE_TYPE_NAME]` to make it easier to pass the `moduleTypeId` argument (eg TYPE_VALIDATOR).
+You can also use the imported `MODULE_TYPE_[MODULE_TYPE_NAME]` to make it easier to pass the `moduleTypeId` argument (eg `MODULE_TYPE_VALIDATOR`). These can be imported from `modulekit/external/ERC7579.sol`.
 
 ## Utilities
 

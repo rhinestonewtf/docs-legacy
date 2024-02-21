@@ -58,7 +58,37 @@ contract ExecutorExample is ERC7579ExecutorBase {
 
 As mentioned in the example contract above, ERC-7579 does not specify an interface for executors beyond the general Module interface. This means that executors can implement any kind of function in their business logic.
 
-In the example above, the function `execute` simply forwards its calldata and executes it on the account. Note that executors can only call the `executeFromExecutor` function of the account and not the `execute` function. Unlike the example above, the executor can also execute a batch of executions on the account.
+In the example above, the function `execute` simply forwards its calldata and executes it on the account. Note that executors can only call the `executeFromExecutor` function of the account and not the `execute` function. Unlike the example above, the executor can also execute a batch of executions on the account. To pass the execution mode, the executor can use the `ModeLib` and to correctly format the calldata, you can use the `ExecutionLib`.
+
+#### ModeLib
+
+The `ModeLib` is a library that provides a set of functions to encode and decode execution modes. The `ModeLib` is used to encode the execution mode and pass it to the account. You can import the `ModeLib` from the `erc7579` package:
+
+```solidity
+import { ModeLib } from "erc7579/lib/ModeLib.sol";
+```
+
+The `ModeLib` provides the following functions:
+
+- `encodeSimpleSingle()`: Encodes a simple single execution mode
+- `encodeSimpleBatch()`: Encodes a simple batch execution mode
+- `encode(CallType callType, ExecType execType, ModeSelector mode, ModePayload payload)`: Encodes a custom execution mode (uses the `CallType`, `ExecType`, `ModeSelector`, and `ModePayload` custom types from the `ModeLib`)
+- `decode(ModeCode mode)`: Decodes the execution mode into `CallType`, `ExecType`, `ModeSelector`, and `ModePayload` custom types
+
+#### ExecutionLib
+
+The `ExecutionLib` is a library that provides a set of functions to encode and decode execution data. The `ExecutionLib` is used to encode the execution data and pass it to the account. You can import the `ExecutionLib` from the `erc7579` package:
+
+```solidity
+import { ExecutionLib } from "erc7579/lib/ExecutionLib.sol";
+```
+
+The `ExecutionLib` provides the following functions:
+
+- `encodeSingle(address target, uint256 value, bytes calldata callData)`: Encodes a single execution
+- `encodeBatch(Execution[] calldata executions)`: Encodes a batch of executions, which uses the `Execution` interface which can be imported from `modulekit/Accounts`
+- `decodeSingle(bytes calldata callData)`: Decodes the execution data into `address target`, `uint256 value`, and `bytes calldata callData`
+- `decodeBatch(bytes calldata callData)`: Decodes the execution data into `Execution[]`
 
 ## Executor examples
 
