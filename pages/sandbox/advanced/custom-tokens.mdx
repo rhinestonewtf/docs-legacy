@@ -1,0 +1,18 @@
+# Custom tokens
+
+The Sandbox currently hardcodes the tokens that should be fetched and displayed. In the future, tokens will be fetched dynamically based on the account holdings. In the meantime, the tokens to fetch are stored in [`src/domains/Token/api/data/tokens.ts`](https://github.com/rhinestonewtf/sandbox/blob/main/src/domains/Token/api/data/tokens.ts).
+
+## Adding a new token
+
+To add a new network, add an entry to the `allTokens` object in `src/domains/Token/api/data/tokens.ts` with the following parameters:
+
+```javascript copy
+{
+    name: "",
+    token_address: "",
+    symbol: "",
+    decimals: 0,
+    chainId: 0,
+    logoURI: "",
+}
+```
