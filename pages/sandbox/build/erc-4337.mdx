@@ -3,3 +3,34 @@
 The Sandbox provides a complete abstraction of the ERC-4337 flows. This page gives an overview of the different helper utilities that enable this and how you can use them.
 
 ## Creating and executing a UserOperation
+
+To create and execute a UserOperation, you can use the [`useCreateUserOp`](https://github.com/rhinestonewtf/sandbox/blob/main/src/domains/UserOperation/hooks/useCreateUserOp.ts) hook. The hook can be used like a regular React hook:
+
+```javascript copy
+const createUserOp = useCreateUserOp();
+```
+
+The main argument for creating a UserOperation is the `actions` array. It consists of a list of `ExecuteAction` objects, which have the following parameters:
+
+```typescript
+type ExecuteAction = {
+  target: Address;
+  value: BigInt;
+  callData: Hex;
+};
+```
+
+The `createUserOp` object has a `mutateAsync` method that can be used to create a UserOperation:
+
+```javascript copy
+userOp = await createUserOp.mutateAsync({
+  name: `Display Name in the UI`,
+  actions,
+});
+```
+
+Optionally, you can also provide additional parameters to the `mutateAsync` method:
+
+- `account`: The account to use for the UserOperation. If not provided, the active account will be used. (Type: [`Account`](https://github.com/rhinestonewtf/sandbox/blob/main/src/domains/Account/Account.ts))
+- `validator`: The validator to use for the UserOperation. If not provided, the active validator will be used. (Type: [`Validator`](https://github.com/rhinestonewtf/sandbox/blob/main/src/domains/Module/Module.ts))
+- `callback`: A callback function that will be called when the UserOperation is executed. (Type: `() => void`)
