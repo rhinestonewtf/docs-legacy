@@ -1,0 +1,33 @@
+# Custom networks
+
+The Sandbox supports different EVM networks. By default, it supports the following networks:
+
+- Polygon Mumbai
+
+The networks are defined in the [`src/domains/Network/api/networks.ts`](https://github.com/rhinestonewtf/sandbox/blob/main/src/domains/Network/api/networks.ts) file.
+
+## Adding a new network
+
+To add a new network, add an entry to the `networks` object in `src/domains/Network/api/networks.ts` with the following parameters:
+
+```javascript copy
+{
+    name: "",
+    testnet: true,
+    icon: "",
+    bundlerUrl: "",
+    rpcUrl: "",
+    zeroExBaseUrl: "",
+    id: 0,
+    network: "",
+    queryName: "",
+    nativeCurrency: { name: "", symbol: "", decimals: 0 },
+    rpcUrls: {
+        default: {
+            http: [""],
+        },
+    },
+    blockExplorerUrl: "",
+    explorerName: "",
+}
+```

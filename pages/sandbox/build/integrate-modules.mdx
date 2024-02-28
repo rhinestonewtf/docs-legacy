@@ -1,0 +1,28 @@
+import { Callout } from "nextra/components";
+
+# Integrating modules
+
+The Module Sandbox has different helper utilities to make it easy to integrate modules into your frontend applications. This page gives an overview of the different helper utilities.
+
+## Contract dependencies
+
+The Sandbox stores the contract dependencies in the [`contracts` file](https://github.com/rhinestonewtf/sandbox/blob/main/src/constants/contracts.ts). To add a new contract, add an entry to the `contracts` object.
+
+## Installing modules
+
+To install a module from within a frontend component, you can use the relevant `install` functions from the [`installModule` file](https://github.com/rhinestonewtf/sandbox/blob/main/src/domains/Account/api/installModule.ts).
+
+<Callout type="warning">
+  This interface will change soon to support the latest changes of ERC-7579,
+  through the SDK.
+</Callout>
+
+## Using modules
+
+How you use modules depends on the module type that you are using. If you are using an executor, the only thing you need to make sure is that it is called correctly, in most cases as the target of a UserOperation. Hooks and fallbacks just need to be installed and they will be called onchain given the right conditions.
+
+To use validator modules, you will need to provide the validator module to be used when creating a UserOperation. Learn more about this in the [ERC-4337 page](./erc-4337.mdx).
+
+## Uninstalling modules
+
+A helper for this is coming soon.
