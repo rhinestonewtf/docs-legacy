@@ -13,5 +13,6 @@
     "type": "separator",
     "title": "Tutorials"
   },
-  "build-multi-owner-validator": "Multi-Owner Validator"
+  "build-multi-owner-validator": "Multi-Owner Validator",
+  "build-automated-swap-executor": "Auto-swap Executor"
 }
