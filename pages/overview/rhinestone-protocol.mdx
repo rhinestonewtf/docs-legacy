@@ -1,25 +1,22 @@
 # Rhinestone Protocol
 
-The Rhinestone Protocol is an open and permissionless system of smart contracts that enables a modular ecosystem for smart accounts.
+Rhinestone is building at the frontier of modular smart account abstraction. We imagine a world where smart accounts become vanilla kernels and all the interesting features and components move to the module layer. However, for the module ecosystem to be permissionless, open and interoperable across any smart account there are a number of challenges that need resolving.
 
-## Architecture
+1. **Security**: Developers and end users require assurances that a third-party module it is not malicious.
+2. **Developer complexity**: The complexities of modular smart accounts need to be abstracted from the developer.
+3. **Interoperability**: We still require a translation layer between different account implementations so that module developers need only build once for maximum distribution.
+4. **Accessibility**: Installing and using a module at the application layer should be as simple as installing an app.
+
+## Protocol Architecture
 
 The Rhinestone Protocol consists of several key components that facilitates the lifecycle of smart account modules from development through to account installation and monetization. The protocol is account implementation agnostic, with the primary objective of being a credibly neutral middleware layer that solves user security, account portability and account extensibility.
 
 ![Protocol overview](/protocol.png)
 
-## Accounts
+### Components
 
-Accounts are smart contracts that are used as the user’s account (“smart accounts”). These smart accounts are module enabled. The protocol is account-agnostic with the goal of being interoperable with all modular smart account implementations.
-
-## Modules
-
-Modules are smart contracts that extend the functionality of a user’s account. We categorize modules into four different types; validators, executors, hooks and recovery (explored in detail [here](modules.mdx)). Rhinestone will add additional module types as they are formulated.
-
-## Module Registry
-
-The Module Registry is the foundational layer to the module marketplace. It’s primary function is to enforces standards and security guarantees. Importantly, the Module Registry is ownerless, permissionless and free, giving developers, auditors, vendors and users maximum flexibility within the module marketplace.
-
-## Adapters
-
-Adapters are the communication layer that exist between Accounts and the Module Registry. The Adapter allows vendors or users to specify their security postures and ensure that modules meet a prescribed set of security rules and guidelines. Learn more about Registry Adapters by reading [ERC-7484](https://eips.ethereum.org/EIPS/eip-7484), which we recently drafted and shared to get feedback from the community.
+- **Modules**: Smart contracts that extend the features of smart accounts.
+- **Accounts**: Different smart account implementations built and integrated by trusted account vendor partners.
+- **Module Registry**: The foundational layer to the Rhinestone Protocol. Its primary function is to enforce standards and security guarantees for users and developers by storing onchain security assertions made by independent auditors.
+- **Core Module Components**: Complex module functions that are required across many different types of modules (for example, module monetization enforcement). These components are optionally inherited by the developer.
+- **Account Adapters**: A communication layer that exists between different account implementations and the Module Registry. Adapters allow users, application developers and/or account vendors configure their security postures and ensure modules meet a predefined set of security rules and guidelines.

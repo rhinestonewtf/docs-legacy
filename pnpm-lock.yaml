@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  clsx:
+    specifier: ^2.1.0
+    version: 2.1.0
   hast:
     specifier: ^1.0.0
     version: 1.0.0
