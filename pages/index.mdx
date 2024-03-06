@@ -1,8 +1,11 @@
-import { Cards } from "nextra/components";
+import { Cards } from "nextra-theme-docs";
 import { ComponentCard } from "../components/ComponentCard";
 import { ModuleKitIcon, SandboxIcon, SDKIcon } from "../components/icons";
+import { Bleed } from "../components/Bleed";
 
-# Welcome
+<Bleed>
+
+# Welcome to Rhinestone
 
 Rhinestone is dedicated to transforming smart accounts into a platform for permissionless innovation. Our mission is to create a secure ecosystem of smart account modules, enabling developers to build powerful on-chain products.
 
@@ -12,13 +15,13 @@ Rhinestone is pioneering a new infrastructure layer that allows any developer to
 
 #### Our modular smart account stack
 
-<Cards>
+<Cards className="gap-x-[15px]">
 <ComponentCard
   component={{
     icon: (<ModuleKitIcon width={48} height={48}/>),
     title: "ModuleKit",
     description:
-      "The Rhinestone Protocol is an open and permissionless system of smart contracts that enables a modular ecosystem for smart accounts",
+      "ModuleKit is a developer tool for building, testing, and deploying smart account modules",
     href: "/modulekit",
   }}
 />
@@ -28,7 +31,7 @@ Rhinestone is pioneering a new infrastructure layer that allows any developer to
     icon: <SandboxIcon width={48} height={48} />,
     title: "Module Sandbox",
     description:
-      "The fastest way to start building a smart account module is by using ModuleKit, a development kit for building and testing modules",
+      "Module Sandbox is a frontend playground for building and testing UI components for modules",
     href: "/sandbox",
   }}
 />
@@ -38,8 +41,10 @@ Rhinestone is pioneering a new infrastructure layer that allows any developer to
     icon: (<SDKIcon width={48} height={48}/>),
     title: "Rhinestone SDK",
     description:
-      "The fastest way to start building a smart account module is by using ModuleKit, a development kit for building and testing modules",
+      "Our SDK simplifies the integration and usage of smart account modules for application developers",
     href: "/sdk",
   }}
 />
 </Cards>
+
+</Bleed>
