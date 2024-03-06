@@ -76,6 +76,14 @@ const config: DocsThemeConfig = {
       return <div>{title}</div>;
     },
   },
+  primaryHue: {
+    light: 244.83,
+    dark: 245.57,
+  },
+  primarySaturation: {
+    light: 72.8,
+    dark: 38.04,
+  },
   docsRepositoryBase: "https://github.com/rhinestonewtf/docs/",
   footer: {
     text: (

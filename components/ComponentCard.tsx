@@ -16,7 +16,7 @@ interface Component {
   icon: React.ReactNode;
   title: string;
   description: string;
-  href: string;
+  href?: string;
 }
 
 export const ComponentCard = ({ component }: { component: Component }) => {
@@ -27,7 +27,7 @@ export const ComponentCard = ({ component }: { component: Component }) => {
     <div
       className={cn(
         classes.card,
-        "bg-gray-100 dark:border-neutral-700 dark:bg-neutral-800 dark:text-gray-50 min-w-[150px] min-h-[200px] py-[16px] px-[16px]"
+        "bg-gray-100 dark:border-neutral-700 dark:bg-neutral-800 dark:text-gray-50 min-w-[150px] min-h-[120px] py-[16px] px-[16px]"
       )}
     >
       <div className="">{component.icon}</div>
@@ -36,17 +36,19 @@ export const ComponentCard = ({ component }: { component: Component }) => {
       <div className="text-[13px] dark:text-gray-300">
         {component.description}
       </div>
-      <Link
-        href={component.href}
-        className="mt-6 bg-white dark:bg-white/10 rounded-2xl w-fit pl-4 pr-2 py-1 uppercase font-mono text-[14px] flex flex-row items-center justify-center border border-gray-200 dark:border-gray-800 text-[#3D2EE5] dark:text-white"
-      >
-        Open{" "}
-        <CaretRight
-          width={6}
-          height={9}
-          color={currentTheme == "light" ? "#3D2EE5" : "#fff"}
-        />
-      </Link>
+      {component.href ? (
+        <Link
+          href={component.href}
+          className="mt-6 bg-white dark:bg-white/10 rounded-2xl w-fit pl-4 pr-2 py-1 uppercase font-mono text-[14px] flex flex-row items-center justify-center border border-gray-200 dark:border-gray-800 text-[#3D2EE5] dark:text-white"
+        >
+          Open{" "}
+          <CaretRight
+            width={6}
+            height={9}
+            color={currentTheme == "light" ? "#3D2EE5" : "#fff"}
+          />
+        </Link>
+      ) : null}
     </div>
   );
 };

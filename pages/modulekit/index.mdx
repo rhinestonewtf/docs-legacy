@@ -1,3 +1,13 @@
+import { ModuleKitBanner } from "../../components/banners";
+import { Cards } from "nextra-theme-docs";
+import { ComponentCard } from "../../components/ComponentCard";
+import {
+  ValidatorsIcon,
+  ExecutorsIcon,
+  HooksIcon,
+  FallbacksIcon,
+} from "../../components/icons";
+
 # Overview
 
 ModuleKit is a development kit for building, testing, and deploying smart account modules. ModuleKit makes the developer's life as simple as possible by removing the need for deep knowledge of ERC-4337, smart accounts, and the different implementations of smart accounts that exist today (e.g. Safe, Biconomy, and ZeroDev). ModuleKit also provides a library of tools, templates, and integrations that supercharge development, allowing developers to unlock the full potential of smart accounts. Within this toolkit, there are five key abstraction layers:
@@ -8,12 +18,47 @@ ModuleKit is a development kit for building, testing, and deploying smart accoun
 - **Helper utilities**: Various utilities to improve the developer experience, such as calculating gas consumption (including on L2s) and validataing that a module conforms to the ERC-4337 rules.
 - **Security automation**: These tools parse your module code and flag security vulnerabilities to be resolved before moving to a manual audit.
 
+<div className="my-8">
+  <ModuleKitBanner width={1000} height={400} />
+</div>
+
 Current module types supported by ModuleKit include:
 
-- Validators
-- Executors
-- Hooks
-- Fallbacks
+<Cards className="gap-x-[15px]">
+<ComponentCard
+  component={{
+    icon: (<ValidatorsIcon width={48} height={48}/>),
+    title: "Validators",
+    description:
+      "Determine whether a transaction is valid and should be executed",
+  }}
+/>
+
+<ComponentCard
+  component={{
+    icon: <ExecutorsIcon width={48} height={48} />,
+    title: "Executors",
+    description: "Create executions on the account with custom logic",
+  }}
+/>
+
+<ComponentCard
+  component={{
+    icon: (<HooksIcon width={48} height={48}/>),
+    title: "Hooks",
+    description:
+      "Enforce conditions or execute logic pre- or post-execution",
+  }}
+/>
+<ComponentCard
+  component={{
+    icon: (<FallbacksIcon width={48} height={48}/>),
+    title: "Fallbacks",
+    description:
+      "Extend the account logic to add more functionality into the account",
+  }}
+/>
+</Cards>
 
 Current accounts supported by ModuleKit include:
 
