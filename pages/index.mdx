@@ -1,17 +1,50 @@
-import { Cards, Card } from "nextra/components";
+import { Cards } from "nextra-theme-docs";
+import { ComponentCard } from "../components/ComponentCard";
+import { ModuleKitIcon, SandboxIcon, SDKIcon } from "../components/icons";
+import { Bleed } from "../components/Bleed";
 
-# Rhinestone Developer Docs
+<Bleed>
 
-Today there are significant barriers to the adoption of smart accounts, including developer complexity, security, and a lack of simple feature customization, leading to vendor lock-in and ecosystem fragmentation. These challenges paint a picture of a homogenous smart account ecosystem where building novel features is costly, expensive audits disincentivize experimentation, and high switching costs increase user adoption risk.
+# Welcome to Rhinestone
 
-Rhinestone makes smart accounts extensible, portable, and secure by opening up the programmable nature of smart accounts to any third party. Our infrastructure supports an onchain ecosystem of modules: an interoperability layer between accounts, modules, and users. We make it easy for developers to build smart account modules that can extend the functionality of the user’s account. The platform then enables the distribution and monetization of these modules, and for users or application developers to discover and install them.
+Rhinestone is dedicated to transforming smart accounts into a platform for permissionless innovation. Our mission is to create a secure ecosystem of smart account modules, enabling developers to build powerful on-chain products.
 
-Rhinestone is dedicated to transforming wallets into a platform for innovation. Our mission is to create a secure ecosystem of smart account modules, fostering permissionless wallet innovation and enabling developers to build powerful on-chain products that align with web3 values.
+Rhinestone is pioneering a new infrastructure layer that allows any developer to build smart account modules on top of any compatible smart account vendor. Today we support Safe, Biconomy, and ZeroDev.
 
-#### Find out more about our developer tools and resources:
+**Module developers** use Rhinestone to build and distribute their products and services via our integration with these account vendors. **Application developers** access these modules via a module marketplace or self serve through our developer tools.
 
-<Cards>
-  <Card title="ModuleKit" href="/modulekit" />
-  <Card title="Module Sandbox" href="/sandbox" />
-  <Card title="App SDK" href="/sdk" />
+#### Our modular smart account stack
+
+<Cards className="gap-x-[15px]">
+<ComponentCard
+  component={{
+    icon: (<ModuleKitIcon width={48} height={48}/>),
+    title: "ModuleKit",
+    description:
+      "ModuleKit is a developer tool for building, testing, and deploying smart account modules",
+    href: "/modulekit",
+  }}
+/>
+
+<ComponentCard
+  component={{
+    icon: <SandboxIcon width={48} height={48} />,
+    title: "Module Sandbox",
+    description:
+      "Module Sandbox is a frontend playground for building and testing UI components for modules",
+    href: "/sandbox",
+  }}
+/>
+
+<ComponentCard
+  component={{
+    icon: (<SDKIcon width={48} height={48}/>),
+    title: "Rhinestone SDK",
+    description:
+      "Our SDK simplifies the integration and usage of smart account modules for application developers",
+    href: "/sdk",
+  }}
+/>
 </Cards>
+
+</Bleed>
