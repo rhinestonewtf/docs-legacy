@@ -1,3 +1,33 @@
+import { ModuleSDKBanner } from "../../components/banners";
+
 # Overview
 
-Coming soon
+The Module SDK is a TypeScript library for using Smart Account Modules in Applications. It allows you to easily install and uninstall modules for any [ERC-7579](https://erc7579.com/) account, interact with and use modules using dedicated helper utilites and can be used alongside existing account SDKs such as [permissionless](https://www.npmjs.com/package/permissionless), [Biconomy](https://www.npmjs.com/package/@biconomy/account), [Zerodev](https://www.npmjs.com/package/@zerodevapp/sdk) and many more.
+
+The Module SDK is split into two components:
+
+- **Accounts** - Account-related functionality, like installing and uninstalling modules
+- **Modules** - Integrated modules with functionality for their installation and usage
+
+<div className="my-8">
+  <ModuleSDKBanner width={1000} height={400} />
+</div>
+
+Current accounts supported by the Module SDK include:
+
+- [ERC-7579](https://erc7579.com/)
+- Safe (soon)
+- Biconomy (v3)
+- Kernel (v3)
+
+The integrated modules include:
+
+- Ownable Validator
+- WebAuthn Validator
+- MFA Validator
+- Scheduled Transfers
+- Scheduled Orders
+
+### Useful starting resources
+
+- todo

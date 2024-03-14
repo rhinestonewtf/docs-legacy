@@ -1,0 +1,143 @@
+# Accounts
+
+The Module SDK supports different accounts that are compliant with ERC-7579. Currently, the following accounts are supported:
+
+- [ERC-7579](https://erc7579.com/)
+- Safe (soon)
+- Biconomy (v3)
+- Kernel (v3)
+
+## Account type
+
+The `Account` type is a generic type that represents an account. It has the following properties:
+
+- `address`: The address of the account
+- `initCode`: The init code of the account
+- `type`: The type of the account
+- `deployedOnChains`: The chains on which the account is deployed (represented as an array of chainIds)
+
+```typescript
+type Account = {
+  address: Address;
+  initCode?: Hex;
+  type: AccountType;
+  deployedOnChains: Number[];
+};
+```
+
+The `AccountType` type is a string literal type that represents the type of the account. It has the following values:
+
+```typescript
+type AccountType = "erc7579-implementation";
+```
+
+## Module type
+
+The `Module` type is a generic type that represents a module. It has the following properties:
+
+- `module`: The address of the module
+- `data`: The installation or uninstallation data to be sent to the module
+- `additionalContext`: The additional context to be sent to the module
+- `type`: The type of the module
+
+```typescript
+type Module = {
+  module: Address;
+  data?: Hex;
+  additionalContext?: Hex;
+  type: ModuleType;
+};
+```
+
+The `ModuleType` type is a string literal type that represents the type of the module. It has the following values:
+
+```typescript
+type ModuleType = "validators" | "executors" | "hooks" | "fallbacks";
+```
+
+## Action object
+
+The `Action` type is a generic type that represents an action that is executed on the account. It has the following properties:
+
+- `target`: The address of the target
+- `value`: The native token value of the action
+- `callData`: The calldata of the action to be executed on the target
+
+```typescript
+type Action = {
+  target: Address;
+  value: BigInt;
+  callData: Hex;
+};
+```
+
+## `getAccount`
+
+The `getAccount` function is used to format an account object in a future-proof way.
+
+```typescript
+import { getAccount } from "@rhinestone/module-sdk";
+
+const account = getAccount({
+  address: "0x1234...",
+  type: "erc7579-implementation",
+  initCode: "0x1234...", // optional
+  deployedOnChains: [1, 4], // optional
+});
+```
+
+## `installModule`
+
+The `installModule` function is used to install a module on an account. This function returns a promise that resolves to an array of `Action` objects.
+
+```typescript
+import { installModule } from "@rhinestone/module-sdk";
+
+const installModuleActions = await installModule({
+  client, // The client object of type PublicClient from viem
+  account, // The account object
+  module, // The module object
+});
+```
+
+## `uninstallModule`
+
+The `uninstallModule` function is used to uninstall a module from an account. This function returns a promise that resolves to an array of `Action` objects.
+
+```typescript
+import { uninstallModule } from "@rhinestone/module-sdk";
+
+const uninstallModuleActions = await uninstallModule({
+  client, // The client object of type PublicClient from viem
+  account, // The account object
+  module, // The module object
+});
+```
+
+## `isModuleInstalled`
+
+The `isModuleInstalled` function is used to check if a module is installed on an account. This function returns a promise that resolves to a boolean value.
+
+```typescript
+import { isModuleInstalled } from "@rhinestone/module-sdk";
+
+const isInstalled = await isModuleInstalled({
+  client, // The client object of type PublicClient from viem
+  account, // The account object
+  module, // The module object
+});
+```
+
+## `getInstalledModules`
+
+The `getInstalledModules` function is used to get the installed modules on an account. This function returns a promise that resolves to an array of `Module` objects.
+
+```typescript
+import { getInstalledModules } from "@rhinestone/module-sdk";
+
+const installedModules = await getInstalledModules({
+  client, // The client object of type PublicClient from viem
+  account, // The account object
+  moduleTypes, // An array of module types to filter the installed modules (optional, default is all module types)
+});
+```

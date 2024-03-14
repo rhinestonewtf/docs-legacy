@@ -1,0 +1,9 @@
+# Module installation flow
+
+When installing or uninstalling a module, the following steps are performed:
+
+1. The account implementetion is retrieved for routing the function call to the right account.
+2. It is checked if the module is already installed.
+   - If an account is deployed, an rpc call is made to the account to check if the module is installed.
+   - If an account is not deployed, the sdk decodes the `initCode` of the account and checks if the module is installed.
+3. The data to install or uninstall is formatted into an array of `Action` objects. If the module is already installed when trying to install or not yet installed when trying to uninstall, the function will return an empty array.

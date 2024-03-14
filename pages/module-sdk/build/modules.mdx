@@ -1,0 +1,35 @@
+# Modules
+
+The Module SDK come prebuilt with a set of modules that can be installed on an account. These modules are designed to extend the functionality of an account and can be used to add custom logic to the account. Currently, the Module SDK supports the following modules:
+
+- [Ownable Validator](../modules/ownable-validator.mdx)
+- [WebAuthn Validator](../modules/webauthn-validator.mdx)
+- [MFA Validator](../modules/mfa-validator.mdx)
+- [Scheduled Transfers](../modules/scheduled-transfers.mdx)
+- [Scheduled Orders](../modules/scheduled-orders.mdx)
+
+## Usage
+
+All modules will export a set of functions and (usually) constants. Every module has a function called `get...` where `...` is the name of the module. This function will return the module object that can be used to interact with the module, using the [account](./accounts.mdx) functions.
+
+For example, the `Ownable Validator` module has a function called `getOwnableValidator` that returns the module object.
+
+```typescript
+import { getOwnableValidator, installModule } from "@rhinestone/module-sdk";
+
+const ownableValidator = getOwnableValidator({
+  ownerAddress,
+});
+
+const installModuleActions = await installModule({
+  client,
+  account,
+  module: ownableValidator,
+});
+```
+
+Modules will also have a set of constants that can be used for more advanced usage. For example, the `Ownable Validator` module has a constant called `OWNABLE_VALIDATOR_ADDRESS` that represents the module address.
+
+```typescript
+import { OWNABLE_VALIDATOR_ADDRESS } from "@rhinestone/module-sdk";
+```

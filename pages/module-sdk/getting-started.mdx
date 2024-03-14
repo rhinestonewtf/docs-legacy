@@ -1,0 +1,96 @@
+import { Tabs } from "nextra/components";
+
+# Getting started
+
+The Module SDK is built on top of [viem](https://viem.sh/), a typesafe, modern Ethereum library. This SDK is meant to be used alongside existing account SDKs, such as [permissionless](https://www.npmjs.com/package/permissionless), [Biconomy](https://www.npmjs.com/package/@biconomy/account), [Zerodev](https://www.npmjs.com/package/@zerodevapp/sdk), and many more.
+
+## Installation
+
+Install viem as a peer dependency and then install the Module SDK:
+
+<Tabs items={["npm", "yarn", "pnpm", "bun"]}>
+
+<Tabs.Tab>
+
+```bash copy
+npm install viem @rhinestone/module-sdk
+```
+
+</Tabs.Tab>
+
+<Tabs.Tab>
+
+```bash copy
+yarn add viem @rhinestone/module-sdk
+```
+
+</Tabs.Tab>
+
+<Tabs.Tab>
+
+```bash copy
+pnpm install viem @rhinestone/module-sdk
+```
+
+</Tabs.Tab>
+
+<Tabs.Tab>
+
+```bash copy
+bun install viem @rhinestone/module-sdk
+```
+
+</Tabs.Tab>
+</Tabs>
+
+## Quick Start
+
+```typescript
+// Import the required functions
+import {
+  installModule,
+  getModule,
+  getAccount,
+  getClient,
+  getMFAValidator,
+} from "@rhinestone/module-sdk";
+
+// Create a client for the current network
+const client = getClient(network);
+
+// Create the module object if you are using a custom module
+const module = getModule({
+  module: moduleAddress,
+  data: initData,
+  type: moduleType,
+});
+
+// Or use one of the existing modules
+const mfaModule = getMFAValidator({
+  type: "mfa-validator",
+  data: {
+    threshold: 2,
+    methods: ["webauthn", "passkey"],
+  },
+});
+
+// Create the account object
+const account = getAccount({
+  validators: validators,
+  threshold: 2,
+});
+
+// Get the actions required to install the module
+const actions = await installModule({
+  client,
+  account,
+  module,
+});
+
+// Install the module on your account, using your existing account SDK
+accountSDK.execute(actions);
+```
+
+## Integrating an account SDK
+
+If you are not yet using an account SDK, you can use the permissionless SDK to create an account and execute the `UserOperations`. Permissionless currently supports the Safe, Kernel and Biconomy accounts. To learn how you can use the permissionless SDK, check out the [permissionless documentation](https://docs.pimlico.io/permissionless).
