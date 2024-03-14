@@ -15,5 +15,5 @@
   },
   "modulekit": { "title": "ModuleKit", "type": "page" },
   "sandbox": { "title": "Module Sandbox", "type": "page" },
-  "sdk": { "title": "SDK", "type": "page" }
+  "module-sdk": { "title": "Module SDK", "type": "page" }
 }
