@@ -1,1 +1,45 @@
 # Webauthn Validator
+
+The Webauthn Validator is a module that allows you to verify Webauthn signatures (or Passkeys) on an account. The Webauthn Validator module is used to validate transactions and other actions on the account.
+
+You can find the source code for the module in the [ModuleKit examples](https://github.com/rhinestonewtf/modulekit/tree/main/examples/src/WebauthnValidator) and the deployment address in the [address book](../../overview/address-book.mdx).
+
+## `getWebauthnValidator`
+
+The `getWebauthnValidator` function is used to create an instance of the Webauthn Validator module. The `webAuthnCredential` is an object consisting of the string `id` and a publicKey. This function returns a module object.
+
+```typescript
+type WebauthnCredential = {
+  id: string;
+  publicKey: [Hex, Hex];
+};
+```
+
+The `publicKey` is an array of two hex-encoded strings. The first is the `x` coordinate of the key and the second is the `y` coordinate of the key. The `id` is a string that represents the credential id and can be an arbitrary string that is used to identify the credential.
+
+```typescript
+import { getWebauthnValidator } from "@rhinestone/module-sdk";
+
+const webAuthnCredential = {
+  id: "credential-id",
+  publicKey: ["0x1234...", "0x5678..."],
+};
+
+const webauthnValidator = getWebauthnValidator({
+  webAuthnCredential,
+});
+```
+
+## `getWebauthnValidatorMockSignature`
+
+The `getWebauthnValidatorMockSignature` function is used to get a mock signature for the validator. This is used to calculate the gas of an ERC-4337 `UserOperation`. This function returns a hex-encoded signature.
+
+```typescript
+import { getWebauthnValidatorMockSignature } from "@rhinestone/module-sdk";
+
+const mockSignature = getWebauthnValidatorMockSignature();
+```
+
+## `WEBAUTHN_VALIDATOR_ADDRESS`
+
+The `WEBAUTHN_VALIDATOR_ADDRESS` is a constant that represents the module address.

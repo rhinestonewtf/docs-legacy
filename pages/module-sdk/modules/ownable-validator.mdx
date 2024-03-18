@@ -16,16 +16,16 @@ const ownableValidator = getOwnableValidator({
 });
 ```
 
-## `getMockSignature`
+## `getOwnableValidatorMockSignature`
 
-The `getMockSignature` function is used to get a mock signature for the validator. This is used to calculate the gas of an ERC-4337 `UserOperation`. This function returns a hex-encoded signature.
+The `getOwnableValidatorMockSignature` function is used to get a mock signature for the validator. This is used to calculate the gas of an ERC-4337 `UserOperation`. This function returns a hex-encoded signature.
 
 ```typescript
-import { getMockSignature } from "@rhinestone/module-sdk";
+import { getOwnableValidatorMockSignature } from "@rhinestone/module-sdk";
 
-const mockSignature = getMockSignature();
+const mockSignature = getOwnableValidatorMockSignature();
 ```
 
 ## `OWNABLE_VALIDATOR_ADDRESS`
 
-The `OWNABLE_VALIDATOR_ADDRESS` constant that represents the module address.
+The `OWNABLE_VALIDATOR_ADDRESS` is a constant that represents the module address.
