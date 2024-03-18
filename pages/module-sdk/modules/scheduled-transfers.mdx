@@ -69,20 +69,15 @@ const scheduledTransactionData = getScheduledTransactionData({
 The `getScheduledTransfersExecutor` function is used to create an instance of the Scheduled Transfers module. The `executionInterval` is a number that designates the interval at which the execution should occur in seconds. The `numberOfExecutions` is a number that designates how many times this transfer should be executed. The `startDate` is the UNIX timestamp of when the first execution should occur. The `executionData` object is a hex-encoded struct of type [`Action`](../build/accounts#action-object) that represents the transfer. If it is a native token transfer, the `value` should be used, otherwise the `callData` should be an ERC-20 transfer. This function returns a module object.
 
 ```typescript
-import { encodeAbiParameters } from "viem";
 import {
   getScheduledTransfersExecutor,
-  encodeAction,
+  getScheduledTransactionData,
 } from "@rhinestone/module-sdk";
 
 const executionInterval = 60 * 60 * 24; // 1 day
 const numberOfExecutions = 10;
 const startDate = 1710759572; // UNIX timestamp
-const executionData = encodeAction({
-  to: "0x1234...",
-  value: "1",
-  callData: "",
-});
+const executionData = getScheduledTransactionData({...});
 
 const scheduledTransfersExecutor = getScheduledTransfersExecutor({
   executionInterval,
