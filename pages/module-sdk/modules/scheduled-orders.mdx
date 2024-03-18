@@ -1,1 +1,98 @@
 # Scheduled Orders
+
+The Scheduled Orders module allows users to schedule swaps to be executed at a later time, with an optional recurring schedule. This is useful for scheduling recurring swap-based actions, such as dollar cost averaging. This module is an executor that is installed on an account and can be triggered by an automation service at the pre-specified time(s).
+
+You can find the source code for the module in the [ModuleKit examples](https://github.com/rhinestonewtf/modulekit/blob/main/examples/src/ScheduledTransactions/ScheduledOrders.sol) and the deployment address in the [address book](../../overview/address-book.mdx).
+
+## `RecurringOrder` type
+
+The `RecurringOrder` type is an object that represents a recurring order. It has the following properties:
+
+```typescript
+type RecurringOrder = Order & Schedule;
+
+type Order = {
+  buyToken: ERC20Token;
+  sellToken: ERC20Token;
+  amount: number;
+  orderType: "buy" | "sell";
+  priceLimit?: string;
+  maxGasPrice?: string;
+  expirationDate?: string;
+};
+
+type Schedule = {
+  startDate: string;
+  repeatEvery: number;
+  repeatType: "day" | "week" | "month" | "year";
+  numberOfRepeats: number;
+};
+
+type ERC20Token = {
+  name: string;
+  symbol: string;
+  token_address: Hex;
+  decimals: number;
+  chainId: number;
+  balance?: string;
+  logoURI?: string;
+};
+```
+
+## `getSwapOrderData`
+
+The `getSwapOrderData` function is used to create a hex-encoded struct that represents the swap.
+
+```typescript
+import { getSwapOrderData } from "@rhinestone/module-sdk";
+
+const swapOrderData = getSwapOrderData({
+  recurringOrder: {
+    tokenIn: "0x123",
+    tokenOut: "0x456",
+    amountIn: 100,
+    sqrtPriceLimitX96: 100,
+  },
+});
+```
+
+## `getScheduledOrdersExecutor`
+
+The `getScheduledOrdersExecutor` function is used to create an instance of the Scheduled Orders module. The `executionInterval` is a number that designates the interval at which the execution should occur in seconds. The `numberOfExecutions` is a number that designates how many times this transfer should be executed. The `startDate` is the UNIX timestamp of when the first execution should occur. The `executionData` object is a hex-encoded struct that represents the swap (to encode it, use `getSwapOrderData`). This function returns a module object.
+
+```typescript
+import { getScheduledOrdersExecutor, getSwapOrderData } from "@rhinestone/module-sdk";
+
+const executionInterval = 60 * 60 * 24; // 1 day
+const numberOfExecutions = 10;
+const startDate = 1710759572; // UNIX timestamp
+const swapOrderData = getSwapOrderData({...});
+
+const scheduledOrderExecutor = getScheduledOrdersExecutor({
+  executionInterval,
+  numberOfExecutions,
+  startDate,
+  swapOrderData,
+});
+```
+
+## `getCreateRecurringOrderAction`
+
+The `getCreateRecurringOrderAction` function is used to create an action that can be used to schedule a swap. The `recurringOrder` is an object of type `RecurringOrder` which includes the details for the scheduled swap. This function returns an action object.
+
+```typescript
+import { getCreateRecurringOrderAction } from "@rhinestone/module-sdk";
+
+const recurringOrderAction = getCreateRecurringOrderAction({
+  recurringOrder: {
+    tokenIn: "0x123",
+    tokenOut: "0x456",
+    amountIn: 100,
+    sqrtPriceLimitX96: 100,
+  },
+});
+```
+
+## `SCHEDULED_ORDERS_EXECUTER_ADDRESS`
+
+The `SCHEDULED_ORDERS_EXECUTER_ADDRESS` is a constant that represents the address of the Scheduled Orders module.
