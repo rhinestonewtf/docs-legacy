@@ -24,12 +24,12 @@ const account = getAccount({
 
 ## `installModule`
 
-The `installModule` function is used to install a module on an account. This function returns a promise that resolves to an array of `Action` objects.
+The `installModule` function is used to install a module on an account. This function returns a promise that resolves to an array of `Execution` objects.
 
 ```typescript
 import { installModule } from "@rhinestone/module-sdk";
 
-const installModuleActions = await installModule({
+const installModuleExecutions = await installModule({
   client, // The client object of type PublicClient from viem
   account, // The account object
   module, // The module object
@@ -38,12 +38,12 @@ const installModuleActions = await installModule({
 
 ## `uninstallModule`
 
-The `uninstallModule` function is used to uninstall a module from an account. This function returns a promise that resolves to an array of `Action` objects.
+The `uninstallModule` function is used to uninstall a module from an account. This function returns a promise that resolves to an array of `Execution` objects.
 
 ```typescript
 import { uninstallModule } from "@rhinestone/module-sdk";
 
-const uninstallModuleActions = await uninstallModule({
+const uninstallModuleExecutions = await uninstallModule({
   client, // The client object of type PublicClient from viem
   account, // The account object
   module, // The module object

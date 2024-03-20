@@ -21,7 +21,7 @@ const ownableValidator = getOwnableValidator({
   ownerAddress,
 });
 
-const installModuleActions = await installModule({
+const installModuleExecutions = await installModule({
   client,
   account,
   module: ownableValidator,

@@ -58,7 +58,7 @@ const scheduledTransactionData = getScheduledTransactionData({
 
 ## `getScheduledTransfersExecutor`
 
-The `getScheduledTransfersExecutor` function is used to create an instance of the Scheduled Transfers module. The `executionInterval` is a number that designates the interval at which the execution should occur in seconds. The `numberOfExecutions` is a number that designates how many times this transfer should be executed. The `startDate` is the UNIX timestamp of when the first execution should occur. The `executionData` object is a hex-encoded struct of type [`Action`](../build/accounts#action-object) that represents the transfer. If it is a native token transfer, the `value` should be used, otherwise the `callData` should be an ERC-20 transfer. This function returns a module object.
+The `getScheduledTransfersExecutor` function is used to create an instance of the Scheduled Transfers module. The `executionInterval` is a number that designates the interval at which the execution should occur in seconds. The `numberOfExecutions` is a number that designates how many times this transfer should be executed. The `startDate` is the UNIX timestamp of when the first execution should occur. The `executionData` object is a hex-encoded struct of type [`Execution`](../build/types#execution) that represents the transfer. If it is a native token transfer, the `value` should be used, otherwise the `callData` should be an ERC-20 transfer. This function returns a module object.
 
 ```typescript
 import {
@@ -79,12 +79,12 @@ const scheduledTransfersExecutor = getScheduledTransfersExecutor({
 });
 ```
 
-## `getCreateScheduledTransferAction`
+## `getCreateScheduledTransferExecution`
 
-The `getCreateScheduledTransferAction` function is used to create an action that can be used to schedule a transfer. The `isNativeToken` argument is a boolean flag for whether a token is native or not. The `scheduledTransaction` is an object of type `ScheduledTransaction` which includes the details for the scheduled transfer. This function returns an action object.
+The `getCreateScheduledTransferExecution` function is used to create an execution that can be used to schedule a transfer. The `isNativeToken` argument is a boolean flag for whether a token is native or not. The `scheduledTransaction` is an object of type `ScheduledTransaction` which includes the details for the scheduled transfer. This function returns an execution object.
 
 ```typescript
-import { getCreateScheduledTransferAction } from "@rhinestone/module-sdk";
+import { getCreateScheduledTransferExecution } from "@rhinestone/module-sdk";
 
 const isNativeToken = true;
 const scheduledTransaction = {
@@ -103,7 +103,7 @@ const scheduledTransaction = {
   recipient: "0x5678...",
 };
 
-const scheduledTransferAction = getCreateScheduledTransferAction({
+const scheduledTransferExecution = getCreateScheduledTransferExecution({
   isNativeToken,
   scheduledTransaction,
 });
