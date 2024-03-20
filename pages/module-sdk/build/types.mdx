@@ -1,0 +1,67 @@
+# Types
+
+The Module SDK comes with a set of core types to make the developer experience more consistent and predictable. These types are used throughout the SDK and are designed to be future-proof. Individual modules may also have their own types, which are documented in the module's documentation.
+
+## `Account`
+
+The `Account` type is a type that represents an account. It has the following properties:
+
+- `address`: The address of the account
+- `initCode`: The init code of the account
+- `type`: The type of the account
+- `deployedOnChains`: The chains on which the account is deployed (represented as an array of chainIds)
+
+```typescript
+type Account = {
+  address: Address;
+  initCode?: Hex;
+  type: AccountType;
+  deployedOnChains: Number[];
+};
+```
+
+The `AccountType` type is a string literal type that represents the type of the account. It has the following options:
+
+```typescript
+type AccountType = "erc7579-implementation";
+```
+
+## `Module`
+
+The `Module` type is a type that represents a module. It has the following properties:
+
+- `module`: The address of the module
+- `data`: The installation or uninstallation data to be sent to the module
+- `additionalContext`: The additional context to be sent to the module
+- `type`: The type of the module
+
+```typescript
+type Module = {
+  module: Address;
+  data?: Hex;
+  additionalContext?: Hex;
+  type: ModuleType;
+};
+```
+
+The `ModuleType` type is a string literal type that represents the type of the module. It has the following values:
+
+```typescript
+type ModuleType = "validators" | "executors" | "hooks" | "fallbacks";
+```
+
+## `Action`
+
+The `Action` type is a type that represents an action that is executed on the account. It has the following properties:
+
+- `target`: The address of the target
+- `value`: The native token value of the action
+- `callData`: The calldata of the action to be executed on the target
+
+```typescript
+type Action = {
+  target: Address;
+  value: BigInt;
+  callData: Hex;
+};
+```

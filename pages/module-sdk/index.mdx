@@ -1,4 +1,5 @@
 import { ModuleSDKBanner } from "../../components/banners";
+import { Callout } from "nextra/components";
 
 # Overview
 
@@ -6,8 +7,13 @@ The Module SDK is a TypeScript library for using Smart Account Modules in Applic
 
 The Module SDK is split into two components:
 
-- **Accounts** - Account-related functionality, like installing and uninstalling modules
-- **Modules** - Integrated modules with functionality for their installation and usage
+- **Accounts** - Account-related helpers, like installing and uninstalling modules
+- **Modules** - Integrated modules with helpers for their installation and usage
+
+<Callout type="warning">
+  The Module SDK is in currently in alpha and is subject to breaking changes. If
+  you spot a bug, please take out an issue and we will fix it as soon as we can.
+</Callout>
 
 <div className="my-8">
   <ModuleSDKBanner width={1000} height={400} />
@@ -30,4 +36,7 @@ The integrated modules include:
 
 ### Useful starting resources
 
-- todo
+- Blog: [Part 1: Modular Account Abstraction for Everyone Else](https://blog.rhinestone.wtf/part-1-modular-account-abstraction-for-everyone-else-84567422bc46)
+- Blog: [App-layer Innovation with Modular Smart Accounts](https://blog.rhinestone.wtf/app-layer-innovation-with-modular-smart-accounts-8a9d7030c908)
+- List of open-source modules and resources: [awesome-modular-accounts repo](https://github.com/rhinestonewtf/awesome-modular-accounts)
+- [List of module ideas](https://rhinestone.notion.site/Module-ideas-for-developer-inspo-338100a2c99540f490472b8aa839da11)
