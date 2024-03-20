@@ -9,7 +9,7 @@ The Module SDK supports different accounts that are compliant with ERC-7579. Cur
 
 ## Account type
 
-The `Account` type is a generic type that represents an account. It has the following properties:
+The `Account` type is a type that represents an account. It has the following properties:
 
 - `address`: The address of the account
 - `initCode`: The init code of the account
@@ -25,7 +25,7 @@ type Account = {
 };
 ```
 
-The `AccountType` type is a string literal type that represents the type of the account. It has the following values:
+The `AccountType` type is a string literal type that represents the type of the account. It has the following options:
 
 ```typescript
 type AccountType = "erc7579-implementation";
@@ -33,7 +33,7 @@ type AccountType = "erc7579-implementation";
 
 ## Module type
 
-The `Module` type is a generic type that represents a module. It has the following properties:
+The `Module` type is a type that represents a module. It has the following properties:
 
 - `module`: The address of the module
 - `data`: The installation or uninstallation data to be sent to the module
@@ -55,9 +55,9 @@ The `ModuleType` type is a string literal type that represents the type of the m
 type ModuleType = "validators" | "executors" | "hooks" | "fallbacks";
 ```
 
-## Action object
+## Action type
 
-The `Action` type is a generic type that represents an action that is executed on the account. It has the following properties:
+The `Action` type is a type that represents an action that is executed on the account. It has the following properties:
 
 - `target`: The address of the target
 - `value`: The native token value of the action
@@ -73,7 +73,7 @@ type Action = {
 
 ## `getAccount`
 
-The `getAccount` function is used to format an account object in a future-proof way.
+The `getAccount` function is used to format an account object in a future-proof way. Use this function rather than creating an account object manually so that the SDK can handle any future changes to the account object.
 
 ```typescript
 import { getAccount } from "@rhinestone/module-sdk";

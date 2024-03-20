@@ -2,7 +2,7 @@ import { Tabs } from "nextra/components";
 
 # Getting started
 
-The Module SDK is built on top of [viem](https://viem.sh/), a typesafe, modern Ethereum library. This SDK is meant to be used alongside existing account SDKs, such as [permissionless](https://www.npmjs.com/package/permissionless), [Biconomy](https://www.npmjs.com/package/@biconomy/account), [Zerodev](https://www.npmjs.com/package/@zerodevapp/sdk), and many more.
+The Module SDK is built on top of [viem](https://viem.sh/), a typesafe, modern Ethereum library. This SDK is meant to be used alongside existing account SDKs, such as [permissionless.js](https://www.npmjs.com/package/permissionless), [Biconomy](https://www.npmjs.com/package/@biconomy/account), [Zerodev](https://www.npmjs.com/package/@zerodevapp/sdk), and many more.
 
 ## Installation
 
@@ -48,11 +48,11 @@ bun install viem @rhinestone/module-sdk
 ```typescript
 // Import the required functions
 import {
-  installModule,
+  getClient,
   getModule,
   getAccount,
-  getClient,
   getMFAValidator,
+  installModule,
 } from "@rhinestone/module-sdk";
 
 // Create a client for the current network
@@ -93,4 +93,39 @@ accountSDK.execute(actions);
 
 ## Integrating the Module SDK with another account SDK
 
-If you are not yet using an account SDK, you can use the permissionless SDK to create an account and execute the `UserOperations`. Permissionless currently supports the Safe, Kernel and Biconomy accounts. To learn how you can use the permissionless SDK, check out the [permissionless documentation](https://docs.pimlico.io/permissionless).
+If you are not yet using an account SDK, you can use the permissionless.js SDK to create an account and execute the `UserOperations`. Permissionless.js currently supports the Safe, Kernel and Biconomy accounts. To learn how you can use the SDK, check out the [permissionless.js documentation](https://docs.pimlico.io/permissionless). To install the SDK, run:
+
+<Tabs items={["npm", "yarn", "pnpm", "bun"]}>
+
+<Tabs.Tab>
+
+```bash copy
+npm install permissionless
+```
+
+</Tabs.Tab>
+
+<Tabs.Tab>
+
+```bash copy
+yarn add permissionless
+```
+
+</Tabs.Tab>
+
+<Tabs.Tab>
+
+```bash copy
+pnpm install permissionless
+```
+
+</Tabs.Tab>
+
+<Tabs.Tab>
+
+```bash copy
+bun install permissionless
+```
+
+</Tabs.Tab>
+</Tabs>

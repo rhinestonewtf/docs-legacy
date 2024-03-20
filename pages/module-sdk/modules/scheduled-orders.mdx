@@ -29,13 +29,8 @@ type Schedule = {
 };
 
 type ERC20Token = {
-  name: string;
-  symbol: string;
-  token_address: Hex;
+  token_address: Address;
   decimals: number;
-  chainId: number;
-  balance?: string;
-  logoURI?: string;
 };
 ```
 
@@ -48,10 +43,20 @@ import { getSwapOrderData } from "@rhinestone/module-sdk";
 
 const swapOrderData = getSwapOrderData({
   recurringOrder: {
-    tokenIn: "0x123",
-    tokenOut: "0x456",
-    amountIn: 100,
-    sqrtPriceLimitX96: 100,
+    buyToken: {
+      token_address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", // USDC
+      decimals: 6,
+    },
+    sellToken: {
+      token_address: "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984", // UNI
+      decimals: 18,
+    },
+    amount: 10,
+    orderType: "buy",
+    startDate: "1710759572",
+    repeatEvery: 1,
+    repeatType: "day",
+    numberOfRepeats: 10,
   },
 });
 ```
@@ -85,10 +90,7 @@ import { getCreateRecurringOrderAction } from "@rhinestone/module-sdk";
 
 const recurringOrderAction = getCreateRecurringOrderAction({
   recurringOrder: {
-    tokenIn: "0x123",
-    tokenOut: "0x456",
-    amountIn: 100,
-    sqrtPriceLimitX96: 100,
+    ...
   },
 });
 ```

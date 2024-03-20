@@ -9,28 +9,23 @@ You can find the source code for the module in the [ModuleKit examples](https://
 The `ScheduledTransaction` type is an object that represents a scheduled transaction. It has the following properties:
 
 ```typescript
-type Schedule = {
+type ScheduledTransaction = Schedule & {
+  token?: ERC20Token;
+  amount: number;
+  recipient: Hex;
+  maxGasPrice?: number;
+};
+
+export type Schedule = {
   startDate: string;
   repeatEvery: number;
   repeatType: "day" | "week" | "month" | "year";
   numberOfRepeats: number;
 };
 
-type ERC20Token = {
-  name: string;
-  symbol: string;
-  token_address: string;
+export type ERC20Token = {
+  token_address: Address;
   decimals: number;
-  chainId: number;
-  balance?: string;
-  logoURI?: string;
-};
-
-type ScheduledTransaction = Schedule & {
-  token: ERC20Token;
-  amount: number;
-  recipient: string;
-  maxGasPrice?: number;
 };
 ```
 
@@ -48,11 +43,8 @@ const scheduledTransaction = {
   repeatType: "day",
   numberOfRepeats: 10,
   token: {
-    name: "USD Coin",
-    symbol: "USDC",
-    token_address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    token_address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", // USDC
     decimals: 6,
-    chainId: 1,
   },
   amount: 10,
   recipient: "0x5678...",
