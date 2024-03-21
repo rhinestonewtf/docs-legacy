@@ -1,0 +1,35 @@
+# MFA Validator
+
+The MFA Validator module is a module that allows you to add multi-factor validation to an account. The MFA Validator module is used to validate transactions and other executions on the account.
+
+You can find the source code for the module in the [ModuleKit examples](https://github.com/rhinestonewtf/modulekit/tree/main/examples/src/MultiFactor) and the deployment address in the [address book](../../overview/address-book.mdx).
+
+## `getMFAValidator`
+
+The `getMFAValidator` function is used to create an instance of the MFA Validator module. The `validators` argument is an array of validators that the MFA splices together (of type [`Module`](../build/accounts#module-type)) and the `threshold` argument is a threshold for these. This function returns a module object.
+
+```typescript
+import { getMFAValidator } from "@rhinestone/module-sdk";
+
+const validators = [...];
+const threshold = 2;
+
+const mfaValidator = getMFAValidator({
+  validators,
+  threshold,
+});
+```
+
+## `getMFAValidatorMockSignature`
+
+The `getMFAValidatorMockSignature` function is used to get a mock signature for the validator. This is used to calculate the gas of an ERC-4337 `UserOperation`. This function returns a hex-encoded signature.
+
+```typescript
+import { getMFAValidatorMockSignature } from "@rhinestone/module-sdk";
+
+const mockSignature = getMFAValidatorMockSignature();
+```
+
+## `MFA_VALIDATOR_ADDRESS`
+
+The `MFA_VALIDATOR_ADDRESS` is a constant that represents the module address.

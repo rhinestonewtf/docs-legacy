@@ -1,3 +1,15 @@
 {
-  "index": "Overview"
+  "index": "Overview",
+  "getting-started": "Getting Started",
+  "-": {
+    "type": "separator",
+    "title": "Development"
+  },
+  "build": "Build",
+  "modules": "Modules",
+  "advanced": "Advanced",
+  "--": {
+    "type": "separator",
+    "title": "Tutorials"
+  }
 }

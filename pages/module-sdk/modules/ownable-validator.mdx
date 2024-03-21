@@ -1,0 +1,31 @@
+# Ownable Validator
+
+The Ownable Validator module is a module that allows you to add an ECDSA owner to an account. The owner can then be used to validate transactions and other executions on the account.
+
+You can find the source code for the module in the [ModuleKit examples](https://github.com/rhinestonewtf/modulekit/tree/main/examples/src/OwnableValidator) and the deployment address in the [address book](../../overview/address-book.mdx).
+
+## `getOwnableValidator`
+
+The `getOwnableValidator` function is used to create an instance of the Ownable Validator module. The `ownerAddress` is the address of the EOA that should be the owner of this account. This function returns a module object.
+
+```typescript
+import { getOwnableValidator } from "@rhinestone/module-sdk";
+
+const ownableValidator = getOwnableValidator({
+  ownerAddress,
+});
+```
+
+## `getOwnableValidatorMockSignature`
+
+The `getOwnableValidatorMockSignature` function is used to get a mock signature for the validator. This is used to calculate the gas of an ERC-4337 `UserOperation`. This function returns a hex-encoded signature.
+
+```typescript
+import { getOwnableValidatorMockSignature } from "@rhinestone/module-sdk";
+
+const mockSignature = getOwnableValidatorMockSignature();
+```
+
+## `OWNABLE_VALIDATOR_ADDRESS`
+
+The `OWNABLE_VALIDATOR_ADDRESS` is a constant that represents the module address.

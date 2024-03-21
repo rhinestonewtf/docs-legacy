@@ -1,0 +1,114 @@
+# Scheduled Transfers
+
+The Scheduled Transfers module allows users to schedule token transfers to occur at a future time, with an optional recurring schedule. It is an executor that is installed on an account and can be triggered by an automation service at the pre-specified time(s).
+
+You can find the source code for the module in the [ModuleKit examples](https://github.com/rhinestonewtf/modulekit/blob/main/examples/src/ScheduledTransactions/ScheduledTransfers.sol) and the deployment address in the [address book](../../overview/address-book.mdx).
+
+## `ScheduledTransaction` type
+
+The `ScheduledTransaction` type is an object that represents a scheduled transaction. It has the following properties:
+
+```typescript
+type ScheduledTransaction = Schedule & {
+  token?: ERC20Token;
+  amount: number;
+  recipient: Hex;
+  maxGasPrice?: number;
+};
+
+export type Schedule = {
+  startDate: string;
+  repeatEvery: number;
+  repeatType: "day" | "week" | "month" | "year";
+  numberOfRepeats: number;
+};
+
+export type ERC20Token = {
+  token_address: Address;
+  decimals: number;
+};
+```
+
+## `getScheduledTransactionData`
+
+The `getScheduledTransactionData` function is used to create a hex-encoded struct that represents the scheduled transaction.
+
+```typescript
+import { getScheduledTransactionData } from "@rhinestone/module-sdk";
+
+const isNativeToken = true;
+const scheduledTransaction = {
+  startDate: "1710759572",
+  repeatEvery: 1,
+  repeatType: "day",
+  numberOfRepeats: 10,
+  token: {
+    token_address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", // USDC
+    decimals: 6,
+  },
+  amount: 10,
+  recipient: "0x5678...",
+};
+
+const scheduledTransactionData = getScheduledTransactionData({
+  isNativeToken,
+  scheduledTransaction,
+});
+```
+
+## `getScheduledTransfersExecutor`
+
+The `getScheduledTransfersExecutor` function is used to create an instance of the Scheduled Transfers module. The `executionInterval` is a number that designates the interval at which the execution should occur in seconds. The `numberOfExecutions` is a number that designates how many times this transfer should be executed. The `startDate` is the UNIX timestamp of when the first execution should occur. The `executionData` object is a hex-encoded struct of type [`Execution`](../build/types#execution) that represents the transfer. If it is a native token transfer, the `value` should be used, otherwise the `callData` should be an ERC-20 transfer. This function returns a module object.
+
+```typescript
+import {
+  getScheduledTransfersExecutor,
+  getScheduledTransactionData,
+} from "@rhinestone/module-sdk";
+
+const executionInterval = 60 * 60 * 24; // 1 day
+const numberOfExecutions = 10;
+const startDate = 1710759572; // UNIX timestamp
+const executionData = getScheduledTransactionData({...});
+
+const scheduledTransfersExecutor = getScheduledTransfersExecutor({
+  executionInterval,
+  numberOfExecutions,
+  startDate,
+  executionData,
+});
+```
+
+## `getCreateScheduledTransferExecution`
+
+The `getCreateScheduledTransferExecution` function is used to create an execution that can be used to schedule a transfer. The `isNativeToken` argument is a boolean flag for whether a token is native or not. The `scheduledTransaction` is an object of type `ScheduledTransaction` which includes the details for the scheduled transfer. This function returns an execution object.
+
+```typescript
+import { getCreateScheduledTransferExecution } from "@rhinestone/module-sdk";
+
+const isNativeToken = true;
+const scheduledTransaction = {
+  startDate: "1710759572",
+  repeatEvery: 1,
+  repeatType: "day",
+  numberOfRepeats: 10,
+  token: {
+    name: "USD Coin",
+    symbol: "USDC",
+    token_address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    decimals: 6,
+    chainId: 1,
+  },
+  amount: 10,
+  recipient: "0x5678...",
+};
+
+const scheduledTransferExecution = getCreateScheduledTransferExecution({
+  isNativeToken,
+  scheduledTransaction,
+});
+```
+
+## `SCHEDULED_TRANSFERS_EXECUTER_ADDRESS`
+
+The `SCHEDULED_TRANSFERS_EXECUTER_ADDRESS` is a constant that represents the module address.

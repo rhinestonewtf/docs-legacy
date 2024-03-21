@@ -1,0 +1,7 @@
+{
+  "ownable-validator": "Ownable Validator",
+  "webauthn-validator": "WebAuthn Validator",
+  "mfa-validator": "MFA Validator",
+  "scheduled-transfers": "Scheduled Transfers",
+  "scheduled-orders": "Scheduled Orders"
+}
