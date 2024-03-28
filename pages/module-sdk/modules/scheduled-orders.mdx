@@ -22,9 +22,8 @@ type Order = {
 };
 
 type Schedule = {
-  startDate: string;
-  repeatEvery: number;
-  repeatType: "day" | "week" | "month" | "year";
+  startDate: number; // UNIX timestamp
+  repeatEvery: number; // In seconds
   numberOfRepeats: number;
 };
 
@@ -53,9 +52,8 @@ const swapOrderData = getSwapOrderData({
     },
     amount: 10,
     orderType: "buy",
-    startDate: "1710759572",
-    repeatEvery: 1,
-    repeatType: "day",
+    startDate: 1710759572,
+    repeatEvery: 60 * 60 * 24, // 1 day
     numberOfRepeats: 10,
   },
 });
@@ -68,13 +66,13 @@ The `getScheduledOrdersExecutor` function is used to create an instance of the S
 ```typescript
 import { getScheduledOrdersExecutor, getSwapOrderData } from "@rhinestone/module-sdk";
 
-const executionInterval = 60 * 60 * 24; // 1 day
+const executeInterval = 60 * 60 * 24; // 1 day
 const numberOfExecutions = 10;
 const startDate = 1710759572; // UNIX timestamp
 const swapOrderData = getSwapOrderData({...});
 
 const scheduledOrderExecutor = getScheduledOrdersExecutor({
-  executionInterval,
+  executeInterval,
   numberOfExecutions,
   startDate,
   swapOrderData,
@@ -90,7 +88,19 @@ import { getCreateRecurringOrderExecution } from "@rhinestone/module-sdk";
 
 const recurringOrderExecution = getCreateRecurringOrderExecution({
   recurringOrder: {
-    ...
+    buyToken: {
+      token_address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", // USDC
+      decimals: 6,
+    },
+    sellToken: {
+      token_address: "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984", // UNI
+      decimals: 18,
+    },
+    amount: 10,
+    orderType: "buy",
+    startDate: 1710759572,
+    repeatEvery: 60 * 60 * 24, // 1 day
+    numberOfRepeats: 10,
   },
 });
 ```

@@ -17,9 +17,8 @@ type ScheduledTransaction = Schedule & {
 };
 
 export type Schedule = {
-  startDate: string;
-  repeatEvery: number;
-  repeatType: "day" | "week" | "month" | "year";
+  startDate: number; // UNIX timestamp
+  repeatEvery: number; // In seconds
   numberOfRepeats: number;
 };
 
@@ -38,9 +37,8 @@ import { getScheduledTransactionData } from "@rhinestone/module-sdk";
 
 const isNativeToken = true;
 const scheduledTransaction = {
-  startDate: "1710759572",
-  repeatEvery: 1,
-  repeatType: "day",
+  startDate: 1710759572,
+  repeatEvery: 60 * 60 * 24, // 1 day
   numberOfRepeats: 10,
   token: {
     token_address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", // USDC
@@ -88,9 +86,8 @@ import { getCreateScheduledTransferExecution } from "@rhinestone/module-sdk";
 
 const isNativeToken = true;
 const scheduledTransaction = {
-  startDate: "1710759572",
-  repeatEvery: 1,
-  repeatType: "day",
+  startDate: 1710759572,
+  repeatEvery: 60 * 60 * 24, // 1 day
   numberOfRepeats: 10,
   token: {
     name: "USD Coin",
