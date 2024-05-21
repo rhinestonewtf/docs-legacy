@@ -1,20 +1,21 @@
 # Rhinestone Documentation
 
-This repository contains the Rhinestone docs.
+**The Rhinestone Developer Docs**
 
-## Getting Started
+## Using this repo
 
-To get started, clone this repository and run the following commands:
+To install the dependencies, run:
 
 ```bash
-pnpm
+pnpm install
+```
+
+To run the project, run:
+
+```bash
 pnpm dev
 ```
 
 ## Contributing
 
-To contribute to this repository, please fork this repository and submit a pull request.
-
-## License
-
-This project is licensed under the MIT License.
+For feature or change requests, feel free to open a PR, start a discussion or get in touch with us.
