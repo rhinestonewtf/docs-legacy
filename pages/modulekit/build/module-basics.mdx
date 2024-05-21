@@ -80,12 +80,6 @@ contract ModuleExample is ERC7579ModuleBase {
     function isModuleType(uint256 typeID) external pure override returns (bool) {
         return typeID == TYPE_VALIDATOR || typeID == TYPE_EXECUTOR || typeID == TYPE_FALLBACK || typeID == TYPE_HOOK;
     }
-
-    /**
-     * Get the module types
-     * @return moduleTypes The bit-encoded module types
-     */
-    function getModuleTypes() external view returns (EncodedModuleTypes) {}
 }
 ```
 
@@ -112,7 +106,3 @@ This function is called to get the version of the module. It should return a str
 ### `isModuleType`
 
 This function is called to check if the module is of a certain type. It should return `true` if the module is of the given type and `false` otherwise.
-
-### `getModuleTypes`
-
-This function is called to get the module types. It should return a bit-encoded module types.

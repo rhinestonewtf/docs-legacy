@@ -31,17 +31,22 @@ contract HookExample is ERC7579HookBase {
                                      MODULE LOGIC
     //////////////////////////////////////////////////////////////////////////*/
 
-    /**
+     /**
      * Pre-checks an execution
+     *
+     * @param account The account address
      * @param msgSender The sender of the execution to the account
      * @param msgData The data of the execution
+     *
      * @return hookData The data to be used in the post-check
      */
-    function preCheck(
+    function _preCheck(
+        address account,
         address msgSender,
+        uint256 msgValue,
         bytes calldata msgData
     )
-        external
+        internal
         override
         returns (bytes memory hookData)
     {
@@ -50,11 +55,15 @@ contract HookExample is ERC7579HookBase {
 
     /**
      * Post-checks an execution
+     *
+     * @param account The account address
      * @param hookData The data from the pre-check
-     * @return success true if the execution is successful, false otherwise
      */
-    function postCheck(bytes calldata hookData) external override returns (bool success) {
-        (success) = abi.decode(hookData, (bool));
+    function _postCheck(address account, bytes calldata hookData) internal override {
+        (bool success) = abi.decode(hookData, (bool));
+        if (!success) {
+            revert("HookTemplate: execution failed");
+        }
     }
 
     /*//////////////////////////////////////////////////////////////////////////
@@ -65,13 +74,13 @@ contract HookExample is ERC7579HookBase {
 }
 ```
 
-### `preCheck`
+### `_preCheck`
 
-This function is called before a single or batched execution and contains the `msg.sender` to the account as well as the `msg.data` to the account. The hook can perform any arbitrary computations on this data. Optionally, the function can revert if the hook wants to disallow this execution. The function may also return data which is then passed on to the `postCheck` function.
+This function is called before a single or batched execution and contains the `address account`, the `address msgSender` to the account, the `uint256 msgValue` sent to the account and the `bytes msgData` sent to the account. The hook can perform any arbitrary computations on this data. Optionally, the function can revert if the hook wants to disallow this execution. The function may also return data which is then passed on to the `postCheck` function.
 
-### `postCheck`
+### `_postCheck`
 
-This function is called after a single or batched execution and is given the return value of the `preCheck` function. This function returns a boolean signifying success. If the function returns false, the account will halt the execution and revert.
+This function is called after a single or batched execution and is given the return value of the `preCheck` function as well as the `address account`. The hook can perform any arbitrary computations on this data. Optionally, the function can revert if the hook wants to disallow this execution.
 
 ### `ERC7579HookDestruct`
 
@@ -89,6 +98,7 @@ abstract contract ERC7579HookDestruct is ERC7579HookBase {
     //////////////////////////////////////////////////////////////////////////*/
 
     function onExecute(
+        address account,
         address msgSender,
         address target,
         uint256 value,
@@ -96,17 +106,21 @@ abstract contract ERC7579HookDestruct is ERC7579HookBase {
     )
         internal
         virtual
-        returns (bytes memory hookData);
+        returns (bytes memory hookData)
+    { }
 
     function onExecuteBatch(
+        address account,
         address msgSender,
         Execution[] calldata
     )
         internal
         virtual
-        returns (bytes memory hookData);
+        returns (bytes memory hookData)
+    { }
 
     function onExecuteFromExecutor(
+        address account,
         address msgSender,
         address target,
         uint256 value,
@@ -114,21 +128,25 @@ abstract contract ERC7579HookDestruct is ERC7579HookBase {
     )
         internal
         virtual
-        returns (bytes memory hookData);
+        returns (bytes memory hookData)
+    { }
 
     function onExecuteBatchFromExecutor(
+        address account,
         address msgSender,
         Execution[] calldata
     )
         internal
         virtual
-        returns (bytes memory hookData);
+        returns (bytes memory hookData)
+    { }
 
-    /*//////////////////////////////////////////////////////////////////////////
+   /*//////////////////////////////////////////////////////////////////////////
                                      CONFIG
     //////////////////////////////////////////////////////////////////////////*/
 
     function onInstallModule(
+        address account,
         address msgSender,
         uint256 moduleType,
         address module,
@@ -136,9 +154,11 @@ abstract contract ERC7579HookDestruct is ERC7579HookBase {
     )
         internal
         virtual
-        returns (bytes memory hookData);
+        returns (bytes memory hookData)
+    { }
 
     function onUninstallModule(
+        address account,
         address msgSender,
         uint256 moduleType,
         address module,
@@ -146,20 +166,36 @@ abstract contract ERC7579HookDestruct is ERC7579HookBase {
     )
         internal
         virtual
-        returns (bytes memory hookData);
+        returns (bytes memory hookData)
+    { }
+
+    /*//////////////////////////////////////////////////////////////////////////
+                                UNKNOWN FUNCTION
+    //////////////////////////////////////////////////////////////////////////*/
+
+    function onUnknownFunction(
+        address account,
+        address msgSender,
+        uint256 msgValue,
+        bytes calldata msgData
+    )
+        internal
+        virtual
+        returns (bytes memory hookData)
+    { }
 
     /*//////////////////////////////////////////////////////////////////////////
                                      POSTCHECK
     //////////////////////////////////////////////////////////////////////////*/
 
-    function onPostCheck(bytes calldata hookData) internal virtual returns (bool success);
+    function onPostCheck(address account, bytes calldata hookData) internal virtual { }
 
 }
 ```
 
-These functions must be overriden by the developer to implement the hook logic. If a developer chooses to not allow certain entrypoints into the account, they can revert the function call. If the developer chooses to allow the entrypoint, they can return some data that is then passed on to the `postCheck` function and then routed into the `onPostCheck` function which can be overriden to implement the post-check logic.
+These functions may be overriden by the developer to implement the hook logic. If a developer chooses to not allow certain entrypoints into the account, they can revert the function call. If the developer chooses to allow the entrypoint, they can return some data that is then passed on to the `postCheck` function and then routed into the `onPostCheck` function which can be overriden to implement the post-check logic.
 
 ## Hook examples
 
-- [Cold Storage Hook](https://github.com/rhinestonewtf/modulekit/tree/main/examples/src/ColdStorage/ColdStorageHook.sol)
-- [Deadmans Switch](https://github.com/rhinestonewtf/modulekit/tree/main/examples/src/DeadmanSwitch/DeadmanSwitch.sol)
+- [Cold Storage Hook](https://github.com/rhinestonewtf/core-modules/blob/main/src/ColdStorageHook/ColdStorageHook.sol)
+- [Deadman Switch](https://github.com/rhinestonewtf/core-modules/blob/main/src/DeadmanSwitch/DeadmanSwitch.sol)
