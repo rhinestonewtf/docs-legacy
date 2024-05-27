@@ -36,7 +36,7 @@
   "homepage": "https://docs.rhinestone.wtf",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rhinestonewtf/docs.git"
+    "url": "git+https://github.com/rhinestonewtf/docs.git"
   },
   "bugs": {
     "url": "https://github.com/rhinestonewtf/docs/issues"
