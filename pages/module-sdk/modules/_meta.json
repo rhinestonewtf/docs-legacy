@@ -2,6 +2,7 @@
   "ownable-validator": "Ownable Validator",
   "webauthn-validator": "WebAuthn Validator",
   "mfa-validator": "MFA Validator",
+  "social-recovery-validator": "Social Recovery Validator",
   "scheduled-transfers": "Scheduled Transfers",
   "scheduled-orders": "Scheduled Orders"
 }
