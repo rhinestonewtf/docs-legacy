@@ -1,20 +1,42 @@
+import { Tabs } from "nextra/components";
+
 # Ownable Validator
 
-The Ownable Validator module is a module that allows you to add an ECDSA owner to an account. The owner can then be used to validate transactions and other executions on the account.
+The Ownable Validator module is a module that allows you to add an ECDSA owners to an account. The owners can then be used to validate transactions and other executions on the account.
 
-You can find the source code for the module in the [ModuleKit examples](https://github.com/rhinestonewtf/modulekit/tree/main/examples/src/OwnableValidator) and the deployment address in the [address book](../../overview/address-book.mdx).
+You can find the source code for the module in the [Core Modules repo](https://github.com/rhinestonewtf/core-modules/tree/main/src/OwnableValidator) and the deployment address in the [address book](../../overview/address-book.mdx).
 
-## `getOwnableValidator`
+## `getInstallOwnableValidator`
 
-The `getOwnableValidator` function is used to create an instance of the Ownable Validator module. The `ownerAddress` is the address of the EOA that should be the owner of this account. This function returns a module object.
+The `getInstallOwnableValidator` function is used to create an instance of the Ownable Validator module. This function returns a module object.
+
+<Tabs items={["Safe", "Kernel"]}>
+
+<Tabs.Tab>
 
 ```typescript
-import { getOwnableValidator } from "@rhinestone/module-sdk";
+import { getInstallOwnableValidator } from "@rhinestone/module-sdk";
 
-const ownableValidator = getOwnableValidator({
-  ownerAddress,
+const ownableValidator = getInstallOwnableValidator({
+  owners: ['0x..', '0x..']  // Addresses of the EOAs that should be the owners of this account.
+  threshold: 2, // owners threshold
 });
 ```
+
+</Tabs.Tab>
+<Tabs.Tab>
+```typescript
+import { getInstallOwnableValidator } from "@rhinestone/module-sdk";
+
+const ownableValidator = getInstallOwnableValidator({
+owners: ['0x..', '0x..'] // Addresses of the EOAs that should be the owners of this account.
+threshold: 2, // owners threshold
+hook: '0x..' // needed only
+});
+
+````
+</Tabs.Tab>
+</Tabs>
 
 ## `getOwnableValidatorMockSignature`
 
@@ -24,6 +46,66 @@ The `getOwnableValidatorMockSignature` function is used to get a mock signature 
 import { getOwnableValidatorMockSignature } from "@rhinestone/module-sdk";
 
 const mockSignature = getOwnableValidatorMockSignature();
+````
+
+## `getSetOwnableValidatorThresholdAction`
+
+The `getSetOwnableValidatorThresholdAction` function is used to set the threshold for the validator. This function returns an execution object
+
+```typescript
+import { getSetOwnableValidatorThresholdAction } from "@rhinestone/module-sdk";
+
+const threshold = 2;
+
+const setOwnableValidatorThresholdAction =
+  getSetOwnableValidatorThresholdAction({
+    threshold,
+  });
+```
+
+## `getAddOwnableValidatorOwnerAction`
+
+The `getAddOwnableValidatorOwnerAction` function is used to add an owner to the validator. This function returns an execution object
+
+```typescript
+import { getAddOwnableValidatorOwnerAction } from "@rhinestone/module-sdk";
+
+const owner = "0x...";
+
+const addOwnableValidatorOwnerAction = getAddOwnableValidatorOwnerAction({
+  owner,
+});
+```
+
+## `getRemoveOwnableValidatorOwnerAction`
+
+The `getRemoveOwnableValidatorOwnerAction` function is used to remove an owner from the validator. This function returns an execution object
+
+```typescript
+import { getRemoveOwnableValidatorOwnerAction } from "@rhinestone/module-sdk";
+
+const owner = "0x...";
+
+const removeOwnableValidatorOwnerAction = getRemoveOwnableValidatorOwnerAction(
+  {
+    owner,
+  }
+);
+```
+
+## `getOwnableValidatorOwners`
+
+The `getOwnableValidatorOwners` function is used to return ownable validator owners. This function returns an array of owners addresses.
+
+```typescript
+import { getOwnableValidatorOwners } from "@rhinestone/module-sdk";
+
+const params = {
+  account,
+  client,
+};
+
+const ownableValidatorOwners = await getOwnableValidatorOwners(params);
 ```
 
 ## `OWNABLE_VALIDATOR_ADDRESS`
