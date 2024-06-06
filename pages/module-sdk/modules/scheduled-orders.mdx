@@ -1,8 +1,10 @@
+import { Tabs } from "nextra/components";
+
 # Scheduled Orders
 
 The Scheduled Orders module allows users to schedule swaps to be executed at a later time, with an optional recurring schedule. This is useful for scheduling recurring swap-based executions, such as dollar cost averaging. This module is an executor that is installed on an account and can be triggered by an automation service at the pre-specified time(s).
 
-You can find the source code for the module in the [ModuleKit examples](https://github.com/rhinestonewtf/modulekit/blob/main/examples/src/ScheduledTransactions/ScheduledOrders.sol) and the deployment address in the [address book](../../overview/address-book.mdx).
+You can find the source code for the module in the [Core Modules repo](https://github.com/rhinestonewtf/core-modules/tree/main/src/ScheduledOrders) and the deployment address in the [address book](../../overview/address-book.mdx).
 
 ## `RecurringOrder` type
 
@@ -59,34 +61,60 @@ const swapOrderData = getSwapOrderData({
 });
 ```
 
-## `getScheduledOrdersExecutor`
+## `getInstallScheduledOrdersExecutor`
 
-The `getScheduledOrdersExecutor` function is used to create an instance of the Scheduled Orders module. The `executionInterval` is a number that designates the interval at which the execution should occur in seconds. The `numberOfExecutions` is a number that designates how many times this transfer should be executed. The `startDate` is the UNIX timestamp of when the first execution should occur. The `executionData` object is a hex-encoded struct that represents the swap (to encode it, use `getSwapOrderData`). This function returns a module object.
+The `getInstallScheduledOrdersExecutor` function is used to create an instance of the Scheduled Orders module. The `executionInterval` is a number that designates the interval at which the execution should occur in seconds. The `numberOfExecutions` is a number that designates how many times this transfer should be executed. The `startDate` is the UNIX timestamp of when the first execution should occur. The `executionData` object is a hex-encoded struct that represents the swap (to encode it, use `getSwapOrderData`). This function returns a module object.
 
+<Tabs items={["Safe", "Kernel"]}>
+
+<Tabs.Tab>
 ```typescript
-import { getScheduledOrdersExecutor, getSwapOrderData } from "@rhinestone/module-sdk";
+import { getInstallScheduledOrdersExecutor, getSwapOrderData } from "@rhinestone/module-sdk";
 
 const executeInterval = 60 * 60 * 24; // 1 day
 const numberOfExecutions = 10;
 const startDate = 1710759572; // UNIX timestamp
-const swapOrderData = getSwapOrderData({...});
+const executionData = getSwapOrderData({...});
 
-const scheduledOrderExecutor = getScheduledOrdersExecutor({
+const scheduledOrderExecutor = getInstallScheduledOrdersExecutor({
   executeInterval,
   numberOfExecutions,
   startDate,
-  swapOrderData,
+  executionData,
 });
 ```
+</Tabs.Tab>
 
-## `getCreateRecurringOrderExecution`
+<Tabs.Tab>
+```typescript
+import { getInstallScheduledOrdersExecutor, getSwapOrderData } from "@rhinestone/module-sdk";
 
-The `getCreateRecurringOrderExecution` function is used to create an execution that can be used to schedule a swap. The `recurringOrder` is an object of type `RecurringOrder` which includes the details for the scheduled swap. This function returns an execution object.
+const executeInterval = 60 * 60 * 24; // 1 day
+const numberOfExecutions = 10;
+const startDate = 1710759572; // UNIX timestamp
+const executionData = getSwapOrderData({...});
+const hook = '0x...';
+
+const scheduledOrderExecutor = getInstallScheduledOrdersExecutor({
+  executeInterval,
+  numberOfExecutions,
+  startDate,
+  executionData,
+  hook,
+});
+```
+</Tabs.Tab>
+
+</Tabs>
+
+## `getCreateScheduledOrderAction`
+
+The `getCreateScheduledOrderAction` function is used to create an execution that can be used to schedule a swap. The `recurringOrder` is an object of type `RecurringOrder` which includes the details for the scheduled swap. This function returns an execution object.
 
 ```typescript
-import { getCreateRecurringOrderExecution } from "@rhinestone/module-sdk";
+import { getCreateScheduledOrderAction } from "@rhinestone/module-sdk";
 
-const recurringOrderExecution = getCreateRecurringOrderExecution({
+const recurringOrderExecution = getCreateScheduledOrderAction({
   recurringOrder: {
     buyToken: {
       token_address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", // USDC

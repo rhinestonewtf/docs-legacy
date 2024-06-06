@@ -1,8 +1,10 @@
 {
   "ownable-validator": "Ownable Validator",
-  "webauthn-validator": "WebAuthn Validator",
   "mfa-validator": "MFA Validator",
   "social-recovery-validator": "Social Recovery Validator",
+  "deadman-switch": "Deadman Switch Validator",
   "scheduled-transfers": "Scheduled Transfers",
-  "scheduled-orders": "Scheduled Orders"
+  "scheduled-orders": "Scheduled Orders",
+  "ownable-executor": "Ownable Executor",
+  "auto-saving-executor": "Auto Saving Executor"
 }

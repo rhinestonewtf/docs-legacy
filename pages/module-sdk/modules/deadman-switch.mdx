@@ -1,0 +1,79 @@
+import { Tabs } from "nextra/components";
+
+# Deadman Switch Validator
+
+The Deadman Switch Validator module is a Module that allows users to set a nominee that can recover their account if they are inactive for a certain period of time.
+
+You can find the source code for the module in the [Core Modules repo](https://github.com/rhinestonewtf/core-modules/tree/main/src/DeadmanSwitch) and the deployment address in the [address book](../../overview/address-book.mdx).
+
+## `getInstallDeadmanSwitch`
+
+The `getInstallDeadmanSwitch` function is used to create an instance of the Deadman Switch Validator module. This function returns a module object.
+
+<Tabs items={["Safe", "Kernel"]}>
+
+<Tabs.Tab>
+
+```typescript
+import { getInstallDeadmanSwitch } from "@rhinestone/module-sdk";
+
+const moduleType = "validator" | "hook";
+const nominee = "0x..."; // nominee address
+const timeout = 100; // inactive period
+
+const deadmanSwitch = getInstallDeadmanSwitch({
+  moduleType,
+  nominee,
+  timeout,
+});
+```
+
+</Tabs.Tab>
+
+<Tabs.Tab>
+
+```typescript
+import { getInstallDeadmanSwitch } from "@rhinestone/module-sdk";
+
+const moduleType = "validator" | "hook";
+const nominee = "0x..."; // nominee address
+const timeout = 100; // inactive period
+const hook = "0x...";
+
+const deadmanSwitch = getInstallDeadmanSwitch({
+  moduleType,
+  nominee,
+  timeout,
+  hook,
+});
+```
+
+</Tabs.Tab>
+</Tabs>
+
+## `getDeadmanSwitchValidatorMockSignature`
+
+The `getDeadmanSwitchValidatorMockSignature` function is used to get a mock signature for the validator. This is used to calculate the gas of an ERC-4337 `UserOperation`. This function returns a hex-encoded signature.
+
+```typescript
+import { getDeadmanSwitchValidatorMockSignature } from "@rhinestone/module-sdk";
+
+const mockSignature = getDeadmanSwitchValidatorMockSignature();
+```
+
+## `getDeadmanSwitchConfig`
+
+The `getDeadmanSwitchConfig` function is used to get config of deadman switch module.
+
+```typescript
+import { getDeadmanSwitchConfig } from "@rhinestone/module-sdk";
+
+const deadmanSwitchConfig = await getDeadmanSwitchConfig({
+  account,
+  client,
+});
+```
+
+## `DEADMAN_SWITCH_ADDRESS`
+
+The `DEADMAN_SWITCH_ADDRESS` is a constant that represents the module address.
