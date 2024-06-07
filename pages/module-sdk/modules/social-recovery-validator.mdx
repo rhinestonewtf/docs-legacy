@@ -48,6 +48,16 @@ const socialRecoveryValidator = getInstallSocialRecoveryValidator({
 
 </Tabs>
 
+## `getSocialRecoveryMockSignature`
+
+The `getSocialRecoveryMockSignature` function is used to get a mock signature for the validator. This is used to calculate the gas of an ERC-4337 `UserOperation`. This function returns a hex-encoded signature.
+
+```typescript
+import { getSocialRecoveryMockSignature } from "@rhinestone/module-sdk";
+
+const mockSignature = getSocialRecoveryMockSignature();
+````
+
 ## `getSetSocialRecoveryThresholdAction`
 
 The `getSetSocialRecoveryThresholdAction` function is used to set the threshold for the validator. This function returns an execution object

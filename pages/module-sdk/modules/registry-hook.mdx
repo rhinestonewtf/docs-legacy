@@ -1,0 +1,56 @@
+import { Tabs } from "nextra/components";
+
+# Registry Hook
+
+The Registry Hook module is a module that allows querying of a Registry on module installation.
+
+You can find the source code for the module in the [Core Modules repo](https://github.com/rhinestonewtf/core-modules/tree/main/src/RegistryHook) and the deployment address in the [address book](../../overview/address-book.mdx).
+
+## `getInstallRegistryHook`
+
+The `getInstallRegistryHook` function is used to create an instance of the Registry Hook module. This function returns a module object.
+
+<Tabs items={["Safe", "Kernel"]}>
+
+<Tabs.Tab>
+
+```typescript
+import { getInstallRegistryHook, HookType } from "@rhinestone/module-sdk";
+
+const registryHook = getInstallRegistryHook({
+  registryAddress: "0x...",
+  hookType: HookType.GLOBAL,
+  selector: "0x", // should be a 4 byte hex string in case of SIG hook
+});
+```
+
+</Tabs.Tab>
+
+<Tabs.Tab>
+```typescript
+import { getInstallRegistryHook } from "@rhinestone/module-sdk";
+
+
+const registryHook = getInstallRegistryHook({
+  registryAddress: "0x...",
+});
+```
+
+</Tabs.Tab>
+</Tabs>
+
+## `getSetRegistryAction`
+
+The `getSetRegistryAction` function is used to set the registry hook address. This function returns an execution object
+
+```typescript
+import { getSetRegistryAction } from "@rhinestone/module-sdk";
+
+const setRegistryAction = getSetRegistryAction({
+  registryAddress: "0x...",
+});
+```
+
+## `REGISTRY_HOOK_ADDRESS`
+
+The `REGISTRY_HOOK_ADDRESS` is a constant that represents the module address.
