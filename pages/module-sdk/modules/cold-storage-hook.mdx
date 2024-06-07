@@ -15,12 +15,7 @@ The `getInstallColdStorageHook` function is used to create an instance of the Co
 <Tabs.Tab>
 
 ```typescript
-import { getInstallColdStorageHook } from "@rhinestone/module-sdk";
-
-enum HookType {
-  GLOBAL = 0,
-  SIG = 1,
-}
+import { getInstallColdStorageHook, HookType } from "@rhinestone/module-sdk";
 
 const coldStorageHook = getInstallColdStorageHook({
   account,

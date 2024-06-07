@@ -15,12 +15,7 @@ The `getInstallHookMultiPlexer` function is used to create an instance of the Ho
 <Tabs.Tab>
 
 ```typescript
-import { getInstallHookMultiPlexer } from "@rhinestone/module-sdk";
-
-enum HookType {
-  GLOBAL = 0,
-  SIG = 1,
-}
+import { getInstallHookMultiPlexer, HookType } from "@rhinestone/module-sdk";
 
 const params = {
   globalHooks: ['0x...', '0x...'], // hook addresses
@@ -83,15 +78,7 @@ const hooks = await getHooks({
 The `getAddHookAction` function is used to add a sub hook to the Hook MultiPlexer module. This function returns an execution object.
 
 ```typescript
-import { getAddHookAction } from "@rhinestone/module-sdk";
-
-enum HookType {
-  GLOBAL,
-  DELEGATECALL,
-  VALUE,
-  SIG,
-  TARGET,
-}
+import { getAddHookAction, HookType } from "@rhinestone/module-sdk";
 
 const addHookAction = getAddHookAction({
   hook: '0x...', // hook address
@@ -105,15 +92,7 @@ const addHookAction = getAddHookAction({
 The `getRemoveHookAction` function is used to remove a sub hook from the Hook MultiPlexer module. This function returns an execution object.
 
 ```typescript
-import { getRemoveHookAction } from "@rhinestone/module-sdk";
-
-enum HookType {
-  GLOBAL,
-  DELEGATECALL,
-  VALUE,
-  SIG,
-  TARGET,
-}
+import { getRemoveHookAction, HookType } from "@rhinestone/module-sdk";
 
 const removeHookAction = getRemoveHookAction({
   hook: '0x...', // hook address

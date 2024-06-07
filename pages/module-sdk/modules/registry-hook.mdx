@@ -15,12 +15,7 @@ The `getInstallRegistryHook` function is used to create an instance of the Regis
 <Tabs.Tab>
 
 ```typescript
-import { getInstallRegistryHook } from "@rhinestone/module-sdk";
-
-enum HookType {
-  GLOBAL = 0,
-  SIG = 1,
-}
+import { getInstallRegistryHook, HookType } from "@rhinestone/module-sdk";
 
 const registryHook = getInstallRegistryHook({
   registryAddress: "0x...",
