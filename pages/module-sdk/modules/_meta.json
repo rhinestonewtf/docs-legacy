@@ -6,5 +6,8 @@
   "scheduled-transfers": "Scheduled Transfers",
   "scheduled-orders": "Scheduled Orders",
   "ownable-executor": "Ownable Executor",
-  "auto-saving-executor": "Auto Saving Executor"
+  "auto-saving-executor": "Auto Saving Executor",
+  "registry-hook": "Registry Hook",
+  "hook-multi-plexer": "Hook MultiPlexer",
+  "cold-storage-hook": "Cold Storage Hook"
 }
