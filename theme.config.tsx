@@ -68,7 +68,7 @@ const config: DocsThemeConfig = {
     link: "https://github.com/rhinestonewtf",
   },
   sidebar: {
-    defaultMenuCollapseLevel: 1,
+    defaultMenuCollapseLevel: 2,
     titleComponent({ title, type }) {
       if (type === "separator") {
         return <Separator title={title} />;

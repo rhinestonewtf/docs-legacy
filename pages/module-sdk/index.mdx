@@ -3,17 +3,12 @@ import { Callout } from "nextra/components";
 
 # Overview
 
-The Module SDK is a TypeScript library for using Smart Account Modules in Applications. It allows you to easily install and uninstall modules for any [ERC-7579](https://erc7579.com/) account, interact with and use modules using dedicated helper utilites and can be used alongside existing account SDKs such as [permissionless.js](https://www.npmjs.com/package/permissionless), [Biconomy](https://www.npmjs.com/package/@biconomy/account), [ZeroDev](https://docs.zerodev.app) and many more.
+The ModuleSDK is a TypeScript library for using Smart Account Modules in Applications. It allows you to easily install and uninstall modules for any [ERC-7579](https://erc7579.com/) account, interact with and use modules using dedicated helper utilites and can be used alongside existing account SDKs such as [permissionless.js](https://www.npmjs.com/package/permissionless), [Biconomy](https://www.npmjs.com/package/@biconomy/account), [ZeroDev](https://docs.zerodev.app) and many more.
 
 The Module SDK is split into two components:
 
 - **Accounts** - Account-related helpers, like installing and uninstalling modules
-- **Modules** - Integrated modules with helpers for their installation and usage
-
-<Callout type="warning">
-  The Module SDK is in currently in alpha and is subject to breaking changes. If
-  you spot a bug, please take out an issue and we will fix it as soon as we can.
-</Callout>
+- **Modules** - Integrated core modules with helpers for their installation and usage
 
 <div className="my-8">
   <ModuleSDKBanner width={1000} height={400} />
@@ -21,22 +16,26 @@ The Module SDK is split into two components:
 
 Current accounts supported by the Module SDK include:
 
-- [ERC-7579](https://erc7579.com/)
-- Safe (soon)
-- Biconomy (v3)
-- Kernel (v3)
+- **Safe**
+- **Kernel v3**
+- **Biconomy v3** (soon)
 
 The integrated modules include:
 
-- [Ownable Validator](/module-sdk/modules/ownable-validator.mdx)
-- [WebAuthn Validator](/module-sdk/modules/webauthn-validator.mdx)
-- [MFA Validator](/module-sdk/modules/mfa-validator.mdx)
-- [Scheduled Transfers](/module-sdk/modules/scheduled-transfers.mdx)
-- [Scheduled Orders](/module-sdk/modules/scheduled-orders.mdx)
+- **Auto Savings**: Automatically save a percentage of incoming funds
+- **ColdStorage Hook**: Prevent funds from being withdrawn without a timelock
+- **Deadman Switch**: Prevent funds from being locked forever
+- **Hook Multiplexer**: Combine multiple hooks into one with fine-grained control over when they are called
+- **Multi Factor**: Use multiple validators in combination as a multi-factor authentication system
+- **Ownable Executor**: Allow an account to control a subaccount and pay for its transaction fees
+- **Ownable Validator**: Authenticate on your account with multiple ECDSA keys
+- **Registry Hook**: Query the Module Registry before installing and using modules
+- **Scheduled Orders**: Execute swaps on a specified schedule
+- **Scheduled Transfers**: Transfer funds on a specified schedule
+- **Social Recovery:** Recover your account using a set of guardians
 
-### Useful starting resources
+### Useful starting resources on general concepts
 
 - Blog: [Part 1: Modular Account Abstraction for Everyone Else](https://blog.rhinestone.wtf/part-1-modular-account-abstraction-for-everyone-else-84567422bc46)
 - Blog: [App-layer Innovation with Modular Smart Accounts](https://blog.rhinestone.wtf/app-layer-innovation-with-modular-smart-accounts-8a9d7030c908)
-- List of open-source modules and resources: [awesome-modular-accounts repo](https://github.com/rhinestonewtf/awesome-modular-accounts)
-- [List of module ideas](https://rhinestone.notion.site/Module-ideas-for-developer-inspo-338100a2c99540f490472b8aa839da11)
+- [List of modules](https://erc7579.com/modules)

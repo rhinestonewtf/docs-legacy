@@ -3,9 +3,18 @@
   "getting-started": "Getting Started",
   "-": {
     "type": "separator",
-    "title": "Development"
+    "title": "Tutorials"
   },
-  "build": "Build",
+  "--": {
+    "type": "separator",
+    "title": "Guides"
+  },
+  "---": {
+    "type": "separator",
+    "title": "Reference"
+  },
+  "accounts": "Accounts",
   "modules": "Modules",
-  "advanced": "Advanced"
+  "utilities": "Utilites",
+  "experimental": "Experimental"
 }
