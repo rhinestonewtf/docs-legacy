@@ -1,6 +1,7 @@
 import React from "react";
 import { DocsThemeConfig } from "nextra-theme-docs";
-import { LiaTelegram } from "react-icons/lia";
+import { SiFarcaster } from "react-icons/si";
+import { BsTwitterX } from "react-icons/bs";
 import { useRouter } from "next/router";
 import { Separator } from "./components/Separator";
 
@@ -66,6 +67,18 @@ const config: DocsThemeConfig = {
   ),
   project: {
     link: "https://github.com/rhinestonewtf",
+  },
+  navbar: {
+    extraContent: (
+      <div className="flex flex-row">
+        <a href="https://x.com/rhinestonewtf" target="_blank" className="mr-4">
+          <BsTwitterX size={24} />
+        </a>
+        <a href="https://warpcast.com/rhinestone" target="_blank" className="">
+          <SiFarcaster size={24} />
+        </a>
+      </div>
+    ),
   },
   sidebar: {
     defaultMenuCollapseLevel: 2,
