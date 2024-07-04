@@ -96,16 +96,20 @@ Get the module object for the module that you want to install on the smart accou
 
 ```typescript copy
 import { getInstallDeadmanSwitch } from "@rhinestone/module-sdk";
+import { privateKeyToAccount } from "viem/accounts";
+
+const nominee = privateKeyToAccount("0xPRIVATE_KEY");
 
 const module = getInstallDeadmanSwitch({
-  threshold: 2,
-  guardians: ["0x1234...", "0x5678..."],
+  nominee: nominee.address,
+  timeout: "100", // in seconds
+  moduleType: "validator",
 });
 ```
 
-### Install the module
+### Install the module as a validator
 
-With this module object, we can now install it on the smart account.
+With this module object, we can now install it on the smart account as a validator.
 
 ```typescript copy
 const opHash = await smartClient.installModule({
@@ -113,17 +117,34 @@ const opHash = await smartClient.installModule({
   address: module.module,
   context: module.data,
 });
-```
 
-### Wait for the UserOperation to be confirmed
-
-Let's wait until the UserOperation is confirmed, after which the module will be installed.
-
-```typescript copy
 await bundlerClientV07.waitForUserOperationReceipt({
   hash: opHash,
   timeout: 100000,
 });
 ```
+
+### Install the module as a validator
+
+The Deadman Switch module is also a hook, so it also needs to be installed as a hook.
+
+```typescript copy
+const opHash = await smartClient.installModule({
+  type: "hook", // manually set the type to hook
+  address: module.module,
+  context: "0x", // we need to leave this empty since the data was already passed above
+});
+
+await bundlerClientV07.waitForUserOperationReceipt({
+  hash: opHash,
+  timeout: 100000,
+});
+```
+
+### Recover the account
+
+Every transaction, the latest access will be updated. After the timeout has passed, the nominee will be able to use the account. In our case, the timeout is just 100 seconds, so we can recover the account almost immediately.
+
+tbd
 
 </Steps>
