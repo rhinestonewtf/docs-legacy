@@ -5,10 +5,12 @@
     "type": "separator",
     "title": "Tutorials"
   },
+  "tutorial-1": "1: Install and use your first module",
   "--": {
     "type": "separator",
     "title": "Guides"
   },
+  "account-sdks": "Account SDKs",
   "---": {
     "type": "separator",
     "title": "Reference"
