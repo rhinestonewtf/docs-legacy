@@ -6,12 +6,12 @@ The Scheduled Transfers module allows users to schedule token transfers to occur
 
 You can find the source code for the module in the [Core Modules repo](https://github.com/rhinestonewtf/core-modules/tree/main/src/ScheduledTransfers) and the deployment address in the [address book](../../overview/address-book.mdx).
 
-## `ScheduledTransaction` type
+## `ScheduledTransfer` type
 
-The `ScheduledTransaction` type is an object that represents a scheduled transaction. It has the following properties:
+The `ScheduledTransfer` type is an object that represents a scheduled transfer. It has the following properties:
 
 ```typescript
-type ScheduledTransaction = Schedule & {
+type ScheduledTransfer = Schedule & {
   token?: ERC20Token;
   amount: number;
   recipient: Hex;
@@ -30,15 +30,15 @@ export type ERC20Token = {
 };
 ```
 
-## `getScheduledTransactionData`
+## `getScheduledTransferData`
 
-The `getScheduledTransactionData` function is used to create a hex-encoded struct that represents the scheduled transaction.
+The `getScheduledTransferData` function is used to create a hex-encoded struct that represents the scheduled transfer.
 
 ```typescript
-import { getScheduledTransactionData } from "@rhinestone/module-sdk";
+import { getScheduledTransferData } from "@rhinestone/module-sdk";
 
 const isNativeToken = true;
-const scheduledTransaction = {
+const scheduledTransfer = {
   startDate: 1710759572,
   repeatEvery: 60 * 60 * 24, // 1 day
   numberOfRepeats: 10,
@@ -50,73 +50,75 @@ const scheduledTransaction = {
   recipient: "0x5678...",
 };
 
-const scheduledTransactionData = getScheduledTransactionData({
+const scheduledTransferData = getScheduledTransferData({
   isNativeToken,
-  scheduledTransaction,
+  scheduledTransafer,
 });
 ```
 
-## `getInstallScheduledTransfersExecutor`
+## `getScheduledTransfersExecutor`
 
-The `getInstallScheduledTransfersExecutor` function is used to create an instance of the Scheduled Transfers module. The `executionInterval` is a number that designates the interval at which the execution should occur in seconds. The `numberOfExecutions` is a number that designates how many times this transfer should be executed. The `startDate` is the UNIX timestamp of when the first execution should occur. The `executionData` object is a hex-encoded struct of type [`Execution`](../build/types#execution) that represents the transfer. If it is a native token transfer, the `value` should be used, otherwise the `callData` should be an ERC-20 transfer. This function returns a module object.
+The `getScheduledTransfersExecutor` function is used to create an instance of the Scheduled Transfers module. The `executionInterval` is a number that designates the interval at which the execution should occur in seconds. The `numberOfExecutions` is a number that designates how many times this transfer should be executed. The `startDate` is the UNIX timestamp of when the first execution should occur. The `executionData` object is a hex-encoded struct of type [`Execution`](../build/types#execution) that represents the transfer. If it is a native token transfer, the `value` should be used, otherwise the `callData` should be an ERC-20 transfer. This function returns a module object.
 
 <Tabs items={["Safe", "Kernel"]}>
 
 <Tabs.Tab>
 ```typescript
 import {
-  getInstallScheduledTransfersExecutor,
-  getScheduledTransactionData,
+  getScheduledTransfersExecutor,
+  getScheduledTransferData,
 } from "@rhinestone/module-sdk";
 
-const executionInterval = 60 * 60 * 24; // 1 day
+const executionInterval = 60 _ 60 _ 24; // 1 day
 const numberOfExecutions = 10;
 const startDate = 1710759572; // UNIX timestamp
-const executionData = getScheduledTransactionData({...});
+const executionData = getScheduledTransferData({...});
 
-const scheduledTransfersExecutor = getInstallScheduledTransfersExecutor({
-  executionInterval,
-  numberOfExecutions,
-  startDate,
-  executionData,
+const scheduledTransfersExecutor = getScheduledTransfersExecutor({
+executionInterval,
+numberOfExecutions,
+startDate,
+executionData,
 });
-```
+
+````
 </Tabs.Tab>
 
 <Tabs.Tab>
 ```typescript
 import {
-  getInstallScheduledTransfersExecutor,
-  getScheduledTransactionData,
+  getScheduledTransfersExecutor,
+  getScheduledTransferData,
 } from "@rhinestone/module-sdk";
 
 const executionInterval = 60 * 60 * 24; // 1 day
 const numberOfExecutions = 10;
 const startDate = 1710759572; // UNIX timestamp
-const executionData = getScheduledTransactionData({...});
+const executionData = getScheduledTransferData({...});
 const hook = '0x...';
 
-const scheduledTransfersExecutor = getInstallScheduledTransfersExecutor({
+const scheduledTransfersExecutor = getScheduledTransfersExecutor({
   executionInterval,
   numberOfExecutions,
   startDate,
   executionData,
   hook,
 });
-```
+````
+
 </Tabs.Tab>
 
 </Tabs>
 
 ## `getCreateScheduledTransferAction`
 
-The `getCreateScheduledTransferAction` function is used to create an execution that can be used to schedule a transfer. The `isNativeToken` argument is a boolean flag for whether a token is native or not. The `scheduledTransaction` is an object of type `ScheduledTransaction` which includes the details for the scheduled transfer. This function returns an execution object.
+The `getCreateScheduledTransferAction` function is used to create an execution that can be used to schedule a transfer. The `isNativeToken` argument is a boolean flag for whether a token is native or not. The `scheduledTransfer` is an object of type `ScheduledTransfer` which includes the details for the scheduled transfer. This function returns an execution object.
 
 ```typescript
 import { getCreateScheduledTransferAction } from "@rhinestone/module-sdk";
 
 const isNativeToken = true;
-const scheduledTransaction = {
+const scheduledTransfer = {
   startDate: 1710759572,
   repeatEvery: 60 * 60 * 24, // 1 day
   numberOfRepeats: 10,
@@ -133,7 +135,7 @@ const scheduledTransaction = {
 
 const scheduledTransferExecution = getCreateScheduledTransferAction({
   isNativeToken,
-  scheduledTransaction,
+  scheduledTransfer,
 });
 ```
 

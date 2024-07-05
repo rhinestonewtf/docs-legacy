@@ -6,16 +6,16 @@ The Auto Savings module is a module that allows users users to automatically sav
 
 You can find the source code for the module in the [Core Modules repo](https://github.com/rhinestonewtf/core-modules/tree/main/src/AutoSavings) and the deployment address in the [address book](../../overview/address-book.mdx).
 
-## `getInstallAutoSavingsExecutor`
+## `getAutoSavingsExecutor`
 
-The `getInstallAutoSavingsExecutor` function is used to create an instance of the Auto Saving Executor module. This function returns a module object.
+The `getAutoSavingsExecutor` function is used to create an instance of the Auto Saving Executor module. This function returns a module object.
 
 <Tabs items={["Safe", "Kernel"]}>
 
 <Tabs.Tab>
 
 ```typescript
-import { getInstallAutoSavingsExecutor } from "@rhinestone/module-sdk";
+import { getAutoSavingsExecutor } from "@rhinestone/module-sdk";
 
 const params = {
   tokens: ["0x.."], // array of token addresses
@@ -28,13 +28,13 @@ const params = {
   ],
 };
 
-const autoSavingsExecutor = getInstallAutoSavingsExecutor(params);
+const autoSavingsExecutor = getAutoSavingsExecutor(params);
 ```
 
 </Tabs.Tab>
 <Tabs.Tab>
 ```typescript
-import { getInstallAutoSavingsExecutor } from "@rhinestone/module-sdk";
+import { getAutoSavingsExecutor } from "@rhinestone/module-sdk";
 
 const params = {
 tokens: ['0x..'], // array of token addresses
@@ -46,7 +46,7 @@ sqrtPriceLimitX96: 10n, // sqrt price limit
 hook: '0x..', // hook address
 }
 
-const autoSavingsExecutor = getInstallAutoSavingsExecutor(params);
+const autoSavingsExecutor = getAutoSavingsExecutor(params);
 
 ````
 </Tabs.Tab>

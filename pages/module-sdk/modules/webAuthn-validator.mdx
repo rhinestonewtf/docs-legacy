@@ -6,21 +6,21 @@ The WebAuthn Validator module is a module that allows you to use passkeys to sig
 
 You can find the source code for the module [here](https://github.com/zerodevapp/kernel-7579-plugins/blob/master/validators/webauthn/src/WebAuthnValidator.sol) and the deployment address in the [address book](../../overview/address-book.mdx).
 
-## `getInstallWebAuthnValidator`
+## `getWebAuthnValidator`
 
-The `getInstallWebAuthnValidator` function is used to create an instance of the WebAuthn Validator module. This function returns a module object.
+The `getWebAuthnValidator` function is used to create an instance of the WebAuthn Validator module. This function returns a module object.
 
 <Tabs items={["Safe", "Kernel"]}>
 
 <Tabs.Tab>
 
 ```typescript
-import { getInstallWebAuthnValidator } from "@rhinestone/module-sdk";
+import { getWebAuthnValidator } from "@rhinestone/module-sdk";
 
-const webAuthnValidator = getInstallWebAuthnValidator({
+const webAuthnValidator = getWebAuthnValidator({
   pubKeyX: 123,
   pubKeyY: 456,
-  authenticatorId: 'authenticator id',
+  authenticatorId: "authenticator id",
 });
 ```
 
@@ -28,20 +28,18 @@ const webAuthnValidator = getInstallWebAuthnValidator({
 <Tabs.Tab>
 
 ```typescript
+import { getWebAuthnValidator } from "@rhinestone/module-sdk";
 
-import { getInstallWebAuthnValidator } from "@rhinestone/module-sdk";
-
-const webAuthnValidator = getInstallWebAuthnValidator({
+const webAuthnValidator = getWebAuthnValidator({
   pubKeyX: 123,
   pubKeyY: 456,
-  authenticatorId: 'authenticator id',
-  hook: '0x...'
+  authenticatorId: "authenticator id",
+  hook: "0x...",
 });
+```
 
-````
 </Tabs.Tab>
 </Tabs>
-
 
 ## `getWebauthnValidatorSignature`
 
@@ -52,7 +50,7 @@ The `getWebauthnValidatorSignature` function is used to get a encoded webauthn s
 import { getWebauthnValidatorSignature } from "@rhinestone/module-sdk";
 
 const webAuthnSignature = getWebauthnValidatorSignature({
-    authenticatorData: '0x...', 
+    authenticatorData: '0x...',
     clientDataJSON: '',
     responseTypeLocation: 1
     r: 2
@@ -60,8 +58,6 @@ const webAuthnSignature = getWebauthnValidatorSignature({
     usePrecompiled: true
 });
 ```
-
-
 
 ## `getWebauthnValidatorMockSignature`
 
@@ -71,10 +67,7 @@ The `getWebauthnValidatorMockSignature` function is used to get a mock signature
 import { getWebauthnValidatorMockSignature } from "@rhinestone/module-sdk";
 
 const mockSignature = getWebauthnValidatorMockSignature();
-````
-
-
-
+```
 
 ## `WEBAUTHN_VALIDATOR_ADDRESS`
 

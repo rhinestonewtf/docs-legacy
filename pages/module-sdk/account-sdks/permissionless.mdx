@@ -93,9 +93,9 @@ const smartAccountClient = createSmartAccountClient({
 Get the module object for the module that you want to install on the smart account. In this case, we will install the Social Recovery Module. We will pass to it a number of guardians that can recover the account as well as a threshold of guardians required to recover the account.
 
 ```typescript copy
-import { getInstallSocialRecoveryValidator } from "@rhinestone/module-sdk";
+import { getSocialRecoveryValidator } from "@rhinestone/module-sdk";
 
-const module = getInstallSocialRecoveryValidator({
+const module = getSocialRecoveryValidator({
   threshold: 2,
   guardians: ["0x1234...", "0x5678..."],
 });

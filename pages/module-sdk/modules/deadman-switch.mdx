@@ -1,27 +1,29 @@
 import { Tabs } from "nextra/components";
 
-# Deadman Switch Validator
+# Deadman Switch
 
-The Deadman Switch Validator module is a Module that allows users to set a nominee that can recover their account if they are inactive for a certain period of time.
+The Deadman Switch module is a Module that allows users to set a nominee that can recover their account if they are inactive for a certain period of time.
 
 You can find the source code for the module in the [Core Modules repo](https://github.com/rhinestonewtf/core-modules/tree/main/src/DeadmanSwitch) and the deployment address in the [address book](../../overview/address-book.mdx).
 
-## `getInstallDeadmanSwitch`
+## `getDeadmanSwitch`
 
-The `getInstallDeadmanSwitch` function is used to create an instance of the Deadman Switch Validator module. This function returns a module object.
+The `getDeadmanSwitch` function is used to create an instance of the Deadman Switch module. This function returns a module object.
+
+Note: The Deadman Switch needs to be installed as both a validator and a hook. When this function is called and the module is already installed, then the `initData` will be empty, which is expected.
 
 <Tabs items={["Safe", "Kernel"]}>
 
 <Tabs.Tab>
 
 ```typescript
-import { getInstallDeadmanSwitch } from "@rhinestone/module-sdk";
+import { getDeadmanSwitch } from "@rhinestone/module-sdk";
 
 const moduleType = "validator" | "hook";
 const nominee = "0x..."; // nominee address
 const timeout = 100; // inactive period
 
-const deadmanSwitch = getInstallDeadmanSwitch({
+const deadmanSwitch = getDeadmanSwitch({
   moduleType,
   nominee,
   timeout,
@@ -33,14 +35,14 @@ const deadmanSwitch = getInstallDeadmanSwitch({
 <Tabs.Tab>
 
 ```typescript
-import { getInstallDeadmanSwitch } from "@rhinestone/module-sdk";
+import { getDeadmanSwitch } from "@rhinestone/module-sdk";
 
 const moduleType = "validator" | "hook";
 const nominee = "0x..."; // nominee address
 const timeout = 100; // inactive period
 const hook = "0x...";
 
-const deadmanSwitch = getInstallDeadmanSwitch({
+const deadmanSwitch = getDeadmanSwitch({
   moduleType,
   nominee,
   timeout,

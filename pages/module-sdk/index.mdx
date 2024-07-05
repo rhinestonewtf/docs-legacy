@@ -23,9 +23,9 @@ Current accounts supported by the Module SDK include:
 
 The integrated modules include:
 
-- **Auto Savings**: Automatically save a percentage of incoming funds
-- **ColdStorage Hook**: Prevent funds from being withdrawn without a timelock
-- **Deadman Switch**: Prevent funds from being locked forever
+- **Auto Savings**: Automatically allocate a set percentage of any incoming token to a target vault
+- **ColdStorage Hook**: Restrict all transactions with a timelock and only allow funds to be sent to a single address
+- **Deadman Switch**: Recover an account after a specified inactive period
 - **Hook Multiplexer**: Combine multiple hooks into one with fine-grained control over when they are called
 - **Multi Factor**: Use multiple validators in combination as a multi-factor authentication system
 - **Ownable Executor**: Allow an account to control a subaccount and pay for its transaction fees

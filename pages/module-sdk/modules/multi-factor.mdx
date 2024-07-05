@@ -6,16 +6,16 @@ The Multi Factor module is a module that allows you to add multi-factor validati
 
 You can find the source code for the module in the [Core Modules repo](https://github.com/rhinestonewtf/core-modules/tree/main/src/MultiFactor) and the deployment address in the [address book](../../overview/address-book.mdx).
 
-## `getInstallMultiFactorValidator`
+## `getMultiFactorValidator`
 
-The `getInstallMultiFactorValidator` function is used to create an instance of the Multi Factor module. This function returns a module object.
+The `getMultiFactorValidator` function is used to create an instance of the Multi Factor module. This function returns a module object.
 
 <Tabs items={["Safe", "Kernel"]}>
 
 <Tabs.Tab>
 
 ```typescript
-import { getInstallMultiFactorValidator } from "@rhinestone/module-sdk";
+import { getMultiFactorValidator } from "@rhinestone/module-sdk";
 
 const validators = [{
     packedValidatorAndId: '0x...' // packed validator address and validator id
@@ -24,7 +24,7 @@ const validators = [{
 
 const threshold = 1;
 
-const mfaValidator = getInstallMultiFactorValidator({
+const mfaValidator = getMultiFactorValidator({
   validators,
   threshold,
 });
@@ -35,7 +35,7 @@ const mfaValidator = getInstallMultiFactorValidator({
 <Tabs.Tab>
 
 ```typescript
-import { getInstallMultiFactorValidator } from "@rhinestone/module-sdk";
+import { getMultiFactorValidator } from "@rhinestone/module-sdk";
 
 const validators = [{
     packedValidatorAndId: '0x...' // packed validator address and validator id
@@ -45,7 +45,7 @@ const validators = [{
 const threshold = 1;
 const hook = '0x...' // hook address
 
-const mfaValidator = getInstallMultiFactorValidator({
+const mfaValidator = getMultiFactorValidator({
   validators,
   threshold,
   hook

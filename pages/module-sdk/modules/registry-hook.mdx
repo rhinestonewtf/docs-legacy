@@ -6,18 +6,18 @@ The Registry Hook module is a module that allows querying of a Registry on modul
 
 You can find the source code for the module in the [Core Modules repo](https://github.com/rhinestonewtf/core-modules/tree/main/src/RegistryHook) and the deployment address in the [address book](../../overview/address-book.mdx).
 
-## `getInstallRegistryHook`
+## `getRegistryHook`
 
-The `getInstallRegistryHook` function is used to create an instance of the Registry Hook module. This function returns a module object.
+The `getRegistryHook` function is used to create an instance of the Registry Hook module. This function returns a module object.
 
 <Tabs items={["Safe", "Kernel"]}>
 
 <Tabs.Tab>
 
 ```typescript
-import { getInstallRegistryHook, HookType } from "@rhinestone/module-sdk";
+import { getRegistryHook, HookType } from "@rhinestone/module-sdk";
 
-const registryHook = getInstallRegistryHook({
+const registryHook = getRegistryHook({
   registryAddress: "0x...",
   hookType: HookType.GLOBAL,
   selector: "0x", // should be a 4 byte hex string in case of SIG hook
@@ -28,13 +28,13 @@ const registryHook = getInstallRegistryHook({
 
 <Tabs.Tab>
 ```typescript
-import { getInstallRegistryHook } from "@rhinestone/module-sdk";
+import { getRegistryHook } from "@rhinestone/module-sdk";
 
-
-const registryHook = getInstallRegistryHook({
-  registryAddress: "0x...",
+const registryHook = getRegistryHook({
+registryAddress: "0x...",
 });
-```
+
+````
 
 </Tabs.Tab>
 </Tabs>
@@ -49,7 +49,7 @@ import { getSetRegistryAction } from "@rhinestone/module-sdk";
 const setRegistryAction = getSetRegistryAction({
   registryAddress: "0x...",
 });
-```
+````
 
 ## `REGISTRY_HOOK_ADDRESS`
 

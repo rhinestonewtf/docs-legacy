@@ -15,8 +15,8 @@
     "type": "separator",
     "title": "Reference"
   },
-  "accounts": "Accounts",
   "modules": "Modules",
+  "accounts": "Accounts",
   "utilities": "Utilites",
   "experimental": "Experimental"
 }

@@ -86,11 +86,9 @@ import { getRemoveOwnableValidatorOwnerAction } from "@rhinestone/module-sdk";
 
 const owner = "0x...";
 
-const removeOwnableValidatorOwnerAction = getRemoveOwnableValidatorOwnerAction(
-  {
-    owner,
-  }
-);
+const removeOwnableValidatorOwnerAction = getRemoveOwnableValidatorOwnerAction({
+  owner,
+});
 ```
 
 ## `getOwnableValidatorOwners`
@@ -106,6 +104,21 @@ const params = {
 };
 
 const ownableValidatorOwners = await getOwnableValidatorOwners(params);
+```
+
+## `getOwnableValidatorThreshold`
+
+The `getOwnableValidatorThreshold` function is used to return the ownable validator threshold. This function returns the threshold value.
+
+```typescript
+import { getOwnableValidatorThreshold } from "@rhinestone/module-sdk";
+
+const params = {
+  account,
+  client,
+};
+
+const threshold = await getOwnableValidatorOwners(params);
 ```
 
 ## `OWNABLE_VALIDATOR_ADDRESS`

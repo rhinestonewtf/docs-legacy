@@ -6,32 +6,33 @@ The Ownable Executor module is a module that allows users to designate an owner 
 
 You can find the source code for the module in the [Core Modules repo](https://github.com/rhinestonewtf/core-modules/tree/main/src/OwnableExecutor) and the deployment address in the [address book](../../overview/address-book.mdx).
 
-## `getInstallOwnableExecuter`
+## `getOwnableExecuter`
 
-The `getInstallOwnableExecuter` function is used to create an instance of the Ownable Executor module. This function returns a module object.
+The `getOwnableExecuter` function is used to create an instance of the Ownable Executor module. This function returns a module object.
 
 <Tabs items={["Safe", "Kernel"]}>
 
 <Tabs.Tab>
 
 ```typescript
-import { getInstallOwnableExecuter } from "@rhinestone/module-sdk";
+import { getOwnableExecuter } from "@rhinestone/module-sdk";
 
-const ownableExecutor = getInstallOwnableExecuter({
-  owner: '0x..',
+const ownableExecutor = getOwnableExecuter({
+  owner: "0x..",
 });
 ```
 
 </Tabs.Tab>
 <Tabs.Tab>
 ```typescript
-import { getInstallOwnableExecuter } from "@rhinestone/module-sdk";
+import { getOwnableExecuter } from "@rhinestone/module-sdk";
 
-const ownableExecutor = getInstallOwnableExecuter({
-  owner: '0x..',
-  hook: '0x..',
+const ownableExecutor = getOwnableExecuter({
+owner: '0x..',
+hook: '0x..',
 });
-```
+
+````
 </Tabs.Tab>
 </Tabs>
 
@@ -48,7 +49,7 @@ const owner = "0x...";
 const addOwnableExecutorOwnerAction = getAddOwnableExecutorOwnerAction({
   owner,
 });
-```
+````
 
 ## `getRemoveOwnableExecutorOwnerAction`
 
@@ -57,13 +58,12 @@ The `getRemoveOwnableExecutorOwnerAction` function is used to remove an owner fr
 ```typescript
 import { getRemoveOwnableExecutorOwnerAction } from "@rhinestone/module-sdk";
 
-const removeOwnableExecutorOwnerAction = await getRemoveOwnableExecutorOwnerAction(
-  {
+const removeOwnableExecutorOwnerAction =
+  await getRemoveOwnableExecutorOwnerAction({
     client,
     account,
     owner,
-  }
-);
+  });
 ```
 
 ## `getOwnableExecutorOwners`
@@ -89,11 +89,11 @@ The `getExecuteOnOwnedAccountAction` function is used to execute action on owned
 import { getExecuteOnOwnedAccountAction } from "@rhinestone/module-sdk";
 
 const params = {
-  ownedAccount: '0x...',
+  ownedAccount: "0x...",
   execution: {
-    target: '0x...', // address
+    target: "0x...", // address
     value: 0n,
-    callData: '0x...', // hex string
+    callData: "0x...", // hex string
   },
 };
 
@@ -108,15 +108,18 @@ The `getExecuteBatchOnOwnedAccountAction` function is used to execute batch of a
 import { getExecuteBatchOnOwnedAccountAction } from "@rhinestone/module-sdk";
 
 const params = {
-  ownedAccount: '0x...',
-  executions: [{
-    target: '0x...', // address
-    value: 0n,
-    callData: '0x...', // hex string
-  }],
+  ownedAccount: "0x...",
+  executions: [
+    {
+      target: "0x...", // address
+      value: 0n,
+      callData: "0x...", // hex string
+    },
+  ],
 };
 
-const executeOnOwnedAccountActions = getExecuteBatchOnOwnedAccountAction(params);
+const executeOnOwnedAccountActions =
+  getExecuteBatchOnOwnedAccountAction(params);
 ```
 
 ## `OWNABLE_EXECUTER_ADDRESS`
