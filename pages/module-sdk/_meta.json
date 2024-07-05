@@ -3,9 +3,20 @@
   "getting-started": "Getting Started",
   "-": {
     "type": "separator",
-    "title": "Development"
+    "title": "Tutorials"
   },
-  "build": "Build",
+  "tutorial-1": "1: Install and use your first module",
+  "--": {
+    "type": "separator",
+    "title": "Guides"
+  },
+  "account-sdks": "Account SDKs",
+  "---": {
+    "type": "separator",
+    "title": "Reference"
+  },
+  "accounts": "Accounts",
   "modules": "Modules",
-  "advanced": "Advanced"
+  "utilities": "Utilites",
+  "experimental": "Experimental"
 }
