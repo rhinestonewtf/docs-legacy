@@ -60,6 +60,8 @@ const account = await createKernelAccount(publicClient, {
 The smart account client is used to interact with the smart account.
 
 ```typescript copy
+import { createKernelAccountClient } from "@zerodev/sdk";
+
 const smartClient = createKernelAccountClient({
   account,
   chain,
@@ -99,10 +101,22 @@ const module = getSocialRecoveryValidator({
 With this module object, we can now install it on the smart account.
 
 ```typescript copy
+
+const context = encodePacked(
+  ["address", "bytes"],
+  [
+    module.hook ?? zeroAddress,
+    encodeAbiParameters(
+      [{ type: "bytes" }, { type: "bytes" }],
+      [module.initData || "0x", "0x"]
+    ),
+  ]
+);
+
 const opHash = await smartClient.installModule({
   type: module.type,
   address: module.module,
-  context: module.data,
+  context,
 });
 ```
 
