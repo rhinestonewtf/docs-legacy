@@ -37,6 +37,7 @@ import { signerToEcdsaValidator } from "@zerodev/ecdsa-validator";
 const ecdsaValidator = await signerToEcdsaValidator(publicClient, {
   signer,
   entryPoint,
+  kernelVersion: KERNEL_V3_1,
 });
 ```
 
@@ -52,7 +53,7 @@ const account = await createKernelAccount(publicClient, {
     sudo: ecdsaValidator,
   },
   entryPoint,
-});
+}).extend(erc7579Actions({ entryPoint }));
 ```
 
 ### Create the smart account client
@@ -101,7 +102,6 @@ const module = getSocialRecoveryValidator({
 With this module object, we can now install it on the smart account.
 
 ```typescript copy
-
 const context = encodePacked(
   ["address", "bytes"],
   [
@@ -125,9 +125,9 @@ const opHash = await smartClient.installModule({
 Let's wait until the UserOperation is confirmed, after which the module will be installed.
 
 ```typescript copy
-await bundlerClientV07.waitForUserOperationReceipt({
-  hash: opHash,
-  timeout: 100000,
+const bundlerClient = kernelClient.extend(bundlerActions(entryPoint));
+await bundlerClient.waitForUserOperationReceipt({
+  hash: userOpHash,
 });
 ```
 
