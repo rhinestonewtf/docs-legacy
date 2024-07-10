@@ -139,6 +139,18 @@ const scheduledTransferExecution = getCreateScheduledTransferAction({
 });
 ```
 
+## `getExecuteScheduledTranferAction`
+
+The `getExecuteScheduledTranferAction` function is used to create an execution for execute scheduled transfer. This function returns an execution object.
+
+```typescript
+import { getExecuteScheduledTranferAction } from "@rhinestone/module-sdk";
+
+const executeScheduledTranferAction = getExecuteScheduledTranferAction({
+  jobId: 1
+});
+```
+
 ## `SCHEDULED_TRANSFERS_EXECUTER_ADDRESS`
 
 The `SCHEDULED_TRANSFERS_EXECUTER_ADDRESS` is a constant that represents the module address.
