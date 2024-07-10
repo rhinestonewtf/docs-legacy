@@ -135,6 +135,18 @@ const recurringOrderExecution = getCreateScheduledOrderAction({
 });
 ```
 
+## `getExecuteScheduledOrderAction`
+
+The `getExecuteScheduledOrderAction` function is used to create an execution for execute scheduled order. This function returns an execution object.
+
+```typescript
+import { getExecuteScheduledOrderAction } from "@rhinestone/module-sdk";
+
+const executeScheduledOrderAction = getExecuteScheduledOrderAction({
+  jobId: 1
+});
+```
+
 ## `SCHEDULED_ORDERS_EXECUTER_ADDRESS`
 
 The `SCHEDULED_ORDERS_EXECUTER_ADDRESS` is a constant that represents the address of the Scheduled Orders module.
