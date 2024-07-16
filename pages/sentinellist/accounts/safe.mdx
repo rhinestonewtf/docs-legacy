@@ -1,0 +1,74 @@
+# Safe
+
+The Safe is ERC-7579 compliant through the [Safe7579](https://github.com/rhinestonewtf/safe7579) adapter and can be used with the ModuleSDK. To create an account instance, use the `getAccount` function and then you can use the other functions below to get the calldata for module configuration actions on the account.
+
+## `getAccount`
+
+The `getAccount` function is used to format an account object in a future-proof way. Use this function rather than creating an account object manually so that the SDK can handle any future changes to the account object.
+
+```typescript
+import { getAccount } from "@rhinestone/module-sdk";
+
+const account = getAccount({
+  address: "0x1234...",
+  type: "safe",
+  initCode: "0x1234...", // optional
+  deployedOnChains: [1, 4], // optional
+});
+```
+
+## `installModule`
+
+The `installModule` function is used to install a module on an account. This function returns a promise that resolves to an array of `Execution` objects.
+
+```typescript
+import { installModule } from "@rhinestone/module-sdk";
+
+const installModuleExecutions = await installModule({
+  client, // The client object of type PublicClient from viem
+  account, // The account object
+  module, // The module object
+});
+```
+
+## `uninstallModule`
+
+The `uninstallModule` function is used to uninstall a module from an account. This function returns a promise that resolves to an array of `Execution` objects.
+
+```typescript
+import { uninstallModule } from "@rhinestone/module-sdk";
+
+const uninstallModuleExecutions = await uninstallModule({
+  client, // The client object of type PublicClient from viem
+  account, // The account object
+  module, // The module object
+});
+```
+
+## `isModuleInstalled`
+
+The `isModuleInstalled` function is used to check if a module is installed on an account. This function returns a promise that resolves to a boolean value.
+
+```typescript
+import { isModuleInstalled } from "@rhinestone/module-sdk";
+
+const isInstalled = await isModuleInstalled({
+  client, // The client object of type PublicClient from viem
+  account, // The account object
+  module, // The module object
+});
+```
+
+## `getInstalledModules`
+
+The `getInstalledModules` function is used to get the installed modules on an account. This function returns a promise that resolves to an array of `Module` objects.
+
+```typescript
+import { getInstalledModules } from "@rhinestone/module-sdk";
+
+const installedModules = await getInstalledModules({
+  client, // The client object of type PublicClient from viem
+  account, // The account object
+  moduleTypes, // An array of module types to filter the installed modules (optional, default is all module types)
+});
+```

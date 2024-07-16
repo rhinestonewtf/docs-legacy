@@ -14,6 +14,31 @@
     "type": "page"
   },
   "modulekit": { "title": "ModuleKit", "type": "page" },
-  "sandbox": { "title": "ModuleSandbox", "type": "page" },
-  "module-sdk": { "title": "ModuleSDK", "type": "page" }
+  "module-sdk": { "title": "ModuleSDK", "type": "page" },
+  "solidity": {
+    "title": "Solidity",
+    "type": "menu",
+    "items": {
+      "sentinellist": {
+        "title": "SentinelList",
+        "href": "/sentinellist"
+      }
+    }
+  },
+  "sentinellist": {
+    "title": "SentinelList",
+    "type": "page",
+    "display": "hidden"
+  },
+  "javascript": {
+    "title": "JavaScript",
+    "type": "menu",
+    "items": {
+      "sandbox": {
+        "title": "Sandbox",
+        "href": "/sandbox"
+      }
+    }
+  },
+  "sandbox": { "title": "ModuleSandbox", "type": "page", "display": "hidden" }
 }

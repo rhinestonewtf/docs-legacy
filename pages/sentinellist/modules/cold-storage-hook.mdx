@@ -1,0 +1,131 @@
+import { Tabs } from "nextra/components";
+
+# Cold Storage Hook
+
+The Cold Storage Hook module is a module that allows user to lock down a subaccount and perform actions after a timelock has expired.
+
+You can find the source code for the module in the [Core Modules repo](https://github.com/rhinestonewtf/core-modules/tree/main/src/ColdStorageHook) and the deployment address in the [address book](../../overview/address-book.mdx).
+
+## `getColdStorageHook`
+
+The `getColdStorageHook` function is used to create an instance of the Cold Storage Hook module. This function returns a module object.
+
+<Tabs items={["Safe", "Kernel"]}>
+
+<Tabs.Tab>
+
+```typescript
+import { getColdStorageHook, HookType } from "@rhinestone/module-sdk";
+
+const coldStorageHook = getColdStorageHook({
+  account,
+  client,
+  moduleType: 'hook',
+  waitPeriod: 1000,
+  owner: '0x...', // owner address
+  hookType: HookType.GLOBAL,
+  selector: "0x"
+});
+
+// install flashloan callback module for cold storage accounts
+const installAllowedCallbackSenders = getAllowedCallbackSenders({
+  addresses: ['0x...'],
+  callType: '0x00' // single call
+  functionSig: '0x...' // function signature
+});
+```
+
+</Tabs.Tab>
+
+<Tabs.Tab>
+```typescript
+import { getColdStorageHook } from "@rhinestone/module-sdk";
+
+const coldStorageHook = getColdStorageHook({
+account,
+client,
+moduleType: 'hook',
+waitPeriod: 1000,
+owner: '0x...', // owner address
+});
+
+// install flashloan callback module for cold storage accounts
+const installAllowedCallbackSenders = getAllowedCallbackSenders({
+addresses: ['0x...'],
+callType: '0x00' // single call
+selector: '0x...' // function signature
+hook: '0x...' // hook address
+});
+
+````
+
+</Tabs.Tab>
+</Tabs>
+
+## `getColdStorageSetWaitPeriodAction`
+
+The `getColdStorageSetWaitPeriodAction` function is used to request execution to change wait period. This function returns an execution object
+
+```typescript
+import { getColdStorageSetWaitPeriodAction } from "@rhinestone/module-sdk";
+
+const coldStorageSetWaitPeriodAction = getColdStorageSetWaitPeriodAction({
+  waitPeriod: 100,
+});
+````
+
+## `getColdStorageExecutionTime`
+
+The `getColdStorageExecutionTime` function is used to get execution time for a specific execution. This function returns an execution time.
+
+```typescript
+import { getColdStorageExecutionTime } from "@rhinestone/module-sdk";
+
+const coldStorageExecutionTime = await getColdStorageExecutionTime({
+  account,
+  client,
+  executionHash: "0x...", // hash of the execution previously requested
+});
+```
+
+## `getRequestTimelockedExecution`
+
+The `getRequestTimelockedExecution` function is used to request time locked execution. This function returns an execution object
+
+```typescript
+import { getRequestTimelockedExecution } from "@rhinestone/module-sdk";
+
+const execution = {
+  taregt: "0x...", // target address
+  value: 0,
+  callData: "0x...", // encoded call data
+};
+
+const additionalWait = 100;
+
+const requestTimelockedExecution = getRequestTimelockedExecution({
+  execution,
+  additionalWait,
+});
+```
+
+## `getRequestTimelockedModuleConfigExecution`
+
+The `getRequestTimelockedModuleConfigExecution` function is used to request time locked module config execution. This function returns an execution object
+
+```typescript
+import { getRequestTimelockedModuleConfigExecution } from "@rhinestone/module-sdk";
+
+const requestTimelockedModuleConfigExecution =
+  getRequestTimelockedModuleConfigExecution({
+    moduleTypeId: 4, // hook module
+    module: "0x...", // module address
+    data: "0x...", // data to be passed to the module
+    isInstall: false, // true if the module is being installed, false if it is being uninstalled
+    additionalWait: 0,
+  });
+```
+
+## `COLD_STORAGE_HOOK_ADDRESS`
+
+The `COLD_STORAGE_HOOK_ADDRESS` is a constant that represents the module address.

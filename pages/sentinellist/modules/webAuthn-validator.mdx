@@ -1,0 +1,74 @@
+import { Tabs } from "nextra/components";
+
+# WebAuthn Validator
+
+The WebAuthn Validator module is a module that allows you to use passkeys to sign transactions to be executed on the account.
+
+You can find the source code for the module [here](https://github.com/zerodevapp/kernel-7579-plugins/blob/master/validators/webauthn/src/WebAuthnValidator.sol) and the deployment address in the [address book](../../overview/address-book.mdx).
+
+## `getWebAuthnValidator`
+
+The `getWebAuthnValidator` function is used to create an instance of the WebAuthn Validator module. This function returns a module object.
+
+<Tabs items={["Safe", "Kernel"]}>
+
+<Tabs.Tab>
+
+```typescript
+import { getWebAuthnValidator } from "@rhinestone/module-sdk";
+
+const webAuthnValidator = getWebAuthnValidator({
+  pubKeyX: 123,
+  pubKeyY: 456,
+  authenticatorId: "authenticator id",
+});
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+```typescript
+import { getWebAuthnValidator } from "@rhinestone/module-sdk";
+
+const webAuthnValidator = getWebAuthnValidator({
+  pubKeyX: 123,
+  pubKeyY: 456,
+  authenticatorId: "authenticator id",
+  hook: "0x...",
+});
+```
+
+</Tabs.Tab>
+</Tabs>
+
+## `getWebauthnValidatorSignature`
+
+The `getWebauthnValidatorSignature` function is used to get a encoded webauthn signature for the validator.
+
+```typescript
+
+import { getWebauthnValidatorSignature } from "@rhinestone/module-sdk";
+
+const webAuthnSignature = getWebauthnValidatorSignature({
+    authenticatorData: '0x...',
+    clientDataJSON: '',
+    responseTypeLocation: 1
+    r: 2
+    s: 3
+    usePrecompiled: true
+});
+```
+
+## `getWebauthnValidatorMockSignature`
+
+The `getWebauthnValidatorMockSignature` function is used to get a mock signature for the validator. This is used to calculate the gas of an ERC-4337 `UserOperation`. This function returns a hex-encoded signature.
+
+```typescript
+import { getWebauthnValidatorMockSignature } from "@rhinestone/module-sdk";
+
+const mockSignature = getWebauthnValidatorMockSignature();
+```
+
+## `WEBAUTHN_VALIDATOR_ADDRESS`
+
+The `WEBAUTHN_VALIDATOR_ADDRESS` is a constant that represents the module address.
