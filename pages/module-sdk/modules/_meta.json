@@ -10,5 +10,5 @@
   "scheduled-orders": "Scheduled Orders",
   "scheduled-transfers": "Scheduled Transfers",
   "social-recovery": "Social Recovery",
-  "webauthn-validator": "WebAuthn Validator"
+  "webAuthn-validator": "WebAuthn Validator"
 }
