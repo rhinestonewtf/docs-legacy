@@ -23,7 +23,7 @@ type Account = {
 The `AccountType` type is a string literal type that represents the type of the account. It has the following options:
 
 ```typescript
-type AccountType = "erc7579-implementation";
+type AccountType = "erc7579-implementation" | "kernel" | "safe";
 ```
 
 ## `Module`
@@ -52,11 +52,11 @@ type ModuleType = "validators" | "executors" | "hooks" | "fallbacks";
 
 ## `Execution`
 
-The `Execution` type is a type that represents an execution that is executed on the account. It has the following properties:
+The `Execution` type is a type that represents an action that is executed on the account. It has the following properties:
 
 - `target`: The address of the target
 - `value`: The native token value of the execution
-- `callData`: The calldata of the execution to be executed on the target
+- `callData`: The calldata of the action to be executed on the target
 
 ```typescript
 type Execution = {

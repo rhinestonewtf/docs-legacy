@@ -6,18 +6,18 @@ The Ownable Validator module is a module that allows you to add multiple ECDSA o
 
 You can find the source code for the module in the [Core Modules repo](https://github.com/rhinestonewtf/core-modules/tree/main/src/OwnableValidator) and the deployment address in the [address book](../../overview/address-book.mdx).
 
-## `getInstallOwnableValidator`
+## `getOwnableValidator`
 
-The `getInstallOwnableValidator` function is used to create an instance of the Ownable Validator module. This function returns a module object.
+The `getOwnableValidator` function is used to create an instance of the Ownable Validator module. This function returns a module object.
 
 <Tabs items={["Safe", "Kernel"]}>
 
 <Tabs.Tab>
 
 ```typescript
-import { getInstallOwnableValidator } from "@rhinestone/module-sdk";
+import { getOwnableValidator } from "@rhinestone/module-sdk";
 
-const ownableValidator = getInstallOwnableValidator({
+const ownableValidator = getOwnableValidator({
   owners: ['0x..', '0x..']  // Addresses of the EOAs that should be the owners of this account.
   threshold: 2, // owners threshold
 });
@@ -26,9 +26,9 @@ const ownableValidator = getInstallOwnableValidator({
 </Tabs.Tab>
 <Tabs.Tab>
 ```typescript
-import { getInstallOwnableValidator } from "@rhinestone/module-sdk";
+import { getOwnableValidator } from "@rhinestone/module-sdk";
 
-const ownableValidator = getInstallOwnableValidator({
+const ownableValidator = getOwnableValidator({
 owners: ['0x..', '0x..'] // Addresses of the EOAs that should be the owners of this account.
 threshold: 2, // owners threshold
 hook: '0x..' // needed only
@@ -86,11 +86,9 @@ import { getRemoveOwnableValidatorOwnerAction } from "@rhinestone/module-sdk";
 
 const owner = "0x...";
 
-const removeOwnableValidatorOwnerAction = getRemoveOwnableValidatorOwnerAction(
-  {
-    owner,
-  }
-);
+const removeOwnableValidatorOwnerAction = getRemoveOwnableValidatorOwnerAction({
+  owner,
+});
 ```
 
 ## `getOwnableValidatorOwners`
@@ -106,6 +104,21 @@ const params = {
 };
 
 const ownableValidatorOwners = await getOwnableValidatorOwners(params);
+```
+
+## `getOwnableValidatorThreshold`
+
+The `getOwnableValidatorThreshold` function is used to return the ownable validator threshold. This function returns the threshold value.
+
+```typescript
+import { getOwnableValidatorThreshold } from "@rhinestone/module-sdk";
+
+const params = {
+  account,
+  client,
+};
+
+const threshold = await getOwnableValidatorOwners(params);
 ```
 
 ## `OWNABLE_VALIDATOR_ADDRESS`

@@ -1,26 +1,26 @@
 import { Tabs } from "nextra/components";
 
-# Social Recovery Validator
+# Social Recovery
 
-The Social Recovery Validator allows users to recover their account using a social recovery mechanism
+The Social Recovery allows users to recover their account using a social recovery mechanism
 
 You can find the source code for the module in the [Core Modules repo](https://github.com/rhinestonewtf/core-modules/tree/main/src/SocialRecovery) and the deployment address in the [address book](../../overview/address-book.mdx).
 
-## `getInstallSocialRecoveryValidator`
+## `getSocialRecoveryValidator`
 
-The `getInstallSocialRecoveryValidator` function is used to install the social recovery validator in the account. This function returns a module object.
+The `getSocialRecoveryValidator` function is used to install the social recovery validator in the account. This function returns a module object.
 
 <Tabs items={["Safe", "Kernel"]}>
 
 <Tabs.Tab>
 
 ```typescript
-import { getInstallSocialRecoveryValidator } from "@rhinestone/module-sdk";
+import { getSocialRecoveryValidator } from "@rhinestone/module-sdk";
 
 const guardians = ["0x...", "0x..."]; // guardians address list
 const threshold = 2;
 
-const socialRecoveryValidator = getInstallSocialRecoveryValidator({
+const socialRecoveryValidator = getSocialRecoveryValidator({
   guardians,
   threshold,
 });
@@ -31,13 +31,13 @@ const socialRecoveryValidator = getInstallSocialRecoveryValidator({
 <Tabs.Tab>
 
 ```typescript
-import { getInstallSocialRecoveryValidator } from "@rhinestone/module-sdk";
+import { getSocialRecoveryValidator } from "@rhinestone/module-sdk";
 
 const guardians = ["0x...", "0x..."]; // guardians address list
 const threshold = 2;
 const hook = "0x..";
 
-const socialRecoveryValidator = getInstallSocialRecoveryValidator({
+const socialRecoveryValidator = getSocialRecoveryValidator({
   guardians,
   threshold,
   hook,
@@ -56,7 +56,7 @@ The `getSocialRecoveryMockSignature` function is used to get a mock signature fo
 import { getSocialRecoveryMockSignature } from "@rhinestone/module-sdk";
 
 const mockSignature = getSocialRecoveryMockSignature();
-````
+```
 
 ## `getSetSocialRecoveryThresholdAction`
 

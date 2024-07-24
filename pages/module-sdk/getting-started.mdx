@@ -8,40 +8,9 @@ The Module SDK is built on top of [viem](https://viem.sh/), a typesafe, modern E
 
 Install viem as a peer dependency and then install the Module SDK:
 
-<Tabs items={["npm", "yarn", "pnpm", "bun"]}>
-
-<Tabs.Tab>
-
-```bash copy
-npm install viem @rhinestone/module-sdk
+```sh npm2yarn
+npm i viem @rhinestone/module-sdk
 ```
-
-</Tabs.Tab>
-
-<Tabs.Tab>
-
-```bash copy
-yarn add viem @rhinestone/module-sdk
-```
-
-</Tabs.Tab>
-
-<Tabs.Tab>
-
-```bash copy
-pnpm install viem @rhinestone/module-sdk
-```
-
-</Tabs.Tab>
-
-<Tabs.Tab>
-
-```bash copy
-bun install viem @rhinestone/module-sdk
-```
-
-</Tabs.Tab>
-</Tabs>
 
 ## Quick Start
 
@@ -77,7 +46,7 @@ const mfaModule = getMFAValidator({
 // Create the account object
 const account = getAccount({
   address: "0x123...",
-  type: "erc7579-implementation",
+  type: "safe",
 });
 
 // Get the executions required to install the module
@@ -95,37 +64,6 @@ accountSDK.execute(executions);
 
 If you are not yet using an account SDK, you can use the permissionless.js SDK to create an account and execute the `UserOperations`. Permissionless.js currently supports the Safe, Kernel and Biconomy accounts. To learn how you can use the SDK, check out the [permissionless.js documentation](https://docs.pimlico.io/permissionless). To install the SDK, run:
 
-<Tabs items={["npm", "yarn", "pnpm", "bun"]}>
-
-<Tabs.Tab>
-
-```bash copy
-npm install permissionless
+```sh npm2yarn
+npm i permissionless
 ```
-
-</Tabs.Tab>
-
-<Tabs.Tab>
-
-```bash copy
-yarn add permissionless
-```
-
-</Tabs.Tab>
-
-<Tabs.Tab>
-
-```bash copy
-pnpm install permissionless
-```
-
-</Tabs.Tab>
-
-<Tabs.Tab>
-
-```bash copy
-bun install permissionless
-```
-
-</Tabs.Tab>
-</Tabs>

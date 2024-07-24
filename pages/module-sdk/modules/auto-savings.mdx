@@ -1,51 +1,54 @@
 import { Tabs } from "nextra/components";
 
-# Auto Saving Executor
+# Auto Savings
 
-The Auto Saving Executor module is a module that allows users users to automatically save a percentage of their received tokens to a vault.
+The Auto Savings module is a module that allows users users to automatically save a percentage of their received tokens to a vault.
 
 You can find the source code for the module in the [Core Modules repo](https://github.com/rhinestonewtf/core-modules/tree/main/src/AutoSavings) and the deployment address in the [address book](../../overview/address-book.mdx).
 
-## `getInstallAutoSavingsExecutor`
+## `getAutoSavingsExecutor`
 
-The `getInstallAutoSavingsExecutor` function is used to create an instance of the Auto Saving Executor module. This function returns a module object.
+The `getAutoSavingsExecutor` function is used to create an instance of the Auto Saving Executor module. This function returns a module object.
 
 <Tabs items={["Safe", "Kernel"]}>
 
 <Tabs.Tab>
 
 ```typescript
-import { getInstallAutoSavingsExecutor } from "@rhinestone/module-sdk";
+import { getAutoSavingsExecutor } from "@rhinestone/module-sdk";
 
 const params = {
-  tokens: ['0x..'], // array of token addresses
-  configs: [{
-    percentage: 10, // percentage to save
-    vault: '0x..', // vault address
-    sqrtPriceLimitX96: 10n, // sqrt price limit
-  }]
-}
+  tokens: ["0x.."], // array of token addresses
+  configs: [
+    {
+      percentage: 10, // percentage to save
+      vault: "0x..", // vault address
+      sqrtPriceLimitX96: 10n, // sqrt price limit
+    },
+  ],
+};
 
-const autoSavingsExecutor = getInstallAutoSavingsExecutor(params);
+const autoSavingsExecutor = getAutoSavingsExecutor(params);
 ```
 
 </Tabs.Tab>
 <Tabs.Tab>
 ```typescript
-import { getInstallAutoSavingsExecutor } from "@rhinestone/module-sdk";
+import { getAutoSavingsExecutor } from "@rhinestone/module-sdk";
 
 const params = {
-  tokens: ['0x..'], // array of token addresses
-  configs: [{
-    percentage: 10, // percentage to save
-    vault: '0x..', // vault address
-    sqrtPriceLimitX96: 10n, // sqrt price limit
-  }],
-  hook: '0x..', // hook address
+tokens: ['0x..'], // array of token addresses
+configs: [{
+percentage: 10, // percentage to save
+vault: '0x..', // vault address
+sqrtPriceLimitX96: 10n, // sqrt price limit
+}],
+hook: '0x..', // hook address
 }
 
-const autoSavingsExecutor = getInstallAutoSavingsExecutor(params);
-```
+const autoSavingsExecutor = getAutoSavingsExecutor(params);
+
+````
 </Tabs.Tab>
 </Tabs>
 
@@ -67,7 +70,7 @@ const params = {
 }
 
 const setAutoSavingConfigAction = getSetAutoSavingConfigAction(params);
-```
+````
 
 ## `getAutoSavingTokens`
 
@@ -76,12 +79,10 @@ The `getAutoSavingTokens` function is used to get tokens that is auto saved by t
 ```typescript
 import { getAutoSavingTokens } from "@rhinestone/module-sdk";
 
-const autoSavingTokens = await getAutoSavingTokens(
-  {
-    client,
-    account,
-  }
-);
+const autoSavingTokens = await getAutoSavingTokens({
+  client,
+  account,
+});
 ```
 
 ## `getDeleteAutoSavingConfigAction`
@@ -94,10 +95,12 @@ import { getDeleteAutoSavingConfigAction } from "@rhinestone/module-sdk";
 const params = {
   account,
   client,
-  token: '0x..' // token address
+  token: "0x..", // token address
 };
 
-const deleteAutoSavingConfigAction = await getDeleteAutoSavingConfigAction(params);
+const deleteAutoSavingConfigAction = await getDeleteAutoSavingConfigAction(
+  params
+);
 ```
 
 ## `getAutoSaveAction`
@@ -108,7 +111,7 @@ The `getAutoSaveAction` function is used to execute auto save when a token recei
 import { getAutoSaveAction } from "@rhinestone/module-sdk";
 
 const params = {
-  token: '0x...', // token address
+  token: "0x...", // token address
   amountReceived: 10,
 };
 
@@ -123,12 +126,14 @@ The `getAutoSavingAccountTokenConfig` function is used to get auto saving config
 import { getAutoSavingAccountTokenConfig } from "@rhinestone/module-sdk";
 
 const params = {
-  token: '0x...', // token address
+  token: "0x...", // token address
   account,
   client,
 };
 
-const autoSavingAccountTokenConfig = await getAutoSavingAccountTokenConfig(params);
+const autoSavingAccountTokenConfig = await getAutoSavingAccountTokenConfig(
+  params
+);
 ```
 
 ## `AUTO_SAVINGS_ADDRESS`

@@ -14,6 +14,6 @@
     "type": "page"
   },
   "modulekit": { "title": "ModuleKit", "type": "page" },
-  "sandbox": { "title": "Module Sandbox", "type": "page" },
-  "module-sdk": { "title": "Module SDK", "type": "page" }
+  "sandbox": { "title": "ModuleSandbox", "type": "page" },
+  "module-sdk": { "title": "ModuleSDK", "type": "page" }
 }

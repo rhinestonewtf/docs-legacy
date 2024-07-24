@@ -1,11 +1,6 @@
-# Accounts
+# Safe
 
-The Module SDK supports different accounts that are compliant with ERC-7579. Currently, the following accounts are supported:
-
-- [ERC-7579](https://erc7579.com/)
-- Safe (soon)
-- Biconomy (v3)
-- Kernel (v3)
+The Safe is ERC-7579 compliant through the [Safe7579](https://github.com/rhinestonewtf/safe7579) adapter and can be used with the ModuleSDK. To create an account instance, use the `getAccount` function and then you can use the other functions below to get the calldata for module configuration actions on the account.
 
 ## `getAccount`
 
@@ -16,7 +11,7 @@ import { getAccount } from "@rhinestone/module-sdk";
 
 const account = getAccount({
   address: "0x1234...",
-  type: "erc7579-implementation",
+  type: "safe",
   initCode: "0x1234...", // optional
   deployedOnChains: [1, 4], // optional
 });

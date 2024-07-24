@@ -6,18 +6,18 @@ The Cold Storage Hook module is a module that allows user to lock down a subacco
 
 You can find the source code for the module in the [Core Modules repo](https://github.com/rhinestonewtf/core-modules/tree/main/src/ColdStorageHook) and the deployment address in the [address book](../../overview/address-book.mdx).
 
-## `getInstallColdStorageHook`
+## `getColdStorageHook`
 
-The `getInstallColdStorageHook` function is used to create an instance of the Cold Storage Hook module. This function returns a module object.
+The `getColdStorageHook` function is used to create an instance of the Cold Storage Hook module. This function returns a module object.
 
 <Tabs items={["Safe", "Kernel"]}>
 
 <Tabs.Tab>
 
 ```typescript
-import { getInstallColdStorageHook, HookType } from "@rhinestone/module-sdk";
+import { getColdStorageHook, HookType } from "@rhinestone/module-sdk";
 
-const coldStorageHook = getInstallColdStorageHook({
+const coldStorageHook = getColdStorageHook({
   account,
   client,
   moduleType: 'hook',
@@ -28,7 +28,7 @@ const coldStorageHook = getInstallColdStorageHook({
 });
 
 // install flashloan callback module for cold storage accounts
-const installAllowedCallbackSenders = getInstallAllowedCallbackSenders({
+const installAllowedCallbackSenders = getAllowedCallbackSenders({
   addresses: ['0x...'],
   callType: '0x00' // single call
   functionSig: '0x...' // function signature
@@ -39,25 +39,25 @@ const installAllowedCallbackSenders = getInstallAllowedCallbackSenders({
 
 <Tabs.Tab>
 ```typescript
-import { getInstallColdStorageHook } from "@rhinestone/module-sdk";
+import { getColdStorageHook } from "@rhinestone/module-sdk";
 
-const coldStorageHook = getInstallColdStorageHook({
-  account,
-  client,
-  moduleType: 'hook',
-  waitPeriod: 1000,
-  owner: '0x...', // owner address
+const coldStorageHook = getColdStorageHook({
+account,
+client,
+moduleType: 'hook',
+waitPeriod: 1000,
+owner: '0x...', // owner address
 });
 
 // install flashloan callback module for cold storage accounts
-const installAllowedCallbackSenders = getInstallAllowedCallbackSenders({
-  addresses: ['0x...'],
-  callType: '0x00' // single call
-  selector: '0x...' // function signature
-  hook: '0x...' // hook address
+const installAllowedCallbackSenders = getAllowedCallbackSenders({
+addresses: ['0x...'],
+callType: '0x00' // single call
+selector: '0x...' // function signature
+hook: '0x...' // hook address
 });
 
-```
+````
 
 </Tabs.Tab>
 </Tabs>
@@ -72,7 +72,7 @@ import { getColdStorageSetWaitPeriodAction } from "@rhinestone/module-sdk";
 const coldStorageSetWaitPeriodAction = getColdStorageSetWaitPeriodAction({
   waitPeriod: 100,
 });
-```
+````
 
 ## `getColdStorageExecutionTime`
 
@@ -84,7 +84,7 @@ import { getColdStorageExecutionTime } from "@rhinestone/module-sdk";
 const coldStorageExecutionTime = await getColdStorageExecutionTime({
   account,
   client,
-  executionHash: '0x...' // hash of the execution previously requested
+  executionHash: "0x...", // hash of the execution previously requested
 });
 ```
 
@@ -96,16 +96,16 @@ The `getRequestTimelockedExecution` function is used to request time locked exec
 import { getRequestTimelockedExecution } from "@rhinestone/module-sdk";
 
 const execution = {
-  taregt: '0x...', // target address
+  taregt: "0x...", // target address
   value: 0,
-  callData: '0x...', // encoded call data
-}
+  callData: "0x...", // encoded call data
+};
 
-const additionalWait = 100
+const additionalWait = 100;
 
 const requestTimelockedExecution = getRequestTimelockedExecution({
   execution,
-  additionalWait
+  additionalWait,
 });
 ```
 
@@ -116,13 +116,14 @@ The `getRequestTimelockedModuleConfigExecution` function is used to request time
 ```typescript
 import { getRequestTimelockedModuleConfigExecution } from "@rhinestone/module-sdk";
 
-const requestTimelockedModuleConfigExecution = getRequestTimelockedModuleConfigExecution({
-  moduleTypeId: 4, // hook module
-  module: '0x...', // module address
-  data: '0x...', // data to be passed to the module
-  isInstall: false, // true if the module is being installed, false if it is being uninstalled
-  additionalWait: 0
-});
+const requestTimelockedModuleConfigExecution =
+  getRequestTimelockedModuleConfigExecution({
+    moduleTypeId: 4, // hook module
+    module: "0x...", // module address
+    data: "0x...", // data to be passed to the module
+    isInstall: false, // true if the module is being installed, false if it is being uninstalled
+    additionalWait: 0,
+  });
 ```
 
 ## `COLD_STORAGE_HOOK_ADDRESS`

@@ -61,33 +61,34 @@ const swapOrderData = getSwapOrderData({
 });
 ```
 
-## `getInstallScheduledOrdersExecutor`
+## `getScheduledOrdersExecutor`
 
-The `getInstallScheduledOrdersExecutor` function is used to create an instance of the Scheduled Orders module. The `executionInterval` is a number that designates the interval at which the execution should occur in seconds. The `numberOfExecutions` is a number that designates how many times this transfer should be executed. The `startDate` is the UNIX timestamp of when the first execution should occur. The `executionData` object is a hex-encoded struct that represents the swap (to encode it, use `getSwapOrderData`). This function returns a module object.
+The `getScheduledOrdersExecutor` function is used to create an instance of the Scheduled Orders module. The `executionInterval` is a number that designates the interval at which the execution should occur in seconds. The `numberOfExecutions` is a number that designates how many times this transfer should be executed. The `startDate` is the UNIX timestamp of when the first execution should occur. The `executionData` object is a hex-encoded struct that represents the swap (to encode it, use `getSwapOrderData`). This function returns a module object.
 
 <Tabs items={["Safe", "Kernel"]}>
 
 <Tabs.Tab>
 ```typescript
-import { getInstallScheduledOrdersExecutor, getSwapOrderData } from "@rhinestone/module-sdk";
+import { getScheduledOrdersExecutor, getSwapOrderData } from "@rhinestone/module-sdk";
 
-const executeInterval = 60 * 60 * 24; // 1 day
+const executeInterval = 60 _ 60 _ 24; // 1 day
 const numberOfExecutions = 10;
 const startDate = 1710759572; // UNIX timestamp
 const executionData = getSwapOrderData({...});
 
-const scheduledOrderExecutor = getInstallScheduledOrdersExecutor({
-  executeInterval,
-  numberOfExecutions,
-  startDate,
-  executionData,
+const scheduledOrderExecutor = getScheduledOrdersExecutor({
+executeInterval,
+numberOfExecutions,
+startDate,
+executionData,
 });
-```
+
+````
 </Tabs.Tab>
 
 <Tabs.Tab>
 ```typescript
-import { getInstallScheduledOrdersExecutor, getSwapOrderData } from "@rhinestone/module-sdk";
+import { getScheduledOrdersExecutor, getSwapOrderData } from "@rhinestone/module-sdk";
 
 const executeInterval = 60 * 60 * 24; // 1 day
 const numberOfExecutions = 10;
@@ -95,14 +96,15 @@ const startDate = 1710759572; // UNIX timestamp
 const executionData = getSwapOrderData({...});
 const hook = '0x...';
 
-const scheduledOrderExecutor = getInstallScheduledOrdersExecutor({
+const scheduledOrderExecutor = getScheduledOrdersExecutor({
   executeInterval,
   numberOfExecutions,
   startDate,
   executionData,
   hook,
 });
-```
+````
+
 </Tabs.Tab>
 
 </Tabs>
@@ -130,6 +132,18 @@ const recurringOrderExecution = getCreateScheduledOrderAction({
     repeatEvery: 60 * 60 * 24, // 1 day
     numberOfRepeats: 10,
   },
+});
+```
+
+## `getExecuteScheduledOrderAction`
+
+The `getExecuteScheduledOrderAction` function is used to create an execution for execute scheduled order. This function returns an execution object.
+
+```typescript
+import { getExecuteScheduledOrderAction } from "@rhinestone/module-sdk";
+
+const executeScheduledOrderAction = getExecuteScheduledOrderAction({
+  jobId: 1
 });
 ```
 
