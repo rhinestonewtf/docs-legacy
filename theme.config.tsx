@@ -60,9 +60,7 @@ const config: DocsThemeConfig = {
           </clipPath>
         </defs>
       </svg>
-      <span style={{ fontWeight: "bold", marginLeft: "8px" }}>
-        Rhinestone Docs
-      </span>
+      <span style={{ fontWeight: "bold", marginLeft: "8px" }}>Rhinestone</span>
     </>
   ),
   project: {

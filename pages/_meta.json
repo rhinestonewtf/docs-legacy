@@ -16,12 +16,28 @@
   "modulekit": { "title": "ModuleKit", "type": "page" },
   "module-sdk": { "title": "ModuleSDK", "type": "page" },
   "solidity": {
-    "title": "Solidity",
+    "title": "Tools",
     "type": "menu",
     "items": {
       "sentinellist": {
         "title": "SentinelList",
         "href": "/sentinellist"
+      },
+      "flatbytes": {
+        "title": "Flatbytes",
+        "href": "/flatbytes"
+      },
+      "checknsignatures": {
+        "title": "CheckNSignatures",
+        "href": "/checknsignatures"
+      },
+      "erc4337-validation": {
+        "title": "ERC4337 Validation",
+        "href": "/erc4337-validation"
+      },
+      "sandbox": {
+        "title": "ModuleSandbox",
+        "href": "/sandbox"
       }
     }
   },
@@ -30,15 +46,49 @@
     "type": "page",
     "display": "hidden"
   },
-  "javascript": {
-    "title": "JavaScript",
+  "flatbytes": { "title": "Flatbytes", "type": "page", "display": "hidden" },
+  "checknsignatures": {
+    "title": "CheckNSignatures",
+    "type": "page",
+    "display": "hidden"
+  },
+  "erc4337-validation": {
+    "title": "ERC4337 Validation",
+    "type": "page",
+    "display": "hidden"
+  },
+  "sandbox": { "title": "ModuleSandbox", "type": "page", "display": "hidden" },
+  "infrastructure": {
+    "title": "Infrastructure",
     "type": "menu",
     "items": {
-      "sandbox": {
-        "title": "Sandbox",
-        "href": "/sandbox"
+      "registry": {
+        "title": "Module Registry",
+        "href": "/module-registry"
+      },
+      "orchestrator": {
+        "title": "Orchestrator",
+        "href": "/orchestrator"
+      },
+      "payments": {
+        "title": "Payments",
+        "href": "/payments"
       }
     }
   },
-  "sandbox": { "title": "ModuleSandbox", "type": "page", "display": "hidden" }
+  "module-registry": {
+    "title": "Module Registry",
+    "type": "page",
+    "display": "hidden"
+  },
+  "orchestrator": {
+    "title": "Orchestrator",
+    "type": "page",
+    "display": "hidden"
+  },
+  "payments": {
+    "title": "Payments",
+    "type": "page",
+    "display": "hidden"
+  }
 }
