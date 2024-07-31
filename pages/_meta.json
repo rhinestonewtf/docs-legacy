@@ -16,7 +16,7 @@
   "modulekit": { "title": "ModuleKit", "type": "page" },
   "module-sdk": { "title": "ModuleSDK", "type": "page" },
   "solidity": {
-    "title": "Tools",
+    "title": "Helpers",
     "type": "menu",
     "items": {
       "sentinellist": {
