@@ -1,7 +1,8 @@
 {
-  "core": "Core",
+  "module-basics": "Module Basics",
   "validators": "Validators",
   "executors": "Executors",
+  "hooks": "Hooks",
   "fallbacks": "Fallbacks",
-  "hooks": "Hooks"
+  "integrations": "Integrations"
 }

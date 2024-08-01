@@ -11,12 +11,13 @@
     "type": "separator",
     "title": "Guides"
   },
+  "testing": "Testing",
+  "deploying": "Deploying",
   "---": {
     "type": "separator",
     "title": "Reference"
   },
-  "build": "Build",
-  "test": "Test",
-  "deploy": "Deploy",
-  "advanced": "Advanced"
+  "build": "Building",
+  "test": "Testing",
+  "deploy": "Deploying"
 }
