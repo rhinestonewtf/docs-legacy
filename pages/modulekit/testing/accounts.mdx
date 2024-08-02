@@ -1,128 +1,36 @@
 import { Steps } from "nextra/components";
 
-# How to use the Module SDK with Permissionless.js
+# How to use ModuleKit with different accounts
 
-[Permissionless.js](https://docs.pimlico.io/permissionless) is one of the most widely used account SDKs. It is a typescript library that makes it easy to build with smart accounts. This guide will show you how to use the Module SDK with permissionless.js.
+The ModuleKit is integrated with a range of modular smart accounts. When you write your integration tests and use [`makeAccountInstance`](/modulekit/test/core/makeAccountInstance), you can easily switch between different accounts.
 
 <Steps>
 
-### Install the packages
+### Write your tests
 
-```sh npm2yarn
-npm i viem @rhinestone/module-sdk permissionless
+When you write your tests, you can use the `makeAccountInstance` function to create an account instance. Then, you can use this `instance` to execute transactions, for example:
+
+```solidity copy
+// Create an account instance
+AccountInstance memory instance = makeAccountInstance("account1");
+
+// Execute a UserOperation on the account
+instance.exec({ target: address(1), value: 1 wei, callData: "" });
 ```
 
-### Import the required packages
+### Run your tests against different accounts
 
-```typescript copy
-import {
-  ENTRYPOINT_ADDRESS_V07,
-  createSmartAccountClient,
-} from "permissionless";
-import { signerToSafeSmartAccount } from "permissionless/accounts";
-import {
-  createPimlicoBundlerClient,
-  createPimlicoPaymasterClient,
-} from "permissionless/clients/pimlico";
-import { createPublicClient, getContract, http, parseEther } from "viem";
-import { sepolia } from "viem/chains";
+To do this, run:
+
+```bash
+ACCOUNT_TYPE=... forge test
 ```
 
-### Create the clients
+where the options are:
 
-Create the smart account client and the bundler client.
-
-```typescript copy
-export const publicClient = createPublicClient({
-  transport: http("https://rpc.ankr.com/eth_sepolia"),
-});
-
-export const pimlicoBundlerClient = createPimlicoBundlerClient({
-  transport: http("https://api.pimlico.io/v2/sepolia/rpc?apikey=API_KEY"),
-  entryPoint: ENTRYPOINT_ADDRESS_V07,
-});
-```
-
-### Create the signer
-
-The Safe account will need to have a signer to sign user operations. In permissionless.js, the default Safe account validates ECDSA signatures.
-
-For example, to create a signer based on a private key:
-
-```typescript copy
-import { privateKeyToAccount } from "viem/accounts";
-
-const signer = privateKeyToAccount("0xPRIVATE_KEY");
-```
-
-### Create the Safe account
-
-Create the Safe account object using the signer.
-
-```typescript copy
-const safeAccount = await signerToSafeSmartAccount(publicClient, {
-  entryPoint: ENTRYPOINT_ADDRESS_V07,
-  signer: signer,
-  saltNonce: 0n, // optional
-  safeVersion: "1.4.1",
-  address: "0x...", // optional, only if you are using an already created account
-});
-```
-
-### Create the smart account client
-
-The smart account client is used to interact with the smart account.
-
-```typescript copy
-const smartAccountClient = createSmartAccountClient({
-  account: safeAccount,
-  entryPoint: ENTRYPOINT_ADDRESS_V07,
-  chain: sepolia,
-  bundlerTransport: http(
-    "https://api.pimlico.io/v2/sepolia/rpc?apikey=API_KEY"
-  ),
-  middleware: {
-    gasPrice: async () => {
-      return (await pimlicoBundlerClient.getUserOperationGasPrice()).fast;
-    },
-  },
-}).extend(erc7579Actions({ entryPoint: ENTRYPOINT_ADDRESS_V07 }));
-```
-
-### Create the module object
-
-Get the module object for the module that you want to install on the smart account. In this case, we will install the Social Recovery Module. We will pass to it a number of guardians that can recover the account as well as a threshold of guardians required to recover the account.
-
-```typescript copy
-import { getSocialRecoveryValidator } from "@rhinestone/module-sdk";
-
-const module = getSocialRecoveryValidator({
-  threshold: 2,
-  guardians: ["0x1234...", "0x5678..."],
-});
-```
-
-### Install the module
-
-With this module object, we can now install it on the smart account.
-
-```typescript copy
-const opHash = await smartClient.installModule({
-  type: module.type,
-  address: module.module,
-  context: module.data,
-});
-```
-
-### Wait for the UserOperation to be confirmed
-
-Let's wait until the UserOperation is confirmed, after which the module will be installed.
-
-```typescript copy
-await bundlerClientV07.waitForUserOperationReceipt({
-  hash: opHash,
-  timeout: 100000,
-});
-```
+- `DEFAULT`: The ERC-7579 Reference Implementation (note: this is equivalent to emitting the `ACCOUNT_TYPE` environment variable)
+- `SAFE`: The Safe account
+- `KERNEL`: The Kernel account
+- `CUSTOM`: A custom account
 
 </Steps>

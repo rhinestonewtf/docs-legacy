@@ -1,62 +1,37 @@
+import { Steps } from "nextra/components";
 import { Callout } from "nextra/components";
 
-# Utilities
+# How to use ModuleKit to test ERC-4337 restrictions
 
-The ModuleKit comes with a some additional utilities to help you test your modules and ensure that they behave as expected.
+The ModuleKit is integrated with the [ERC-4337 Validation library](/erc4337-validation) in order to make it effortless to ensure modules comply with the restrictions required by the ERC-4337 mempool. You can find the restrictions in the [ERC-7562 specifications](https://eips.ethereum.org/EIPS/eip-7562).
 
-## Gas Calulations
+<Steps>
 
-The ModuleKit comes with a gas testing helper library to test gas consumption of UserOps, including for the different phases of the ERC-4337 flow and L2-L1 calldata gas.
+### Write your tests
 
-### Setup
+When you write your tests, you can use the `makeAccountInstance` function to create an account instance. Then, you can use this `instance` to execute transactions, for example:
 
-Before using this utility, create a folder called `gas_calculations` in the root folder of the directory (same level as the `src` folder) and ensure that you have the right permissions settings set in your `foundry.toml` file:
+```solidity copy
+// Create an account instance
+AccountInstance memory instance = makeAccountInstance("account1");
 
-```
-fs_permissions = [{ access = "read-write", path = "gas_calculations" }]
-```
-
-### Usage
-
-In order to use the gas testing utility, follow the steps below:
-
-1. In the test function(s) that you want to perform, call `instance.log4337Gas("identifier")` before a `UserOperation` is executed. This will log the gas used for the `UserOperation` and use the identifier as the filename for the gas report. Make sure to use a unique identifier for each UserOp, otherwise the gas reports will be overwritten.
-
-2. Execute your tests and add `GAS=true` to the start of the command. For example: `GAS=true forge test`.
-
-3. After the tests have finished, the gas reports will be written to the `gas_calculations` folder in the root of the project. A gas report will look like this:
-
-```json
-{
-  "Calldata": {
-    "Arbitrum": "6504 gas",
-    "OP-Stack": "8859 gas"
-  },
-  "Phases": {
-    "Creation": "187_170 gas",
-    "Execution": "37_054 gas",
-    "Validation": "35_980 gas"
-  },
-  "Total": "2_550_948 gas"
-}
+// Execute a UserOperation on the account
+instance.exec({ target: address(1), value: 1 wei, callData: "" });
 ```
 
-Note that if you re-run gas calculations, then the newest number will be added and every value will be followed by a `(diff: ...)` that shows the difference, in gas units between the calculations.
+### Run your tests with simulation
 
-4. All numbers are in gas units. To calculate the cost in gwei, follow the instructions below:
+To do this, run:
 
-- On L1: multiply the total gas used by the gas price in gwei: `totalGasUsed * gasPrice`
-- On an L2: multiply the total gas used by the L2 gas price in gwei and then add it to to the result of the relevant L2-L1 gas cost muliplied by the L1 gas cost in gwei: `totalGasUsed * l2GasPrice + callDataGasUsed * l1GasPrice`
+```bash
+SIMULATE=true forge test
+```
 
-Note: if you are calculating the dollar amount of the gas cost, make sure to use the relevant gwei to usd conversions if the L2 has a different gas token to L1.
-
-## ERC-4337 Restrictions
-
-ModuleKit allows you to test whether your modules adhere to the ERC-4337 restrictions. These restrictions only apply to the validation phase, so only Validators will need to adhere to them ([read more](../build/validators.mdx)).
-
-In order to simulate these restrictions, simply add `SIMULATE=true` before your test command. For example: `SIMULATE=true forge test`. If any of the tests violate any of the ERC-4337 Restrictions, then the ModuleKit will throw an error and describe which restriction has been violated.
+If your tests are successful, you are compliant with the ERC-4337 restrictions. Otherwise, you will receive an error message.
 
 <Callout type="info">
   Note that we do not yet test the banned opcodes restrictions, but we will add
   this feature soon.
 </Callout>
+
+</Steps>
