@@ -1,15 +1,21 @@
 # expect4337Revert
 
-description
+Expect a UserOperation to revert. Similar to Foundry's `vm.expectRevert` function but the latter will not work with UserOperations.
 
 ## Usage
 
-tbd
+```solidity copy
+instance.expect4337Revert();
+```
 
 ## Parameters
 
-tbd
+### instance
+
+- Type: [`AccountInstance`](/modulekit/glossary/types#accountinstance)
+
+The instance of the account used for testing.
 
 ## Returns
 
-tbd
+The function will revert if the UserOperation does not revert.

@@ -1,15 +1,27 @@
 # registerResolver
 
-description
+Register a resolver on the Registry.
 
 ## Usage
 
-tbd
+```solidity copy
+ResolverUID resolverUID = registerResolver({
+    resolver: resolver
+});
+```
 
 ## Parameters
 
-tbd
+### resolver
+
+- Type: `address`
+
+The address of the resolver to register.
 
 ## Returns
 
-tbd
+### resolverUID
+
+- Type: `ResolverUID | bytes32`
+
+The resolver UID.

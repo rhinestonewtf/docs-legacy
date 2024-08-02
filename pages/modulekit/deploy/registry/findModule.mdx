@@ -1,15 +1,25 @@
 # findModule
 
-description
+Find a deployed module on the Registry.
 
 ## Usage
 
-tbd
+```solidity copy
+ModuleRecord memory moduleRecord = findModule({ moduleAddress: moduleAddress });
+```
 
 ## Parameters
 
-tbd
+### moduleAddress
+
+- Type: `address`
+
+The address of the module to find.
 
 ## Returns
 
-tbd
+### moduleRecord
+
+- Type: `ModuleRecord`
+
+The module record.

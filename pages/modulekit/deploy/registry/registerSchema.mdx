@@ -1,15 +1,34 @@
 # registerSchema
 
-description
+Register a schema on the Registry.
 
 ## Usage
 
-tbd
+```solidity copy
+SchemaUID schemaUID = registerSchema({
+    schema: schema,
+    validator: validator
+});
+```
 
 ## Parameters
 
-tbd
+### schema
+
+- Type: `string`
+
+The schema string to register.
+
+### validator
+
+- Type: `address`
+
+The address of the schema validator to register.
 
 ## Returns
 
-tbd
+### schemaUID
+
+- Type: `SchemaUID | bytes32`
+
+The schema UID.

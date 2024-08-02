@@ -1,15 +1,33 @@
 # mockAttestToModule
 
-description
+Make a mock attestation to a module.
 
 ## Usage
 
-tbd
+```solidity copy
+mockAttestToModule({ module: module, attestationData: attestationData, moduleTypes: moduleTypes });
+```
 
 ## Parameters
 
-tbd
+### module
+
+- Type: `address`
+
+The address of the module to attest.
+
+### attestationData
+
+- Type: `bytes`
+
+The attestation data.
+
+### moduleTypes
+
+- Type: `ModuleType[]`
+
+The module types.
 
 ## Returns
 
-tbd
+None

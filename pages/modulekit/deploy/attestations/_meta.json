@@ -1,4 +1,4 @@
 {
-  "deployModule": "deployModule",
-  "deployModuleViaFactory": "deployModuleViaFactory"
+  "mockAttestToModule": "mockAttestToModule",
+  "isModuleAttestedMock": "isModuleAttestedMock"
 }
