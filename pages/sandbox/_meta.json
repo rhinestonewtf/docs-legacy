@@ -3,12 +3,16 @@
   "getting-started": "Getting Started",
   "-": {
     "type": "separator",
-    "title": "Development"
+    "title": "Tutorials"
   },
-  "build": "Build",
-  "advanced": "Advanced",
   "--": {
     "type": "separator",
-    "title": "Tutorials"
-  }
+    "title": "Guides"
+  },
+  "---": {
+    "type": "separator",
+    "title": "Reference"
+  },
+  "build": "Build",
+  "advanced": "Advanced"
 }

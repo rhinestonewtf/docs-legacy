@@ -4,14 +4,15 @@ import { ModuleSDKBanner } from "../../components/banners";
 
 **A library for linked lists in Solidity**
 
-description
+SentinelList is a Solidity library that provides linked lists in different flavors:
 
-<div className="my-8">
-  <ModuleSDKBanner width={1000} height={400} />
-</div>
+- SentinelList: A linked list for addresses
+- SentinelList4337: An ERC-4337 compliant linked list for addresses
+- SentinelListBytes32: A linked list for bytes32
 
-extended description
+This makes it easy to use linked list data structures in Solidity and also be ERC-4337 compliant. It is fully audited, tested and can be used in production.
 
 ### Useful starting resources
 
--
+- [SentinelList source code](https://github.com/rhinestonewtf/sentinellist)
+- [A module usage example](https://github.com/rhinestonewtf/core-modules/blob/7de2fb5330cbf2cf698e1822283b20fa29595dbe/src/OwnableValidator/OwnableValidator.sol#L43)
