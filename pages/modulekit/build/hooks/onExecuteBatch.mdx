@@ -1,15 +1,14 @@
-# \_preCheck
+# onExecuteBatch
 
-A virtual function called before executions occured on the account. Overwrites from `ERC7579HookDestruct`.
+A virtual function called when a batch of executions occurs on the account. Overwrites from `ERC7579HookDestruct`.
 
 ## Usage
 
 ```solidity copy
-function _preCheck(
+function onExecuteBatch(
     address account,
     address msgSender,
-    uint256 msgValue,
-    bytes calldata msgData
+    Execution[] calldata executions
 )
     internal
     virtual
@@ -34,17 +33,9 @@ The address of the account that the execution is called on.
 
 The address of the caller to the account.
 
-### msgValue
+### executions
 
-- Type: `uint256`
-
-The value sent to the account.
-
-### msgData
-
-- Type: `bytes`
-
-The msgData sent to the account.
+- Type: [`Execution[]`](/modulekit/glossary/types#execution)
 
 ## Returns
 

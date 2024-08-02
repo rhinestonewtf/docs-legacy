@@ -1,4 +1,6 @@
 {
   "validateUserOp": "validateUserOp",
-  "isValidSignatureWithSender": "isValidSignatureWithSender"
+  "isValidSignatureWithSender": "isValidSignatureWithSender",
+  "packValidationData": "_packValidationData",
+  "unpackValidationData": "_unpackValidationData"
 }

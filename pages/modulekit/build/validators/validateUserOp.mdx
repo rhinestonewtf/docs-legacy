@@ -1,6 +1,6 @@
 # validateUserOp
 
-Valdiates the [UserOperation](https://eips.ethereum.org/EIPS/eip-4337#useroperation) and returns the result.
+A virtual function that validates the [UserOperation](https://eips.ethereum.org/EIPS/eip-4337#useroperation) and returns the result. Overwrites from `ERC7579ValidatorBase`.
 
 ## Usage
 
@@ -23,6 +23,8 @@ function validateUserOp(
 )
     external
     view
+    virtual
+    override
     returns (ValidationData)
 {
     return ValidationData.wrap(0);

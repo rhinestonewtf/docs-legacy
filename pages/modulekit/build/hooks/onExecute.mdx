@@ -1,15 +1,16 @@
-# \_preCheck
+# onExecute
 
-A virtual function called before executions occured on the account. Overwrites from `ERC7579HookDestruct`.
+A virtual function called when a single execution occurs on the account. Overwrites from `ERC7579HookDestruct`.
 
 ## Usage
 
 ```solidity copy
-function _preCheck(
+function onExecute(
     address account,
     address msgSender,
-    uint256 msgValue,
-    bytes calldata msgData
+    address target,
+    uint256 value,
+    bytes calldata callData
 )
     internal
     virtual
@@ -34,17 +35,23 @@ The address of the account that the execution is called on.
 
 The address of the caller to the account.
 
-### msgValue
+### target
+
+- Type: `address`
+
+The target of the execution.
+
+### value
 
 - Type: `uint256`
 
-The value sent to the account.
+The value of the execution.
 
-### msgData
+### callData
 
 - Type: `bytes`
 
-The msgData sent to the account.
+The data of the execution.
 
 ## Returns
 

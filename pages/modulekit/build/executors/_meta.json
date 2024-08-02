@@ -1,8 +1,4 @@
 {
-  "module-basics": "Module Basics",
-  "validators": "Validators",
-  "executors": "Executors",
-  "hooks": "Hooks",
-  "fallbacks": "Fallbacks",
-  "integrations": "Integrations"
+  "execute": "_execute",
+  "executeDelegateCall": "_executeDelegateCall"
 }

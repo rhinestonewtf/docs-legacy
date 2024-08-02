@@ -1,11 +1,11 @@
-# \_preCheck
+# onUnknownFunction
 
-A virtual function called before executions occured on the account. Overwrites from `ERC7579HookDestruct`.
+A virtual function called when an execution occurs on the account that could not be decoded. Overwrites from `ERC7579HookDestruct`.
 
 ## Usage
 
 ```solidity copy
-function _preCheck(
+function onUnknownFunction(
     address account,
     address msgSender,
     uint256 msgValue,
@@ -13,7 +13,6 @@ function _preCheck(
 )
     internal
     virtual
-    override
     returns (bytes memory hookData)
 {
     return abi.encode("success");

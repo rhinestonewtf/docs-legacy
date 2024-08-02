@@ -1,6 +1,6 @@
 # isValidSignatureWithSender
 
-Validates an [ERC-1271](https://eips.ethereum.org/EIPS/eip-1271) signature with a sender address.
+A virtual function that validates an [ERC-1271](https://eips.ethereum.org/EIPS/eip-1271) signature with a sender address. Overwrites from `ERC7579ValidatorBase`.
 
 ## Usage
 
@@ -23,6 +23,8 @@ function isValidSignatureWithSender(
 )
     external
     view
+    virtual
+    override
     returns (bytes4 sigValidationResult)
 {
     return EIP1271_FAILED;
