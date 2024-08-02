@@ -1,15 +1,34 @@
 # isInitialized
 
-description
+Check whether a module has already been initialized.
 
 ## Usage
 
-tbd
+```solidity copy
+ /**
+* Check if the module is initialized
+*
+* @param smartAccount The smart account to check
+*
+* @return true if the module is initialized, false otherwise
+*/
+function isInitialized(address smartAccount) external view returns (bool) {
+    return _isInitialized(smartAccount);
+}
+```
 
 ## Parameters
 
-tbd
+### smartAccount
+
+- Type: `address`
+
+The smart account to check.
 
 ## Returns
 
-tbd
+### isInitialized
+
+- Type: `bool`
+
+Is true if the module is initialized and false otherwise.

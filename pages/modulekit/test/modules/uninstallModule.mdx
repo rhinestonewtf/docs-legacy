@@ -1,15 +1,47 @@
 # uninstallModule
 
-description
+Uinstalls a module into the account.
 
 ## Usage
 
-tbd
+```solidity copy
+instance.uninstallModule({
+    moduleTypeId: MODULE_TYPE_VALIDATOR,
+    module: validator,
+    data: validatorData
+});
+```
 
 ## Parameters
 
-tbd
+### instance
+
+- Type: [`AccountInstance`](/modulekit/glossary/types#accountinstance)
+
+The instance of the account used for testing.
+
+### moduleTypeId
+
+- Type: `uint256`
+
+The type of the module to uninstall.
+
+### module
+
+- Type: `address`
+
+The address of the module to uninstall.
+
+### data
+
+- Type: `bytes`
+
+The data to send with the module uninstallation.
 
 ## Returns
 
-tbd
+### userOpData
+
+- Type: [`UserOpData`](/modulekit/glossary/types#useropdata)
+
+The data of the UserOperation.

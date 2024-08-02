@@ -1,15 +1,43 @@
 # exec
 
-description
+Execute a UserOperation on the account.
 
 ## Usage
 
-tbd
+```solidity copy
+instance.exec({ target: target, value: value, callData: callData });
+```
 
 ## Parameters
 
-tbd
+### instance
+
+- Type: [`AccountInstance`](/modulekit/glossary/types#accountinstance)
+
+The instance of the account used for testing.
+
+### target
+
+- Type: `address`
+
+The address of the target contract.
+
+### callData
+
+- Type: `bytes`
+
+The data to send with the call.
+
+### value (optional)
+
+- Type: `uint256`
+
+The value to send with the call.
 
 ## Returns
 
-tbd
+### userOpData
+
+- Type: [`UserOpData`](/modulekit/glossary/types#useropdata)
+
+The data of the UserOperation.

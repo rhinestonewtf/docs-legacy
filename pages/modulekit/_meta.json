@@ -19,5 +19,6 @@
   },
   "build": "Building",
   "test": "Testing",
-  "deploy": "Deploying"
+  "deploy": "Deploying",
+  "glossary": "Glossary"
 }
