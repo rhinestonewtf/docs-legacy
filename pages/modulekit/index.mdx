@@ -1,5 +1,5 @@
 import { ModuleKitBanner } from "../../components/banners";
-import { Cards } from "nextra-theme-docs";
+import { Cards, Card } from "nextra-theme-docs";
 import { ComponentCard } from "../../components/ComponentCard";
 import {
   ValidatorsIcon,
@@ -7,22 +7,92 @@ import {
   HooksIcon,
   FallbacksIcon,
 } from "../../components/icons";
+import Image from "next/image";
 
-# Overview
+# ModuleKit
 
-ModuleKit is a development kit for building, testing, and deploying smart account modules. ModuleKit makes the developer's life as simple as possible by removing the need for deep knowledge of ERC-4337, smart accounts, and the different implementations of smart accounts that exist today (e.g. Safe, Biconomy, and ZeroDev). ModuleKit also provides a library of tools, templates, and integrations that supercharge development, allowing developers to unlock the full potential of smart accounts. Within this toolkit, there are five key abstraction layers:
+**A Development Kit for building Smart Account Modules**
 
-- **Standardized interfaces and templates**: These ensure that your module is compatible with all the major account implementations and that it's extremely easy to get started.
-- **Third-party integrations**: ModuleKit has a [library of integrations](https://github.com/rhinestonewtf/modulekit/tree/main/packages/modulekit/src/integrations) and pre-built conditions for execution to make building powerful modules seamless.
-- **Testing frameworks**: An out-of-the-box testing setup with in-build unit and integration tests. This allows developers to easily test modules against different account implementations and abstracts away the complexities of the entire ERC-4337 flow.
-- **Helper utilities**: Various utilities to improve the developer experience, such as calculating gas consumption (including on L2s) and validataing that a module conforms to the ERC-4337 rules.
-- **Security automation**: These tools parse your module code and flag security vulnerabilities to be resolved before moving to a manual audit.
+ModuleKit aims to make it simple for any developer to build a module that works across all ERC-7579 compliant accounts, including Safe, ZeroDev’s Kernel V3, Biconomy’s Nexus, and many more.
 
 <div className="my-8">
   <ModuleKitBanner width={1000} height={400} />
 </div>
 
-Current module types supported by ModuleKit include:
+ModuleKit has several tools to help during the development lifecycle of a module:
+
+**Build**
+
+- **Standardized interfaces and templates**: These ensure that your module is compatible with all the major account implementations and that it's extremely easy to get started.
+- T**hird-party integrations**: ModuleKit has a library of integrations and pre-built conditions for execution to make building powerful modules seamless.
+
+**Test**
+
+- **Testing frameworks**: These are out-of-the-box testing setups with in-built unit and integration tests. They allow developers to easily test modules against different account implementations and abstract away the complexities of the entire ERC-4337 flow.
+- **Helper utilities**: These utilities improve the developer experience, such as calculating gas consumption (including on L2s) and validating that a module conforms to the ERC-4337 rules.
+
+**Deploy**
+
+- **Deployment script**: The ModuleKit comes with a helper contract that allows you to easily deploy a module and register it in the Module Registry.
+
+### Supported Accounts
+
+<Cards>
+  <Card
+    title="ERC-7579"
+    href="https://erc7579.com/"
+    icon={
+      <Image
+        src="/logos/erc7579.png"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: "5px" }}
+      />
+    }
+  />
+  <Card
+    title="Safe"
+    href="https://safe.global/"
+    icon={
+      <Image
+        src="/logos/safe.png"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: "5px" }}
+      />
+    }
+  />
+  <Card
+    title="Kernel (v3)"
+    href="https://zerodev.app/"
+    icon={
+      <Image
+        src="/logos/zerodev.png"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: "5px" }}
+      />
+    }
+  />
+  <Card
+    title="Biconomy (v3) (soon)"
+    href="https://biconomy.io/"
+    icon={
+      <Image
+        src="/logos/biconomy.jpeg"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: "5px" }}
+      />
+    }
+  />
+</Cards>
+
+### Supported Module Types
 
 <Cards className="gap-x-[15px]">
 <ComponentCard
@@ -67,13 +137,6 @@ Current module types supported by ModuleKit include:
   }}
 />
 </Cards>
-
-Current accounts supported by ModuleKit include:
-
-- [ERC-7579](https://erc7579.com/)
-- Safe
-- Kernel (v3)
-- Biconomy (v3) (soon)
 
 ### Useful starting resources
 
