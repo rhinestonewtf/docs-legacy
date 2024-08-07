@@ -1,6 +1,6 @@
 # Rhinestone Infrastructure
 
-Today, smart accounts are still plagued by many issues: developer complexity, cross-chain smart contract sync, vendor lock-in, ecosystem fragmentation, and a lack of customization. Rhinestone’s Infrastructure aims to solve these challenges, transforming smart accounts into the next compostable platform for open innovation. 
+Today, smart accounts are still plagued by many issues: developer complexity, cross-chain smart contract sync, vendor lock-in, ecosystem fragmentation, and a lack of customization. Rhinestone’s Infrastructure aims to solve these challenges, transforming smart accounts into the next compostable platform for open innovation.
 
 ![Protocol overview](/protocol.png)
 
@@ -8,7 +8,7 @@ Today, smart accounts are still plagued by many issues: developer complexity, cr
 
 ### Smart Account Security
 
-Smart accounts introduce smart contract risk for users. Allowing any developer to build a module that can extend the functionality of smart accounts significantly increases a user's attack surface. Without new security frameworks, the potential of what modular smart accounts can unlock for users and developers will be severely limited. 
+Smart accounts introduce smart contract risk for users. Allowing any developer to build a module that can extend the functionality of smart accounts significantly increases a user's attack surface. Without new security frameworks, the potential of what modular smart accounts can unlock for users and developers will be severely limited.
 
 ### Fragmentation
 
@@ -30,17 +30,17 @@ Unlike EOAs, smart accounts are not easily portable across L2s. State sync is a 
 
 ### The Module Registry
 
-Installing third-party modules unchecked opens up a wide range of attack vectors. As such, an open module marketplace requires a credibly neutral, permissionless, and highly scalable system for solving this problem. The Module Registry provides this solution. It stores security attestations on modules and allows smart accounts to query them when installing or executing a module. 
+Installing third-party modules unchecked opens up a wide range of attack vectors. As such, an open module marketplace requires a credibly neutral, permissionless, and highly scalable system for solving this problem. The Module Registry provides this solution. It stores security attestations on modules and allows smart accounts to query them when installing or executing a module.
 
-[Module Registry] [Become a module Auditor]
+[Module Registry](/module-registry) [Become a module Auditor](http://t.me/kurt_larsen)
 
 ### ERC-7579 and Account Adapters
 
 We led the development of [ERC-7579](https://erc7579.com), a minimal standard for modular smart accounts, to create greater interoperability of modules across the various smart account implementations. ERC-7579 is now the leading standard for modular accounts, significantly reducing vendor lock-in and ensuring any developer building with Rhinestone can service the growing market of smart accounts and wallets.
 
-For accounts that are not yet compliant with ERC-7579, we are developing account adapters to act as a translation layer between ERC-7579 modules and non-compliant accounts. An example is the Safe7579 Adapter, co-developed with Safe and allowing a Safe developer to access modules from the Rhinestone ecosystem. 
+For accounts that are not yet compliant with ERC-7579, we are developing account adapters to act as a translation layer between ERC-7579 modules and non-compliant accounts. An example is the [Safe7579 Adapter](/safe7579), co-developed with Safe and allowing a Safe developer to access modules from the Rhinestone ecosystem.
 
-[ERC-7579 button] [Safe7579 button]
+[ERC-7579 button](https://erc7579.com/) [Safe7579 button](/safe7579)
 
 ### Rhinestone Payments
 

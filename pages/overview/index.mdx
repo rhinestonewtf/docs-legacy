@@ -2,9 +2,10 @@
 
 Rhinestone provides infrastructure and tooling for building products with modular smart accounts. Our technology stack is smart account agnostic (compatible with Safe, Biconomy, ZeroDev, and any ERC-7579 compliant account) and ERC-4337 infrastructure agnostic (compatible with all leading account abstraction SDKs and bundlers).
 
-Rhinestone is specifically focused on smart account modules. Modules are self-contained smart contracts that extend the feature set of any smart account. Our infrastructure and tooling support the full lifecycle of a module, from development to deployment, through audits, and to usage at the application layer.  
+Rhinestone is specifically focused on smart account modules. Modules are self-contained smart contracts that extend the feature set of any smart account. Our infrastructure and tooling support the full lifecycle of a module, from development to deployment, through audits, and to usage at the application layer.
 
 Reasons to build with Rhinestone:
+
 - Level up your product with a library of modules that are ready to be used within your application
 - Develop the module you need to power an advanced smart account-native product or service
 - Develop a product that works with any ERC-7579 account (incl. Safe, Biconomy’s Nexus, ZeroDev’s Kernel, OKX smart wallet, and many more)
@@ -23,10 +24,10 @@ We envision a world where smart accounts are simple (from a DevEx perspective), 
 
 ## Build with existing tools
 
-The best tools improve the developer's life and don’t require a steep learning curve. For this reason, we designed the ModuleSDK to leverage viem, one of the most popular libraries for Ethereum developers, and to be compatible as a companion tool with all existing account abstraction SDKs (including permissionless.js, Biconomy SDK, ZeroDev SDK, and userop.js).
+The best tools improve the developer's life and don’t require a steep learning curve. For this reason, we designed the ModuleSDK to leverage [viem](https://viem.sh), one of the most popular libraries for Ethereum developers, and to be compatible as a companion tool with all existing account abstraction SDKs (including permissionless.js, Biconomy SDK, ZeroDev SDK, and userop.js).
 
-ModuleKit has been developed on top of Foundry and aims to abstract away as many complexities as possible when it comes to building and testing modules. It provides templates to get you started, module bases for common functions, and frameworks that allow you to test your module against multiple smart account implementations through one single variable change. 
+ModuleKit has been developed on top of Foundry and aims to abstract away as many complexities as possible when it comes to building and testing modules. It provides templates to get you started, module bases for common functions, and frameworks that allow you to test your module against multiple smart account implementations through one single variable change.
 
 ## Avoid vendor lock-in
 
-Our tools, modules, and services are built to be smart account agnostic and 4337 infrastructure agnostic. We led the development of ERC-7579, the leading standard for modular smart accounts, to increase the interoperability of modules across smart accounts. This serves two purposes: one, it ensures developers need only build once to maximize their audience, and two, it ensures our developers are not locked into one single provider or ecosystem. 
+Our tools, modules, and services are built to be smart account agnostic and 4337 infrastructure agnostic. We led the development of ERC-7579, the leading standard for modular smart accounts, to increase the interoperability of modules across smart accounts. This serves two purposes: one, it ensures developers need only build once to maximize their audience, and two, it ensures our developers are not locked into one single provider or ecosystem.
