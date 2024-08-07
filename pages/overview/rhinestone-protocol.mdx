@@ -1,22 +1,51 @@
-# Rhinestone Protocol
+# Rhinestone Infrastructure
 
-Rhinestone is building at the frontier of modular account abstraction. We imagine a world where smart accounts become vanilla kernels and all the interesting features and components move to the module layer. However, for the module ecosystem to be permissionless, open, and interoperable across any smart account, several challenges need resolving.
-
-1. **Security**: Developers and end users require assurances that a third-party module is not malicious.
-2. **Developer complexity**: The complexities of modular smart accounts need to be abstracted from the developer.
-3. **Interoperability**: We still require a translation layer between different account implementations so that module developers need only build once for maximum distribution.
-4. **Accessibility**: Installing and using a module at the application layer should be as simple as installing an app.
-
-## Protocol Architecture
-
-The Rhinestone Protocol consists of several key components that facilitate the lifecycle of smart account modules from development through to account installation and monetization. The protocol is account implementation agnostic, with the primary objective of being a credibly neutral middleware layer that solves user security, account portability, and account extensibility.
+Today, smart accounts are still plagued by many issues: developer complexity, cross-chain smart contract sync, vendor lock-in, ecosystem fragmentation, and a lack of customization. Rhinestone’s Infrastructure aims to solve these challenges, transforming smart accounts into the next compostable platform for open innovation. 
 
 ![Protocol overview](/protocol.png)
 
-### Components
+## Challenges Rhinestone Infrastructure Solves
 
-- **Modules**: Smart contracts that extend the features of smart accounts.
-- **Accounts**: Different smart account implementations built and integrated by trusted account vendor partners.
-- **Module Registry**: The foundational layer of the Rhinestone Protocol. Its primary function is to enforce standards and security guarantees for users and developers by storing onchain security assertions made by independent auditors.
-- **Core Module Components**: Complex module functions that are required across many different types of modules (for example, module monetization enforcement). These components are optionally inherited by the developer.
-- **Account Adapters**: A communication layer that exists between different account implementations and the Module Registry. Adapters allow users, application developers, and/or account vendors to configure their security postures and ensure modules meet a predefined set of security rules and guidelines.
+### Smart Account Security
+
+Smart accounts introduce smart contract risk for users. Allowing any developer to build a module that can extend the functionality of smart accounts significantly increases a user's attack surface. Without new security frameworks, the potential of what modular smart accounts can unlock for users and developers will be severely limited. 
+
+### Fragmentation
+
+Since the finalized audit of the ERC-4337 entrypoint contract, a flurry of new smart accounts has emerged. This has led to a fragmentation of the ecosystem, with tooling and application developers having to choose which implementation to prioritize. We lead the work around ERC-7579 to combat this, but we still see significant scope outside of standards to promote greater smart account interoperability.
+
+### Vendor Lock-in
+
+A direct symptom of fragmentation is vendor lock-in. As developer tooling becomes more opinionated toward certain account implementations, application developers and users can be locked into a local optimum that limits innovation and reduces competition. Unlike EOAs, users can suffer from an inability to seamlessly move between clients offering similar but competing services.
+
+### Monetization
+
+For a vibrant ecosystem of applications to emerge on top of smart accounts, developers require sustainable economics, and the stakeholders involved in making this ecosystem possible need to be fairly rewarded.
+
+### Omnichain Smart Accounts
+
+Unlike EOAs, smart accounts are not easily portable across L2s. State sync is a problem, and lack of bytecode equivalence can lead to different addresses for different chains. With the emergence of modular smart accounts, account and module config introduces a new layer of complexity for users and developers.
+
+## Solutions
+
+### The Module Registry
+
+Installing third-party modules unchecked opens up a wide range of attack vectors. As such, an open module marketplace requires a credibly neutral, permissionless, and highly scalable system for solving this problem. The Module Registry provides this solution. It stores security attestations on modules and allows smart accounts to query them when installing or executing a module. 
+
+[Module Registry] [Become a module Auditor]
+
+### ERC-7579 and Account Adapters
+
+We led the development of [ERC-7579](https://erc7579.com), a minimal standard for modular smart accounts, to create greater interoperability of modules across the various smart account implementations. ERC-7579 is now the leading standard for modular accounts, significantly reducing vendor lock-in and ensuring any developer building with Rhinestone can service the growing market of smart accounts and wallets.
+
+For accounts that are not yet compliant with ERC-7579, we are developing account adapters to act as a translation layer between ERC-7579 modules and non-compliant accounts. An example is the Safe7579 Adapter, co-developed with Safe and allowing a Safe developer to access modules from the Rhinestone ecosystem. 
+
+[ERC-7579 button] [Safe7579 button]
+
+### Rhinestone Payments
+
+Coming soon.
+
+### Omnichain Smart Accounts
+
+Coming soon.
