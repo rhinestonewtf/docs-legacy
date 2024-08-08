@@ -1,6 +1,6 @@
 # Create Time Based Automation
 
-Create a time based Automation for an account to schedule executions based on a cron expression and a start date.
+Create an automation for an account using one of the existing triggers.
 
 ## Usage
 
@@ -31,30 +31,21 @@ const automation = await automationClient.createAutomation({
 
 ### trigger
 
-- triggerData: `TimeBasedTriggerData`
-  - cronExpression: `string`
-    Cron expression to schedule the automation.
-  - startDate: `number`
-    Timestamp of the start date of the automation.
+- Type: `TimeBasedTriggerData | EventBasedTriggerData`
+
+The trigger data for the relevant trigger type.
 
 ### actions
 
-- type: `static` | `dynamic`
-  type of the action to be executed.
-- target: `address`
-  Target address of the action.
-- value: `number`
-  Value to be sent with the action.
-- callData: `Hex`
-  Call data to be sent with the action.
+- type: `AutomationAction[]`
 
-Actions to be executed when the automation is triggered.
+Array of actions to be executed when the automation is triggered.
 
 ### maxNumberOfExecutions
 
 - Type: `number`
 
-  Maximum number of executions for the automation.
+Maximum number of executions for the automation.
 
 ## Returns
 
@@ -62,10 +53,10 @@ Actions to be executed when the automation is triggered.
 
 - Type: `string`
 
-  Id of the created automation.
+Id of the created automation.
 
 ### hash
 
-- Type: `string`
+- Type: `Hex`
 
-  Hash of the created automation to be signed by account owner to activate the automation.
+Hash of the created automation to be signed by account owner to activate the automation.

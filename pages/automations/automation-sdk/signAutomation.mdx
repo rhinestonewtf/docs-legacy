@@ -4,15 +4,11 @@ Signs the automation hash with your account signer in order to activate the auto
 
 ## Usage
 
-```typescript
-
+```typescript copy
 const response = await automationClient.signAutomation({
-  automationId: 'your-automation-id',
-  signature: '0x...',
-})
-
-console.log(response) // { success: true }
-
+  automationId: "your-automation-id",
+  signature: "0x...",
+});
 ```
 
 ## Parameters
@@ -21,13 +17,13 @@ console.log(response) // { success: true }
 
 - Type: `string`
 
-  Id of the automation to sign.
+Id of the automation to sign.
 
 ### signature
 
 - Type: `Hex`
 
-  Signature of the automation hash you got when creating the automation.
+Signature of the automation hash you got when creating the automation.
 
 ## Returns
 
@@ -35,4 +31,4 @@ console.log(response) // { success: true }
 
 - Type: `boolean`
 
-  True if the automation is signed successfully.
+True if the automation is signed successfully.
