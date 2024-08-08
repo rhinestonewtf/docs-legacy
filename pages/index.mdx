@@ -15,20 +15,20 @@ Rhinestone is the leading ERC-7579 modular smart account infrastructure platform
 <Cards className="gap-x-[15px]">
 <ComponentCard
   component={{
-    icon: (<ModuleKitIcon width={48} height={48}/>),
-    title: "ModuleKit",
+    icon: <SDKIcon width={48} height={48} />,
+    title: "Beginner",
     description:
-      "A development kit for building and testing smart account modules",
+      "The simplest way to use pre-built modules. No solidity needed. Tap into powerful smart account features with a few lines of code.",
 href: "/modulekit",
 }}
 />
 
 <ComponentCard
   component={{
-    icon: <SDKIcon width={48} height={48} />,
-    title: "Module SDK",
+    icon: <ModuleKitIcon width={48} height={48} />,
+    title: "Advanced",
     description:
-      "A TypeScript library for using Smart Account Modules in Applications",
+      "Tap into the programmable validation and execution of smart accounts by building your own bespoke module to power an advanced self-custodial product with seamless UX.",
     href: "/module-sdk",
   }}
 />
@@ -36,11 +36,15 @@ href: "/modulekit",
 <ComponentCard
   component={{
     icon: (<SandboxIcon width={48} height={48}/>),
-    title: "More Tools",
+    title: "Infrastructure",
     description:
-      "Check out the rest of our tools and resources including Solidity libraries with useful components for modules, the Module Sandbox, our Orchestrator and more...",
+      "Explore Rhinestone’s services for security and automation. Get your module audited and integrated into the Module Registry and Module SDK, and build automations with the Rhinestone Automation service.",
   }}
 />
 </Cards>
+
+### What are Modules
+
+Modules are smart contracts that extend the functionality of smart accounts. Modular smart accounts allow users and developers to easily change how a smart account works. In order to understand more deeply what is possible with modules (spoiler: a lot), let’s quickly recap the transaction flow of a smart account.
 
 </Bleed>
