@@ -1,11 +1,10 @@
 {
-  "create-automation-client": "Create Automation Client",
-  "create-time-based-automation": "Create time-based automation",
-  "create-event-based-automation": "Create event-based automation",
-  "sign-automation": "Sign automation",
-  "get-automation": "Get automation",
-  "get-active-automations": "Get active automations",
-  "get-account-automations": "Get account automations",
-  "delete-automation": "Delete automation",
-  "get-automation-logs": "Get automation logs"
+  "createAutomationClient": "createAutomationClient",
+  "createAutomation": "createAutomation",
+  "signAutomation": "signAutomation",
+  "getAutomation": "getAutomation",
+  "getActiveAutomations": "getActiveAutomations",
+  "getAccountAutomations": "getAccountAutomations",
+  "deleteAutomation": "deleteAutomation",
+  "getAutomationLogs": "getAutomationLogs"
 }

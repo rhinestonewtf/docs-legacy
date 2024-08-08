@@ -5,9 +5,9 @@ Get executions logs for an automation.
 ## Usage
 
 ```typescript
-
-const automationLogs = await automationClient.getAutomationLogs('your-automation-id')
-
+const automationLogs = await automationClient.getAutomationLogs(
+  "your-automation-id"
+);
 ```
 
 ## Parameters
@@ -18,8 +18,6 @@ const automationLogs = await automationClient.getAutomationLogs('your-automation
 
 Id of the automation to get logs.
 
-
-
 ## Returns
 
 Array of automation logs.
@@ -29,5 +27,3 @@ Array of automation logs.
 - Type: `string`
 
 UserOp hash of the execution of your automation.
-
-
