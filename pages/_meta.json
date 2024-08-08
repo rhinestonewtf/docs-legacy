@@ -13,8 +13,8 @@
     "title": "Overview",
     "type": "page"
   },
-  "modulekit": { "title": "ModuleKit", "type": "page" },
   "module-sdk": { "title": "ModuleSDK", "type": "page" },
+  "modulekit": { "title": "ModuleKit", "type": "page" },
   "solidity": {
     "title": "Helpers",
     "type": "menu",
@@ -73,14 +73,6 @@
       "automations": {
         "title": "Automations",
         "href": "/automations"
-      },
-      "orchestrator": {
-        "title": "Orchestrator",
-        "href": "/orchestrator"
-      },
-      "payments": {
-        "title": "Payments",
-        "href": "/payments"
       }
     }
   },
@@ -96,16 +88,6 @@
   },
   "automations": {
     "title": "Automations",
-    "type": "page",
-    "display": "hidden"
-  },
-  "orchestrator": {
-    "title": "Orchestrator",
-    "type": "page",
-    "display": "hidden"
-  },
-  "payments": {
-    "title": "Payments",
     "type": "page",
     "display": "hidden"
   }
