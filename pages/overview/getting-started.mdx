@@ -1,5 +1,8 @@
 import { Cards, Card } from "nextra-theme-docs";
 import Image from "next/image";
+import { ComponentCard } from "../../components/ComponentCard";
+import { ModuleKitIcon, SandboxIcon, SDKIcon } from "../../components/icons";
+import { CoreModulesBanner } from "../../components/banners";
 
 # Getting started
 
@@ -61,6 +64,49 @@ Rhinestone’s tools and services make building with modular smart accounts a br
     }
   />
 </Cards>
+
+<Cards className="gap-x-[15px]">
+<ComponentCard
+  component={{
+    icon: <SDKIcon width={48} height={48} />,
+    title: "ModuleSDK",
+    description:
+      "A TypeScript library for using smart account modules in applications. The ModuleSDK supports Safe and any ERC-7579 account, and is built to be used with existing AA SDKs.",
+href: "/modulekit",
+}}
+/>
+
+<ComponentCard
+  component={{
+    icon: <ModuleKitIcon width={48} height={48} />,
+    title: "ModuleKit",
+    description:
+      "The fastest way to start building a smart account module is by using ModuleKit, a development kit for building and testing account-agnostic modules",
+    href: "/module-sdk",
+  }}
+/>
+
+<ComponentCard
+  component={{
+    icon: <SandboxIcon width={48} height={48} />,
+    title: "Module Helpers",
+    description:
+      "A set of libraries that should prove incredibly useful for any developer building modules or products with modules.",
+    href: "/module-sdk",
+  }}
+/>
+
+<ComponentCard
+  component={{
+    icon: (<SandboxIcon width={48} height={48}/>),
+    title: "Infrastructure",
+    description:
+      "Services developed specifically for the module ecosystem. This includes our Module Registry for security and Rhinestone Automation for managing account automation with modules.",
+      href: "/module-sdk",
+  }}
+/>
+</Cards>
+
 ## Use existing modules
 
 Reuse existing modules with the [ModuleSDK](/module-sdk), a typeScript library for using smart account modules in applications and wallets.
@@ -72,6 +118,10 @@ Core Modules include base smart account features like Passkeys, Social Recovery,
 ModuleSDK is built to be coupled with:
 
 permissionless.js | Biconomy SDK | ZeroDev SDK | userop.js
+
+<div className="my-8">
+  <CoreModulesBanner width={1000} height={400} />
+</div>
 
 ## Build a module
 
