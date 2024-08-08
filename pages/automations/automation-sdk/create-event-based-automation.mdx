@@ -1,0 +1,86 @@
+# Create Event Based Automation
+
+Create an event based Automation for an account to schedule executions based on certain blockchain event.
+
+## Usage
+
+```typescript
+
+const automation = await automationClient.createAutomation({
+      type: 'event-based',
+      data: {
+        trigger: {
+          triggerData: {
+             query: "{\n  block {\n  transactions (filter:{addresses:{to:\"0xc2b17e73603dccc195118a36f3203134fd7985f5\"}}) {\n      value,\n      hash,\n      from {\n        address\n      }\n    }\n  }\n}"
+          },
+        },
+        actions: [
+            {
+                type: "dynamic",
+                target: "0xa564cB165815937967a7d018B7F34B907B52fcFd",
+                value: 0,
+                callDataBuilderUrl: "https://relayer-ashy.vercel.app/dynamic-calldata-builder/test",
+                functionSelector: "0x00000000",
+                params: {
+                    static: {"foo": "bar"},
+                    dynamic: {}
+                }
+            }
+        ],
+        maxNumberOfExecutions: 10,
+      },
+    })
+
+```
+
+## Parameters
+
+### trigger
+
+- triggerData: `EventBasedTriggerData`
+  - query: `string`
+
+   GraphQl query to filter the events. You could check the [GraphQl API](https://docs.alchemy.com/reference/custom-webhooks-example) to get the required query.
+ 
+
+### actions
+
+- type: `dynamic`
+  type of the action to be executed.
+ - target: `address`
+   Target address of the action.
+ - value: `number`
+    Value to be sent with the action.
+ - callDataBuilderUrl: `string`
+    URL of the dynamic call data builder to be used to build the call data.
+  - functionSelector: `string`
+    Function selector of the function to be called. The function selector from calldata builder should match this function selector.
+  - params: `Params`
+    - static: `object`
+      Arbitrary Static parameters to be passed to your calldata builder service.
+    - dynamic: `object`
+      This will be filled with data from your graphl query when the event is triggered and passed to your calldata builder service.
+
+Actions to be executed when the automation is triggered.
+
+### maxNumberOfExecutions
+
+- Type: `number`
+
+  Maximum number of executions for the automation.
+
+
+
+## Returns
+
+### id
+
+- Type: `string`
+
+  Id of the created automation.
+
+### hash
+
+- Type: `string`
+
+  Hash of the created automation to be signed by account owner to activate the automation.
