@@ -15,7 +15,7 @@ export const SandboxIcon = ({
       src={
         currentTheme == "light"
           ? "/icons/sandbox_light.png"
-          : "/icons/sandbox_light.png"
+          : "/icons/sandbox_dark.png"
       }
       width={width}
       height={height}

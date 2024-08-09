@@ -1,7 +1,7 @@
 import { Cards, Card } from "nextra-theme-docs";
 import Image from "next/image";
 import { ComponentCard } from "../../components/ComponentCard";
-import { ModuleKitIcon, SandboxIcon, SDKIcon } from "../../components/icons";
+import { ModuleKitIcon, SDKIcon, LogoIcon } from "../../components/icons";
 import { CoreModulesBanner } from "../../components/banners";
 
 # Getting started
@@ -72,7 +72,7 @@ Rhinestone’s tools and services make building with modular smart accounts a br
     title: "ModuleSDK",
     description:
       "A TypeScript library for using smart account modules in applications. The ModuleSDK supports Safe and any ERC-7579 account, and is built to be used with existing AA SDKs.",
-href: "/modulekit",
+href: "/module-sdk",
 }}
 />
 
@@ -82,27 +82,17 @@ href: "/modulekit",
     title: "ModuleKit",
     description:
       "The fastest way to start building a smart account module is by using ModuleKit, a development kit for building and testing account-agnostic modules",
-    href: "/module-sdk",
+    href: "/modulekit",
   }}
 />
 
 <ComponentCard
   component={{
-    icon: <SandboxIcon width={48} height={48} />,
-    title: "Module Helpers",
-    description:
-      "A set of libraries that should prove incredibly useful for any developer building modules or products with modules.",
-    href: "/module-sdk",
-  }}
-/>
-
-<ComponentCard
-  component={{
-    icon: (<SandboxIcon width={48} height={48}/>),
+    icon: (<LogoIcon width={48} height={48}/>),
     title: "Infrastructure",
     description:
       "Services developed specifically for the module ecosystem. This includes our Module Registry for security and Rhinestone Automation for managing account automation with modules.",
-      href: "/module-sdk",
+      href: "/automations",
   }}
 />
 </Cards>

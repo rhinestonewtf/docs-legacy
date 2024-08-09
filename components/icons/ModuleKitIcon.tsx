@@ -16,7 +16,7 @@ export const ModuleKitIcon = ({
       src={
         currentTheme == "light"
           ? "/icons/modulekit_light.png"
-          : "/icons/modulekit_light.png"
+          : "/icons/modulekit_dark.png"
       }
       width={width}
       height={height}

@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { useTheme } from "next-themes";
+import Image from "next/image";
 
-export const SDKIcon = ({
+export const LogoIcon = ({
   width,
   height,
 }: {
@@ -10,14 +10,17 @@ export const SDKIcon = ({
 }) => {
   const { systemTheme, theme } = useTheme();
   const currentTheme = theme === "system" ? systemTheme : theme;
+
   return (
     <Image
       src={
-        currentTheme == "light" ? "/icons/sdk_light.png" : "/icons/sdk_dark.png"
+        currentTheme == "light"
+          ? "/icons/logo_light.png"
+          : "/icons/logo_dark.png"
       }
       width={width}
       height={height}
-      alt="SDK Icon"
+      alt="Logo Icon"
     />
   );
 };

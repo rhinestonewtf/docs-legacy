@@ -1,4 +1,5 @@
 import { ProtocolBanner } from "../../components/banners";
+import { Button } from "../../components/Button";
 
 # Rhinestone Infrastructure
 
@@ -7,6 +8,7 @@ Today, smart accounts are still plagued by many issues: developer complexity, cr
 <div className="my-8">
   <ProtocolBanner width={1000} height={400} />
 </div>
+
 ## Challenges Rhinestone Infrastructure Solves
 
 ### Smart Account Security
@@ -35,7 +37,13 @@ Unlike EOAs, smart accounts are not easily portable across L2s. State sync is a 
 
 Installing third-party modules unchecked opens up a wide range of attack vectors. As such, an open module marketplace requires a credibly neutral, permissionless, and highly scalable system for solving this problem. The Module Registry provides this solution. It stores security attestations on modules and allows smart accounts to query them when installing or executing a module.
 
-[Module Registry](/module-registry) [Become a module Auditor](http://t.me/kurt_larsen)
+<div className="flex flex-row gap-x-[10px] mb-8">
+  <Button href="/module-registry" buttonComponent={"Module Registry"} />
+  <Button
+    href="http://t.me/kurt_larsen"
+    buttonComponent={"Become a module Auditor"}
+  />
+</div>
 
 ### ERC-7579 and Account Adapters
 
@@ -43,7 +51,10 @@ We led the development of [ERC-7579](https://erc7579.com), a minimal standard fo
 
 For accounts that are not yet compliant with ERC-7579, we are developing account adapters to act as a translation layer between ERC-7579 modules and non-compliant accounts. An example is the [Safe7579 Adapter](/safe7579), co-developed with Safe and allowing a Safe developer to access modules from the Rhinestone ecosystem.
 
-[ERC-7579 button](https://erc7579.com/) [Safe7579 button](/safe7579)
+<div className="flex flex-row gap-x-[10px] mb-8">
+  <Button href="https://erc7579.com/" buttonComponent={"ERC-7579"} />
+  <Button href="/safe7579" buttonComponent={"Safe7579"} />
+</div>
 
 ### Rhinestone Payments
 

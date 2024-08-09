@@ -1,7 +1,8 @@
 import { Cards } from "nextra-theme-docs";
 import { ComponentCard } from "../components/ComponentCard";
-import { ModuleKitIcon, SandboxIcon, SDKIcon } from "../components/icons";
+import { ModuleKitIcon, LogoIcon, SDKIcon } from "../components/icons";
 import { Bleed } from "../components/Bleed";
+import { Button } from "../components/Button";
 
 <Bleed>
 
@@ -9,8 +10,10 @@ import { Bleed } from "../components/Bleed";
 
 Rhinestone is the leading ERC-7579 modular smart account infrastructure platform. We provide tools and services that help developers build, deploy, and manage the smart account modules that will power the next wave of powerful onchain products with seamless UX.
 
-[Get started](/module-sdk/tutorial-1)
-[Get in touch](http://t.me/kurt_larsen)
+<div className="flex flex-row gap-x-[10px] mb-8">
+  <Button href="/module-sdk/tutorial-1" buttonComponent={"Get started"} />
+  <Button href="http://t.me/kurt_larsen" buttonComponent={"Get in touch"} />
+</div>
 
 <Cards className="gap-x-[15px]">
 <ComponentCard
@@ -19,7 +22,8 @@ Rhinestone is the leading ERC-7579 modular smart account infrastructure platform
     title: "Beginner",
     description:
       "The simplest way to use pre-built modules. No solidity needed. Tap into powerful smart account features with a few lines of code.",
-href: "/modulekit",
+href: "/module-sdk",
+buttonTitle: "Get started",
 }}
 />
 
@@ -29,16 +33,19 @@ href: "/modulekit",
     title: "Advanced",
     description:
       "Tap into the programmable validation and execution of smart accounts by building your own bespoke module to power an advanced self-custodial product with seamless UX.",
-    href: "/module-sdk",
+    href: "/modulekit",
+    buttonTitle: "Get started",
   }}
 />
 
 <ComponentCard
   component={{
-    icon: (<SandboxIcon width={48} height={48}/>),
+    icon: (<LogoIcon width={48} height={48}/>),
     title: "Infrastructure",
     description:
       "Explore Rhinestone’s services for security and automation. Get your module audited and integrated into the Module Registry and Module SDK, and build automations with the Rhinestone Automation service.",
+      href: "/module-registry",
+      buttonTitle: "Get started",
   }}
 />
 </Cards>
