@@ -1,10 +1,11 @@
-mport { ComponentCard } from "../../components/ComponentCard";
+import { ComponentCard } from "../../components/ComponentCard";
 import {
   ValidatorsIcon,
   ExecutorsIcon,
   HooksIcon,
   FallbacksIcon,
 } from "../../components/icons";
+import { Cards } from "nextra-theme-docs";
 import Image from "next/image";
 
 # Modules explained
@@ -43,8 +44,6 @@ ERC-4337 breaks down the flow of a UserOperation into two distinct phases, valid
     title: "Validators",
     description:
       "Determine whether a transaction is valid and should be executed",
-      href: "modulekit/build/validators",
-      isClickable: true,
   }}
 />
 
@@ -53,8 +52,6 @@ ERC-4337 breaks down the flow of a UserOperation into two distinct phases, valid
     icon: <ExecutorsIcon width={48} height={48} />,
     title: "Executors",
     description: "Create executions on the account with custom logic",
-    href: "modulekit/build/executors",
-    isClickable: true,
   }}
 />
 
@@ -64,8 +61,6 @@ ERC-4337 breaks down the flow of a UserOperation into two distinct phases, valid
     title: "Hooks",
     description:
       "Enforce conditions or execute logic pre- or post-execution",
-      href: "modulekit/build/hooks",
-      isClickable: true,
   }}
 />
 <ComponentCard
@@ -74,8 +69,6 @@ ERC-4337 breaks down the flow of a UserOperation into two distinct phases, valid
     title: "Fallbacks",
     description:
       "Extend the account logic to add more functionality into the account",
-      href: "modulekit/build/fallbacks",
-      isClickable: true,
   }}
 />
 </Cards>
