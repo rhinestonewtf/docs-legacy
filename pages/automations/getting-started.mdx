@@ -1,3 +1,66 @@
 # Getting started
 
-Coming soon
+The Automations SDK is built on top of [viem](https://viem.sh/), a typesafe, modern Ethereum library. Apart from that, the SDK is standalone and can be used without any other dependencies and in any javascript or typescript project.
+
+## Installation
+
+Install viem as a peer dependency and then install the Automations SDK:
+
+```sh npm2yarn
+npm i viem @rhinestone/automations-sdk
+```
+
+## Quick Start
+
+```typescript copy
+// Import the required functions
+import {
+  createAutomationClient,
+} from '@rhinestone/automations-sdk'
+
+// Create a client for the automations service
+const automationsClient = createAutomationClient({
+      account: "0xc2b17e73603dccc195118a36f3203134fd7985f5",
+      apiKey: process.env.AUTOMATIONS_API_KEY!,
+      accountInitCode: '0x',
+      network: 11155111,
+      validator: '0x503b54Ed1E62365F0c9e4caF1479623b08acbe77',
+})
+
+// Create a new automation
+const automation = await automationsClient.createAutomation({
+      type: 'time-based',
+      data: {
+        trigger: {
+          triggerData: {
+            cronExpression: '*/30 * * * * *',
+            startDate: new Date().getTime(),
+          },
+        },
+        actions: [
+          {
+            type: 'static',
+            target: '0x503b54Ed1E62365F0c9e4caF1479623b08acbe77',
+            value: 100,
+            callData: '0x',
+          },
+        ],
+        maxNumberOfExecutions: 10,
+      },
+})
+
+// Sign the automation to active it
+const signature = sign(automation.hash) // Sign the hash of the automation with the account
+
+await automationsClient.signAutomation({
+      automationId: automation.id,
+      signature: signature,
+})
+
+// Get the automation and verify that it is active
+automation = await automationsClient.getAutomation(
+      automationId: automation.id,
+)
+
+console.log(automation.status) // active
+```
