@@ -12,5 +12,7 @@
   "---": {
     "type": "separator",
     "title": "Reference"
-  }
+  },
+  "checksignatures": "CheckSignatures",
+  "checknsignaturesfoundryhelper": "CheckNSignaturesFoundryHelper"
 }
