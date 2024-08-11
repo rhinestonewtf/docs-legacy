@@ -12,5 +12,6 @@
   "---": {
     "type": "separator",
     "title": "Reference"
-  }
+  },
+  "simulator": "Simulator"
 }
