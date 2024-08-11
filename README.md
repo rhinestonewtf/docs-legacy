@@ -1,6 +1,6 @@
 # Rhinestone Documentation
 
-**The Rhinestone Developer Docs**
+**The Rhinestone developer docs**
 
 ## Using this repo
 
