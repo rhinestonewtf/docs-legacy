@@ -10,7 +10,7 @@ import { Button } from "../components/Button";
 
 Rhinestone is the leading ERC-7579 modular smart account infrastructure platform. We provide tools and services that help developers build, deploy, and manage the smart account modules that will power the next wave of powerful onchain products with seamless UX.
 
-<div className="flex flex-row gap-x-[10px] mb-8">
+<div className="flex flex-row justify-center gap-x-[10px] mb-8">
   <Button href="/module-sdk/tutorial-1" buttonComponent={"Get started"} />
   <Button href="http://t.me/kurt_larsen" buttonComponent={"Get in touch"} />
 </div>
@@ -50,8 +50,15 @@ buttonTitle: "Get started",
 />
 </Cards>
 
-### What are Modules
+### What are Smart Account Modules
 
-Modules are smart contracts that extend the functionality of smart accounts. Modular smart accounts allow users and developers to easily change how a smart account works. In order to understand more deeply what is possible with modules (spoiler: a lot), let’s quickly recap the transaction flow of a smart account.
+Modules are self-contained smart contracts that extend a smart account's feature set. This creates a new paradigm for developers to access the programmable validation and execution of smart accounts, unlocking new product capabilities without compromising user self-sovereignty.
+
+There are four types of modules today:
+
+- **Validators:** Allow developers to modify how transactions are authenticated or what can be authorized against an account. [ZK Email](https://blog.rhinestone.wtf/private-email-recovery-with-zk-email-3405ce4d866e) is a novel example of how powerful and versatile a validator can be.
+- **Executors:** Allow developers to create executions on an account with custom logic. This, for example, can unlock portfolio management products like a take profit or stop loss feature on a DeFi platform.
+- **Hooks:** Allow developers to augment a smart account's execution flow by hooking in pre- or post-execution and enforcing conditions or any custom logic. A simple example is a spending limit.
+- **Fallbacks:** Extend the account logic to add more functionality. For example, this can allow an account to be compatible with new module types in the future.
 
 </Bleed>

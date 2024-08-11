@@ -1,3 +1,13 @@
+import { ComponentCard } from "../../components/ComponentCard";
+import {
+  ValidatorsIcon,
+  ExecutorsIcon,
+  HooksIcon,
+  FallbacksIcon,
+} from "../../components/icons";
+import { Cards } from "nextra-theme-docs";
+import Image from "next/image";
+
 # Modules explained
 
 Modules are smart contracts that extend the functionality of smart accounts. Modular smart accounts allow users and developers to easily change how a smart account works. In order to understand more deeply what is possible with modules (spoiler: a lot), let’s quickly recap the transaction flow of a smart account.
@@ -26,6 +36,42 @@ Similar to the validation phase, ERC-4337 does not stipulate how execution occur
 ## Module types
 
 ERC-4337 breaks down the flow of a UserOperation into two distinct phases, validation and execution. The account functionality that is required in either of these two phases differs to that of the other, so there are at least two different types of modules: validators and executors. However, there are at least two more distinct types of modules that perform different functions to the aforementioned: hooks and recovery modules.
+
+<Cards className="gap-x-[15px]">
+<ComponentCard
+  component={{
+    icon: (<ValidatorsIcon width={48} height={48}/>),
+    title: "Validators",
+    description:
+      "Determine whether a transaction is valid and should be executed",
+  }}
+/>
+
+<ComponentCard
+  component={{
+    icon: <ExecutorsIcon width={48} height={48} />,
+    title: "Executors",
+    description: "Create executions on the account with custom logic",
+  }}
+/>
+
+<ComponentCard
+  component={{
+    icon: (<HooksIcon width={48} height={48}/>),
+    title: "Hooks",
+    description:
+      "Enforce conditions or execute logic pre- or post-execution",
+  }}
+/>
+<ComponentCard
+  component={{
+    icon: (<FallbacksIcon width={48} height={48}/>),
+    title: "Fallbacks",
+    description:
+      "Extend the account logic to add more functionality into the account",
+  }}
+/>
+</Cards>
 
 ### Validators
 

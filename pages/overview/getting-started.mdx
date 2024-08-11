@@ -1,14 +1,24 @@
 import { Cards, Card } from "nextra-theme-docs";
-import Image from "next/image";
-import { ComponentCard } from "../../components/ComponentCard";
-import { ModuleKitIcon, SDKIcon, LogoIcon } from "../../components/icons";
 import { CoreModulesBanner } from "../../components/banners";
+import Image from "next/image";
 
 # Getting started
 
 Rhinestone’s tools and services make building with modular smart accounts a breeze.
 
-**Supported smart accounts**
+## Use ModuleSDK to install your first module
+
+If you are new to smart account modules, we recommend checking out the [ModuleSDK](/module-sdk), a typeScript library for integrating modules into applications and wallets.
+
+Get started with one of our [Core Modules](/module-sdk#core-modules):
+
+<div className="my-8">
+  <CoreModulesBanner width={1000} height={400} />
+</div>
+
+ModuleSDK is built to be used alongside existing account abstraction SDKs, such as permissionless.js, Biconomy SDK, ZeroDev SDK, and userop.js. Follow this [simple tutorial](/module-sdk/tutorial-1) to install your first module.
+
+## Supported smart accounts
 
 <Cards>
   <Card
@@ -64,63 +74,3 @@ Rhinestone’s tools and services make building with modular smart accounts a br
     }
   />
 </Cards>
-
-<Cards className="gap-x-[15px]">
-<ComponentCard
-  component={{
-    icon: <SDKIcon width={48} height={48} />,
-    title: "ModuleSDK",
-    description:
-      "A TypeScript library for using smart account modules in applications. The ModuleSDK supports Safe and any ERC-7579 account, and is built to be used with existing AA SDKs.",
-href: "/module-sdk",
-}}
-/>
-
-<ComponentCard
-  component={{
-    icon: <ModuleKitIcon width={48} height={48} />,
-    title: "ModuleKit",
-    description:
-      "The fastest way to start building a smart account module is by using ModuleKit, a development kit for building and testing account-agnostic modules",
-    href: "/modulekit",
-  }}
-/>
-
-<ComponentCard
-  component={{
-    icon: (<LogoIcon width={48} height={48}/>),
-    title: "Infrastructure",
-    description:
-      "Services developed specifically for the module ecosystem. This includes our Module Registry for security and Rhinestone Automation for managing account automation with modules.",
-      href: "/automations",
-  }}
-/>
-</Cards>
-
-## Use existing modules
-
-Reuse existing modules with the [ModuleSDK](/module-sdk), a typeScript library for using smart account modules in applications and wallets.
-
-Access an extensive set of [Core Modules](/module-sdk#core-modules) built by modules and a growing library of third-party modules.
-
-Core Modules include base smart account features like Passkeys, Social Recovery, and MFA (multisig), as well as more opinionated features like Scheduled Order and Deadman Switch.
-
-ModuleSDK is built to be coupled with:
-
-permissionless.js | Biconomy SDK | ZeroDev SDK | userop.js
-
-<div className="my-8">
-  <CoreModulesBanner width={1000} height={400} />
-</div>
-
-## Build a module
-
-Build a smart account-agnostic module with [ModuleKit](/modulekit), a developer framework for building, testing, and deploying modules with Foundry.
-
-## Create smart account automation
-
-Build account automations using modules and the [Rhinestone Automations](/automations) service, a system that enables developers to effortlessly set up, manage, and automate smart account actions via modules.
-
-## Get your module audited
-
-[Contact us](http://t.me/kurt_larsen) to get matched with an auditor who can audit and attest to your module’s security on the Module Registry, a permissionless and ownerless system for scalable trust delegation when using modules.
