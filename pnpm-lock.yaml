@@ -25,7 +25,7 @@ importers:
         version: 2.13.4(next@13.5.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       nextra-theme-docs:
         specifier: https://github.com/rhinestonewtf/rhinestone-theme-docs.git
-        version: rhinestone-theme-docs@https://codeload.github.com/rhinestonewtf/rhinestone-theme-docs/tar.gz/e62ccc0e59b79594bf3d98477b682b247a70d8c7(next@13.5.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(nextra@2.13.4(next@13.5.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: rhinestone-theme-docs@https://codeload.github.com/rhinestonewtf/rhinestone-theme-docs/tar.gz/8886a7811069a09a8870346653b1b4c1c2e1be31(next@13.5.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(nextra@2.13.4(next@13.5.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -1687,8 +1687,8 @@ packages:
     resolution: {integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
 
-  rhinestone-theme-docs@https://codeload.github.com/rhinestonewtf/rhinestone-theme-docs/tar.gz/e62ccc0e59b79594bf3d98477b682b247a70d8c7:
-    resolution: {tarball: https://codeload.github.com/rhinestonewtf/rhinestone-theme-docs/tar.gz/e62ccc0e59b79594bf3d98477b682b247a70d8c7}
+  rhinestone-theme-docs@https://codeload.github.com/rhinestonewtf/rhinestone-theme-docs/tar.gz/8886a7811069a09a8870346653b1b4c1c2e1be31:
+    resolution: {tarball: https://codeload.github.com/rhinestonewtf/rhinestone-theme-docs/tar.gz/8886a7811069a09a8870346653b1b4c1c2e1be31}
     version: 2.13.4
     peerDependencies:
       next: '>=9.5.3'
@@ -3974,7 +3974,7 @@ snapshots:
 
   reusify@1.0.4: {}
 
-  rhinestone-theme-docs@https://codeload.github.com/rhinestonewtf/rhinestone-theme-docs/tar.gz/e62ccc0e59b79594bf3d98477b682b247a70d8c7(next@13.5.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(nextra@2.13.4(next@13.5.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  rhinestone-theme-docs@https://codeload.github.com/rhinestonewtf/rhinestone-theme-docs/tar.gz/8886a7811069a09a8870346653b1b4c1c2e1be31(next@13.5.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(nextra@2.13.4(next@13.5.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@headlessui/react': 1.7.19(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@popperjs/core': 2.11.8
