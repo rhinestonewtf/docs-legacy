@@ -30,7 +30,7 @@ export const ComponentCard = ({ component }: { component: Component }) => {
       <Link
         className={cn(
           classes.card,
-          "bg-gray-100 dark:border-neutral-700 dark:bg-neutral-800 dark:text-gray-50 min-w-[150px] min-h-[120px] py-[16px] px-[16px]"
+          "bg-gray-100 dark:border-neutral-700 dark:bg-white/[0.08] dark:text-gray-50 min-w-[150px] min-h-[120px] py-[16px] px-[16px]"
         )}
         href={component.href}
       >
@@ -47,7 +47,7 @@ export const ComponentCard = ({ component }: { component: Component }) => {
       <div
         className={cn(
           classes.card,
-          "bg-gray-100 dark:border-neutral-700 dark:bg-neutral-800 dark:text-gray-50 min-w-[150px] min-h-[120px] py-[16px] px-[16px] flex justify-between flex-grow"
+          "bg-gray-100 dark:border-neutral-700 dark:bg-white/[0.08] dark:text-gray-50 min-w-[150px] min-h-[120px] py-[16px] px-[16px] flex justify-between flex-grow"
         )}
       >
         <div className="">{component.icon}</div>

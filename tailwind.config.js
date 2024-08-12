@@ -38,7 +38,6 @@ module.exports = {
           800: makePrimaryColor(32),
           900: makePrimaryColor(24),
         },
-        dark: "#0d0926",
       },
     },
   },
