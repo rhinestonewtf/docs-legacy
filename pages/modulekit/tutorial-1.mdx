@@ -1,8 +1,12 @@
+import { Steps } from "nextra/components";
+
 # Tutorial 1: Building a Muti-Owner Validator
 
 In this tutorial, we will walk you through building a simple validator module, in this case, a multi-owner validator. This validator module allows multiple owners to sign transactions using an EOA. Before getting started, make sure you have [ModuleKit](./getting-started) installed and have set up a repo to work from.
 
-1. Building the module
+<Steps>
+
+### Building the module
 
 To get started building the validator, we will first of all create a new contract that inherits from `ERC7579ValidatorBase` and has all the needed imports:
 
@@ -215,7 +219,7 @@ This is pretty standard. We define the name and version of the module and check 
 
 We have now successfully built a multi-owner validator module. The next step is to test the module.
 
-2. Testing the module
+### Testing the module
 
 First, we will create a new `.t.sol` file with the following content:
 
@@ -351,3 +355,5 @@ Test result: ok. 2 passed; 0 failed; 0 skipped; finished in 4.21ms
 
 Ran 1 test suites: 2 tests passed, 0 failed, 0 skipped (2 total tests)
 ```
+
+</Steps>

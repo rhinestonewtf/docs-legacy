@@ -1,8 +1,12 @@
+import { Steps } from "nextra/components";
+
 # Tutorial 2: Building an Auto-swap Executor
 
 In this tutorial, we will walk you through building a simple executor module, in this case, an automated swap executor. This executor allows a user to create a schedule of swaps that are automatically executed for them. Before getting started, make sure you have [ModuleKit](./getting-started) installed and have set up a repo to work from.
 
-1. Building the module
+<Steps>
+
+### Building the module
 
 To get started building the executor, we will first of all create a new contract that inherits from `ERC7579ExecutorBase` and has all the needed imports:
 
@@ -319,7 +323,7 @@ This is pretty standard. We define the name and version of the module and check 
 
 We have now successfully built an automated swap module. The next step is to test the module.
 
-2. Testing the module
+### Testing the module
 
 First, we will create a new `.t.sol` file with the following content:
 
@@ -472,3 +476,5 @@ Test result: ok. 2 passed; 0 failed; 0 skipped; finished in 4.21ms
 
 Ran 1 test suites: 2 tests passed, 0 failed, 0 skipped (2 total tests)
 ```
+
+</Steps>
