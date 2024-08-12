@@ -15,8 +15,8 @@ export const ProtocolBanner = ({
     <Image
       src={
         currentTheme == "light"
-          ? "/protocol_banner_light.png"
-          : "/protocol_banner_dark.png"
+          ? "/banners/protocol_banner_light.png"
+          : "/banners/protocol_banner_dark.png"
       }
       width={width}
       height={height}

@@ -67,16 +67,16 @@ const config: DocsThemeConfig = {
     link: "https://github.com/rhinestonewtf",
   },
   navbar: {
-    extraContent: (
-      <div className="flex flex-row">
-        <a href="https://x.com/rhinestonewtf" target="_blank" className="mr-4">
-          <BsTwitterX size={24} />
-        </a>
-        <a href="https://warpcast.com/rhinestone" target="_blank" className="">
-          <SiFarcaster size={24} />
-        </a>
-      </div>
-    ),
+    // extraContent: (
+    //   <div className="flex flex-row">
+    //     <a href="https://x.com/rhinestonewtf" target="_blank" className="mr-4">
+    //       <BsTwitterX size={24} />
+    //     </a>
+    //     <a href="https://warpcast.com/rhinestone" target="_blank" className="">
+    //       <SiFarcaster size={24} />
+    //     </a>
+    //   </div>
+    // ),
   },
   sidebar: {
     defaultMenuCollapseLevel: 2,
@@ -84,7 +84,7 @@ const config: DocsThemeConfig = {
       if (type === "separator") {
         return <Separator title={title} />;
       }
-      return <div>{title}</div>;
+      return <div className="font-favoritMono uppercase">{title}</div>;
     },
   },
   primaryHue: {
@@ -106,11 +106,17 @@ const config: DocsThemeConfig = {
           </a>
         </span>
         <div className="flex flex-row justify-between gap-x-4">
+          <a href="https://rhinestone.wtf" target="_blank">
+            About us
+          </a>
           <a href="https://blog.rhinestone.wtf" target="_blank">
             Blog
           </a>
           <a href="https://twitter.com/rhinestonewtf" target="_blank">
             Twitter
+          </a>
+          <a href="https://warpcast.com/rhinestone" target="_blank">
+            Warpcast
           </a>
         </div>
       </div>

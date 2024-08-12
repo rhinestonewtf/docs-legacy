@@ -15,8 +15,8 @@ export const ModuleKitBanner = ({
     <Image
       src={
         currentTheme == "light"
-          ? "/modulekit_banner_light.png"
-          : "/modulekit_banner_dark.png"
+          ? "/banners/modulekit_banner_light.png"
+          : "/banners/modulekit_banner_dark.png"
       }
       width={width}
       height={height}

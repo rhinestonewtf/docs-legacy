@@ -20,6 +20,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        favorit: ["var(--font-ABCFavoritBook)"],
+        favoritMono: ["var(--font-ABCFavoritMonoRegular)"],
+      },
       colors: {
         primary: {
           50: makePrimaryColor(97),
@@ -34,6 +38,7 @@ module.exports = {
           800: makePrimaryColor(32),
           900: makePrimaryColor(24),
         },
+        dark: "#0d0926",
       },
     },
   },

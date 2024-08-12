@@ -15,8 +15,8 @@ export const CoreModulesBanner = ({
     <Image
       src={
         currentTheme == "light"
-          ? "/core_modules_banner_light.png"
-          : "/core_modules_banner_dark.png"
+          ? "/banners/core_modules_banner_light.png"
+          : "/banners/core_modules_banner_dark.png"
       }
       width={width}
       height={height}

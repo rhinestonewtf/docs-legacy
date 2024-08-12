@@ -5,3 +5,11 @@
 img {
   border-radius: 10px;
 }
+
+.nextra-nav-container {
+  @apply font-favoritMono uppercase;
+}
+
+button[id|="headlessui-menu-button"] {
+  @apply font-favoritMono uppercase;
+}

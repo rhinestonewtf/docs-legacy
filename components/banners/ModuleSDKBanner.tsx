@@ -15,8 +15,8 @@ export const ModuleSDKBanner = ({
     <Image
       src={
         currentTheme == "light"
-          ? "/module_sdk_banner_light.png"
-          : "/module_sdk_banner_dark.png"
+          ? "/banners/module_sdk_banner_light.png"
+          : "/banners/module_sdk_banner_dark.png"
       }
       width={width}
       height={height}
