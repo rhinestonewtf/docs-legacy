@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export const SDKIcon = ({
   width,
@@ -8,16 +9,23 @@ export const SDKIcon = ({
   width: number;
   height: number;
 }) => {
-  const { systemTheme, theme } = useTheme();
-  const currentTheme = theme === "system" ? systemTheme : theme;
+  const [src, setSrc] = useState<string>(
+    "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+  );
+  const { resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    switch (resolvedTheme) {
+      case "light":
+        setSrc("/icons/sdk_light.png");
+        break;
+      case "dark":
+        setSrc("/icons/sdk_dark.png");
+        break;
+    }
+  }, [resolvedTheme]);
+
   return (
-    <Image
-      src={
-        currentTheme == "light" ? "/icons/sdk_light.png" : "/icons/sdk_dark.png"
-      }
-      width={width}
-      height={height}
-      alt="SDK Icon"
-    />
+    <Image src={src} width={width} height={height} alt="Module SDK Icon" />
   );
 };

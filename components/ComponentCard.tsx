@@ -2,6 +2,7 @@ import Link from "next/link";
 import cn from "clsx";
 import { CaretRight } from "./icons";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 const classes = {
   card: cn(
@@ -22,8 +23,19 @@ interface Component {
 }
 
 export const ComponentCard = ({ component }: { component: Component }) => {
-  const { systemTheme, theme } = useTheme();
-  const currentTheme = theme === "system" ? systemTheme : theme;
+  const [color, setColor] = useState<string>("#fff");
+  const { resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    switch (resolvedTheme) {
+      case "light":
+        setColor("#3D2EE5");
+        break;
+      case "dark":
+        setColor("#fff");
+        break;
+    }
+  }, [resolvedTheme]);
 
   if (component.isClickable && component.href) {
     return (
@@ -62,11 +74,7 @@ export const ComponentCard = ({ component }: { component: Component }) => {
             className="mt-6 bg-white dark:bg-white/10 rounded-2xl w-fit pl-4 pr-2 py-1 uppercase font-mono text-[14px] flex flex-row items-center justify-center border border-gray-200 dark:border-gray-800 text-[#3D2EE5] dark:text-white"
           >
             {component.buttonTitle || "Open"}{" "}
-            <CaretRight
-              width={6}
-              height={9}
-              color={currentTheme == "light" ? "#3D2EE5" : "#fff"}
-            />
+            <CaretRight width={6} height={9} color={color} />
           </Link>
         ) : null}
       </div>

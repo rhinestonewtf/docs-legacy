@@ -29,7 +29,7 @@ const config: DocsThemeConfig = {
   ),
   logo: (
     <>
-      <Logo width={25} height={25} />
+      <Logo width={22} height={22} />
       <div className="font-favorit normal-case ml-2 font-bold text-xl">
         rhinestone <span className="text-[#8479FF] text-lg">Docs</span>
       </div>
