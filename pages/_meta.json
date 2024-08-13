@@ -19,13 +19,9 @@
     "title": "Helpers",
     "type": "menu",
     "items": {
-      "sentinellist": {
-        "title": "SentinelList",
-        "href": "/sentinellist"
-      },
-      "flatbytes": {
-        "title": "Flatbytes",
-        "href": "/flatbytes"
+      "erc4337-data-libs": {
+        "title": "ERC4337 Data Libs",
+        "href": "/erc4337-data-libs"
       },
       "checknsignatures": {
         "title": "CheckNSignatures",
@@ -41,12 +37,11 @@
       }
     }
   },
-  "sentinellist": {
-    "title": "SentinelList",
+  "erc4337-data-libs": {
+    "title": "ERC4337 Data Libs",
     "type": "page",
     "display": "hidden"
   },
-  "flatbytes": { "title": "Flatbytes", "type": "page", "display": "hidden" },
   "checknsignatures": {
     "title": "CheckNSignatures",
     "type": "page",

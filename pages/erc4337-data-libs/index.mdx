@@ -1,0 +1,38 @@
+# ERC4337 Data Libs
+
+**A collection of libraries to use different data types during the ERC4337 validation phase**
+
+ERC-4337 has specific rules for storage and opcode accesses during the validation phase. These rules can be found in [ERC-7562](https://eips.ethereum.org/EIPS/eip-7562). The libraries in this collection provide data structures that are compliant with these rules. They are also audited and ready to be used in production. To verify that you are following these rules from within Foundry, you can use the [ERC-4337 validation](/erc4337-validation) package.
+
+Currently available libraries:
+
+- **SentinelList**: A library for linked lists
+- **FlatBytes**: A library to store bytes in consecutive storage slots
+
+## SentinelList
+
+**A library for linked lists in Solidity**
+
+SentinelList is a Solidity library that provides linked lists in different flavors:
+
+- SentinelList: A linked list for addresses
+- SentinelList4337: An ERC-4337 compliant linked list for addresses
+- SentinelListBytes32: A linked list for bytes32
+
+This makes it easy to use linked list data structures in Solidity and also be ERC-4337 compliant. It is fully audited, tested and can be used in production.
+
+### Useful starting resources
+
+- [SentinelList source code](https://github.com/rhinestonewtf/sentinellist)
+- [A module usage example](https://github.com/rhinestonewtf/core-modules/blob/7de2fb5330cbf2cf698e1822283b20fa29595dbe/src/OwnableValidator/OwnableValidator.sol#L43)
+
+## FlatBytes
+
+**A library to store bytes in consecutive storage slots**
+
+FlatBytes provides an easy way to store bytes in an ERC-4337 compliant way. This is needed because byte strings longer than 32 bytes will be stored in a different storage location to the root slot, breaking ERC-4337 compliance. FlatBytes solves this by storing the bytes in consecutive storage slots.
+
+### Useful starting resources
+
+- [Flatbytes source code](https://github.com/rhinestonewtf/flatbytes)
+- [A module usage example](https://github.com/rhinestonewtf/core-modules/blob/7de2fb5330cbf2cf698e1822283b20fa29595dbe/src/MultiFactor/DataTypes.sol#L32)
