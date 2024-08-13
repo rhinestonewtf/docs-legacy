@@ -2,7 +2,7 @@ import { Steps } from "nextra/components";
 
 # How to use ModuleKit with different accounts
 
-The ModuleKit is integrated with a range of modular smart accounts. When you write your integration tests and use [`makeAccountInstance`](/modulekit/test/core/makeAccountInstance), you can easily switch between different accounts.
+The ModuleKit is integrated with a range of modular smart accounts. When you write your integration tests and use [`makeAccountInstance`](/modulekit/test/core/makeAccountInstance), you can easily switch between different accounts. Alternatively, you can also use the [`setAccountEnv`](/modulekit/test/utilities/setAccountEnv) function to use a specific account type for a specific test.
 
 <Steps>
 
@@ -31,6 +31,7 @@ where the options are:
 - `DEFAULT`: The ERC-7579 Reference Implementation (note: this is equivalent to emitting the `ACCOUNT_TYPE` environment variable)
 - `SAFE`: The Safe account
 - `KERNEL`: The Kernel account
+- `NEXUS`: The Nexus account
 - `CUSTOM`: A custom account
 
 </Steps>
