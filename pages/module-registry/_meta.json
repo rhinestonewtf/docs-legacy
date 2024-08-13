@@ -12,5 +12,8 @@
   "---": {
     "type": "separator",
     "title": "Reference"
-  }
+  },
+  "querying": "Querying",
+  "modules": "Modules",
+  "glossary": "Glossary"
 }
