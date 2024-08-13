@@ -9,6 +9,7 @@
     "type": "separator",
     "title": "Guides"
   },
+  "integrations": "Integrations",
   "---": {
     "type": "separator",
     "title": "Reference"
