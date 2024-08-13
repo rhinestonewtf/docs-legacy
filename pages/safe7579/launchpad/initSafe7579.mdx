@@ -1,0 +1,69 @@
+# initSafe7579
+
+This function should be called by the Safe setup function to initialize the Safe7579 adapter.
+
+## Usage
+
+```solidity copy
+ModuleInit[] memory executors = new ModuleInit[](0);
+ModuleInit[] memory fallbacks = new ModuleInit[](0);
+ModuleInit[] memory hooks = new ModuleInit[](0);
+
+address[] memory attesters = new address[](2);
+attesters[0] = makeAddr("attester1");
+attesters[1] = makeAddr("attester2");
+
+bytes memory setupData = abi.encodeCall(
+    Safe7579Launchpad.initSafe7579,
+    (
+        address(safe7579),
+        executors,
+        fallbacks,
+        hooks,
+        attesters,
+        2
+    )
+);
+```
+
+## Parameters
+
+### safe7579
+
+- Type: `address`
+
+The address of the Safe7579 contract.
+
+### executors
+
+- Type: [`ModuleInit[]`](/safe7579/glossary/types#moduleinit)
+
+An array of `ModuleInit` structs that contain the addresses of the executors and their initialization data.
+
+### fallbacks
+
+- Type: [`ModuleInit[]`](/safe7579/glossary/types#moduleinit)
+
+An array of `ModuleInit` structs that contain the addresses of the fallbacks and their initialization data.
+
+### hooks
+
+- Type: [`ModuleInit[]`](/safe7579/glossary/types#moduleinit)
+
+An array of `ModuleInit` structs that contain the addresses of the hooks and their initialization data.
+
+### attesters
+
+- Type: `address[]`
+
+The addresses of the attesters.
+
+### threshold
+
+- Type: `uint8`
+
+The number of attesters required to have attested to a module before it can be installed.
+
+## Returns
+
+None

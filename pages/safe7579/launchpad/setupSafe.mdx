@@ -1,0 +1,21 @@
+# setupSafe
+
+Concludes the setup of the Safe7579 contract and should be called during the first UserOperation of the account. This function will also execute the calldata that is passed in the `InitData` struct.
+
+## Usage
+
+```solidity copy
+userOp.callData = abi.encodeCall(Safe7579Launchpad.setupSafe, (initData));
+```
+
+## Parameters
+
+### initData
+
+- Type: [`InitData`](/safe7579/glossary/types#initdata)
+
+The `InitData` struct that contains the setup data for the Safe7579 contract.
+
+## Returns
+
+None

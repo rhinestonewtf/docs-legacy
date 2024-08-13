@@ -1,0 +1,59 @@
+# predictSafeAddress
+
+This function can be used to predict the address of a new Safe7579 account.
+
+## Usage
+
+```solidity copy
+bytes32 salt = 0;
+bytes memory factoryInitializer =
+abi.encodeCall(Safe7579Launchpad.preValidationSetup, (initHash, address(0), ""));
+
+address predict = launchpad.predictSafeAddress({
+    singleton: address(launchpad),
+    safeProxyFactory: address(safeProxyFactory),
+    creationCode: type(SafeProxy).creationCode,
+    salt: salt,
+    factoryInitializer: factoryInitializer
+});
+```
+
+## Parameters
+
+### singleton
+
+- Type: `address`
+
+The address of the launchpad.
+
+### safeProxyFactory
+
+- Type: `address`
+
+The address of the SafeProxyFactory contract.
+
+### creationCode
+
+- Type: `bytes`
+
+The creation code of the SafeProxy contract.
+
+### salt
+
+- Type: `bytes32`
+
+The salt to use for the address prediction.
+
+### factoryInitializer
+
+- Type: `bytes`
+
+The factory initializer data, which should call the launchpad's [`preValidationSetup`](/safe7579/launchpad/preValidationSetup) function.
+
+## Returns
+
+### predict
+
+- Type: `address`
+
+The address of the Safe7579 account.

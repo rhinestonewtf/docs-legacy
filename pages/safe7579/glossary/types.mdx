@@ -1,0 +1,99 @@
+# Types in Safe7579
+
+Glossary of types in Safe7579.
+
+## `InitData`
+
+The `InitData` struct is used to initialize Safe7579.
+
+### Definition
+
+```solidity
+struct InitData {
+    address singleton;
+    address[] owners;
+    uint256 threshold;
+    address setupTo;
+    bytes setupData;
+    ISafe7579 safe7579;
+    ModuleInit[] validators;
+    bytes callData;
+}
+```
+
+### Properties
+
+#### `singleton`
+
+- Type: `address`
+
+The address of the Safe singleton.
+
+#### `owners`
+
+- Type: `address[]`
+
+The addresses of the Safe owners.
+
+#### `threshold`
+
+- Type: `uint256`
+
+The threshold for the Safe.
+
+#### `setupTo`
+
+- Type: `address`
+
+The address to set up the Safe to, in this case, the launchpad contract.
+
+#### `setupData`
+
+- Type: `bytes`
+
+The setup data to be sent to the launchpad contract. This should call the [`initSafe7579`](/safe7579/launchpad/initSafe7579) function.
+
+#### `safe7579`
+
+- Type: `ISafe7579`
+
+The Safe7579 contract.
+
+#### `validators`
+
+- Type: [`ModuleInit[]`](#moduleinit)
+
+An array of `ModuleInit` structs that contain the addresses of the validators and their initialization data.
+
+#### `callData`
+
+- Type: `bytes`
+
+The call data of the first UserOperation. Note that this field does not impact the account address, so it can be swapped out later.
+
+## `ModuleInit`
+
+The `ModuleInit` struct is used to initialize modules.
+
+### Definition
+
+```solidity
+struct ModuleInit {
+    address module;
+    bytes initData;
+}
+```
+
+### Properties
+
+#### `module`
+
+- Type: `address`
+
+The address of the module.
+
+#### `initData`
+
+- Type: `bytes`
+
+The init data to be sent to the module.

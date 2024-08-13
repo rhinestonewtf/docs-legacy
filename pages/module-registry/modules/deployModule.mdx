@@ -20,7 +20,7 @@ address moduleAddress = registry.deployModule(salt, resolverUID, initCode, metad
 
 - Type: `bytes32`
 
-The salt value to use for the module deployment. Note that the last 20 bytes should be either the `msg.sender` for replay protection or zeroed out.
+The salt value to use for the module deployment. Note that the first 20 bytes should be either the `msg.sender` for replay protection or zeroed out.
 
 ### resolverUID
 
