@@ -15,8 +15,8 @@ ModuleInit[] memory fallbacks = new ModuleInit[](0);
 ModuleInit[] memory hooks = new ModuleInit[](0);
 
 address[] memory attesters = new address[](2);
-attesters[0] = makeAddr("attester1");
-attesters[1] = makeAddr("attester2");
+attesters[0] = attester1Addr;
+attesters[1] = attester2Addr;
 
 uint8 threshold = 2;
 

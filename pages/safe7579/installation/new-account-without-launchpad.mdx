@@ -1,0 +1,74 @@
+import { Steps } from "nextra/components";
+
+# How to deploy a Safe7579 account without the launchpad
+
+The easiest and recommended way to create a new Safe7579 account is [using the launchpad](/safe7579/installation/new-account-with-launchpad). However, if you want to create a new Safe7579 account without the launchpad, you can follow these steps. One thing to note is that you will only be able to initialize validator modules, since other module types might break the ERC-4337 restrictions.
+
+<Steps>
+
+### Set up the initial data
+
+First, you will need to set up the initial data for the new account. This includes the owners, validators, and attesters.
+
+```solidity copy
+address[] memory owners = new address[](1);
+owners[0] = signer1.addr;
+
+uint256 ownerThreshold = 1;
+
+ModuleInit[] memory validators = new ModuleInit[](1);
+validators[0] = ModuleInit({ module: address(defaultValidator), initData: bytes("") });
+
+address[] memory attesters = new address[](2);
+attesters[0] = attester1Addr;
+attesters[1] = attester2Addr;
+
+uint8 attesterThreshold = 2;
+```
+
+### Create the initializer calldata
+
+Next, you will need to create the calldata for the initializer. This is the data that will be executed when the account is initialized.
+
+```solidity copy
+bytes memory initializer = abi.encodeCall(
+    Safe.setup,
+    (
+        owners,
+        ownerThreshold,
+        address(launchpad),
+        abi.encodeCall(
+            Safe7579Launchpad.addSafe7579,
+            (
+                address(safe7579),
+                validators,
+                new ModuleInit[](0),
+                new ModuleInit[](0),
+                new ModuleInit[](0),
+                attesters,
+                attesterThreshold
+            )
+        ),
+        address(safe7579),
+        address(0),
+        0,
+        payable(address(0))
+    )
+);
+```
+
+### Create a new Safe7579 account
+
+Finally, you can create a new Safe7579 account by using the SafeProxyFactory to deploy a new SafeProxy with the initializer calldata.
+
+```solidity copy
+Safe safe = Safe(
+    payable(
+        address(safeProxyFactory.createProxyWithNonce(address(singleton), initializer, uint256(salt)))
+    )
+);
+```
+
+Note that the salt value should be unique for each new account you create. This is to ensure that the address of the new account is unique.
+
+</Steps>

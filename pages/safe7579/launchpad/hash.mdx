@@ -9,8 +9,8 @@ address[] memory owners = new address[](1);
 owners[0] = signer1.addr;
 
 address[] memory attesters = new address[](2);
-attesters[0] = makeAddr("attester1");
-attesters[1] = makeAddr("attester2");
+attesters[0] = attester1Addr;
+attesters[1] = attester2Addr;
 
 ModuleInit[] memory validators = new ModuleInit[](1);
 validators[0] = ModuleInit({ module: address(defaultValidator), initData: bytes("") });
