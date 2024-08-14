@@ -108,7 +108,7 @@ const module = getSocialRecoveryValidator({
 With this module object, we can now install it on the smart account.
 
 ```typescript copy
-const opHash = await smartClient.installModule({
+const opHash = await smartAccountClient.installModule({
   type: module.type,
   address: module.module,
   context: module.data,

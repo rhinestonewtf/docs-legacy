@@ -37,7 +37,7 @@ The `getScheduledTransferData` function is used to create a hex-encoded struct t
 ```typescript
 import { getScheduledTransferData } from "@rhinestone/module-sdk";
 
-const isNativeToken = true;
+const isNativeToken = false;
 const scheduledTransfer = {
   startDate: 1710759572,
   repeatEvery: 60 * 60 * 24, // 1 day
@@ -63,6 +63,7 @@ The `getScheduledTransfersExecutor` function is used to create an instance of th
 <Tabs items={["Safe", "Kernel"]}>
 
 <Tabs.Tab>
+
 ```typescript
 import {
   getScheduledTransfersExecutor,
@@ -75,36 +76,38 @@ const startDate = 1710759572; // UNIX timestamp
 const executionData = getScheduledTransferData({...});
 
 const scheduledTransfersExecutor = getScheduledTransfersExecutor({
-executionInterval,
-numberOfExecutions,
-startDate,
-executionData,
+  executionInterval,
+  numberOfExecutions,
+  startDate,
+  executionData,
 });
+```
 
-````
 </Tabs.Tab>
 
 <Tabs.Tab>
+
 ```typescript
 import {
   getScheduledTransfersExecutor,
   getScheduledTransferData,
 } from "@rhinestone/module-sdk";
 
-const executionInterval = 60 * 60 * 24; // 1 day
+const executionInterval = 60 _ 60 _ 24; // 1 day
 const numberOfExecutions = 10;
 const startDate = 1710759572; // UNIX timestamp
 const executionData = getScheduledTransferData({...});
 const hook = '0x...';
 
 const scheduledTransfersExecutor = getScheduledTransfersExecutor({
-  executionInterval,
-  numberOfExecutions,
-  startDate,
-  executionData,
-  hook,
+executionInterval,
+numberOfExecutions,
+startDate,
+executionData,
+hook,
 });
-````
+
+```
 
 </Tabs.Tab>
 
