@@ -31,13 +31,13 @@ const automation = await automationClient.createAutomation({
 
 ### trigger
 
-- Type: `TimeBasedTriggerData | EventBasedTriggerData`
+- Type: [`CreateTimeBasedTriggerParams | CreateEventBasedTriggerParams`](/automations/glossary/types)
 
 The trigger data for the relevant trigger type.
 
 ### actions
 
-- type: `AutomationAction[]`
+- type: [`Action[]`](/automations/glossary/types#action)
 
 Array of actions to be executed when the automation is triggered.
 
@@ -57,6 +57,6 @@ Id of the created automation.
 
 ### hash
 
-- Type: `Hex`
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
 
 Hash of the created automation to be signed by account owner to activate the automation.

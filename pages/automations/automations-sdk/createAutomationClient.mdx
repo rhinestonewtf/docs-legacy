@@ -20,7 +20,7 @@ const automationClient = createAutomationClient({
 
 ### account
 
-- Type: `Address`
+- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
 
 Account address you want to setup automation for.
 
@@ -32,7 +32,7 @@ API key to authenticate with the automation service.
 
 ### accountInitCode
 
-- Type: `Hex`
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
 
 Account initCode in case account is not deployed yet.
 
@@ -44,7 +44,7 @@ Chain id of the network. Note: Currently only sepolia testnet is supported.
 
 ### validator
 
-- Type: `Address`
+- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
 
 Address of the ECDSA validator module to use when constructing user ops in the automation service. The validator module should be installed in the account and automation service account should be added as an owner of the validator module before start using the automation service.
 

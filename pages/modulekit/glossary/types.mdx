@@ -23,49 +23,49 @@ struct AccountInstance {
 
 ### Properties
 
-#### `account`
+#### account
 
 - Type: `address`
 
 The address of the account.
 
-#### `accountType`
+#### accountType
 
 - Type: [`AccountType`](#accounttype)
 
 The type of the account.
 
-#### `accountHelper`
+#### accountHelper
 
 - Type: `address`
 
 The address of the account helper. This helper is used to format any calls for the right account type.
 
-#### `aux`
+#### aux
 
 - Type: [`Auxiliary`](#auxiliary)
 
 Auxiliary data for the account.
 
-#### `defaultValidator`
+#### defaultValidator
 
 - Type: `IERC7579Validator`
 
 The default validator that is used when no validator is specified by the user.
 
-#### `salt`
+#### salt
 
 - Type: `bytes32`
 
 The salt used to create the account.
 
-#### `initCode`
+#### initCode
 
 - Type: `bytes`
 
 The ERC-4337 initialization code for the account.
 
-#### `accountFactory`
+#### accountFactory
 
 - Type: `address`
 
@@ -88,19 +88,23 @@ enum AccountType {
 
 ### Properties
 
-#### `DEFAULT`
+#### DEFAULT
 
 The ERC-7579 Reference Implementation.
 
-#### `SAFE`
+#### SAFE
 
 The Safe using the [Safe7579](https://github.com/rhinestonewtf/safe7579) adapter.
 
-#### `KERNEL`
+#### KERNEL
 
 The Kernel account.
 
-#### `CUSTOM`
+#### NEXUS
+
+The Nexus account.
+
+#### CUSTOM
 
 A custom account type that a developer can define.
 
@@ -121,25 +125,25 @@ struct Auxiliary {
 
 ### Properties
 
-#### `entrypoint`
+#### entrypoint
 
 - Type: `IEntryPoint`
 
 The ERC-4337 entryPoint used.
 
-#### `gasSimulation`
+#### gasSimulation
 
 - Type: `UserOpGasLog`
 
 A contract that is used to log the gas used in a UserOperation.
 
-#### `registry`
+#### registry
 
 - Type: `IERC7484`
 
 The registry used for the account.
 
-#### `mockFactory`
+#### mockFactory
 
 - Type: `MockFactory`
 
@@ -161,19 +165,19 @@ struct Execution {
 
 ### Properties
 
-#### `target`
+#### target
 
 - Type: `address`
 
 The address of the target contract.
 
-#### `value`
+#### value
 
 - Type: `uint256`
 
 The value to send with the call.
 
-#### `callData`
+#### callData
 
 - Type: `bytes`
 
@@ -195,19 +199,19 @@ struct UserOpData {
 
 ### Properties
 
-#### `userOp`
+#### userOp
 
 - Type: `PackedUserOperation`
 
 The UserOperation.
 
-#### `userOpHash`
+#### userOpHash
 
 - Type: `bytes32`
 
 The hash of the UserOperation.
 
-#### `entrypoint`
+#### entrypoint
 
 - Type: `IEntryPoint`
 

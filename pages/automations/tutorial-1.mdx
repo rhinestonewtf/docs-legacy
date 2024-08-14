@@ -8,4 +8,214 @@ You will need to set up the smart account, install the module and create an auto
 
 <Steps>
 
+### Install the dependencies
+
+First, install the dependencies:
+
+```sh npm2yarn
+npm i viem @rhinestone/module-sdk @rhinestone/automations-sdk
+```
+
+Additionally, we will use permissionless.js to create and interact with the smart account. However, you can use another account SDK if you prefer:
+
+```sh npm2yarn
+npm i permissionless
+```
+
+### Create the smart account
+
+First, create a smart account using permissionless.js. The full code for this step is available in the [permissionless.js guide](/module-sdk/account-sdks/permissionless).
+
+```typescript copy
+const smartAccountClient = createSmartAccountClient({
+  account: safeAccount,
+  entryPoint: ENTRYPOINT_ADDRESS_V07,
+  chain: sepolia,
+  bundlerTransport: http(
+    "https://api.pimlico.io/v2/sepolia/rpc?apikey=API_KEY"
+  ),
+  middleware: {
+    gasPrice: async () => {
+      return (await pimlicoBundlerClient.getUserOperationGasPrice()).fast;
+    },
+  },
+}).extend(erc7579Actions({ entryPoint: ENTRYPOINT_ADDRESS_V07 }));
+```
+
+### Install the automations validator
+
+Next, we will first need to install the validator for the automations service. Currently, we use the `OwnableValidtor` but we will switch the the [smart sessions module](https://github.com/erc7579/smartsessions/) as soon as the audit is complete.
+
+```typescript copy
+import { getOwnableValidator } from "@rhinestone/module-sdk";
+
+const ownableValidator = getOwnableValidator({
+  owners: ["0x2DC2fb2f4F11DeE1d6a2054ffCBf102D09b62bE2"],
+  threshold: 1,
+});
+
+const opHash = await smartAccountClient.installModule({
+  type: ownableValidator.type,
+  address: ownableValidator.module,
+  context: ownableValidator.data,
+});
+```
+
+### Install the scheduled transfers module
+
+Next, we will install the scheduled transfers module. This module allows you to create time-based automations that can transfer funds to other accounts.
+
+```typescript copy
+import {
+  getScheduledTransfersExecutor,
+  getScheduledTransferData,
+} from "@rhinestone/module-sdk";
+
+const executionInterval = 60 _ 60 _ 24; // 1 day
+const numberOfExecutions = 10;
+const startDate = 1710759572; // UNIX timestamp
+
+const isNativeToken = false;
+const scheduledTransfer = {
+  startDate: startDate,
+  repeatEvery: executionInterval,
+  numberOfRepeats: numberOfExecutions,
+  token: {
+    token_address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", // USDC
+    decimals: 6,
+  },
+  amount: 10,
+  recipient: "0x5678...",
+};
+
+const executionData = getScheduledTransferData({
+  isNativeToken,
+  scheduledTransafer,
+});
+
+const scheduledTransfers = getScheduledTransfersExecutor({
+  executionInterval,
+  numberOfExecutions,
+  startDate,
+  executionData,
+});
+
+const opHash = await smartAccountClient.installModule({
+  type: scheduledTransfers.type,
+  address: scheduledTransfers.module,
+  context: scheduledTransfers.data,
+});
+```
+
+There is a lot going on here, but essentially you are initializing the module with the correct information, such as the token, amount, recipient, and execution interval.
+
+### Get the job id
+
+Using the `opHash` from the previous step, you can get the job id for the scheduled transfer:
+
+```typescript copy
+const receipt = await bundlerClient.waitForUserOperationReceipt({
+  hash: opHash,
+});
+```
+
+From this receipt, you can extract the job id out of the logs.
+
+### Create the automations client
+
+Next, create the automations client using the Automations SDK.
+
+```typescript copy
+import { createAutomationClient } from "@rhinestone/automations-sdk";
+import { OWNABLE_VALIDATOR_ADDRESS } from "@rhinestone/module-sdk";
+
+const automationClient = createAutomationClient({
+  account: "0x...",
+  apiKey: "YOUR_API_KEY",
+  accountInitCode: "0x",
+  network: 11155111,
+  validator: OWNABLE_VALIDATOR_ADDRESS,
+});
+```
+
+Here, you should pass account address from above as account and the API key you received from the automations service as apiKey. Since the account is already deployed, you can pass an empty initCode.
+
+### Create the automation data
+
+Next, create the automation details:
+
+```typescript
+import { getExecuteScheduledTransferAction } from "@rhinestone/module-sdk";
+
+const executeScheduledTranferAction = getExecuteScheduledTransferAction({
+  jobId: jobId,
+});
+
+const actions = [
+  {
+    type: "static",
+    target: executeScheduledTranferAction.target,
+    value: executeScheduledTranferAction.value,
+    callData: executeScheduledTranferAction.callData,
+  },
+];
+```
+
+### Create the time based trigger details
+
+Next, create the time based trigger details:
+
+```typescript
+const triggerData = {
+  cronExpression: "*/0 0 * * *",
+  startDate: startDate,
+};
+```
+
+Here, the `cronExpression` is a cron expression that defines the schedule for the automation. This is set to once a day, aligned with the above. However, you should replace this with your schedule. The `startDate` is the start date for the automation.
+
+### Create the automation
+
+Next, create the automation:
+
+```typescript
+const automation = await automationClient.createAutomation({
+  type: "time-based",
+  data: {
+    trigger: {
+      triggerData,
+    },
+    actions,
+    maxNumberOfExecutions: numberOfExecutions,
+  },
+});
+```
+
+### Sign the automation
+
+Before an automation can be created, the user needs to sign the automation to provide access control.
+
+```typescript
+const hash = await smartAccountClient.signMessage({
+  message: { raw: automation.hash },
+});
+
+const response = await automationClient.signAutomation({
+  automationId: automation.id,
+  signature: signature,
+});
+```
+
+Note that you will need to replace the signing flow with your own if you use another account SDK.
+
+The automation is now created and active.
+
+### Check the automation logs (optional)
+
+You can check the automation logs to see the status of the automation:
+
+```typescript
+const automationLogs = await automationClient.getAutomationLogs(automation.id);
+```
+
 </Steps>
