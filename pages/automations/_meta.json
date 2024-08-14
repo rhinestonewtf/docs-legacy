@@ -9,9 +9,11 @@
     "type": "separator",
     "title": "Guides"
   },
+  "triggers": "Triggers",
   "---": {
     "type": "separator",
     "title": "Reference"
   },
-  "automations-sdk": "Automations SDK"
+  "automations-sdk": "Automations SDK",
+  "glossary": "Glossary"
 }

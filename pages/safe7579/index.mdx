@@ -12,7 +12,7 @@ import Image from "next/image";
 
 **An ERC-7579 adapter for Safe accounts**
 
-Safe7579 provides full `ERC4337` and `ERC7579` compliance to Safe accounts by serving as the Safe's FallbackHandler and an enabled module. This setup allows Safe accounts to utilize all `ERC7579` modules. The launchpad is used to facilitate the setup of new safes with Safe7579 using the EntryPoint factory.
+Safe7579 provides full ERC-4337 and ERC-7579 compliance to Safe accounts by serving as the Safe's FallbackHandler and an enabled module. This setup allows Safe accounts to utilize all ERC-7579 modules. The launchpad is used to facilitate the setup of new safes with Safe7579 using the EntryPoint factory.
 
 The Safe7579 Adapter allows Safe accounts to access:
 
@@ -30,8 +30,6 @@ The Safe7579 Adapter allows Safe accounts to access:
     title: "Validators",
     description:
       "Determine whether a transaction is valid and should be executed",
-      href: "modulekit/build/validators",
-      isClickable: true,
   }}
 />
 
@@ -40,8 +38,6 @@ The Safe7579 Adapter allows Safe accounts to access:
     icon: <ExecutorsIcon width={48} height={48} />,
     title: "Executors",
     description: "Create executions on the account with custom logic",
-    href: "modulekit/build/executors",
-    isClickable: true,
   }}
 />
 
@@ -51,8 +47,6 @@ The Safe7579 Adapter allows Safe accounts to access:
     title: "Hooks",
     description:
       "Enforce conditions or execute logic pre- or post-execution",
-      href: "modulekit/build/hooks",
-      isClickable: true,
   }}
 />
 <ComponentCard
@@ -61,8 +55,6 @@ The Safe7579 Adapter allows Safe accounts to access:
     title: "Fallbacks",
     description:
       "Extend the account logic to add more functionality into the account",
-      href: "modulekit/build/fallbacks",
-      isClickable: true,
   }}
 />
 </Cards>
