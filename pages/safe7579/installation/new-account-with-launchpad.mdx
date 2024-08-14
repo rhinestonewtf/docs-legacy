@@ -1,0 +1,107 @@
+import { Steps } from "nextra/components";
+
+# How to deploy a Safe7579 account with the launchpad (recommended)
+
+The easiest way to create a new Safe7579 account is using the Safe7579 launchpad. The launchpad is a contract that abstracts the complexities away from initializing the account and ensures that this is done in an ERC-4337 compliant way. This guide will run through the high level steps to create a new Safe7579 account using the launchpad with Solidity snippets, but these should be easily translatable into other languages, like TypeScript.
+
+<Steps>
+
+### Create the InitData
+
+First, you will need to create the InitData for the Safe7579. This contains the main configuration for the Safe7579 account, such as the owners, validators, and attesters.
+
+```solidity copy
+address[] memory owners = new address[](1);
+owners[0] = signer1.addr;
+
+uint256 ownerThreshold = 1;
+
+address[] memory attesters = new address[](2);
+attesters[0] = attester1Addr;
+attesters[1] = attester2Addr;
+
+uint8 attesterThreshold = 2;
+
+ModuleInit[] memory validators = new ModuleInit[](1);
+validators[0] = ModuleInit({ module: address(defaultValidator), initData: bytes("") });
+
+ModuleInit[] memory executors = new ModuleInit[](0);
+ModuleInit[] memory fallbacks = new ModuleInit[](0);
+ModuleInit[] memory hooks = new ModuleInit[](0);
+
+Safe7579Launchpad.InitData memory initData = Safe7579Launchpad.InitData({
+    singleton: address(singleton),
+    owners: owners,
+    threshold: ownerThreshold,
+    setupTo: address(launchpad),
+    setupData: abi.encodeCall(
+        Safe7579Launchpad.initSafe7579,
+        (
+            address(safe7579),
+            executors,
+            fallbacks,
+            hooks,
+            attesters,
+            attesterThreshold
+        )
+    ),
+    safe7579: ISafe7579(safe7579),
+    validators: validators,
+    callData: ""
+});
+```
+
+Note that the callData field can be left empty for now since it will not be used in the hash. However, before sending off the first UserOperation, you will need to fill this field with the calldata to be executed.
+
+### Create the initHash
+
+Next, you will need to create the initHash. This is a unique hash for the `InitData`, excluding the `callData` field.
+
+```solidity copy
+bytes32 initHash = launchpad.hash(initData);
+```
+
+### Create the factoryInitializer
+
+Next, you will need to create the factoryInitializer, which will be sent to the factory to call on the newly deployed account.
+
+```solidity copy
+bytes memory factoryInitializer = abi.encodeCall(Safe7579Launchpad.preValidationSetup, (initHash, address(0), ""));
+```
+
+### Create the UserOperation
+
+Next, you will need to create the UserOperation during which the account will be created. The two main fields to encode specifically for the creation of the Safe7579 account are the callData and the initCode.
+
+```solidity copy
+userOp.callData = abi.encodeCall(Safe7579Launchpad.setupSafe, (initData));
+userOp.initCode = abi.encodePacked(
+    address(safeProxyFactory),
+    abi.encodeCall(
+        SafeProxyFactory.createProxyWithNonce,
+        (address(launchpad), factoryInitializer, uint256(salt))
+    )
+);
+```
+
+Here, the salt is any `uint256` value that can be used to create a unique address for the Safe7579 account.
+
+### Predict the Safe address
+
+Finally, you can predict the address of the Safe7579 account by calling the dedicated helper function.
+
+```solidity copy
+address predict = launchpad.predictSafeAddress({
+    singleton: address(launchpad),
+    safeProxyFactory: address(safeProxyFactory),
+    creationCode: type(SafeProxy).creationCode,
+    salt: salt,
+    factoryInitializer: factoryInitializer
+});
+```
+
+### Send the UserOperation
+
+Now that you have all the necessary data, you can send the UserOperation to the EntryPoint and your new Safe7579 account will be deployed.
+
+</Steps>

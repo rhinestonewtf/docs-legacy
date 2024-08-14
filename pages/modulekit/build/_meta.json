@@ -1,8 +1,11 @@
 {
-  "module-basics": "Module Basics",
+  "core": "Core",
   "validators": "Validators",
   "executors": "Executors",
-  "hooks": "Hooks",
   "fallbacks": "Fallbacks",
-  "integrations": "Integrations"
+  "hooks": "Hooks",
+  "scheduling-module": "Scheduling Module",
+  "trusted-forwarder": "Trusted Forwarder",
+  "flashloan": "Flashloan",
+  "registry-adapter": "Registry Adapter"
 }

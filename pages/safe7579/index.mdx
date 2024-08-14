@@ -1,0 +1,67 @@
+import { Cards } from "nextra-theme-docs";
+import { ComponentCard } from "../../components/ComponentCard";
+import {
+  ValidatorsIcon,
+  ExecutorsIcon,
+  HooksIcon,
+  FallbacksIcon,
+} from "../../components/icons";
+import Image from "next/image";
+
+# Safe7579
+
+**An ERC-7579 adapter for Safe accounts**
+
+Safe7579 provides full ERC-4337 and ERC-7579 compliance to Safe accounts by serving as the Safe's FallbackHandler and an enabled module. This setup allows Safe accounts to utilize all ERC-7579 modules. The launchpad is used to facilitate the setup of new safes with Safe7579 using the EntryPoint factory.
+
+The Safe7579 Adapter allows Safe accounts to access:
+
+- **ERC-4337**: Using the ERC-4337 flow for gas abstraction and a permissionless mempool.
+- **Validation Logic**: Modular validation logic for Safe transactions, such as passkeys or weighted multi-sigs.
+- **Execution Logic**: Modular execution logic for Safe transactions, such as conditional execution based on call returns.
+- **Hook Behavior**: Enforcing conditions or executing logic pre- or post-execution, such as spending limits or virtual cold storage.
+
+### Supported Module Types
+
+<Cards className="gap-x-[15px]">
+<ComponentCard
+  component={{
+    icon: (<ValidatorsIcon width={48} height={48}/>),
+    title: "Validators",
+    description:
+      "Determine whether a transaction is valid and should be executed",
+  }}
+/>
+
+<ComponentCard
+  component={{
+    icon: <ExecutorsIcon width={48} height={48} />,
+    title: "Executors",
+    description: "Create executions on the account with custom logic",
+  }}
+/>
+
+<ComponentCard
+  component={{
+    icon: (<HooksIcon width={48} height={48}/>),
+    title: "Hooks",
+    description:
+      "Enforce conditions or execute logic pre- or post-execution",
+  }}
+/>
+<ComponentCard
+  component={{
+    icon: (<FallbacksIcon width={48} height={48}/>),
+    title: "Fallbacks",
+    description:
+      "Extend the account logic to add more functionality into the account",
+  }}
+/>
+</Cards>
+
+## Useful starting resources
+
+- Blog: [Introducing Safe7579](https://blog.rhinestone.wtf/introducing-safe7579-cf390b630d28)
+- [Getting started tutorial](/module-sdk/tutorial-1) using permissionless.js
+- [Safe7579 source code](https://github.com/rhinestonewtf/safe7579)
+- [ERC-7579 Modules](https://erc7579.com/modules)

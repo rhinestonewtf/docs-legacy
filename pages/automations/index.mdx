@@ -1,0 +1,78 @@
+import { Cards, Card } from "nextra-theme-docs";
+import Image from "next/image";
+
+# Rhinestone Automations
+
+**An offchain service for executing automations on smart accounts**
+
+Rhinestone Automations allows developers to create automations that will be executed on a smart account based on a trigger. Existing triggers include:
+
+- **Time-based trigger**: Execute automations at a specified time interval -- e.g. every hour or every 7 days.
+- **Event-based trigger**: Execute automation based on an event emitted onchain -- e.g. transfer events on an ERC-20 contract
+
+Accounts supported by Rhinestone Automations:
+
+<Cards>
+  <Card
+    title="ERC-7579"
+    href="https://erc7579.com/"
+    icon={
+      <Image
+        src="/logos/erc7579.png"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: "5px" }}
+      />
+    }
+  />
+  <Card
+    title="Safe"
+    href="https://safe.global/"
+    icon={
+      <Image
+        src="/logos/safe.png"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: "5px" }}
+      />
+    }
+  />
+  <Card
+    title="Kernel (v3) (soon)"
+    href="https://zerodev.app/"
+    icon={
+      <Image
+        src="/logos/zerodev.png"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: "5px" }}
+      />
+    }
+  />
+  <Card
+    title="Biconomy (v3) (soon)"
+    href="https://biconomy.io/"
+    icon={
+      <Image
+        src="/logos/biconomy.jpeg"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: "5px" }}
+      />
+    }
+  />
+</Cards>
+
+## Automations SDK
+
+**A TypeScript library for using Rhinestone Automations**
+
+The Rhinestone Automations SDK allows you to easily interact with Rhinestone Automations and create, sign, and manage automations. It consists of an [automations client](/automations/automations-sdk/createAutomationClient) that can be used to create and manage smart account automations.
+
+## Useful starting resources
+
+- [Automations SDK source code](https://github.com/rhinestonewtf/automations-sdk)

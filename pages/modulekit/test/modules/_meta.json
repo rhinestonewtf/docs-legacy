@@ -1,0 +1,5 @@
+{
+  "installModule": "installModule",
+  "isModuleInstalled": "isModuleInstalled",
+  "uninstallModule": "uninstallModule"
+}

@@ -1,5 +1,3 @@
-const colors = require("tailwindcss/colors");
-
 const makePrimaryColor =
   (l) =>
   ({ opacityValue }) => {
@@ -20,6 +18,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        favorit: ["var(--font-ABCFavoritBook)"],
+        favoritMono: ["var(--font-ABCFavoritMonoRegular)"],
+      },
       colors: {
         primary: {
           50: makePrimaryColor(97),

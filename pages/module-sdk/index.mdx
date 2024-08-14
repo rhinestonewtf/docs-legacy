@@ -1,8 +1,10 @@
 import { ModuleSDKBanner } from "../../components/banners";
+import { Cards, Card } from "nextra-theme-docs";
+import Image from "next/image";
 
 # ModuleSDK
 
-**A TypeScript library for using Smart Account Modules in Applications**
+**A TypeScript library for using smart account modules in applications**
 
 Use the ModuleSDK to integrate smart account modules into your application. It allows you to easily install and uninstall modules for any [ERC-7579](https://erc7579.com/) account, interact with and use modules using dedicated helper utilites and can be used alongside existing account SDKs such as [permissionless.js](https://www.npmjs.com/package/permissionless), [Biconomy](https://www.npmjs.com/package/@biconomy/account), [ZeroDev](https://docs.zerodev.app) and many more.
 
@@ -17,26 +19,80 @@ The Module SDK is split into two components:
 
 Current accounts supported by the Module SDK include:
 
-- **Safe**
-- **Kernel v3**
-- **Biconomy v3** (soon)
+<Cards>
+  <Card
+    title="ERC-7579"
+    href="https://erc7579.com/"
+    icon={
+      <Image
+        src="/logos/erc7579.png"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: "5px" }}
+      />
+    }
+  />
+  <Card
+    title="Safe"
+    href="https://safe.global/"
+    icon={
+      <Image
+        src="/logos/safe.png"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: "5px" }}
+      />
+    }
+  />
+  <Card
+    title="Kernel (v3)"
+    href="https://zerodev.app/"
+    icon={
+      <Image
+        src="/logos/zerodev.png"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: "5px" }}
+      />
+    }
+  />
+  <Card
+    title="Biconomy (v3) (soon)"
+    href="https://biconomy.io/"
+    icon={
+      <Image
+        src="/logos/biconomy.jpeg"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: "5px" }}
+      />
+    }
+  />
+</Cards>
 
-The integrated modules include:
+## Core Modules
 
-- **Auto Savings**: Automatically allocate a set percentage of any incoming token to a target vault
-- **ColdStorage Hook**: Restrict all transactions with a timelock and only allow funds to be sent to a single address
-- **Deadman Switch**: Recover an account after a specified inactive period
-- **Hook Multiplexer**: Combine multiple hooks into one with fine-grained control over when they are called
-- **Multi Factor**: Use multiple validators in combination as a multi-factor authentication system
-- **Ownable Executor**: Allow an account to control a subaccount and pay for its transaction fees
-- **Ownable Validator**: Authenticate on your account with multiple ECDSA keys
-- **Registry Hook**: Query the Module Registry before installing and using modules
-- **Scheduled Orders**: Execute swaps on a specified schedule
-- **Scheduled Transfers**: Transfer funds on a specified schedule
-- **Social Recovery:** Recover your account using a set of guardians
-- **WebAuthn Validator**: Use passkeys to sign transactions to be executed on the account
+| Module                                                                  | Description                                                                                                                                                                                                                                                                                                                                                        |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [Ownable Validator](/module-sdk/modules/ownable-validator)              | This module enables an EOA as a signer for a smart account. It is ideal for product use cases where users are expected to be crypto-native and possess an EOA wallet. Alternatively, it can be combined with MPC providers [embedded signers](https://docs.pimlico.io/permissionless/how-to/signers).                                                              |
+| [Passkeys / Webauthn Validator](/module-sdk/modules/webAuthn-validator) | Enables a passkey as a signer on a smart account, allowing users to sign cryptographic messages with their biometrics via the secure enclave of their device or use a preferred password manager.                                                                                                                                                                  |
+| [Social Recovery](/module-sdk/modules/social-recovery)                  | This allows users to specify one or multiple guardians with an m or n threshold for account recovery. The user sets a guardian by expressing the public address of the guardian.                                                                                                                                                                                   |
+| [Multifactor Authentication (MFA)](/module-sdk/modules/multi-factor)    | The module is a multiplexer, which allows developers to compose any set of signer modules together. For example, passkeys can be set as the main signer, but passkeys and an ECDSA validation scheme are required when making high-value transfers.                                                                                                                |
+| [Module Registry Adapter](/module-sdk/modules/registry-hook)            | The Module Registry enforces security guarantees and standards when installing a module on a smart account. The Module Registry stores onchain security attestations made by independent auditors. When installing a new module on the account, the Module Registry Adapter queries the Module Registry and checks that pre-set security thresholds have been met. |
+| [Scheduled Transfers](/module-sdk/modules/scheduled-transfers)          | Allows for automated transfers to be triggered on a smart account. The user can create a schedule on which a relayer will execute the transfers based on some parameters, like frequency or number of repetitions.                                                                                                                                                 |
+| [Scheduled Orders](/module-sdk/modules/scheduled-orders)                | Allows for automated token swaps to be triggered on a smart account. The user can create a schedule on which a relayer will execute the swaps based on some parameters, like frequency or number of repetitions.                                                                                                                                                   |
+| [Auto Save](/module-sdk/modules/auto-savings)                           | This is a more opinionated version of the Schedule Transfer module. It allows a user to automatically transfer a set percentage of any received token to a target ERC-4626 yield-bearing vault.                                                                                                                                                                    |
+| [Deadman Switch](/module-sdk/modules/deadman-switch)                    | Recover an account after a specified inactive period. The user sets the target recovery address (this could be another smart account or a typical EOA wallet) along with the required period of inactivity.                                                                                                                                                        |
+| [Ownable Executor](/module-sdk/modules/ownable-executor)                | Create a hierarchy ownership structure across smart accounts. This module allows one smart account to have execution rights on another smart account. The execution rights can trigger any transaction with the owner account paying for gas. This can enable automated relationships between DAOs and sub-DAOs or main accounts to sub-accounts.                  |
+| [Cold Storage Hook](/module-sdk/modules/cold-storage-hook)              | Creates timelock and transfer restrictions. It restricts execution on the account in two ways: 1) a timelock period and 2) transfers are limited to just one address.                                                                                                                                                                                              |
+| [Flash Loan](/modulekit)                                                | A module base found in [ModuleKit](/modulekit) allows developers to easily create executor modules that tap into flash loan capabilities, as described in ERC-3156. This could be used to create a peer-to-peer rental system without needing an escrow contract or over-collateralization.                                                                        |
+| [Hook Multiplexer](/module-sdk/modules/hook-multi-plexer)               | An opinionated router for combining multiple hook modules. Hooks are modules that are triggered before or after execution and can be used to enforce certain smart account behavior. Some examples of hooks include spending limits, white/blacklists, and more. This is an important module for accounts with only one global hook slot.                          |
 
-### Useful starting resources on higher-level concepts
+## Useful starting resources
 
 - Blog: [Part 1: Modular Account Abstraction for Everyone Else](https://blog.rhinestone.wtf/part-1-modular-account-abstraction-for-everyone-else-84567422bc46)
 - Blog: [App-layer Innovation with Modular Smart Accounts](https://blog.rhinestone.wtf/app-layer-innovation-with-modular-smart-accounts-8a9d7030c908)

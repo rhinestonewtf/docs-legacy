@@ -1,0 +1,34 @@
+# signAutomation
+
+Signs the automation hash with your account signer in order to activate the automation.
+
+## Usage
+
+```typescript copy
+const response = await automationClient.signAutomation({
+  automationId: "your-automation-id",
+  signature: "0x...",
+});
+```
+
+## Parameters
+
+### automationId
+
+- Type: `string`
+
+Id of the automation to sign.
+
+### signature
+
+- Type: `Hex`
+
+Signature of the automation hash you got when creating the automation.
+
+## Returns
+
+### success
+
+- Type: `boolean`
+
+True if the automation is signed successfully.

@@ -1,0 +1,79 @@
+# getAutomation
+
+Get automation details by id.
+
+## Usage
+
+```typescript copy
+const automation = await automationClient.getAutomation("your-automation-id");
+```
+
+## Parameters
+
+### automationId
+
+- Type: `string`
+
+Id of the automation to get details.
+
+## Returns
+
+### id
+
+- Type: `string`
+
+Id of the created automation.
+
+### account
+
+- Type: `Address`
+
+Account address of the automation.
+
+### validator
+
+- Type: `Address`
+
+Address of the ECDSA validator module to use when constructing user ops in the automation service.
+
+### network
+
+- Type: `number`
+
+Chain id of the network for this automation.
+
+### maxNumberOfExecutions
+
+- Type: `number`
+
+Maximum number of executions for the automation.
+
+### numberOfExecutionsExecuted
+
+- Type: `number`
+
+Number of executions executed for the automation.
+
+### actions
+
+- Type: `Action[]`
+
+Actions to be executed when the automation is triggered.
+
+### trigger
+
+- Type: `Trigger`
+
+Trigger of the automation.
+
+### active
+
+- Type: `boolean`
+
+Status of the automation.
+
+### signed
+
+- Type: `boolean`
+
+Status of the automation hash signed by the account owner.

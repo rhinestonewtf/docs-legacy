@@ -1,14 +1,14 @@
 {
-  "auto-savings": "Auto Savings",
-  "cold-storage-hook": "Cold Storage Hook",
-  "deadman-switch": "Deadman Switch",
-  "hook-multi-plexer": "Hook MultiPlexer",
-  "multi-factor": "Multi Factor",
-  "ownable-executor": "Ownable Executor",
   "ownable-validator": "Ownable Validator",
-  "registry-hook": "Registry Hook",
-  "scheduled-orders": "Scheduled Orders",
-  "scheduled-transfers": "Scheduled Transfers",
+  "webAuthn-validator": "WebAuthn Validator",
   "social-recovery": "Social Recovery",
-  "webAuthn-validator": "WebAuthn Validator"
+  "multi-factor": "Multi Factor",
+  "registry-hook": "Registry Hook",
+  "scheduled-transfers": "Scheduled Transfers",
+  "scheduled-orders": "Scheduled Orders",
+  "auto-savings": "Auto Savings",
+  "deadman-switch": "Deadman Switch",
+  "ownable-executor": "Ownable Executor",
+  "cold-storage-hook": "Cold Storage Hook",
+  "hook-multi-plexer": "Hook MultiPlexer"
 }

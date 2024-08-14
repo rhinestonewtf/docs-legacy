@@ -7,7 +7,8 @@
     "type": "separator",
     "title": "Learn more"
   },
-  "rhinestone-protocol": "Rhinestone Protocol",
+  "tooling": "Tooling overview",
+  "rhinestone-infrastructure": "Rhinestone Infrastructure",
   "modules": "Modules explained",
   "--": {
     "type": "separator",
@@ -16,5 +17,6 @@
   "account-abstraction": "Account Abstraction",
   "erc-7484": "ERC-7484",
   "erc-7579": "ERC-7579",
-  "address-book": "Address Book"
+  "address-book": "Address book",
+  "audits": "Audits"
 }

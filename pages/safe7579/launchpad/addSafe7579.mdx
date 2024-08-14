@@ -1,0 +1,83 @@
+# addSafe7579
+
+Allows an existing Safe account to add the Safe7579 adapter. Note, this function should be called via delegatecall from the Safe.
+
+## Usage
+
+```solidity copy
+ModuleInit[] memory validators = new ModuleInit[](1);
+validators[0] = ModuleInit({ module: address(defaultValidator), initData: bytes("") });
+
+ModuleInit[] memory executors = new ModuleInit[](1);
+executors[0] = ModuleInit({ module: address(defaultExecutor), initData: bytes("") });
+
+ModuleInit[] memory fallbacks = new ModuleInit[](0);
+ModuleInit[] memory hooks = new ModuleInit[](0);
+
+address[] memory attesters = new address[](2);
+attesters[0] = attester1Addr;
+attesters[1] = attester2Addr;
+
+uint8 threshold = 2;
+
+bytes memory data = abi.encodeCall(
+    Safe7579Launchpad.addSafe7579,
+    (
+        address(safe7579),
+        validators,
+        executors,
+        fallbacks,
+        hooks,
+        attesters,
+        threshold
+    )
+);
+```
+
+## Parameters
+
+### safe7579
+
+- Type: `address`
+
+The address of the Safe7579 contract.
+
+### validators
+
+- Type: [`ModuleInit[]`](/safe7579/glossary/types#moduleinit)
+
+An array of `ModuleInit` structs that contain the addresses of the validators and their initialization data.
+
+### executors
+
+- Type: [`ModuleInit[]`](/safe7579/glossary/types#moduleinit)
+
+An array of `ModuleInit` structs that contain the addresses of the executors and their initialization data.
+
+### fallbacks
+
+- Type: [`ModuleInit[]`](/safe7579/glossary/types#moduleinit)
+
+An array of `ModuleInit` structs that contain the addresses of the fallbacks and their initialization data.
+
+### hooks
+
+- Type: [`ModuleInit[]`](/safe7579/glossary/types#moduleinit)
+
+An array of `ModuleInit` structs that contain the addresses of the hooks and their initialization data.
+
+### attesters
+
+- Type: `address[]`
+
+An array of addresses that are trusted attesters for the account to use the [Module Registry](/module-registry).
+
+### threshold
+
+- Type: `uint8`
+
+The number of attesters required to have attested to a module before it can be installed.
+
+## Returns
+
+None

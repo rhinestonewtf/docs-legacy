@@ -1,11 +1,76 @@
+import { Cards, Card } from "nextra-theme-docs";
+import { CoreModulesBanner } from "../../components/banners";
+import Image from "next/image";
+
 # Getting started
 
-Rhinestone is building a number of different tools that help either build, test, deploy and distribute modules or to use them in applications and wallets. Of course, many developers will build their own modules and use them in their own applications. In either case, the following sections will help you get started.
+Rhinestone’s tools and services make building with modular smart accounts a breeze.
 
-## Module developers
+## Use ModuleSDK to install your first module
 
-The fastest way to start building a smart account module is by using ModuleKit, a development kit for building and testing modules. ModuleKit simplifies the entire lifecycle of a module, including the building, testing and deploying phases. To learn out more about ModuleKit, check out the [ModuleKit documentation](../modulekit/).
+If you are new to smart account modules, we recommend checking out the [ModuleSDK](/module-sdk), a typeScript library for integrating modules into applications and wallets.
 
-## Application developers
+Get started with one of our [Core Modules](/module-sdk#core-modules):
 
-If you are an application developer and want to use modules in your application, you can use the Module Store to find and install modules. The Module Store, together with our Module SDK, will allow you to easily integrate modules into your application. To learn more about the Module SDK, check out the [SDK documentation](../module-sdk/).
+<div className="my-8">
+  <CoreModulesBanner width={1000} height={400} />
+</div>
+
+ModuleSDK is built to be used alongside existing account abstraction SDKs, such as permissionless.js, Biconomy SDK, ZeroDev SDK, and userop.js. Follow this [simple tutorial](/module-sdk/tutorial-1) to install your first module.
+
+## Supported smart accounts
+
+<Cards>
+  <Card
+    title="ERC-7579"
+    href="https://erc7579.com/"
+    icon={
+      <Image
+        src="/logos/erc7579.png"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: "5px" }}
+      />
+    }
+  />
+  <Card
+    title="Safe"
+    href="https://safe.global/"
+    icon={
+      <Image
+        src="/logos/safe.png"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: "5px" }}
+      />
+    }
+  />
+  <Card
+    title="Kernel (v3)"
+    href="https://zerodev.app/"
+    icon={
+      <Image
+        src="/logos/zerodev.png"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: "5px" }}
+      />
+    }
+  />
+  <Card
+    title="Biconomy (v3) (soon)"
+    href="https://biconomy.io/"
+    icon={
+      <Image
+        src="/logos/biconomy.jpeg"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: "5px" }}
+      />
+    }
+  />
+</Cards>

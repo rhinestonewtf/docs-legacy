@@ -1,0 +1,58 @@
+import { Steps } from "nextra/components";
+
+# How to turn an existing Safe into a Safe7579 account
+
+If you have an existing Safe, it is straightforward to turn it into a Safe7579 account. Note that you will also still be able to use your Safe as it was before, but you will also be able to use the new features of the Safe7579 account.
+
+<Steps>
+
+### Set up the initial data
+
+First, you will need to set up the initial data for the new account. This includes the modules and attesters.
+
+```solidity copy
+ModuleInit[] memory validators = new ModuleInit[](1);
+validators[0] = ModuleInit({ module: address(defaultValidator), initData: bytes("") });
+
+ModuleInit[] memory executors = new ModuleInit[](0);
+ModuleInit[] memory fallbacks = new ModuleInit[](0);
+ModuleInit[] memory hooks = new ModuleInit[](0);
+
+address[] memory attesters = new address[](2);
+attesters[0] = attester1Addr;
+attesters[1] = attester2Addr;
+
+uint8 attesterThreshold = 2;
+```
+
+Note that we have left the module types apart from validators empty for brevity, but you might want to install certain modules as well.
+
+### Create the calldata
+
+Next, you will need to create the calldata for the call to turn your Safe into a Safe7579 account.
+
+```solidity copy
+address to = address(launchpad);
+uint256 value = 0;
+bytes memory data = abi.encodeCall(
+    Safe7579Launchpad.addSafe7579,
+    (
+        address(safe7579),
+        validators,
+        executors,
+        fallbacks,
+        hooks,
+        attesters,
+        attesterThreshold
+    )
+);
+Enum.Operation operation = Enum.Operation.DelegateCall;
+```
+
+Note that this call needs to be a delegatecall.
+
+### Execute the call on the Safe
+
+Finally, you will need to execute the call on the Safe. For this, you might also need to calculate the gas fields and fill out the rest of the required fields for Safe transactions. However, these are independent of the Safe7579 and might be handled for you depending on what tool is being used.
+
+</Steps>

@@ -1,0 +1,19 @@
+{
+  "index": "Overview",
+  "getting-started": "Getting Started",
+  "-": {
+    "type": "separator",
+    "title": "Tutorials"
+  },
+  "--": {
+    "type": "separator",
+    "title": "Guides"
+  },
+  "installation": "Installation",
+  "---": {
+    "type": "separator",
+    "title": "Reference"
+  },
+  "launchpad": "Launchpad",
+  "glossary": "Glossary"
+}

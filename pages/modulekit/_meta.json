@@ -3,16 +3,22 @@
   "getting-started": "Getting Started",
   "-": {
     "type": "separator",
-    "title": "Module development"
-  },
-  "build": "Build",
-  "test": "Test",
-  "deploy": "Deploy",
-  "advanced": "Advanced",
-  "--": {
-    "type": "separator",
     "title": "Tutorials"
   },
-  "build-multi-owner-validator": "Multi-Owner Validator",
-  "build-automated-swap-executor": "Auto-swap Executor"
+  "tutorial-1": "1: Multi-Owner Validator",
+  "tutorial-2": "2: Auto-Swap Executor",
+  "--": {
+    "type": "separator",
+    "title": "Guides"
+  },
+  "testing": "Testing",
+  "deploying": "Deploying",
+  "---": {
+    "type": "separator",
+    "title": "Reference"
+  },
+  "build": "Building",
+  "test": "Testing",
+  "deploy": "Deploying",
+  "glossary": "Glossary"
 }

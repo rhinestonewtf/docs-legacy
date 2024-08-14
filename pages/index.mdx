@@ -1,50 +1,72 @@
 import { Cards } from "nextra-theme-docs";
 import { ComponentCard } from "../components/ComponentCard";
-import { ModuleKitIcon, SandboxIcon, SDKIcon } from "../components/icons";
+import { ModuleKitIcon, LogoIcon, SDKIcon } from "../components/icons";
 import { Bleed } from "../components/Bleed";
+import { Button } from "../components/Button";
 
 <Bleed>
 
 # Welcome to Rhinestone
 
-Rhinestone is dedicated to transforming smart accounts into a platform for permissionless innovation. Our mission is to create a secure ecosystem of smart account modules, enabling developers to build powerful on-chain products.
+Rhinestone is the leading ERC-7579 modular smart account infrastructure platform. We provide tools and services that help developers build, deploy, and manage the smart account modules that will power the next wave of powerful onchain products with seamless UX.
 
-Rhinestone is pioneering a new infrastructure layer that allows any developer to build smart account modules on top of any compatible smart account vendor. Today we support Safe, Biconomy, and ZeroDev.
-
-**Module developers** use Rhinestone to build and distribute their products and services via our integration with these account vendors. **Application developers** access these modules via a module marketplace or self serve through our developer tools.
-
-#### Our modular smart account stack
+<div className="flex flex-row justify-center gap-x-[10px] mb-8">
+  <Button
+    href="/module-sdk/tutorial-1"
+    buttonComponent="Get started"
+    colors="bg-primary-400 dark:bg-primary-400 text-white dark:text-white"
+  />
+  <Button
+    href="http://t.me/kurt_larsen"
+    buttonComponent="Get in touch"
+    colors="bg-transparent text-primary-400 dark:text-white border-primary-400 dark:border-primary-400"
+  />
+</div>
 
 <Cards className="gap-x-[15px]">
 <ComponentCard
   component={{
-    icon: (<ModuleKitIcon width={48} height={48}/>),
-    title: "ModuleKit",
+    icon: <SDKIcon width={48} height={48} />,
+    title: "Beginner",
     description:
-      "ModuleKit is a developer tool for building, testing, and deploying smart account modules",
+      "The simplest way to use pre-built smart account modules without writing Solidity. Tap into powerful smart account features with just a few lines of code.",
+href: "/module-sdk",
+buttonTitle: "Get started",
+}}
+/>
+
+<ComponentCard
+  component={{
+    icon: <ModuleKitIcon width={48} height={48} />,
+    title: "Advanced",
+    description:
+      "A set of developer tools and helper libraries for building smart account-agnostic modules. Tap into the programmable validation and execution of smart accounts to unlock powerful onchain products with seamless UX.",
     href: "/modulekit",
+    buttonTitle: "Get started",
   }}
 />
 
 <ComponentCard
   component={{
-    icon: <SandboxIcon width={48} height={48} />,
-    title: "Module Sandbox",
+    icon: (<LogoIcon width={48} height={48}/>),
+    title: "Infrastructure",
     description:
-      "Module Sandbox is a frontend playground for building and testing UI components for modules",
-    href: "/sandbox",
-  }}
-/>
-
-<ComponentCard
-  component={{
-    icon: (<SDKIcon width={48} height={48}/>),
-    title: "Module SDK",
-    description:
-      "Our SDK simplifies the integration and usage of smart account modules for application developers",
-    href: "/module-sdk",
+      "Explore Rhinestone’s services for security and smart account automation. Get your module audited and integrated into the Module Registry and ModuleSDK, and build automations with the Rhinestone Automations service.",
+      href: "/overview/rhinestone-infrastructure",
+      buttonTitle: "Learn more",
   }}
 />
 </Cards>
+
+### What are Smart Account Modules
+
+Modules are self-contained smart contracts that extend a smart account's feature set. This creates a new paradigm for developers to access the programmable validation and execution of smart accounts, unlocking new product capabilities without compromising user self-sovereignty.
+
+There are four types of modules today:
+
+- **Validators:** Allow developers to modify how transactions are authenticated or what can be authorized against an account. [ZK Email](https://blog.rhinestone.wtf/private-email-recovery-with-zk-email-3405ce4d866e) is a novel example of how powerful and versatile a validator can be.
+- **Executors:** Allow developers to create executions on an account with custom logic. This, for example, can unlock portfolio management products like a take profit or stop loss feature on a DeFi platform.
+- **Hooks:** Allow developers to augment a smart account's execution flow by hooking in pre- or post-execution and enforcing conditions or any custom logic. A simple example is a spending limit.
+- **Fallbacks:** Extend the account logic to add more functionality. For example, this can allow an account to be compatible with new module types in the future.
 
 </Bleed>

@@ -1,5 +1,6 @@
 import { useTheme } from "next-themes";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export const ExecutorsIcon = ({
   width,
@@ -8,19 +9,21 @@ export const ExecutorsIcon = ({
   width: number;
   height: number;
 }) => {
-  const { systemTheme, theme } = useTheme();
-  const currentTheme = theme === "system" ? systemTheme : theme;
-
-  return (
-    <Image
-      src={
-        currentTheme == "light"
-          ? "/icons/executors_light.png"
-          : "/icons/executors_light.png"
-      }
-      width={width}
-      height={height}
-      alt="Executors Icon"
-    />
+  const [src, setSrc] = useState<string>(
+    "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
   );
+  const { resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    switch (resolvedTheme) {
+      case "light":
+        setSrc("/icons/executors_light.png");
+        break;
+      case "dark":
+        setSrc("/icons/executors_dark.png");
+        break;
+    }
+  }, [resolvedTheme]);
+
+  return <Image src={src} width={width} height={height} alt="Executors Icon" />;
 };

@@ -1,0 +1,59 @@
+# Getting started
+
+## Using ModuleSDK (for frontends)
+
+Using the ModuleSDK and an account SDK, such as permissionless.js, you can create a new Safe7579 account, create userOps and install existing ERC-7579 modules.
+
+### Installation
+
+Install viem as a peer dependency and then install the Module SDK and permissionless.js:
+
+```sh npm2yarn
+npm i viem @rhinestone/module-sdk permissionless
+```
+
+### Quick Start
+
+Follow [our tutorial](/module-sdk/tutorial-1) to create a new Safe7579 account and use it.
+
+## Using the repository (for onchain)
+
+The Safe7579 is built using Foundry. To use it, clone the [git repository](https://github.com/rhinestonewtf/safe7579) and follow the steps below.
+
+### Installation
+
+To install dependencies, run:
+
+```bash
+pnpm install
+```
+
+### Quick Start
+
+To build the project, run:
+
+```bash
+pnpm build
+```
+
+To run tests, run:
+
+```bash
+pnpm test
+```
+
+### Deployment
+
+To deploy the Safe7579 contracts, run:
+
+```bash
+source .env && forge script script/Deploy.s.sol:DeployScript --rpc-url $DEPLOYMENT_RPC --broadcast --sender $DEPLOYMENT_SENDER --verify
+```
+
+To deploy a Safe7579 account, run:
+
+```bash
+source .env && forge script script/DeployAccount.s.sol:DeployAccountScript --rpc-url $DEPLOYMENT_RPC --broadcast --sender $DEPLOYMENT_SENDER --verify
+```
+
+Note, for both of these, you will need to add `PK`, `DEPLOYMENT_SENDER`, `DEPLOYMENT_RPC` and `ETHERSCAN_API_KEY` to your `.env` file.

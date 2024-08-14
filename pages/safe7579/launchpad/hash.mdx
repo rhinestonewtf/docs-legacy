@@ -1,0 +1,60 @@
+# hash
+
+Create a unique hash for the `InitData`, excluding the `callData` field.
+
+## Usage
+
+```solidity copy
+address[] memory owners = new address[](1);
+owners[0] = signer1.addr;
+
+address[] memory attesters = new address[](2);
+attesters[0] = attester1Addr;
+attesters[1] = attester2Addr;
+
+ModuleInit[] memory validators = new ModuleInit[](1);
+validators[0] = ModuleInit({ module: address(defaultValidator), initData: bytes("") });
+
+ModuleInit[] memory executors = new ModuleInit[](0);
+ModuleInit[] memory fallbacks = new ModuleInit[](0);
+ModuleInit[] memory hooks = new ModuleInit[](0);
+
+Safe7579Launchpad.InitData memory initData = Safe7579Launchpad.InitData({
+    singleton: address(singleton),
+    owners: owners,
+    threshold: 1,
+    setupTo: address(launchpad),
+    setupData: abi.encodeCall(
+        Safe7579Launchpad.initSafe7579,
+        (
+            address(safe7579),
+            executors,
+            fallbacks,
+            hooks,
+            attesters,
+            2
+        )
+    ),
+    safe7579: ISafe7579(safe7579),
+    validators: validators,
+    callData: ""
+});
+
+bytes32 initHash = launchpad.hash(initData);
+```
+
+## Parameters
+
+### initData
+
+- Type: [`InitData`](/safe7579/glossary/types#initdata)
+
+The `InitData` struct to hash.
+
+## Returns
+
+### initHash
+
+- Type: `bytes32`
+
+The hash of the initData.

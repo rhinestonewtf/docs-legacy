@@ -1,0 +1,57 @@
+# createAutomationClient
+
+Create an Automation client to interact with the automation service.
+
+## Usage
+
+```typescript copy
+import { createAutomationClient } from "@rhinestone/automations-sdk";
+
+const automationClient = createAutomationClient({
+  account: "0x...",
+  apiKey: "YOUR_API_KEY",
+  accountInitCode: "0x",
+  network: 11155111,
+  validator: "0x...",
+});
+```
+
+## Parameters
+
+### account
+
+- Type: `Address`
+
+Account address you want to setup automation for.
+
+### apiKey
+
+- Type: `string`
+
+API key to authenticate with the automation service.
+
+### accountInitCode
+
+- Type: `Hex`
+
+Account initCode in case account is not deployed yet.
+
+### network
+
+- Type: `number`
+
+Chain id of the network. Note: Currently only sepolia testnet is supported.
+
+### validator
+
+- Type: `Address`
+
+Address of the ECDSA validator module to use when constructing user ops in the automation service. The validator module should be installed in the account and automation service account should be added as an owner of the validator module before start using the automation service.
+
+## Returns
+
+### AutomationClientInstance
+
+- Type: `AutomationClientInstance`
+
+Automation Client Instance to interact with the automation service.

@@ -1,5 +1,6 @@
 import { useTheme } from "next-themes";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export const ModuleSDKBanner = ({
   width,
@@ -8,19 +9,23 @@ export const ModuleSDKBanner = ({
   width: number;
   height: number;
 }) => {
-  const { systemTheme, theme } = useTheme();
-  const currentTheme = theme === "system" ? systemTheme : theme;
+  const [src, setSrc] = useState<string>(
+    "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+  );
+  const { resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    switch (resolvedTheme) {
+      case "light":
+        setSrc("/banners/module_sdk_banner_light.png");
+        break;
+      case "dark":
+        setSrc("/banners/module_sdk_banner_dark.png");
+        break;
+    }
+  }, [resolvedTheme]);
 
   return (
-    <Image
-      src={
-        currentTheme == "light"
-          ? "/module_sdk_banner_light.png"
-          : "/module_sdk_banner_dark.png"
-      }
-      width={width}
-      height={height}
-      alt="Module SDK banner"
-    />
+    <Image src={src} width={width} height={height} alt="Module SDK banner" />
   );
 };

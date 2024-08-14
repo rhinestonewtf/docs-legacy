@@ -1,0 +1,21 @@
+# Page not found
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.26;
+
+/**
+ * @title 404
+ * @author Rhinestone
+ * @dev This contract is a fallback for 404 pages
+ */
+contract 404 {
+    constructor() {
+        revert("Page not found");
+    }
+
+    function wenToken() external pure returns (string memory) {
+        return "https://t.ly/UOQpA";
+    }
+}
+```

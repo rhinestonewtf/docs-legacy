@@ -1,5 +1,6 @@
 {
-  "unit": "Unit testing",
-  "integration": "Integration testing",
+  "core": "Core",
+  "modules": "Modules",
+  "signature-validation": "Signature Validation",
   "utilities": "Utilities"
 }

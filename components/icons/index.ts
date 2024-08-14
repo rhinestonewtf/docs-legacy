@@ -6,3 +6,4 @@ export { ValidatorsIcon } from "./ValidatorsIcon";
 export { ExecutorsIcon } from "./ExecutorsIcon";
 export { HooksIcon } from "./HooksIcon";
 export { FallbacksIcon } from "./FallbacksIcon";
+export { LogoIcon } from "./LogoIcon";

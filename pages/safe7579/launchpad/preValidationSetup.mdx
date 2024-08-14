@@ -1,0 +1,35 @@
+# preValidationSetup
+
+This function should be called by the SafeProxyFactory contract after deploying the account.
+
+## Usage
+
+```solidity copy
+bytes32 initHash = launchpad.hash(initData);
+
+bytes memory factoryInitializer = abi.encodeCall(Safe7579Launchpad.preValidationSetup, (initHash, address(0), ""));
+```
+
+## Parameters
+
+### initHash
+
+- Type: `bytes32`
+
+The hash of the `InitData` struct, obtained by calling the [`hash`](/safe7579/launchpad/hash) function.
+
+### to
+
+- Type: `address`
+
+An optional parameter for an additional delegatecall.
+
+### preInit
+
+- Type: `bytes`
+
+An optional parameter for the calldata of the delegatecall.
+
+## Returns
+
+None
