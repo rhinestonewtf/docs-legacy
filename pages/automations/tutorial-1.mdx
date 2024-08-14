@@ -176,7 +176,7 @@ Here, the `cronExpression` is a cron expression that defines the schedule for th
 
 ### Create the automation
 
-Finally, create the automation:
+Next, create the automation:
 
 ```typescript
 const automation = await automationClient.createAutomation({
@@ -189,6 +189,33 @@ const automation = await automationClient.createAutomation({
     maxNumberOfExecutions: numberOfExecutions,
   },
 });
+```
+
+### Sign the automation
+
+Before an automation can be created, the user needs to sign the automation to provide access control.
+
+```typescript
+const hash = await smartAccountClient.signMessage({
+  message: { raw: automation.hash },
+});
+
+const response = await automationClient.signAutomation({
+  automationId: automation.id,
+  signature: signature,
+});
+```
+
+Note that you will need to replace the signing flow with your own if you use another account SDK.
+
+The automation is now created and active.
+
+### Check the automation logs (optional)
+
+You can check the automation logs to see the status of the automation:
+
+```typescript
+const automationLogs = await automationClient.getAutomationLogs(automation.id);
 ```
 
 </Steps>
