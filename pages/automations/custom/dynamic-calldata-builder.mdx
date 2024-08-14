@@ -1,3 +1,68 @@
 import { Steps } from "nextra/components";
 
 # How to build a custom dynamic calldata builder
+
+Rhinestone Automations allows for executions to be scheduled that have either static or dynamic calldata. In the static calldata case, the calldata is known at the time of the automation creation and is stored in the automation. In the dynamic calldata case, the calldata is not known at the time of the automation creation and is generated at the time of the execution. In order to generate this dynamic calldata, the automations service calls out to a dynamic calldata builder.
+
+This guide walks you through the process of building a custom dynamic calldata builder.
+
+<Steps>
+
+### Create the dynamic calldata service
+
+First, you will need to create a hosted api that can be called from the automations service using REST. This api should accept a POST request with a JSON body that contains the necessary information to generate the calldata. The response should be a JSON object that contains the calldata.
+
+You can find an example of such a service in the [reference implementation](https://github.com/rhinestonewtf/calldata-builder-example/tree/main/src).
+
+### Create the calldata encoding logic
+
+Next, you will need to create the logic that encodes the calldata. This logic should be able to take the JSON object from the response of the dynamic calldata service and encode it into a hex string that can be used as the calldata for the automation execution. An example is below:
+
+```typescript copy
+import { encodeFunctionData } from "viem";
+
+app.post("/call-data-builder", (req: Request, res: Response) => {
+  const data = req.body;
+
+  const calldata = encodeFunctionData({
+    functionName: "setSomeState",
+    abi: [
+      {
+        type: "function",
+        name: "setSomeState",
+        inputs: [{ type: "uint256" }],
+      },
+    ],
+    args: [BigInt(data.someState)],
+  });
+
+  // return the calldata as a hex string
+});
+```
+
+### Host the dynamic calldata builder
+
+Finally, you will need to host the dynamic calldata builder. This can be done using a service like Vercel or Netlify. Once the service is hosted, you can use the url as the dynamic calldata builder in the automation creation.
+
+### Create the automation
+
+Now, you can create an automation. For a full tutorial, check out the [tutorial on creating an automated transfer](/automations/tutorial-1). For the purposes of this guide, the important part is that you pass the correct actions to the automations, as seen below:
+
+```typescript copy
+const actions = [
+  {
+    type: "dynamic",
+    target: "0x123...",
+    value: 0,
+    callDataBuilderUrl: "https://your-dynamic-calldata-builder-url.com",
+    functionSelector: "0x5bf67475", // setSomeState(uint256)
+    params: {
+      static: {
+        someState: 100,
+      },
+    },
+  },
+];
+```
+
+</Steps>

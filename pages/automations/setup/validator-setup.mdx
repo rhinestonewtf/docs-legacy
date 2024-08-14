@@ -1,3 +1,40 @@
 import { Steps } from "nextra/components";
 
 # How to setup the account with a validator to use Rhinestone Automations
+
+In order to use Rhinestone Automations with a smart account, that smart account needs to have a validator enabled that allows the automations service to execute `UserOperations`. For the beta version, we use the `OwnableValidtor` but we will switch the the [smart sessions module](https://github.com/erc7579/smartsessions/) as soon as the audit is complete.
+
+For this guide, we will use permissionless.js but any other account SDK can be used.
+
+<Steps>
+
+### Install Module SDK
+
+First, install the Module SDK:
+
+```sh npm2yarn
+npm i viem @rhinestone/module-sdk
+```
+
+### Install the validator
+
+Next, we will first need to install the validator for the automations service. We use the `smartAccountClient` to install the module, as created in the [permissionless.js guide](/module-sdk/account-sdks/permissionless).
+
+If you use another account SDK, you can use the equivalent method to install the module and pass the `ownableValidator.type`, `ownableValidator.module`, and `ownableValidator.data` to the `installModule` method.
+
+```typescript copy
+import { getOwnableValidator } from "@rhinestone/module-sdk";
+
+const ownableValidator = getOwnableValidator({
+  owners: ["0x2DC2fb2f4F11DeE1d6a2054ffCBf102D09b62bE2"],
+  threshold: 1,
+});
+
+const opHash = await smartAccountClient.installModule({
+  type: ownableValidator.type,
+  address: ownableValidator.module,
+  context: ownableValidator.data,
+});
+```
+
+</Steps>
