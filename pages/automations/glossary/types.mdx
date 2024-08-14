@@ -1,3 +1,245 @@
 # Types in the Automations SDK
 
 Glossary of types in the Automations SDK.
+
+## `Action`
+
+The `Action` object is used for the actions to be executed when the automation is triggered.
+
+### Definition
+
+```typescript
+type StaticAction = {
+  type: "static";
+  target: Address;
+  value: number;
+  callData: Hex;
+};
+
+type DynamicAction = {
+  type: "dynamic";
+  target: Address;
+  value: number;
+  callDataBuilderUrl: string;
+  functionSelector: Hex;
+  params?: {
+    static?: Record<string, any>;
+    dynamic?: Record<string, any>;
+  };
+};
+
+type Action = StaticAction | DynamicAction;
+```
+
+### Properties
+
+#### type
+
+- Type: `static | dynamic`
+
+The type of the action.
+
+#### target
+
+- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
+
+The address of the target contract.
+
+#### value
+
+- Type: `number`
+
+The value to send with the call.
+
+#### callData (for StaticAction)
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The data to send with the call.
+
+#### callDataBuilderUrl (for DynamicAction)
+
+- Type: `string`
+
+The URL of the calldata builder.
+
+#### functionSelector (for DynamicAction)
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The function selector of the calldata. This is used as a security measure to prevent the calldata builder from injecting arbitrary calldata.
+
+#### params (for DynamicAction)
+
+- Type: `Record<string, any>`
+
+The parameters to be used in the calldata builder.
+
+## `Automation`
+
+The `Automation` object is used to create an automation.
+
+### Definition
+
+```typescript
+type CreateTimeBasedTriggerParams = {
+  trigger: TimeBasedTrigger;
+  actions: Action[];
+  maxNumberOfExecutions: number;
+};
+
+type CreateEventBasedTriggerParams = {
+  trigger: EventBasedTrigger;
+  actions: Action[];
+  maxNumberOfExecutions: number;
+};
+
+type Automation =
+  | {
+      type: "time-based";
+      data: CreateTimeBasedTriggerParams;
+    }
+  | {
+      type: "event-based";
+      data: CreateEventBasedTriggerParams;
+    };
+```
+
+### Properties
+
+#### trigger
+
+- Type: `TimeBasedTrigger | EventBasedTrigger`
+
+The trigger for the automation.
+
+#### actions
+
+- Type: [`Action[]`](/automations/glossary/types#action)
+
+The actions to be executed when the automation is triggered.
+
+#### maxNumberOfExecutions
+
+- Type: `number`
+
+The maximum number of executions for the automation.
+
+## `CreateEventBasedTriggerParams`
+
+The `CreateEventBasedTriggerParams` struct is used to create an event based trigger.
+
+### Definition
+
+```typescript
+type CreateEventBasedTriggerParams = {
+  trigger: EventBasedTrigger;
+  actions: Action[];
+  maxNumberOfExecutions: number;
+};
+```
+
+### Properties
+
+#### trigger
+
+- Type: [`EventBasedTrigger`](/automations/glossary/types#eventbasedtrigger)
+
+The trigger for the automation.
+
+#### actions
+
+- Type: [`Action[]`](/automations/glossary/types#action)
+
+The actions to be executed when the automation is triggered.
+
+#### maxNumberOfExecutions
+
+- Type: `number`
+
+The maximum number of executions for the automation.
+
+## `CreateTimeBasedTriggerParams`
+
+The `CreateTimeBasedTriggerParams` struct is used to create a time based trigger.
+
+### Definition
+
+```typescript
+type CreateTimeBasedTriggerParams = {
+  trigger: TimeBasedTrigger;
+  actions: Action[];
+  maxNumberOfExecutions: number;
+};
+```
+
+### Properties
+
+#### trigger
+
+- Type: [`TimeBasedTrigger`](/automations/glossary/types#timebasedtrigger)
+
+The trigger for the automation.
+
+#### actions
+
+- Type: [`Action[]`](/automations/glossary/types#action)
+
+The actions to be executed when the automation is triggered.
+
+#### maxNumberOfExecutions
+
+- Type: `number`
+
+The maximum number of executions for the automation.
+
+## `EventBasedTrigger`
+
+The `EventBasedTrigger` object is used to create an event based trigger.
+
+### Definition
+
+```typescript
+type EventBasedTrigger = {
+  triggerData: {
+    query: string;
+  };
+};
+```
+
+### Properties
+
+#### triggerData.query
+
+- Type: `string`
+
+The query to be used for the event based trigger, in graphQL format.
+
+## `TimeBasedTrigger`
+
+The `TimeBasedTrigger` object is used to create a time based trigger.
+
+### Definition
+
+```typescript
+type TimeBasedTrigger = {
+  triggerData: {
+    cronExpression: string;
+    startDate: number;
+  };
+};
+```
+
+### Properties
+
+#### triggerData.cronExpression
+
+- Type: `string`
+
+The cron expression for the time based trigger.
+
+#### triggerData.startDate
+
+- Type: `number`
+
+The start date for the time based trigger.

@@ -10,7 +10,9 @@
     "type": "separator",
     "title": "Guides"
   },
+  "setup": "Setup",
   "triggers": "Triggers",
+  "custom": "Custom",
   "---": {
     "type": "separator",
     "title": "Reference"

@@ -23,49 +23,49 @@ struct InitData {
 
 ### Properties
 
-#### `singleton`
+#### singleton
 
 - Type: `address`
 
 The address of the Safe singleton.
 
-#### `owners`
+#### owners
 
 - Type: `address[]`
 
 The addresses of the Safe owners.
 
-#### `threshold`
+#### threshold
 
 - Type: `uint256`
 
 The threshold for the Safe.
 
-#### `setupTo`
+#### setupTo
 
 - Type: `address`
 
 The address to set up the Safe to, in this case, the launchpad contract.
 
-#### `setupData`
+#### setupData
 
 - Type: `bytes`
 
 The setup data to be sent to the launchpad contract. This should call the [`initSafe7579`](/safe7579/launchpad/initSafe7579) function.
 
-#### `safe7579`
+#### safe7579
 
 - Type: `ISafe7579`
 
 The Safe7579 contract.
 
-#### `validators`
+#### validators
 
 - Type: [`ModuleInit[]`](#moduleinit)
 
 An array of `ModuleInit` structs that contain the addresses of the validators and their initialization data.
 
-#### `callData`
+#### callData
 
 - Type: `bytes`
 
@@ -86,13 +86,13 @@ struct ModuleInit {
 
 ### Properties
 
-#### `module`
+#### module
 
 - Type: `address`
 
 The address of the module.
 
-#### `initData`
+#### initData
 
 - Type: `bytes`
 
