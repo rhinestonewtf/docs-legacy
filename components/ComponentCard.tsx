@@ -62,11 +62,13 @@ export const ComponentCard = ({ component }: { component: Component }) => {
           "bg-gray-100 dark:border-neutral-700 dark:bg-white/[0.08] dark:text-gray-50 min-w-[150px] min-h-[120px] py-[16px] px-[16px] flex justify-between flex-grow"
         )}
       >
-        <div className="">{component.icon}</div>
+        <div className="flex flex-col justify-between">
+          <div className="">{component.icon}</div>
 
-        <span className="mt-[20px] font-bold">{component.title}</span>
-        <div className="text-[13px] dark:text-gray-300">
-          {component.description}
+          <span className="mt-[20px] font-bold my-2">{component.title}</span>
+          <div className="text-[13px] dark:text-gray-300 mt-2">
+            {component.description}
+          </div>
         </div>
         {component.href ? (
           <Link
