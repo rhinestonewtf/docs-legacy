@@ -183,6 +183,33 @@ The value to send with the call.
 
 The data to send with the call.
 
+## `InstalledModule`
+
+A module that is installed in an account.
+
+### Definition
+
+```solidity
+struct InstalledModule {
+    uint256 moduleType;
+    address moduleAddress;
+}
+```
+
+### Properties
+
+#### moduleType
+
+- Type: `uint256`
+
+The type of the module.
+
+#### moduleAddress
+
+- Type: `address`
+
+The address of the module.
+
 ## `UserOpData`
 
 The data of a UserOperation.

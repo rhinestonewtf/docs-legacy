@@ -1,5 +1,6 @@
 {
   "installModule": "installModule",
   "isModuleInstalled": "isModuleInstalled",
-  "uninstallModule": "uninstallModule"
+  "uninstallModule": "uninstallModule",
+  "getInstalledModules": "getInstalledModules"
 }
