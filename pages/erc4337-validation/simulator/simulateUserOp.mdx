@@ -5,7 +5,7 @@ Simulates a UserOperation and validates the ERC-4337 rules. Note: this function 
 ## Usage
 
 ```solidity copy
-userOp.simulateUserOp(ENTRYPOINT_ADDR);
+bool simulationSuccess = userOp.simulateUserOp(ENTRYPOINT_ADDR);
 ```
 
 ## Parameters
@@ -24,4 +24,8 @@ The address of the entry point. Note: if you're using v0.7 of ERC-4337, this sho
 
 ## Returns
 
-None
+### simulationSuccess
+
+- Type: `bool`
+
+True if the simulation was successful, false otherwise. Note that a UserOperation might revert during validation, in which case the ERC-4337 rules will not be checked properly.
