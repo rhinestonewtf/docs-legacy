@@ -1,0 +1,114 @@
+import { Steps } from "nextra/components";
+
+# How to use the Safe7579 with Permissionless.js
+
+[Permissionless.js](https://docs.pimlico.io/permissionless) is one of the most widely used account SDKs. It is a typescript library that makes it easy to build with smart accounts. This guide will show you how to use the Safe7579 with permissionless.js.
+
+<Steps>
+
+### Install the packages
+
+```sh npm2yarn
+npm i viem permissionless
+```
+
+### Import the required packages
+
+```typescript copy
+import {
+  ENTRYPOINT_ADDRESS_V07,
+  createSmartAccountClient,
+} from "permissionless";
+import { signerToSafeSmartAccount } from "permissionless/accounts";
+import {
+  createPimlicoBundlerClient,
+  createPimlicoPaymasterClient,
+} from "permissionless/clients/pimlico";
+import { erc7579Actions } from "permissionless/actions/erc7579";
+import { createPublicClient, getContract, http, parseEther } from "viem";
+import { sepolia } from "viem/chains";
+```
+
+### Create the clients
+
+Create the smart account client and the bundler client.
+
+```typescript copy
+export const publicClient = createPublicClient({
+  transport: http("https://rpc.ankr.com/eth_sepolia"),
+});
+
+export const pimlicoBundlerClient = createPimlicoBundlerClient({
+  transport: http("https://api.pimlico.io/v2/sepolia/rpc?apikey=API_KEY"),
+  entryPoint: ENTRYPOINT_ADDRESS_V07,
+});
+```
+
+### Create the signer
+
+The Safe account will need to have a signer to sign user operations. In permissionless.js, the default Safe account validates ECDSA signatures.
+
+For example, to create a signer based on a private key:
+
+```typescript copy
+import { privateKeyToAccount } from "viem/accounts";
+
+const signer = privateKeyToAccount("0xPRIVATE_KEY");
+```
+
+### Create the Safe account
+
+Create the Safe account object using the signer.
+
+```typescript copy
+const safeAccount = await signerToSafeSmartAccount(publicClient, {
+  entryPoint: ENTRYPOINT_ADDRESS_V07,
+  signer: signer,
+  saltNonce: 0n, // optional
+  safeVersion: "1.4.1",
+  address: "0x...", // optional, only if you are using an already created account
+});
+```
+
+### Create the smart account client
+
+The smart account client is used to interact with the smart account.
+
+```typescript copy
+const smartAccountClient = createSmartAccountClient({
+  account: safeAccount,
+  entryPoint: ENTRYPOINT_ADDRESS_V07,
+  chain: sepolia,
+  bundlerTransport: http(
+    "https://api.pimlico.io/v2/sepolia/rpc?apikey=API_KEY"
+  ),
+  middleware: {
+    gasPrice: async () => {
+      return (await pimlicoBundlerClient.getUserOperationGasPrice()).fast;
+    },
+  },
+}).extend(erc7579Actions({ entryPoint: ENTRYPOINT_ADDRESS_V07 }));
+```
+
+### Use the account
+
+Now that you have created the smart account client, you can use it to interact with the Safe account. For example, you can install an executor as shown below.
+
+```typescript copy
+const ownableExecutorModule = "0xc98B026383885F41d9a995f85FC480E9bb8bB891";
+const moduleData = encodePacked(
+  ["address"],
+  ["0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"]
+);
+const userOpHash = await smartAccountClient.installModule({
+  type: "executor",
+  address: ownableExecutorModule,
+  context: moduleData,
+});
+
+const receipt = await pimlicoBundlerClient.waitForUserOperationReceipt({
+  hash: userOpHash,
+});
+```
+
+</Steps>
