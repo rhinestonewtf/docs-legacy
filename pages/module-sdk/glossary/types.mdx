@@ -1,245 +1,164 @@
-# Types in ModuleKit
+# Types in ModuleSDK
 
-Glossary of types in ModuleKit.
+Glossary of types in ModuleSDK.
 
-## `AccountInstance`
+## `Account`
 
-The core instance of an account used for testing in ModuleKit.
+The object representing an account in ModuleSDK.
 
 ### Definition
 
-```solidity
-struct AccountInstance {
-    address account;
-    AccountType accountType;
-    address accountHelper;
-    Auxiliary aux;
-    IERC7579Validator defaultValidator;
-    bytes32 salt;
-    bytes initCode;
-    address accountFactory;
-}
+```typescript
+type Account = {
+  address: Address;
+  initCode?: Hex;
+  type: AccountType;
+  deployedOnChains: Number[];
+};
 ```
 
 ### Properties
 
-#### account
+#### address
 
-- Type: `address`
+- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
 
 The address of the account.
 
-#### accountType
+#### initCode
 
-- Type: [`AccountType`](#accounttype)
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The init code of the account.
+
+#### type
+
+- Type: [`AccountType`](/module-sdk/glossary/types#accounttype)
 
 The type of the account.
 
-#### accountHelper
+#### deployedOnChains
 
-- Type: `address`
+- Type: `Number[]`
 
-The address of the account helper. This helper is used to format any calls for the right account type.
-
-#### aux
-
-- Type: [`Auxiliary`](#auxiliary)
-
-Auxiliary data for the account.
-
-#### defaultValidator
-
-- Type: `IERC7579Validator`
-
-The default validator that is used when no validator is specified by the user.
-
-#### salt
-
-- Type: `bytes32`
-
-The salt used to create the account.
-
-#### initCode
-
-- Type: `bytes`
-
-The ERC-4337 initialization code for the account.
-
-#### accountFactory
-
-- Type: `address`
-
-The address of the account factory.
+The chains on which the account is deployed.
 
 ## `AccountType`
 
-The type of account used in ModuleKit.
+The type of the account.
 
 ### Definition
 
-```solidity
-enum AccountType {
-    DEFAULT,
-    SAFE,
-    KERNEL,
-    CUSTOM
-}
+```typescript
+type AccountType = "erc7579-implementation" | "kernel" | "safe";
 ```
 
 ### Properties
 
-#### DEFAULT
+#### type
 
-The ERC-7579 Reference Implementation.
+- Type: `string`
 
-#### SAFE
+One of the following values:
 
-The Safe using the [Safe7579](https://github.com/rhinestonewtf/safe7579) adapter.
+- `erc7579-implementation`
+- `kernel`
+- `safe`
 
-#### KERNEL
+## `Action`
 
-The Kernel account.
-
-#### NEXUS
-
-The Nexus account.
-
-#### CUSTOM
-
-A custom account type that a developer can define.
-
-## `Auxiliary`
-
-Auxiliary data for an account.
+The object representing an action in ModuleSDK.
 
 ### Definition
 
-```solidity
-struct Auxiliary {
-    IEntryPoint entrypoint;
-    UserOpGasLog gasSimulation;
-    IERC7484 registry;
-    MockFactory mockFactory;
-}
-```
-
-### Properties
-
-#### entrypoint
-
-- Type: `IEntryPoint`
-
-The ERC-4337 entryPoint used.
-
-#### gasSimulation
-
-- Type: `UserOpGasLog`
-
-A contract that is used to log the gas used in a UserOperation.
-
-#### registry
-
-- Type: `IERC7484`
-
-The registry used for the account.
-
-#### mockFactory
-
-- Type: `MockFactory`
-
-A factory used to deploy mock periphery contracts like a Mock Swap Router.
-
-## `Execution`
-
-An execution of a UserOperation.
-
-### Definition
-
-```solidity
-struct Execution {
-    address target;
-    uint256 value;
-    bytes callData;
-}
+```typescript
+type Action = {
+  target: Address;
+  value: BigInt;
+  callData: Hex;
+};
 ```
 
 ### Properties
 
 #### target
 
-- Type: `address`
+- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
 
-The address of the target contract.
+The address of the target.
 
 #### value
 
-- Type: `uint256`
+- Type: `BigInt`
 
-The value to send with the call.
+The native token value of the execution.
 
 #### callData
 
-- Type: `bytes`
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
 
-The data to send with the call.
+The calldata of the action to be executed on the target.
 
-## `InstalledModule`
+## `Module`
 
-A module that is installed in an account.
-
-### Definition
-
-```solidity
-struct InstalledModule {
-    uint256 moduleType;
-    address moduleAddress;
-}
-```
-
-### Properties
-
-#### moduleType
-
-- Type: `uint256`
-
-The type of the module.
-
-#### moduleAddress
-
-- Type: `address`
-
-The address of the module.
-
-## `UserOpData`
-
-The data of a UserOperation.
+The object representing a module in ModuleSDK.
 
 ### Definition
 
-```solidity
-struct UserOpData {
-    PackedUserOperation userOp;
-    bytes32 userOpHash;
-    IEntryPoint entrypoint;
-}
+```typescript
+type Module = {
+  module: Address;
+  data?: Hex;
+  additionalContext?: Hex;
+  type: ModuleType;
+};
 ```
 
 ### Properties
 
-#### userOp
+#### module
 
-- Type: `PackedUserOperation`
+- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
 
-The UserOperation.
+The address of the module.
 
-#### userOpHash
+#### data
 
-- Type: `bytes32`
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
 
-The hash of the UserOperation.
+The installation or uninstallation data to be sent to the module.
 
-#### entrypoint
+#### additionalContext
 
-- Type: `IEntryPoint`
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
 
-The entryPoint used for the UserOperation.
+The additional context to be sent to the account.
+
+#### type
+
+- Type: [`ModuleType`](/module-sdk/glossary/types#moduletype)
+
+The type of the module.
+
+## `ModuleType`
+
+The type of the module.
+
+### Definition
+
+```typescript
+type ModuleType = "validators" | "executors" | "hooks" | "fallbacks";
+```
+
+### Properties
+
+#### type
+
+- Type: `string`
+
+One of the following values:
+
+- `validators`
+- `executors`
+- `hooks`
+- `fallbacks`
