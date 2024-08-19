@@ -16,8 +16,8 @@ export function Button({
   return (
     <Link
       href={href}
-      rel={isNewTab && "noopener noreferrer"}
-      target={isNewTab && "_blank"}
+      rel={isNewTab ? "noopener noreferrer" : undefined}
+      target={isNewTab ? "_blank" : undefined}
       className={`mt-6 rounded-2xl w-fit px-4 py-1 uppercase font-mono text-[14px] flex flex-row items-center justify-center border border-gray-200 dark:border-gray-800 ${colors}`}
     >
       {buttonComponent}
