@@ -1,4 +1,7 @@
 {
-  "safe": "Safe",
-  "kernel": "Kernel"
+  "getAccount": "getAccount",
+  "installModule": "installModule",
+  "uninstallModule": "uninstallModule",
+  "isModuleInstalled": "isModuleInstalled",
+  "getInstalledModules": "getInstalledModules"
 }

@@ -1,6 +1,6 @@
 {
   "ownable-validator": "Ownable Validator",
-  "webAuthn-validator": "WebAuthn Validator",
+  "webauthn-validator": "WebAuthn Validator",
   "social-recovery": "Social Recovery",
   "multi-factor": "Multi Factor",
   "registry-hook": "Registry Hook",
