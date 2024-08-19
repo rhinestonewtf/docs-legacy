@@ -21,6 +21,7 @@ import {
 // Create a client for the automations service
 const automationsClient = createAutomationClient({
       account: "0xc2b17e73603dccc195118a36f3203134fd7985f5",
+      accountType: 'SAFE',  // 'SAFE', 'KERNEL',
       apiKey: process.env.AUTOMATIONS_API_KEY!,
       accountInitCode: '0x',
       network: 11155111,
