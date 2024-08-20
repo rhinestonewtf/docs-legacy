@@ -15,6 +15,7 @@ import { createAutomationClient } from "@rhinestone/automations-sdk";
 
 const automationClient = createAutomationClient({
   account: "0x...",
+  accountType: 'SAFE',  // 'SAFE', 'KERNEL',
   apiKey: "YOUR_API_KEY",
   accountInitCode: "0x",
   network: 11155111,

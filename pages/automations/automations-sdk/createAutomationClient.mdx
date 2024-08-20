@@ -9,6 +9,7 @@ import { createAutomationClient } from "@rhinestone/automations-sdk";
 
 const automationClient = createAutomationClient({
   account: "0x...",
+  accountType: 'SAFE',  // 'SAFE', 'KERNEL',
   apiKey: "YOUR_API_KEY",
   accountInitCode: "0x",
   network: 11155111,
@@ -23,6 +24,12 @@ const automationClient = createAutomationClient({
 - Type: [`Address`](https://viem.sh/docs/glossary/types#address)
 
 Account address you want to setup automation for.
+
+### accountType
+
+- Type: `SAFE | KERNEL`
+
+Type of the account. Currently Safe and Kernel accounts are supported.
 
 ### apiKey
 
