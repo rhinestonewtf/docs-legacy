@@ -1,0 +1,213 @@
+# Types in ModuleSDK
+
+Glossary of types in ModuleSDK.
+
+## `Account`
+
+The object representing an account in ModuleSDK.
+
+### Definition
+
+```typescript
+type Account = {
+  address: Address;
+  initCode?: Hex;
+  type: AccountType;
+  deployedOnChains: Number[];
+};
+```
+
+### Properties
+
+#### address
+
+- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
+
+The address of the account.
+
+#### initCode
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The init code of the account.
+
+#### type
+
+- Type: [`AccountType`](/module-sdk/glossary/types#accounttype)
+
+The type of the account.
+
+#### deployedOnChains
+
+- Type: `Number[]`
+
+The chains on which the account is deployed.
+
+## `AccountType`
+
+The type of the account.
+
+### Definition
+
+```typescript
+type AccountType = "erc7579-implementation" | "kernel" | "safe" | "nexus";
+```
+
+### Properties
+
+#### type
+
+- Type: `string`
+
+One of the following values:
+
+- `erc7579-implementation`
+- `kernel`
+- `safe`
+- `nexus`
+
+## `Action`
+
+The object representing an action in ModuleSDK.
+
+### Definition
+
+```typescript
+type Action = {
+  target: Address;
+  value: BigInt;
+  callData: Hex;
+};
+```
+
+### Properties
+
+#### target
+
+- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
+
+The address of the target.
+
+#### value
+
+- Type: `BigInt`
+
+The native token value of the execution.
+
+#### callData
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The calldata of the action to be executed on the target.
+
+## `HookType`
+
+The types of subhooks for the HookMultiplexer.
+
+### Definition
+
+```typescript
+enum HookType {
+  GLOBAL,
+  DELEGATECALL,
+  VALUE,
+  SIG,
+  TARGET,
+}
+```
+
+### Properties
+
+#### GLOBAL
+
+- Type: `number`
+
+Global hooks that get run on every execution.
+
+#### DELEGATECALL
+
+- Type: `number`
+
+Hooks that get run on every delegatecall.
+
+#### VALUE
+
+- Type: `number`
+
+Hooks that get run on every value transfer.
+
+#### SIG
+
+- Type: `number`
+
+Hooks that get run based on which function is called on the account.
+
+#### TARGET
+
+- Type: `number`
+
+Hooks that get run based on the function called on the target.
+
+## `Module`
+
+The object representing a module in ModuleSDK.
+
+### Definition
+
+```typescript
+type Module = {
+  module: Address;
+  data?: Hex;
+  additionalContext?: Hex;
+  type: ModuleType;
+};
+```
+
+### Properties
+
+#### module
+
+- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
+
+The address of the module.
+
+#### data
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The installation or uninstallation data to be sent to the module.
+
+#### additionalContext
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The additional context to be sent to the account.
+
+#### type
+
+- Type: [`ModuleType`](/module-sdk/glossary/types#moduletype)
+
+The type of the module.
+
+## `ModuleType`
+
+The type of the module.
+
+### Definition
+
+```typescript
+type ModuleType = "validators" | "executors" | "hooks" | "fallbacks";
+```
+
+### Properties
+
+#### type
+
+- Type: `string`
+
+One of the following values:
+
+- `validators`
+- `executors`
+- `hooks`
+- `fallbacks`

@@ -1,0 +1,27 @@
+# getExecuteScheduledOrderAction
+
+Get the action to execute a scheduled order. Note that this should be called by a relayer, such as [Rhinestone Automations](/automations).
+
+## Usage
+
+```typescript copy
+const action = await getExecuteScheduledOrderAction({
+  jobId: 1,
+});
+```
+
+## Parameters
+
+### jobId
+
+- Type: `number`
+
+The ID of the scheduled order to execute.
+
+## Returns
+
+### action
+
+- Type: [`Action`](/module-sdk/glossary/types#action)
+
+The action to execute on the smart account.

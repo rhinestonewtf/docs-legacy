@@ -1,0 +1,150 @@
+import { Steps } from "nextra/components";
+
+# Tutorial 1: Install and use your first module
+
+In this tutorial, you will learn how to create a Safe7579 account and install a module on it.
+
+You will set up the smart account, install a Deadman Switch module and then use it to recover the account.
+
+<Steps>
+
+### Install the packages
+
+```sh npm2yarn
+npm i viem @rhinestone/module-sdk permissionless
+```
+
+### Import the required packages
+
+```typescript copy
+import {
+  ENTRYPOINT_ADDRESS_V07,
+  createSmartAccountClient,
+} from "permissionless";
+import { signerToSafeSmartAccount } from "permissionless/accounts";
+import {
+  createPimlicoBundlerClient,
+  createPimlicoPaymasterClient,
+} from "permissionless/clients/pimlico";
+import { erc7579Actions } from "permissionless/actions/erc7579";
+import { createPublicClient, getContract, http, parseEther } from "viem";
+import { sepolia } from "viem/chains";
+```
+
+### Create the clients
+
+Create the smart account client and the bundler client.
+
+```typescript copy
+export const publicClient = createPublicClient({
+  transport: http("https://rpc.ankr.com/eth_sepolia"),
+});
+
+export const pimlicoBundlerClient = createPimlicoBundlerClient({
+  transport: http("https://api.pimlico.io/v2/sepolia/rpc?apikey=API_KEY"),
+  entryPoint: ENTRYPOINT_ADDRESS_V07,
+});
+```
+
+### Create the signer
+
+The Safe account will need to have a signer to sign user operations. In permissionless.js, the default Safe account validates ECDSA signatures.
+
+For example, to create a signer based on a private key:
+
+```typescript copy
+import { privateKeyToAccount } from "viem/accounts";
+
+const signer = privateKeyToAccount("0xPRIVATE_KEY");
+```
+
+### Create the Safe account
+
+Create the Safe account object using the signer.
+
+```typescript copy
+const safeAccount = await signerToSafeSmartAccount(publicClient, {
+  entryPoint: ENTRYPOINT_ADDRESS_V07,
+  signer: signer,
+  saltNonce: 0n, // optional
+  safeVersion: "1.4.1",
+  address: "0x...", // optional, only if you are using an already created account
+});
+```
+
+### Create the smart account client
+
+The smart account client is used to interact with the smart account.
+
+```typescript copy
+const smartAccountClient = createSmartAccountClient({
+  account: safeAccount,
+  entryPoint: ENTRYPOINT_ADDRESS_V07,
+  chain: sepolia,
+  bundlerTransport: http(
+    "https://api.pimlico.io/v2/sepolia/rpc?apikey=API_KEY"
+  ),
+  middleware: {
+    gasPrice: async () => {
+      return (await pimlicoBundlerClient.getUserOperationGasPrice()).fast;
+    },
+  },
+}).extend(erc7579Actions({ entryPoint: ENTRYPOINT_ADDRESS_V07 }));
+```
+
+### Create the module object
+
+Get the module object for the module that you want to install on the smart account. In this case, we will install the Social Recovery Module. We will pass to it a number of guardians that can recover the account as well as a threshold of guardians required to recover the account.
+
+```typescript copy
+import { getDeadmanSwitch } from "@rhinestone/module-sdk";
+import { privateKeyToAccount } from "viem/accounts";
+
+const nominee = privateKeyToAccount("0xPRIVATE_KEY");
+
+const module = getDeadmanSwitch({
+  nominee: nominee.address,
+  timeout: "100", // in seconds
+  moduleType: "validator",
+});
+```
+
+### Install the module as a validator
+
+With this module object, we can now install it on the smart account as a validator.
+
+```typescript copy
+const opHash = await smartClient.installModule({
+  type: module.type,
+  address: module.module,
+  context: module.data,
+});
+
+await bundlerClientV07.waitForUserOperationReceipt({
+  hash: opHash,
+  timeout: 100000,
+});
+```
+
+### Install the module as a validator
+
+The Deadman Switch module is also a hook, so it also needs to be installed as a hook.
+
+```typescript copy
+const opHash = await smartClient.installModule({
+  type: "hook", // manually set the type to hook
+  address: module.module,
+  context: "0x", // we need to leave this empty since the data was already passed above
+});
+
+await bundlerClientV07.waitForUserOperationReceipt({
+  hash: opHash,
+  timeout: 100000,
+});
+```
+
+### Recover the account
+
+Every transaction, the latest access will be updated. After the timeout has passed, the nominee will be able to use the account. In our case, the timeout is just 100 seconds, so we can recover the account almost immediately.
+
+</Steps>

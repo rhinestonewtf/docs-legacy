@@ -1,0 +1,9 @@
+{
+  "getOwnableExecuter": "getOwnableExecuter",
+  "getAddOwnableExecutorOwnerAction": "getAddOwnableExecutorOwnerAction",
+  "getRemoveOwnableExecutorOwnerAction": "getRemoveOwnableExecutorOwnerAction",
+  "getOwnableExecutorOwners": "getOwnableExecutorOwners",
+  "getExecuteOnOwnedAccountAction": "getExecuteOnOwnedAccountAction",
+  "getExecuteBatchOnOwnedAccountAction": "getExecuteBatchOnOwnedAccountAction",
+  "OWNABLE_EXECUTER_ADDRESS": "OWNABLE_EXECUTER_ADDRESS"
+}

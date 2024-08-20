@@ -1,0 +1,7 @@
+{
+  "getScheduledTransferData": "getScheduledTransferData",
+  "getScheduledTransfersExecutor": "getScheduledTransfersExecutor",
+  "getCreateScheduledTransferAction": "getCreateScheduledTransferAction",
+  "getExecuteScheduledTransferAction": "getExecuteScheduledTransferAction",
+  "SCHEDULED_TRANSFERS_EXECUTER_ADDRESS": "SCHEDULED_TRANSFERS_EXECUTER_ADDRESS"
+}
