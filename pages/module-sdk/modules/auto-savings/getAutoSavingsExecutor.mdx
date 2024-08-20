@@ -1,13 +1,50 @@
-# name
+# getAutoSavingsExecutor
 
-description
+Get the auto save executor object.
 
 ## Usage
 
 ```typescript copy
-
+const autoSavingsModule = getAutoSavingsExecutor({
+  tokens: ["0x123..."],
+  configs: [
+    {
+      percentage: 0.1,
+      vault: "0x123...",
+      sqrtPriceLimit: 0.1,
+    },
+  ],
+});
 ```
 
 ## Parameters
 
+### tokens
+
+- Type: [`Address[]`](https://viem.sh/docs/glossary/types#address)
+
+The addresses of the tokens to auto-save.
+
+### configs
+
+- Type: `{
+  percentage: number,
+  vault: Address,
+  sqrtPriceLimitX96: bigint
+}[]`
+
+The configs for each token.
+
+### hook (optional)
+
+- Type: [`Address[]`](https://viem.sh/docs/glossary/types#address)
+
+The address of the hook to use. This is only required for the Kernel account.
+
 ## Returns
+
+### module
+
+- Type: [`Module`](/module-sdk/glossary/types#module)
+
+The auto-savings module object.
