@@ -1,13 +1,27 @@
-# name
+# getRegistryHook
 
-description
+Get the registry hook module object.
 
 ## Usage
 
 ```typescript copy
-
+const module = getRegistryHook({
+  registryAddress: "0x000000000069E2a187AEFFb852bF3cCdC95151B2",
+});
 ```
 
 ## Parameters
 
+### registryAddress
+
+- Type: `Address`
+
+The address of the registry. It is recommended to use the Module Registry singleton address: `0x000000000069E2a187AEFFb852bF3cCdC95151B2`.
+
 ## Returns
+
+### module
+
+- Type: [`Module`](/module-sdk/glossary/types#module)
+
+The registry hook module object.
