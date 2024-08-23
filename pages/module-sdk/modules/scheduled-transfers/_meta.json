@@ -2,6 +2,7 @@
   "getScheduledTransferData": "getScheduledTransferData",
   "getScheduledTransfersExecutor": "getScheduledTransfersExecutor",
   "getCreateScheduledTransferAction": "getCreateScheduledTransferAction",
+  "getToggleScheduledTransferAction": "getToggleScheduledTransferAction",
   "getExecuteScheduledTransferAction": "getExecuteScheduledTransferAction",
   "SCHEDULED_TRANSFERS_EXECUTER_ADDRESS": "SCHEDULED_TRANSFERS_EXECUTER_ADDRESS"
 }
