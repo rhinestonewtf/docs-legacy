@@ -97,12 +97,21 @@ const smartAccountClient = createSmartAccountClient({
 Get the module object for the module that you want to install on the smart account. In this case, we will install the Social Recovery Module. We will pass to it a number of guardians that can recover the account as well as a threshold of guardians required to recover the account.
 
 ```typescript copy
-import { getDeadmanSwitch } from "@rhinestone/module-sdk";
+import { getClient, getAccount, getDeadmanSwitch } from "@rhinestone/module-sdk";
 import { privateKeyToAccount } from "viem/accounts";
+
+const account = await getAccount({
+  address: safeAccount.address, 
+  type: "safe",
+});
+
+const client = getClient({ rpcUrl: "your-rpc-url" });
 
 const nominee = privateKeyToAccount("0xPRIVATE_KEY");
 
 const module = getDeadmanSwitch({
+  client,
+  account,
   nominee: nominee.address,
   timeout: "100", // in seconds
   moduleType: "validator",
@@ -114,7 +123,7 @@ const module = getDeadmanSwitch({
 With this module object, we can now install it on the smart account as a validator.
 
 ```typescript copy
-const opHash = await smartClient.installModule({
+const opHash = await smartAccountClient.installModule({
   type: module.type,
   address: module.module,
   context: module.data,
@@ -131,7 +140,7 @@ await bundlerClientV07.waitForUserOperationReceipt({
 The Deadman Switch module is also a hook, so it also needs to be installed as a hook.
 
 ```typescript copy
-const opHash = await smartClient.installModule({
+const opHash = await smartAccountClient.installModule({
   type: "hook", // manually set the type to hook
   address: module.module,
   context: "0x", // we need to leave this empty since the data was already passed above
