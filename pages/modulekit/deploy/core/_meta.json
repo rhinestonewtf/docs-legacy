@@ -1,4 +1,6 @@
 {
   "deployModule": "deployModule",
-  "deployModuleViaFactory": "deployModuleViaFactory"
+  "predictModuleAddress": "predictModuleAddress",
+  "deployModuleViaFactory": "deployModuleViaFactory",
+  "registerModule": "registerModule"
 }

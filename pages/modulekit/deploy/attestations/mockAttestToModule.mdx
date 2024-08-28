@@ -1,10 +1,13 @@
 # mockAttestToModule
 
-Make a mock attestation to a module.
+Make a mock attestation to a module. Note that this function is only available on testnets.
 
 ## Usage
 
 ```solidity copy
+ModuleType[] memory moduleTypes = new ModuleType[](1);
+moduleTypes[0] = ModuleType.wrap(1);
+
 mockAttestToModule({ module: module, attestationData: attestationData, moduleTypes: moduleTypes });
 ```
 
@@ -24,7 +27,7 @@ The attestation data.
 
 ### moduleTypes
 
-- Type: `ModuleType[]`
+- Type: `ModuleType[] | uint256[]`
 
 The module types.
 
