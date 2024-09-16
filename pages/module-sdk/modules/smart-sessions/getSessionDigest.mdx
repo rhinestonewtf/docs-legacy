@@ -8,8 +8,8 @@ const digest = await getSessionDigest({
   account,
   client,
   session: {
-        sessionValidator: '0xValiatorAddress',
-        sessionValidatorInitData: '0xValiatorInitData',
+        sessionValidator: '0x1234...',
+        sessionValidatorInitData: '0xabcd...',
         salt: toHex(toBytes('1', { size: 32 })),
         userOpPolicies: [],
         erc7739Policies: {
@@ -18,18 +18,18 @@ const digest = await getSessionDigest({
         },
         actions: [
           {
-            actionTarget: '0xTargetAddress',
-            actionTargetSelector: '0x00000000',
+            actionTarget: '0x1234...',
+            actionTargetSelector: '0x00112233',
             actionPolicies: [
               {
-                policy: '0xPolicyAddress',
-                initData: '0xPolicyInitData',
+                policy: '0x1234...',
+                initData: '0xabcd...',
               },
             ],
          },
       ],
     },
-    permissionId: '0xPermissionId',
+    permissionId: '0x1234...',
     mode: '0x00' // USE mode
 });
 ```
@@ -46,7 +46,7 @@ The account object.
 
 - Type: `PublicClient`
 
-The rpc client to use for the chain you want.
+The rpc client to use for the chain you want to use.
 
 ### session
 
@@ -67,6 +67,9 @@ The permission ID of the session.
 The mode of the session. 
 
 ## Returns
+
+### sessionDigest
+
 - Type: `Promise<Hex>`
 
 Returns the digest of the given session.

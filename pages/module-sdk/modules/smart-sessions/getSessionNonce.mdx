@@ -8,7 +8,7 @@ Get the nonce of a session.
 const nonce = await getSessionNonce({
   client,
   account,
-  permissionId: '0xPermissionId',
+  permissionId: '0x1234...',
 });
 ```
 
@@ -32,8 +32,10 @@ The rpc client to use for the chain you want.
 
 The account object.
 
-
 ## Returns
+
+### nonce 
+
 - Type: `Promise<bigint>`
 
 Returns the nonce of the given session.
