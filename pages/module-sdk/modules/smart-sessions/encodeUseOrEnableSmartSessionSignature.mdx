@@ -8,8 +8,8 @@ Get encoded smart session signature.
  const encodedSig = encodeUseOrEnableSmartSessionSignature({
     account,
     client,
-    permissionId: '0xPermissionId',
-    signature: '0xSignature',
+    permissionId: '0xabcd....',
+    signature: '0x1234...',
     enableSessionData: {
        enableSession: {
           chainDigestIndex: 0,
@@ -56,6 +56,8 @@ The signature of the session to enable.
 The data needed to enable a session in an account.
 
 ## Returns
+
+### encodedSignature
 
 - Type: `Promise<Hex>`
 

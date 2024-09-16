@@ -7,8 +7,8 @@ Get encoded smart session signature.
 ```typescript copy
  const encodedSig = encodeSmartSessionSignature({
     mode: SmartSessionMode.ENABLE,
-    permissionId: '0xPermissionId',
-    signature: '0xSignature',
+    permissionId: '0xabcd...',
+    signature: '0x1234...',
     enableSessionData: {
        enableSession: {
           chainDigestIndex: 0,
@@ -30,7 +30,6 @@ Get encoded smart session signature.
 
 The mode of the smart session.
 
-
 ### permissionId
 
 - Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
@@ -50,6 +49,8 @@ The signature of the session to enable.
 The data needed to enable a session in an account.
 
 ## Returns
+
+### encodedSignature
 
 - Type: `Promise<Hex>`
 
