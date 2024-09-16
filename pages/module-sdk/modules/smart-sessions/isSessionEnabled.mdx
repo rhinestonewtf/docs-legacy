@@ -5,7 +5,7 @@ Check whether a session is enabled or not.
 ## Usage
 
 ```typescript copy
-const action = await isSessionEnabled({
+const isEnabled = await isSessionEnabled({
   client,
   account,
   permissionId: '0xPermissionId',
@@ -32,6 +32,10 @@ The rpc client to use for the chain you want to install the module on.
 
 The account object.
 
-
 ## Returns
+
+### isEnabled
+
 - Type: `Promise<boolean>`
+
+True if the session is enabled and false otherwise.
