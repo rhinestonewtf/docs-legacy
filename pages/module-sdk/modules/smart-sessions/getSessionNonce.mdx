@@ -1,0 +1,39 @@
+# getSessionNonce
+
+Get the nonce of a session.
+
+## Usage
+
+```typescript copy
+const nonce = await getSessionNonce({
+  client,
+  account,
+  permissionId: '0xPermissionId',
+});
+```
+
+## Parameters
+
+### permissionId
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The permission ID of the session to the nonce for.
+
+### client
+
+- Type: `PublicClient`
+
+The rpc client to use for the chain you want.
+
+### account
+
+- Type: [`Account`](/module-sdk/glossary/types#account)
+
+The account object.
+
+
+## Returns
+- Type: `Promise<bigint>`
+
+Returns the nonce of the given session.

@@ -1,0 +1,73 @@
+# getSessionDigest
+Get digest of a session.
+
+## Usage
+
+```typescript copy
+const digest = await getSessionDigest({
+  account,
+  client,
+  session: {
+        sessionValidator: '0xValiatorAddress',
+        sessionValidatorInitData: '0xValiatorInitData',
+        salt: toHex(toBytes('1', { size: 32 })),
+        userOpPolicies: [],
+        erc7739Policies: {
+          allowedERC7739Content: [],
+          erc1271Policies: [],
+        },
+        actions: [
+          {
+            actionTarget: '0xTargetAddress',
+            actionTargetSelector: '0x00000000',
+            actionPolicies: [
+              {
+                policy: '0xPolicyAddress',
+                initData: '0xPolicyInitData',
+              },
+            ],
+         },
+      ],
+    },
+    permissionId: '0xPermissionId',
+    mode: '0x00' // USE mode
+});
+```
+
+## Parameters
+
+### account
+
+- Type: [`Account`](/module-sdk/glossary/types#account)
+
+The account object.
+
+### client
+
+- Type: `PublicClient`
+
+The rpc client to use for the chain you want.
+
+### session
+
+- Type: [`Session`](/module-sdk/glossary/types#session)
+
+The session object.
+
+### permissionId
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The permission ID of the session.
+
+### mode
+
+- Type: [`SmartSessionMode`](/module-sdk/glossary/types#smartsessionmode)
+
+The mode of the session. 
+
+## Returns
+- Type: `Promise<Hex>`
+
+Returns the digest of the given session.
+

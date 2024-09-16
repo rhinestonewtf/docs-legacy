@@ -1,0 +1,28 @@
+# hashChainSessions
+Hash a list of chain sessions.
+
+## Usage
+
+```typescript copy
+const chainSessionHash = hashChainSessions([
+      {
+        chainId: 1,
+        session,
+      },
+    ])
+```
+
+## Parameters
+
+### chainSessions
+
+- Type: [`ChainSession[]`](/module-sdk/glossary/types#chainsession)
+
+A list of chain sessions.
+
+
+## Returns
+- Type: `Promise<Hex>`
+
+Returns the hash of the given chain sessions.
+

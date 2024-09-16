@@ -1,0 +1,52 @@
+# getPermissionId
+Get the permission ID of a session.
+
+## Usage
+
+```typescript copy
+const permissionId = await getPermissionId({
+  client,
+  session: {
+        sessionValidator: '0xValiatorAddress',
+        sessionValidatorInitData: '0xValiatorInitData',
+        salt: toHex(toBytes('1', { size: 32 })),
+        userOpPolicies: [],
+        erc7739Policies: {
+          allowedERC7739Content: [],
+          erc1271Policies: [],
+        },
+        actions: [
+          {
+            actionTarget: '0xTargetAddress',
+            actionTargetSelector: '0x00000000',
+            actionPolicies: [
+              {
+                policy: '0xPolicyAddress',
+                initData: '0xPolicyInitData',
+              },
+            ],
+         },
+      ],
+    },
+});
+```
+
+## Parameters
+
+### session
+
+- Type: [`Session`](/module-sdk/glossary/types#session)
+
+The session object.
+
+### client
+
+- Type: `PublicClient`
+
+The rpc client to use for the chain you want.
+
+## Returns
+- Type: `Promise<Hex>`
+
+Returns the permission ID of a given session.
+

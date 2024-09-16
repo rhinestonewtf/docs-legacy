@@ -1,0 +1,56 @@
+# getSmartSessionsValidator
+
+Get the smart sessions module object.
+
+## Usage
+
+```typescript copy
+const module = getSmartSessionsValidator({
+  sessions: [
+      {
+        sessionValidator: '0xValiatorAddress',
+        sessionValidatorInitData: '0xValiatorInitData',
+        salt: toHex(toBytes('1', { size: 32 })),
+        userOpPolicies: [],
+        erc7739Policies: {
+          allowedERC7739Content: [],
+          erc1271Policies: [],
+        },
+        actions: [
+          {
+            actionTarget: '0xTargetAddress',
+            actionTargetSelector: '0x00000000',
+            actionPolicies: [
+              {
+                policy: getSudoPolicy().address,
+                initData: getSudoPolicy().initData,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+});
+```
+
+## Parameters
+
+### sessions
+
+- Type: [`Session[]`](/module-sdk/glossary/types#session)
+
+List of sessions to enable in the smart sessions validator.
+
+### hook (optional)
+
+- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
+
+The address of the hook to use. This is only required for the Kernel account.
+
+## Returns
+
+### module
+
+- Type: [`Module`](https://viem.sh/docs/glossary/types#module)
+
+The smart sessions validator module object.
