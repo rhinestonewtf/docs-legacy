@@ -6,15 +6,15 @@ Get the action to enable action policies for a specific session in the smart ses
 
 ```typescript copy
 const action = await getEnableActionPolicies({
-  permissionId: '0xPermissionId',
+  permissionId: '0x1234...',
   actionPolicies: [
     {
-      actionTarget: '0xTargetAddress',
-      actionTargetSelector: '0xTargetSelector',
+      actionTarget: '0xabcd...',
+      actionTargetSelector: '0x00112233',
       actionPolicies: [
         {
-          policy: '0xPolicyAddress',
-          initData: '0xPolicyInitData',
+          policy: '0x1234...',
+          initData: '0xabcd...',
         },
       ],
     },

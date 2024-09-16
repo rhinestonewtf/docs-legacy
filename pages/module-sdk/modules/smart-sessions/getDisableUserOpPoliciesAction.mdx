@@ -6,8 +6,8 @@ Get the action to disable userOp policies for a specific session in the smart se
 
 ```typescript copy
 const action = await getDisableUserOpPoliciesAction({
-  permissionId: '0xPermissionId',
-  userOpPolicies: ['0xPolicyAddress'],
+  permissionId: '0x1234...',
+  userOpPolicies: ['0xabcd...'],
 });
 ```
 
@@ -17,7 +17,7 @@ const action = await getDisableUserOpPoliciesAction({
 
 - Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
 
-The permission ID of the session to disable userOp policies.
+The permission ID of the session to disable userOp policies for.
 
 ### userOpPolicies
 
