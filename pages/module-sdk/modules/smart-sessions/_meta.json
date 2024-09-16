@@ -17,5 +17,6 @@
   "encodeSmartSessionSignature": "encodeSmartSessionSignature",
   "encodeUseOrEnableSmartSessionSignature": "encodeUseOrEnableSmartSessionSignature",
   "decodeSmartSessionSignature": "decodeSmartSessionSignature",
-  "SMART_SESSIONS_ADDRESS": "SMART_SESSIONS_ADDRESS"
+  "SMART_SESSIONS_ADDRESS": "SMART_SESSIONS_ADDRESS",
+  "policies": "Policies"
 }

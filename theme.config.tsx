@@ -56,7 +56,7 @@ const config: DocsThemeConfig = {
       if (type === "separator") {
         return <Separator title={title} />;
       }
-      return <div className="">{title}</div>;
+      return <div className="-my-[2px]">{title}</div>;
     },
   },
   primaryHue: {
