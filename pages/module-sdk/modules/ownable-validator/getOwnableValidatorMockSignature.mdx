@@ -5,12 +5,18 @@ Get the mock signature for the ownable validator in order to use for ERC-4337 ga
 ## Usage
 
 ```typescript copy
-const mockSignature = getOwnableValidatorMockSignature();
+const mockSignature = getOwnableValidatorMockSignature({
+  threshold: 1,
+});
 ```
 
 ## Parameters
 
-None
+### threshold
+
+- Type: `number`
+
+The number of signatures required to validate the ownable validator. This is required to calculate the gas cost for the UserOperation.
 
 ## Returns
 

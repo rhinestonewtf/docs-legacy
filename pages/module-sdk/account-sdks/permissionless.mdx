@@ -20,10 +20,7 @@ import {
   createSmartAccountClient,
 } from "permissionless";
 import { signerToSafeSmartAccount } from "permissionless/accounts";
-import {
-  createPimlicoBundlerClient,
-  createPimlicoPaymasterClient,
-} from "permissionless/clients/pimlico";
+import { createPimlicoBundlerClient } from "permissionless/clients/pimlico";
 import { erc7579Actions } from "permissionless/actions/erc7579";
 import { createPublicClient, getContract, http, parseEther } from "viem";
 import { sepolia } from "viem/chains";
