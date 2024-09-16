@@ -1,0 +1,34 @@
+# encode1271Signature
+
+Encodes a 1271 signature for the account type.
+
+## Usage
+
+```typescript copy
+const signature = encode1271Signature({
+  validator: OWNABLE_VALIDATOR_ADDRESS,
+  signature: "0x1234...",
+});
+```
+
+## Parameters
+
+### validator
+
+- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
+
+The address of the validator to validate the 1271 signature.
+
+### signature
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The signature to encode.
+
+## Returns
+
+### encodedSignature
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The encoded 1271 signature.

@@ -3,5 +3,6 @@
   "installModule": "installModule",
   "uninstallModule": "uninstallModule",
   "isModuleInstalled": "isModuleInstalled",
-  "getInstalledModules": "getInstalledModules"
+  "getInstalledModules": "getInstalledModules",
+  "encode1271Signature": "encode1271Signature"
 }
