@@ -1,0 +1,50 @@
+# getEnableSessionsAction
+
+Get the action to enable sessions in smart sessions validator.
+
+## Usage
+
+```typescript copy
+const action = await getEnableSessionsAction({
+  sessions: [
+      {
+        sessionValidator: '0x1234...',
+        sessionValidatorInitData: '0xabcd...',
+        salt: toHex(toBytes('1', { size: 32 })),
+        userOpPolicies: [],
+        erc7739Policies: {
+          allowedERC7739Content: [],
+          erc1271Policies: [],
+        },
+        actions: [
+          {
+            actionTarget: '0x1234...',
+            actionTargetSelector: '0x00112233',
+            actionPolicies: [
+              {
+                policy: '0x1234...',
+                initData: '0xabcd...',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+});
+```
+
+## Parameters
+
+### sessions
+
+- Type: [`Session[]`](/module-sdk/glossary/types#session)
+
+List of sessions to enable in the smart sessions validator.
+
+## Returns
+
+### action
+
+- Type: [`Promise<Action>`](/module-sdk/glossary/types#action)
+
+The action to enable sessions in the smart sessions validator.

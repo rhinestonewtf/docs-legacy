@@ -1,0 +1,43 @@
+# getUniversalActionPolicy
+
+Get the universal action policy.
+
+## Usage
+
+```typescript copy
+ const universalActionPolicy = getUniversalActionPolicy({
+      paramRules: {
+        length: 1,
+        rules: new Array(16).fill({
+          condition: ParamCondition.EQUAL,
+          isLimited: false,
+          offset: 0,
+          ref: toHex(toBytes('0x', { size: 32 })),
+          usage: { limit: BigInt(0), used: BigInt(0) },
+        }),
+      },
+      valueLimitPerUse: BigInt(100),
+    })
+```
+
+## Parameters
+
+### paramRules
+
+- Type: [`paramRules`](/module-sdk/glossary/types#paramrules-1)
+
+Parameter rules.
+
+## valueLimitPerUse
+
+- Type: `bigint`
+
+Value limit per use.
+
+## Returns
+
+### policy
+
+- Type: [`Policy`](/module-sdk/glossary/types#policy-1)
+
+The policy object.

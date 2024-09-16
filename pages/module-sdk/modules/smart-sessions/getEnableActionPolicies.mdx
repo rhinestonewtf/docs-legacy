@@ -1,0 +1,45 @@
+# getEnableActionPolicies
+
+Get the action to enable action policies for a specific session in the smart sessions validator.
+
+## Usage
+
+```typescript copy
+const action = await getEnableActionPolicies({
+  permissionId: '0x1234...',
+  actionPolicies: [
+    {
+      actionTarget: '0xabcd...',
+      actionTargetSelector: '0x00112233',
+      actionPolicies: [
+        {
+          policy: '0x1234...',
+          initData: '0xabcd...',
+        },
+      ],
+    },
+  ],
+});
+```
+
+## Parameters
+
+### permissionId
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The permission ID of the session to enable action policies.
+
+### actionPolicies
+
+- Type: [`ActionData[]`](/module-sdk/glossary/types#actiondata)
+
+A list of action policies.
+
+## Returns
+
+### action
+
+- Type: [`Promise<Action>`](/module-sdk/glossary/types#action)
+
+The action to enable action policies for a specific session in the smart sessions validator.
