@@ -22,10 +22,7 @@ import {
   createSmartAccountClient,
 } from "permissionless";
 import { signerToSafeSmartAccount } from "permissionless/accounts";
-import {
-  createPimlicoBundlerClient,
-  createPimlicoPaymasterClient,
-} from "permissionless/clients/pimlico";
+import { createPimlicoBundlerClient } from "permissionless/clients/pimlico";
 import { erc7579Actions } from "permissionless/actions/erc7579";
 import { createPublicClient, getContract, http, parseEther } from "viem";
 import { sepolia } from "viem/chains";
@@ -97,11 +94,15 @@ const smartAccountClient = createSmartAccountClient({
 Get the module object for the module that you want to install on the smart account. In this case, we will install the Social Recovery Module. We will pass to it a number of guardians that can recover the account as well as a threshold of guardians required to recover the account.
 
 ```typescript copy
-import { getClient, getAccount, getDeadmanSwitch } from "@rhinestone/module-sdk";
+import {
+  getClient,
+  getAccount,
+  getDeadmanSwitch,
+} from "@rhinestone/module-sdk";
 import { privateKeyToAccount } from "viem/accounts";
 
 const account = await getAccount({
-  address: safeAccount.address, 
+  address: safeAccount.address,
   type: "safe",
 });
 
