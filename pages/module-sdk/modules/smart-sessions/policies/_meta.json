@@ -1,0 +1,5 @@
+{
+  "getSudoPolicy": "getSudoPolicy",
+  "getSpendingLimitsPolicy": "getSpendingLimitsPolicy",
+  "getUniversalActionPolicy": "getUniversalActionPolicy"
+}

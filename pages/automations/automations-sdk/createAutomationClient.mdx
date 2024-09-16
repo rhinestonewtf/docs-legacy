@@ -14,6 +14,7 @@ const automationClient = createAutomationClient({
   accountInitCode: "0x",
   network: 11155111,
   validator: "0x...",
+  permissionId: '0xabcd...'
 });
 ```
 
@@ -54,6 +55,12 @@ Chain id of the network. Note: Currently only sepolia testnet is supported.
 - Type: [`Address`](https://viem.sh/docs/glossary/types#address)
 
 Address of the ECDSA validator module to use when constructing user ops in the automation service. The validator module should be installed in the account and automation service account should be added as an owner of the validator module before start using the automation service.
+
+### permissionId
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+Permission id of the session enabled in smart session validator module to use when constructing user ops in the automation service. The smart session module should be installed in the account and automation service account should be added as an owner of the validator module of the session that is enabled for the permission id before start using the automation service.
 
 ## Returns
 

@@ -10,5 +10,6 @@
   "deadman-switch": "Deadman Switch",
   "ownable-executor": "Ownable Executor",
   "cold-storage-hook": "Cold Storage Hook",
-  "hook-multi-plexer": "Hook MultiPlexer"
+  "hook-multi-plexer": "Hook MultiPlexer",
+  "smart-sessions": "Smart Sessions"
 }

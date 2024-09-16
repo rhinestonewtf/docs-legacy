@@ -1,0 +1,29 @@
+# getSpendingLimitsPolicy
+
+Get the spending limits policy.
+
+## Usage
+
+```typescript copy
+ const spendingLimitsPolicy = getSpendingLimitsPolicy([{
+    token: '0x1234...',
+    limit: 100
+ }])
+```
+
+## Parameters
+
+### TokenWithLimits
+
+- Type: [`TokenWithLimit[]`](/module-sdk/glossary/types#tokenwithlimit)
+
+Token with limits array. The limit is the maximum amount of the token that can be spent.
+
+## Returns
+
+### policy
+
+- Type: [`Policy`](/module-sdk/glossary/types#policy-1)
+
+The spending limits policy.
+
