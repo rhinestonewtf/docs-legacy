@@ -6,12 +6,12 @@ Get the action to enable ERC1271 policies for a specific session in the smart se
 
 ```typescript copy
 const action = await getEnableERC1271PoliciesAction({
-  permissionId: '0xPermissionId',
+  permissionId: '0x1234...',
   erc1271Policies: {
-    allowedERC7739Content: ['0xContent'],
+    allowedERC7739Content: ['content'],
     erc1271Policies: [
       {
-        policy: '0xPolicyAddress',
+        policy: '0xabcd...',
         initData: '0x',
       },
     ],

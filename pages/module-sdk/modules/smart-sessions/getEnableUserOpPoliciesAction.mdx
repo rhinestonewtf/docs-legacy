@@ -6,11 +6,11 @@ Get the action to enable userOp policies for a specific session in the smart ses
 
 ```typescript copy
 const action = await getEnableUserOpPoliciesAction({
-  permissionId: '0xPermissionId',
+  permissionId: '0x1234...',
   userOpPolicies: [
     {
-      policy: '0xPolicyAddress',
-      initData: '0xPolicyInitData',
+      policy: '0xabcd...',
+      initData: '0x1234...',
     },
   ],
 });

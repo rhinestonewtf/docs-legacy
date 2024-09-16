@@ -1,4 +1,5 @@
 # getPermissionId
+
 Get the permission ID of a session.
 
 ## Usage
@@ -7,8 +8,8 @@ Get the permission ID of a session.
 const permissionId = await getPermissionId({
   client,
   session: {
-        sessionValidator: '0xValiatorAddress',
-        sessionValidatorInitData: '0xValiatorInitData',
+        sessionValidator: '0x1234...',
+        sessionValidatorInitData: '0xabcd...',
         salt: toHex(toBytes('1', { size: 32 })),
         userOpPolicies: [],
         erc7739Policies: {
@@ -17,12 +18,12 @@ const permissionId = await getPermissionId({
         },
         actions: [
           {
-            actionTarget: '0xTargetAddress',
-            actionTargetSelector: '0x00000000',
+            actionTarget: '0x1234...',
+            actionTargetSelector: '0x00112233',
             actionPolicies: [
               {
-                policy: '0xPolicyAddress',
-                initData: '0xPolicyInitData',
+                policy: '0x1234...',
+                initData: '0xabcd...',
               },
             ],
          },

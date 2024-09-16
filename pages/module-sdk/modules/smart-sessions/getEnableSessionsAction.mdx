@@ -8,8 +8,8 @@ Get the action to enable sessions in smart sessions validator.
 const action = await getEnableSessionsAction({
   sessions: [
       {
-        sessionValidator: '0xValiatorAddress',
-        sessionValidatorInitData: '0xValiatorInitData',
+        sessionValidator: '0x1234...',
+        sessionValidatorInitData: '0xabcd...',
         salt: toHex(toBytes('1', { size: 32 })),
         userOpPolicies: [],
         erc7739Policies: {
@@ -18,12 +18,12 @@ const action = await getEnableSessionsAction({
         },
         actions: [
           {
-            actionTarget: '0xTargetAddress',
-            actionTargetSelector: '0x00000000',
+            actionTarget: '0x1234...',
+            actionTargetSelector: '0x00112233',
             actionPolicies: [
               {
-                policy: '0xPolicyAddress',
-                initData: '0xPolicyInitData',
+                policy: '0x1234...',
+                initData: '0xabcd...',
               },
             ],
           },
