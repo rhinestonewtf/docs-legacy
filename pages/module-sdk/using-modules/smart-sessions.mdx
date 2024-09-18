@@ -1,0 +1,147 @@
+import { Steps } from "nextra/components";
+
+# How to use session keys using Smart Sessions 
+
+The Social Recovery Module allows users to add a set of guardians to their account so that they can recover it in case they lose access to it. This guide will show you how to install the Social Recovery Module on a Safe smart account using the permissionless.js SDK.
+
+We will first set up the smart account, install the social recovery module, and then recover the account using the guardians.
+
+<Steps>
+
+### Install the packages
+
+First, install the required packages:
+
+```sh npm2yarn
+npm i viem @rhinestone/module-sdk permissionless
+```
+
+### Set up the smart account
+
+Next, we will first create an account and install a validator on it. We use the `smartAccountClient` to install the module, as created in the [permissionless.js guide](/module-sdk/account-sdks/permissionless). To follow this step, head over to the aforementioned guide or use another account sdk.
+
+### Install a validator
+
+Next, we will install a validator on the account that we can later recover. In this case, we will simply install the Ownable Validator with two owners and a threshold of 2.
+
+```typescript copy
+import { getOwnableValidator } from "@rhinestone/module-sdk";
+
+const ownableValidator = getOwnableValidator({
+  owners: [
+    "0x2DC2fb2f4F11DeE1d6a2054ffCBf102D09b62bE2",
+    "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+  ],
+  threshold: 2,
+});
+
+const opHash = await smartAccountClient.installModule({
+  type: ownableValidator.type,
+  address: ownableValidator.module,
+  context: ownableValidator.data,
+});
+```
+
+### Install the Social Recovery Module
+
+Next, we will install the Social Recovery Module on the account. We will pass to it a number of guardians that can recover the account as well as a threshold of guardians required to recover the account.
+
+```typescript copy
+import { getSocialRecoveryValidator } from "@rhinestone/module-sdk";
+
+const module = getSocialRecoveryValidator({
+  threshold: 2,
+  guardians: [
+    "0xAB3E90EDC2911E5703391bf183555f9F06A5a5a6",
+    "0x576338c36ded622A11c5E51aFB227553aA2Ed813",
+  ],
+});
+
+const opHash = await smartAccountClient.installModule({
+  type: module.type,
+  address: module.module,
+  context: module.data,
+});
+```
+
+### Get the recovery calldata
+
+Finally, we will recover the account using the guardians. In this case, lets assume that the user has lost access to the first signer but still has access to the second one. In this case, the easiest way to recover is to reduce the threshold on the ownable validator to 1 and then the user can add another signer instead.
+
+```typescript copy
+import { getSetOwnableValidatorThresholdAction } from "@rhinestone/module-sdk";
+
+const action = getSetOwnableValidatorThresholdAction({
+  threshold: 1,
+});
+```
+
+### Create the recovery UserOperation
+
+Now that we have the calldata, we can create the UserOperation to recover the account.
+
+```typescript copy
+const callData = await safeAccount.encodeCallData({
+  to: action.target,
+  data: action.callData,
+  value: action.value,
+});
+
+// only if using pimlico
+const gasPrices = await pimlicoBundlerClient.getUserOperationGasPrice();
+
+const userOperation = await smartAccountClient.prepareUserOperationRequest({
+  userOperation: {
+    callData, // callData is the only required field in the partial user operation
+    maxFeePerGas: gasPrices.fast.maxFeePerGas,
+    maxPriorityFeePerGas: gasPrices.fast.maxPriorityFeePerGas,
+  },
+});
+```
+
+### Sign the recovery UserOperation
+
+Next, the guardians will have to sign the recovery UserOperation.
+
+```typescript copy
+import { getUserOperationHash, ENTRYPOINT_ADDRESS_V07 } from "permissionless";
+import { privateKeyToAccount } from "viem/accounts";
+
+const userOperationHash = getUserOperationHash({
+  userOperation,
+  chainId: 5,
+  entryPoint: ENTRYPOINT_ADDRESS_V07,
+});
+
+const guardian1 = privateKeyToAccount(
+  "0xc171c45f3d35fad832c53cade38e8d21b8d5cc93d1887e867fac626c1c0d6be7"
+); // the key coresponding to the first guardian
+
+const guardian2 = privateKeyToAccount(
+  "0x1a4c05be22dd9294615087ba1dba4266ae68cdc320d9164dbf3650ec0db60f67"
+); // the key coresponding to the second guardian
+
+const signature1 = await guardian1.signMessage({
+  message: { raw: userOperationHash },
+});
+
+const signature2 = await guardian2.signMessage({
+  message: { raw: userOperationHash },
+});
+
+userOperation.signature = encodePacked(
+  ["bytes", "bytes"],
+  [signature1, signature2]
+);
+```
+
+### Execute the recovery UserOperation
+
+Finally, we can execute the UserOperation to recover the account.
+
+```typescript copy
+const userOpHash = await smartAccountClient.sendUserOperation({
+  userOperation,
+});
+```
+</Steps>
