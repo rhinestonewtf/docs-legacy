@@ -1,10 +1,10 @@
 import { Steps } from "nextra/components";
 
-# How to use session keys using Smart Sessions 
+# How to use session keys using Smart Sessions
 
-The Social Recovery Module allows users to add a set of guardians to their account so that they can recover it in case they lose access to it. This guide will show you how to install the Social Recovery Module on a Safe smart account using the permissionless.js SDK.
+The Smart Sessions Module allows developers to create session keys with scoped permissions and access rights on a users account. This allows the user to determine exactly what an app is allowed to do on its' behalf and enforce this onchain. This guide will show you how to set up and use Smart Sessions with a Safe smart account using permissionless.js SDK.
 
-We will first set up the smart account, install the social recovery module, and then recover the account using the guardians.
+We will first set up the smart account, install the Smart Sessions Module, create a session and then use this new session to execute a UserOperation.
 
 <Steps>
 
@@ -20,71 +20,220 @@ npm i viem @rhinestone/module-sdk permissionless
 
 Next, we will first create an account and install a validator on it. We use the `smartAccountClient` to install the module, as created in the [permissionless.js guide](/module-sdk/account-sdks/permissionless). To follow this step, head over to the aforementioned guide or use another account sdk.
 
-### Install a validator
+### Install the Smart Sessions Module
 
-Next, we will install a validator on the account that we can later recover. In this case, we will simply install the Ownable Validator with two owners and a threshold of 2.
+Next, we will install the Smart Sessions Module on the users account. Note that while installing the module, we can also pass an initial set of sessions to be activated.
+
+In this step we will activate such a session, but we will then activate another session using the multichain enable flow and use this last section. This is not required but only intended to show the two different ways of activating a new session.
+
+In this demo session, we will use the ownable validator as the session validator and give it an owner address. We also use the sudo policy to allow any actions by the session key owner on the selected target.
 
 ```typescript copy
-import { getOwnableValidator } from "@rhinestone/module-sdk";
+import {
+  getSmartSessionsValidator,
+  OWNABLE_VALIDATOR_ADDRESS,
+  getSudoPolicy,
+} from "@rhinestone/module-sdk";
+import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
+import { encodeAbiParameters, toHex, toBytes, Address, Hex } from "viem";
 
-const ownableValidator = getOwnableValidator({
-  owners: [
-    "0x2DC2fb2f4F11DeE1d6a2054ffCBf102D09b62bE2",
-    "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+const smartSessions = getSmartSessionsValidator({
+  sessions: [
+    {
+      sessionValidator: OWNABLE_VALIDATOR_ADDRESS,
+      sessionValidatorInitData: encodeAbiParameters(
+        [
+          {
+            type: "uint256",
+          },
+          {
+            type: "address[]",
+          },
+        ],
+        [BigInt(1), [privateKeyToAccount(generatePrivateKey()).address]]
+      ),
+      salt: toHex(toBytes("2", { size: 32 })),
+      userOpPolicies: [],
+      erc7739Policies: {
+        allowedERC7739Content: [],
+        erc1271Policies: [],
+      },
+      actions: [
+        {
+          actionTarget: "0xa564cB165815937967a7d018B7F34B907B52fcFd" as Address, // an address as the target of the session execution
+          actionTargetSelector: "0x00000000" as Hex, // function selector to be used in the execution, in this case no function selector is used
+          actionPolicies: [
+            {
+              policy: getSudoPolicy().address,
+              initData: getSudoPolicy().initData,
+            },
+          ],
+        },
+      ],
+    },
   ],
-  threshold: 2,
 });
 
 const opHash = await smartAccountClient.installModule({
-  type: ownableValidator.type,
-  address: ownableValidator.module,
-  context: ownableValidator.data,
+  type: smartSessions.type,
+  address: smartSessions.module,
+  context: smartSessions.data,
 });
 ```
 
-### Install the Social Recovery Module
+### Create the session to enable
 
-Next, we will install the Social Recovery Module on the account. We will pass to it a number of guardians that can recover the account as well as a threshold of guardians required to recover the account.
+In the section above, we create a session inline and installed it on the smart sessions. We could now use this session to execute UserOperations.
+
+However, to demonstrate the second way of creating a session, we will now create and activate a new session and then use it to execute a UserOperation. First we will create the session details.
 
 ```typescript copy
-import { getSocialRecoveryValidator } from "@rhinestone/module-sdk";
+iimport { Session, OWNABLE_VALIDATOR_ADDRESS, getSudoPolicy } from "@rhinestone/module-sdk";
+import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
+import {encodeAbiParameters, toHex, toBytes, Address, Hex} from "viem";
 
-const module = getSocialRecoveryValidator({
-  threshold: 2,
-  guardians: [
-    "0xAB3E90EDC2911E5703391bf183555f9F06A5a5a6",
-    "0x576338c36ded622A11c5E51aFB227553aA2Ed813",
-  ],
-});
+const sessionOwner =  privateKeyToAccount(generatePrivateKey());
 
-const opHash = await smartAccountClient.installModule({
-  type: module.type,
-  address: module.module,
-  context: module.data,
-});
+const session: Session =      {
+        sessionValidator:
+          OWNABLE_VALIDATOR_ADDRESS,
+        sessionValidatorInitData: encodeAbiParameters(
+          [
+            {
+              type: 'uint256',
+            },
+            {
+              type: 'address[]',
+            },
+          ],
+          [
+            BigInt(1),
+            [sessionOwner.address],
+          ],
+        ),
+        salt: toHex(toBytes('41414141', { size: 32 })),
+        userOpPolicies: [],
+        erc7739Policies: {
+          allowedERC7739Content: [],
+          erc1271Policies: [],
+        },
+        actions: [
+          {
+            actionTarget:
+              '0xa564cB165815937967a7d018B7F34B907B52fcFd' as Address, // an address as the target of the session execution
+            actionTargetSelector: '0x00000000' as Hex, // function selector to be used in the execution, in this case no function selector is used
+            actionPolicies: [
+              {
+                policy: getSudoPolicy().address,
+                initData: getSudoPolicy().initData,
+              },
+            ],
+          },
+        ],
+      },
+
 ```
 
-### Get the recovery calldata
+### Get the session data
 
-Finally, we will recover the account using the guardians. In this case, lets assume that the user has lost access to the first signer but still has access to the second one. In this case, the easiest way to recover is to reduce the threshold on the ownable validator to 1 and then the user can add another signer instead.
+Now that we have created the session object, we will get some data that we will need for enabling the session.
+
+First we get the permission id (the identifier of the session) so that we can tell the smart sessions module which session we want to use. Then, we get the sessionNonce that we will sign over for replay protection.
 
 ```typescript copy
-import { getSetOwnableValidatorThresholdAction } from "@rhinestone/module-sdk";
+import {
+  getClient,
+  getAccount,
+  getPermissionId,
+  getSessionNonce,
+} from "@rhinestone/module-sdk";
 
-const action = getSetOwnableValidatorThresholdAction({
-  threshold: 1,
+const publicClient = getClient({
+  rpcUrl: "https://sepolia.drpc.org", // or your own rpc url
+});
+
+const account = await getAccount({
+  address: safeAccount.address,
+  type: "safe",
+});
+
+const permissionId = (await getPermissionId({
+  client: publicClient,
+  session,
+})) as Hex;
+
+const sessionNonce = await getSessionNonce({
+  client: publicClient,
+  account,
+  permissionId,
 });
 ```
 
-### Create the recovery UserOperation
+### Get the digests and hash to sign
 
-Now that we have the calldata, we can create the UserOperation to recover the account.
+Next, we will get various digests in order to formaute the hash to sign. The signature over this hash is what allows the new session to be enabled.
+
+```typescript copy
+import {
+  getSessionDigest,
+  SmartSessionMode,
+  SMART_SESSIONS_ADDRESS,
+  hashChainSessions,
+} from "@rhinestone/module-sdk";
+import { sepolia } from "viem/chains";
+
+const sessionDigest = await getSessionDigest({
+  client: publicClient,
+  account,
+  session,
+  mode: SmartSessionMode.ENABLE,
+  permissionId,
+});
+
+const chainDigests = [
+  {
+    chainId: BigInt(sepolia.id), // or your current chain
+    sessionDigest,
+  },
+];
+
+const chainSessions: ChainSession[] = [
+  {
+    chainId: BigInt(sepolia.id),
+    session: {
+      ...session,
+      account: account.address,
+      smartSession: SMART_SESSIONS_ADDRESS,
+      mode: 1,
+      nonce: sessionNonce,
+    },
+  },
+];
+
+const permissionEnableHash = hashChainSessions(chainSessions);
+```
+
+### Have the user sign the enable signature
+
+Next, the user will need to sign the `permissionEnableHash`. How exactly this is done depends on how your application works and which validator the user currently has installed.
+
+In this case, we will assume that an ownable validator is already installed on the account, so we can use the users' EOA to sign the hash.
+
+```typescript copy
+const permissionEnableSig = await signer.signMessage({
+  message: { raw: permissionEnableHash },
+});
+```
+
+### Create the UserOperation to execute
+
+Now that we have the session set up, we can create the UserOperation. Since we scope this session for a specific target and seletor, we will use those to create the calldata for the UserOperation.
 
 ```typescript copy
 const callData = await safeAccount.encodeCallData({
-  to: action.target,
-  data: action.callData,
-  value: action.value,
+  to: session.actions[0].actionTarget,
+  data: 0,
+  value: session.actions[0].actionTargetSelector,
 });
 
 // only if using pimlico
@@ -99,43 +248,48 @@ const userOperation = await smartAccountClient.prepareUserOperationRequest({
 });
 ```
 
-### Sign the recovery UserOperation
+### Gas estimation
 
-Next, the guardians will have to sign the recovery UserOperation.
+Before wew can sign the UserOperation, we will need to estimate the gas. For this, we will need a dummy signature that is as close to the real signature as possible.
+
+// Todo
+
+### Format the signature
+
+Next, we will use the session key to sign the UserOperation.
 
 ```typescript copy
 import { getUserOperationHash, ENTRYPOINT_ADDRESS_V07 } from "permissionless";
-import { privateKeyToAccount } from "viem/accounts";
+import {encodeSmartSessionSignature, SmartSessionMode, OWNABLE_VALIDATOR_ADDRESS}
 
-const userOperationHash = getUserOperationHash({
+const userOpHash = getUserOperationHash({
   userOperation,
-  chainId: 5,
+  chainId: sepolia.id,
   entryPoint: ENTRYPOINT_ADDRESS_V07,
 });
 
-const guardian1 = privateKeyToAccount(
-  "0xc171c45f3d35fad832c53cade38e8d21b8d5cc93d1887e867fac626c1c0d6be7"
-); // the key coresponding to the first guardian
+const signature = await sessionOwner.signMessage({
+          message: { raw: userOpHash },
+        })
 
-const guardian2 = privateKeyToAccount(
-  "0x1a4c05be22dd9294615087ba1dba4266ae68cdc320d9164dbf3650ec0db60f67"
-); // the key coresponding to the second guardian
-
-const signature1 = await guardian1.signMessage({
-  message: { raw: userOperationHash },
-});
-
-const signature2 = await guardian2.signMessage({
-  message: { raw: userOperationHash },
-});
-
-userOperation.signature = encodePacked(
-  ["bytes", "bytes"],
-  [signature1, signature2]
-);
+       userOperation.signature = encodeSmartSessionSignature({
+          mode: SmartSessionMode.ENABLE,
+          permissionId,
+          signature,
+          enableSessionData: {
+            enableSession: {
+              chainDigestIndex: 0,
+              hashesAndChainIds: chainDigests,
+              sessionToEnable: session,
+              permissionEnableSig,
+            },
+            validator: OWNABLE_VALIDATOR_ADDRESS,
+            accountType: 'safe',
+          },
+        })
 ```
 
-### Execute the recovery UserOperation
+### Execute the UserOperation
 
 Finally, we can execute the UserOperation to recover the account.
 
@@ -144,4 +298,5 @@ const userOpHash = await smartAccountClient.sendUserOperation({
   userOperation,
 });
 ```
+
 </Steps>
