@@ -142,7 +142,12 @@ The Deadman Switch module is also a hook, so it also needs to be installed as a 
 const opHash = await smartClient.installModule({
   type: "hook", // manually set the type to hook
   address: module.module,
-  context: "0x", // we need to leave this empty since the data was already passed above
+  context: encodeAbiParameters(
+    parseAbiParameters(
+      "uint8 hookType, bytes4 selector, bytes memory initData"
+    ),
+    [0, "0x", "0x"]
+  ), // we leave the initData empty since the data was already passed above and install the hook as a global Safe hook
 });
 
 await bundlerClientV07.waitForUserOperationReceipt({
