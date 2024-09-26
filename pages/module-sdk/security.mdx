@@ -1,0 +1,19 @@
+# Security
+
+Smart accounts not only unlock many novel product features, but also allow for the creation of a much more secure account. Wallets can use these security-centered modules to give their users extra protection.
+
+## Registry Hook
+
+The Module Registry enforces security guarantees and standards when installing a module on a smart account. The Module Registry stores onchain security attestations made by independent auditors. When installing a new module on the account, the Module Registry Adapter queries the Module Registry and checks that pre-set security thresholds have been met.
+
+## Deadman Switch
+
+Recover an account after a specified inactive period. The user sets the target recovery address (this could be another smart account or a typical EOA wallet) along with the required period of inactivity.
+
+## Cold Storage Hook
+
+Creates timelock and transfer restrictions. It restricts execution on the account in two ways: 1) a timelock period and 2) transfers are limited to just one address.
+
+## Hook MultiPlexer
+
+An opinionated router for combining multiple hook modules. Hooks are modules that are triggered before or after execution and can be used to enforce certain smart account behavior. Some examples of hooks include spending limits, white/blacklists, and more. This is an important module for accounts with only one global hook slot. 
