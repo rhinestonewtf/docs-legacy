@@ -1,4 +1,4 @@
-# Validators
+# Core 
 
 A core feature of smart accounts is programmable validation. This means that users are now able to control their accounts with different cryptographic methods and without giving up custody to enable this. This unlocks features such as multisigs or passkeys.
 
@@ -13,3 +13,7 @@ Enables a passkey as a signer on a smart account, allowing users to sign cryptog
 ## Multi Factor
 
 The module is a multiplexer, which allows developers to compose any set of signer modules together. For example, passkeys can be set as the main signer, but passkeys and an ECDSA validation scheme are required when making high-value transfers.
+
+## Social Recovery
+
+This allows users to specify one or multiple guardians with an m or n threshold for account recovery. The user sets a guardian by expressing the public address of the guardian.                                                

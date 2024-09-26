@@ -5,10 +5,10 @@
     "type": "separator",
     "title": "Modules"
   },
-  "validators": "Validators",
-  "smart-sessions": "Smart Sessions",
-  "security": "Security",
+  "core": "Core",
+  "permissions": "Permissions",
   "automations": "Automations",
+  "security": "Security",
   "--": {
     "type": "separator",
     "title": "Tutorials"
