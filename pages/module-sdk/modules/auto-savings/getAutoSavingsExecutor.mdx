@@ -6,12 +6,12 @@ Get the auto save executor object.
 
 ```typescript copy
 const autoSavingsModule = getAutoSavingsExecutor({
-  tokens: ["0x123..."],
+  chainId: sepolia.id,
   configs: [
     {
-      percentage: 0.1,
+      token: "0x123...",
+      percentage: BigInt(10),
       vault: "0x123...",
-      sqrtPriceLimit: 0.1,
     },
   ],
 });
@@ -19,18 +19,18 @@ const autoSavingsModule = getAutoSavingsExecutor({
 
 ## Parameters
 
-### tokens
+### chainId
 
-- Type: [`Address[]`](https://viem.sh/docs/glossary/types#address)
+- Type: `number`
 
-The addresses of the tokens to auto-save.
+The chain ID of the chain to use. This is necessary to pick the correct Uniswap router address.
 
 ### configs
 
 - Type: `{
+  token: Address,
   percentage: number,
   vault: Address,
-  sqrtPriceLimitX96: bigint
 }[]`
 
 The configs for each token.

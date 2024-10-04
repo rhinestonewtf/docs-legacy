@@ -6,6 +6,7 @@ Get the scheduled orders executor module object.
 
 ```typescript copy
 const module = getScheduledOrdersExecutor({
+  chainId: sepolia.id,
   executeInterval: 1000,
   numberOfExecutions: 10,
   startData: 1724184464,
@@ -14,6 +15,12 @@ const module = getScheduledOrdersExecutor({
 ```
 
 ## Parameters
+
+### chainId
+
+- Type: `number`
+
+The chain ID of the chain to use. This is necessary to pick the correct Uniswap router address.
 
 ### executeInterval
 

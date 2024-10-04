@@ -8,9 +8,8 @@ Get the action to set the auto-save configuration for a token.
 const action = getSetAutoSavingConfigAction({
   token: "0x123...",
   config: {
-    percentage: 0.1,
+    percentage: BigInt(10),
     vault: "0x123...",
-    sqrtPriceLimit: 0.1,
   },
 });
 ```
@@ -28,7 +27,6 @@ The address of the token to set the auto-save configuration for.
 - Type: `{
   percentage: number,
   vault: Address,
-  sqrtPriceLimit: bigint
 }`
 
 The configuration for the auto-save module for the token.
