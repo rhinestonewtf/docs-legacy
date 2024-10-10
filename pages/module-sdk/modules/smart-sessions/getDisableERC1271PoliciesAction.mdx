@@ -8,6 +8,7 @@ Get the action to disable ERC1271 policies for a specific session in the smart s
 const action = await getDisableERC1271PoliciesAction({
   permissionId: '0x1234...',
   policies: ['0xabcd...'],
+  contents: ['0x1234...'],
 });
 ```
 
@@ -24,6 +25,12 @@ The permission ID of the session to disable userOp policies.
 - Type: [`Address[]`](https://viem.sh/docs/glossary/types#address)
 
 A list of ERC1271 policies addresses.
+
+### contents
+
+- Type: `string[]` 
+
+The list of ERC-7739 contents used by the policies.
 
 ## Returns
 

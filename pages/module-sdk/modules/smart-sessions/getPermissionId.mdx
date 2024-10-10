@@ -5,8 +5,7 @@ Get the permission ID of a session.
 ## Usage
 
 ```typescript copy
-const permissionId = await getPermissionId({
-  client,
+const permissionId = getPermissionId({
   session: {
         sessionValidator: '0x1234...',
         sessionValidatorInitData: '0xabcd...',
@@ -40,17 +39,12 @@ const permissionId = await getPermissionId({
 
 The session object.
 
-### client
-
-- Type: `PublicClient`
-
-The rpc client to use for the chain you want.
 
 ## Returns
 
 ### permissionId
 
-- Type: `Promise<Hex>`
+- Type: `Hex`
 
 Returns the permission ID of a given session.
 

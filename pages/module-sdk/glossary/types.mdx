@@ -74,15 +74,23 @@ The object representing an action in ModuleSDK.
 
 ```typescript
 type Action = {
+  to: Address;
   target: Address;
   value: BigInt;
+  data: Hex;
   callData: Hex;
 };
 ```
 
 ### Properties
 
-#### target
+#### to
+
+- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
+
+The address of the target.
+
+#### target (deprecated)
 
 - Type: [`Address`](https://viem.sh/docs/glossary/types#address)
 
@@ -94,7 +102,13 @@ The address of the target.
 
 The native token value of the execution.
 
-#### callData
+#### data
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The calldata of the action to be executed on the target.
+
+#### callData (deprecated)
 
 - Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
 
@@ -156,26 +170,40 @@ The object representing a module in ModuleSDK.
 
 ```typescript
 type Module = {
-  module: Address;
-  data?: Hex;
-  additionalContext?: Hex;
-  type: ModuleType;
+address: Address
+  module: Address
+  initData: Hex
+  deInitData: Hex
+  additionalContext: Hex
+  type: ModuleType
 };
 ```
 
 ### Properties
 
-#### module
+#### address
 
 - Type: [`Address`](https://viem.sh/docs/glossary/types#address)
 
 The address of the module.
 
-#### data
+#### module (deprecated)
+
+- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
+
+The address of the module.
+
+#### initData
 
 - Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
 
-The installation or uninstallation data to be sent to the module.
+The installation data of the module.
+
+#### deInitData
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The uninstallation data of the module.
 
 #### additionalContext
 
