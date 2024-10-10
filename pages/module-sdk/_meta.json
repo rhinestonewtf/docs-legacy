@@ -10,6 +10,7 @@
     "type": "separator",
     "title": "Guides"
   },
+  "account-guides": "Accounts",
   "account-sdks": "Account SDKs",
   "using-modules": "Using Modules",
   "---": {
