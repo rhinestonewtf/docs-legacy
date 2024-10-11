@@ -1,4 +1,4 @@
-import { Steps } from "nextra/components";
+import { Steps } from 'nextra/components'
 
 # How to integrate the Registry into a smart wallet
 
@@ -25,11 +25,11 @@ npm i viem @rhinestone/module-sdk
 To set up the registry hook module, you can simply call the following function:
 
 ```typescript copy
-import { getRegistryHook } from "@rhinestone/module-sdk";
+import { getRegistryHook } from '@rhinestone/module-sdk'
 
 const registryHook = getRegistryHook({
-  registryAddress: "0x...",
-});
+  registryAddress: '0x...',
+})
 ```
 
 This will return an object with the properties: `module`, `initData` and `type`. You can then use this object to install the module on the smart account.
@@ -43,7 +43,7 @@ const userOpHash = await smartAccountClient.installModule({
   type: registryHook.type,
   address: registryHook.module,
   context: registryHook.initData,
-});
+})
 ```
 
 </Steps>

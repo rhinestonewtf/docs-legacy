@@ -6,17 +6,18 @@ Encodes the `initData` for a module installation.
 
 ```typescript copy
 const initData = encodeModuleInstallationData({
-      account: getAccount({
-        address: safeAccount.address,
-        type: "safe",
-      }),
-      module: getDeadmanSwitch({
-        account,
-        client,
-        nominee: nominee.address,
-        timeout: 1,
-        moduleType: "validator",
-      }),});
+  account: getAccount({
+    address: safeAccount.address,
+    type: 'safe',
+  }),
+  module: getDeadmanSwitch({
+    account,
+    client,
+    nominee: nominee.address,
+    timeout: 1,
+    moduleType: 'validator',
+  }),
+})
 ```
 
 ## Parameters

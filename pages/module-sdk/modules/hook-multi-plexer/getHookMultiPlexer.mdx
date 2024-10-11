@@ -6,22 +6,22 @@ Get the hook multiplexer.
 
 ```typescript copy
 const hookMultiPlexer = getHookMultiPlexer({
-  globalHooks: ["0x123..."],
-  valueHooks: ["0x123..."],
-  delegatecallHooks: ["0x123..."],
+  globalHooks: ['0x123...'],
+  valueHooks: ['0x123...'],
+  delegatecallHooks: ['0x123...'],
   sigHooks: [
     {
-      sig: "0x123...",
-      subHooks: ["0x123..."],
+      sig: '0x123...',
+      subHooks: ['0x123...'],
     },
   ],
   targetHooks: [
     {
-      target: "0x123...",
-      subHooks: ["0x123..."],
+      target: '0x123...',
+      subHooks: ['0x123...'],
     },
   ],
-});
+})
 ```
 
 ## Parameters

@@ -1,4 +1,4 @@
-import { Steps } from "nextra/components";
+import { Steps } from 'nextra/components'
 
 # Tutorial 1: Install and use your first module
 
@@ -17,15 +17,15 @@ npm i viem @rhinestone/module-sdk permissionless
 ### Import the required packages
 
 ```typescript copy
+import { sepolia } from 'viem/chains'
+import { erc7579Actions } from 'permissionless/actions/erc7579'
+import { signerToSafeSmartAccount } from 'permissionless/accounts'
+import { createPublicClient, getContract, http, parseEther } from 'viem'
+import { createPimlicoBundlerClient } from 'permissionless/clients/pimlico'
 import {
   ENTRYPOINT_ADDRESS_V07,
   createSmartAccountClient,
-} from "permissionless";
-import { signerToSafeSmartAccount } from "permissionless/accounts";
-import { createPimlicoBundlerClient } from "permissionless/clients/pimlico";
-import { erc7579Actions } from "permissionless/actions/erc7579";
-import { createPublicClient, getContract, http, parseEther } from "viem";
-import { sepolia } from "viem/chains";
+} from 'permissionless'
 ```
 
 ### Create the clients
@@ -34,13 +34,13 @@ Create the smart account client and the bundler client.
 
 ```typescript copy
 export const publicClient = createPublicClient({
-  transport: http("https://rpc.ankr.com/eth_sepolia"),
-});
+  transport: http('https://rpc.ankr.com/eth_sepolia'),
+})
 
 export const pimlicoBundlerClient = createPimlicoBundlerClient({
-  transport: http("https://api.pimlico.io/v2/sepolia/rpc?apikey=API_KEY"),
+  transport: http('https://api.pimlico.io/v2/sepolia/rpc?apikey=API_KEY'),
   entryPoint: ENTRYPOINT_ADDRESS_V07,
-});
+})
 ```
 
 ### Create the signer
@@ -50,9 +50,9 @@ The Safe account will need to have a signer to sign user operations. In permissi
 For example, to create a signer based on a private key:
 
 ```typescript copy
-import { privateKeyToAccount } from "viem/accounts";
+import { privateKeyToAccount } from 'viem/accounts'
 
-const signer = privateKeyToAccount("0xPRIVATE_KEY");
+const signer = privateKeyToAccount('0xPRIVATE_KEY')
 ```
 
 ### Create the Safe account
@@ -64,9 +64,9 @@ const safeAccount = await signerToSafeSmartAccount(publicClient, {
   entryPoint: ENTRYPOINT_ADDRESS_V07,
   signer: signer,
   saltNonce: 0n, // optional
-  safeVersion: "1.4.1",
-  address: "0x...", // optional, only if you are using an already created account
-});
+  safeVersion: '1.4.1',
+  address: '0x...', // optional, only if you are using an already created account
+})
 ```
 
 ### Create the smart account client
@@ -79,14 +79,14 @@ const smartAccountClient = createSmartAccountClient({
   entryPoint: ENTRYPOINT_ADDRESS_V07,
   chain: sepolia,
   bundlerTransport: http(
-    "https://api.pimlico.io/v2/sepolia/rpc?apikey=API_KEY"
+    'https://api.pimlico.io/v2/sepolia/rpc?apikey=API_KEY',
   ),
   middleware: {
     gasPrice: async () => {
-      return (await pimlicoBundlerClient.getUserOperationGasPrice()).fast;
+      return (await pimlicoBundlerClient.getUserOperationGasPrice()).fast
     },
   },
-}).extend(erc7579Actions({ entryPoint: ENTRYPOINT_ADDRESS_V07 }));
+}).extend(erc7579Actions({ entryPoint: ENTRYPOINT_ADDRESS_V07 }))
 ```
 
 ### Create the module object
@@ -94,27 +94,23 @@ const smartAccountClient = createSmartAccountClient({
 Get the module object for the module that you want to install on the smart account. In this case, we will install the Social Recovery Module. We will pass to it a number of guardians that can recover the account as well as a threshold of guardians required to recover the account.
 
 ```typescript copy
-import {
-  getClient,
-  getAccount,
-  getDeadmanSwitch,
-} from "@rhinestone/module-sdk";
-import { privateKeyToAccount } from "viem/accounts";
+import { privateKeyToAccount } from 'viem/accounts'
+import { getClient, getAccount, getDeadmanSwitch } from '@rhinestone/module-sdk'
 
 const account = await getAccount({
   address: safeAccount.address,
-  type: "safe",
-});
+  type: 'safe',
+})
 
-const client = getClient({ rpcUrl: "your-rpc-url" });
+const client = getClient({ rpcUrl: 'your-rpc-url' })
 
-const nominee = privateKeyToAccount("0xPRIVATE_KEY");
+const nominee = privateKeyToAccount('0xPRIVATE_KEY')
 
 const module = getDeadmanSwitch({
   nominee: nominee.address,
-  timeout: "100", // in seconds
-  moduleType: "validator",
-});
+  timeout: '100', // in seconds
+  moduleType: 'validator',
+})
 ```
 
 ### Install the module as a validator
@@ -126,12 +122,12 @@ const opHash = await smartClient.installModule({
   type: module.type,
   address: module.module,
   context: module.data,
-});
+})
 
 await bundlerClientV07.waitForUserOperationReceipt({
   hash: opHash,
   timeout: 100000,
-});
+})
 ```
 
 ### Install the module as a validator
@@ -140,20 +136,20 @@ The Deadman Switch module is also a hook, so it also needs to be installed as a 
 
 ```typescript copy
 const opHash = await smartClient.installModule({
-  type: "hook", // manually set the type to hook
+  type: 'hook', // manually set the type to hook
   address: module.module,
   context: encodeAbiParameters(
     parseAbiParameters(
-      "uint8 hookType, bytes4 selector, bytes memory initData"
+      'uint8 hookType, bytes4 selector, bytes memory initData',
     ),
-    [0, "0x", "0x"]
+    [0, '0x', '0x'],
   ), // we leave the initData empty since the data was already passed above and install the hook as a global Safe hook
-});
+})
 
 await bundlerClientV07.waitForUserOperationReceipt({
   hash: opHash,
   timeout: 100000,
-});
+})
 ```
 
 ### Recover the account

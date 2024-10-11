@@ -1,6 +1,6 @@
-import { Steps } from "nextra/components";
+import { Steps } from 'nextra/components'
 
-# How to use the Module SDK with the Kernel 
+# How to use the Module SDK with the Kernel
 
 The [Kernel](https://github.com/zerodevapp/kernel) is one of the most widely used smart accounts. In this tutorial, you will learn how to use the Module SDK with the Kernel.
 
@@ -17,12 +17,12 @@ npm i viem @rhinestone/module-sdk permissionless @zerodev/sdk @zerodev/ecdsa-val
 Create a to control the account with, in this case, we will use an EOA.
 
 ```typescript copy
-import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
+import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts'
 
 const main = async () => {
-  const privateKey = generatePrivateKey();
-  const signer = privateKeyToAccount(privateKey);
-};
+  const privateKey = generatePrivateKey()
+  const signer = privateKeyToAccount(privateKey)
+}
 ```
 
 ### Create a validator
@@ -32,13 +32,13 @@ Each Kernel account handles validation through a smart contract known as a "vali
 Add the following code to create the ECDSA validator:
 
 ```typescript copy
-import { signerToEcdsaValidator } from "@zerodev/ecdsa-validator";
+import { signerToEcdsaValidator } from '@zerodev/ecdsa-validator'
 
 const ecdsaValidator = await signerToEcdsaValidator(publicClient, {
   signer,
   entryPoint,
   kernelVersion: KERNEL_V3_1,
-});
+})
 ```
 
 ### Create an account
@@ -46,14 +46,14 @@ const ecdsaValidator = await signerToEcdsaValidator(publicClient, {
 Create the Kernel account object using the signer.
 
 ```typescript copy
-import { createKernelAccount } from "@zerodev/sdk";
+import { createKernelAccount } from '@zerodev/sdk'
 
 const account = await createKernelAccount(publicClient, {
   plugins: {
     sudo: ecdsaValidator,
   },
   entryPoint,
-}).extend(erc7579Actions({ entryPoint }));
+}).extend(erc7579Actions({ entryPoint }))
 ```
 
 ### Create the smart account client
@@ -61,7 +61,7 @@ const account = await createKernelAccount(publicClient, {
 The smart account client is used to interact with the smart account.
 
 ```typescript copy
-import { createKernelAccountClient } from "@zerodev/sdk";
+import { createKernelAccountClient } from '@zerodev/sdk'
 
 const smartClient = createKernelAccountClient({
   account,
@@ -74,14 +74,14 @@ const smartClient = createKernelAccountClient({
         chain,
         entryPoint,
         transport: http(PAYMASTER_RPC),
-      });
+      })
       return zerodevPaymaster.sponsorUserOperation({
         userOperation,
         entryPoint,
-      });
+      })
     },
   },
-});
+})
 ```
 
 ### Create the module object
@@ -89,12 +89,12 @@ const smartClient = createKernelAccountClient({
 Get the module object for the module that you want to install on the smart account. In this case, we will install the Social Recovery Module. We will pass to it a number of guardians that can recover the account as well as a threshold of guardians required to recover the account.
 
 ```typescript copy
-import { getSocialRecoveryValidator } from "@rhinestone/module-sdk";
+import { getSocialRecoveryValidator } from '@rhinestone/module-sdk'
 
 const module = getSocialRecoveryValidator({
   threshold: 2,
-  guardians: ["0x1234...", "0x5678..."],
-});
+  guardians: ['0x1234...', '0x5678...'],
+})
 ```
 
 ### Install the module
@@ -103,21 +103,21 @@ With this module object, we can now install it on the smart account.
 
 ```typescript copy
 const context = encodePacked(
-  ["address", "bytes"],
+  ['address', 'bytes'],
   [
     module.hook ?? zeroAddress,
     encodeAbiParameters(
-      [{ type: "bytes" }, { type: "bytes" }],
-      [module.initData || "0x", "0x"]
+      [{ type: 'bytes' }, { type: 'bytes' }],
+      [module.initData || '0x', '0x'],
     ),
-  ]
-);
+  ],
+)
 
 const opHash = await smartClient.installModule({
   type: module.type,
   address: module.module,
   context,
-});
+})
 ```
 
 ### Wait for the UserOperation to be confirmed
@@ -125,10 +125,10 @@ const opHash = await smartClient.installModule({
 Let's wait until the UserOperation is confirmed, after which the module will be installed.
 
 ```typescript copy
-const bundlerClient = kernelClient.extend(bundlerActions(entryPoint));
+const bundlerClient = kernelClient.extend(bundlerActions(entryPoint))
 await bundlerClient.waitForUserOperationReceipt({
   hash: userOpHash,
-});
+})
 ```
 
 </Steps>

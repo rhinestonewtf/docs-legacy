@@ -1,12 +1,12 @@
-import { ComponentCard } from "../../components/ComponentCard";
+import Image from 'next/image'
+import { Cards } from 'nextra-theme-docs'
+import { ComponentCard } from '../../components/ComponentCard'
 import {
   ValidatorsIcon,
   ExecutorsIcon,
   HooksIcon,
   FallbacksIcon,
-} from "../../components/icons";
-import { Cards } from "nextra-theme-docs";
-import Image from "next/image";
+} from '../../components/icons'
 
 # Modules explained
 
@@ -50,8 +50,8 @@ ERC-4337 breaks down the flow of a UserOperation into two distinct phases, valid
 <ComponentCard
   component={{
     icon: <ExecutorsIcon width={48} height={48} />,
-    title: "Executors",
-    description: "Create executions on the account with custom logic",
+    title: 'Executors',
+    description: 'Create executions on the account with custom logic',
   }}
 />
 

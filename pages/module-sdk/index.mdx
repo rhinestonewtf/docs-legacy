@@ -1,6 +1,6 @@
-import { ModuleSDKBanner } from "../../components/banners";
-import { Cards, Card } from "nextra-theme-docs";
-import Image from "next/image";
+import Image from 'next/image'
+import { Cards, Card } from 'nextra-theme-docs'
+import { ModuleSDKBanner } from '../../components/banners'
 
 # ModuleSDK
 
@@ -29,7 +29,7 @@ Current accounts supported by the Module SDK include:
         width={50}
         height={50}
         alt=""
-        style={{ marginRight: "5px" }}
+        style={{ marginRight: '5px' }}
       />
     }
   />
@@ -42,7 +42,7 @@ Current accounts supported by the Module SDK include:
         width={50}
         height={50}
         alt=""
-        style={{ marginRight: "5px" }}
+        style={{ marginRight: '5px' }}
       />
     }
   />
@@ -55,7 +55,7 @@ Current accounts supported by the Module SDK include:
         width={50}
         height={50}
         alt=""
-        style={{ marginRight: "5px" }}
+        style={{ marginRight: '5px' }}
       />
     }
   />
@@ -68,7 +68,7 @@ Current accounts supported by the Module SDK include:
         width={50}
         height={50}
         alt=""
-        style={{ marginRight: "5px" }}
+        style={{ marginRight: '5px' }}
       />
     }
   />
@@ -76,21 +76,21 @@ Current accounts supported by the Module SDK include:
 
 ## Core Modules
 
-| Module                                                                  | Description                                                                                                                                                                                                                                                                                                                                                        |
-| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Ownable Validator| This module enables an EOA as a signer for a smart account. It is ideal for product use cases where users are expected to be crypto-native and possess an EOA wallet. Alternatively, it can be combined with MPC providers [embedded signers](https://docs.pimlico.io/permissionless/how-to/signers).                                                              |
-| Passkeys / Webauthn Validator| Enables a passkey as a signer on a smart account, allowing users to sign cryptographic messages with their biometrics via the secure enclave of their device or use a preferred password manager.                                                                                                                                                                  |
-| Social Recovery| This allows users to specify one or multiple guardians with an m or n threshold for account recovery. The user sets a guardian by expressing the public address of the guardian.                                                                                                                                                                                   |
-| Multifactor Authentication (MFA)| The module is a multiplexer, which allows developers to compose any set of signer modules together. For example, passkeys can be set as the main signer, but passkeys and an ECDSA validation scheme are required when making high-value transfers.                                                                                                                |
-| Module Registry Adapter| The Module Registry enforces security guarantees and standards when installing a module on a smart account. The Module Registry stores onchain security attestations made by independent auditors. When installing a new module on the account, the Module Registry Adapter queries the Module Registry and checks that pre-set security thresholds have been met. |
-| Scheduled Transfers| Allows for automated transfers to be triggered on a smart account. The user can create a schedule on which a relayer will execute the transfers based on some parameters, like frequency or number of repetitions.                                                                                                                                                 |
-| Scheduled Orders| Allows for automated token swaps to be triggered on a smart account. The user can create a schedule on which a relayer will execute the swaps based on some parameters, like frequency or number of repetitions.                                                                                                                                                   |
-| Auto Save| This is a more opinionated version of the Schedule Transfer module. It allows a user to automatically transfer a set percentage of any received token to a target ERC-4626 yield-bearing vault.                                                                                                                                                                    |
-| Deadman Switch| Recover an account after a specified inactive period. The user sets the target recovery address (this could be another smart account or a typical EOA wallet) along with the required period of inactivity.                                                                                                                                                        |
-| Ownable Executor| Create a hierarchy ownership structure across smart accounts. This module allows one smart account to have execution rights on another smart account. The execution rights can trigger any transaction with the owner account paying for gas. This can enable automated relationships between DAOs and sub-DAOs or main accounts to sub-accounts.                  |
-| Cold Storage Hook| Creates timelock and transfer restrictions. It restricts execution on the account in two ways: 1) a timelock period and 2) transfers are limited to just one address.                                                                                                                                                                                              |
-| Flash Loan| A module base found in [ModuleKit](/modulekit) allows developers to easily create executor modules that tap into flash loan capabilities, as described in ERC-3156. This could be used to create a peer-to-peer rental system without needing an escrow contract or over-collateralization.                                                                        |
-| Hook Multiplexer| An opinionated router for combining multiple hook modules. Hooks are modules that are triggered before or after execution and can be used to enforce certain smart account behavior. Some examples of hooks include spending limits, white/blacklists, and more. This is an important module for accounts with only one global hook slot.                          |
+| Module                           | Description                                                                                                                                                                                                                                                                                                                                                        |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Ownable Validator                | This module enables an EOA as a signer for a smart account. It is ideal for product use cases where users are expected to be crypto-native and possess an EOA wallet. Alternatively, it can be combined with MPC providers [embedded signers](https://docs.pimlico.io/permissionless/how-to/signers).                                                              |
+| Passkeys / Webauthn Validator    | Enables a passkey as a signer on a smart account, allowing users to sign cryptographic messages with their biometrics via the secure enclave of their device or use a preferred password manager.                                                                                                                                                                  |
+| Social Recovery                  | This allows users to specify one or multiple guardians with an m or n threshold for account recovery. The user sets a guardian by expressing the public address of the guardian.                                                                                                                                                                                   |
+| Multifactor Authentication (MFA) | The module is a multiplexer, which allows developers to compose any set of signer modules together. For example, passkeys can be set as the main signer, but passkeys and an ECDSA validation scheme are required when making high-value transfers.                                                                                                                |
+| Module Registry Adapter          | The Module Registry enforces security guarantees and standards when installing a module on a smart account. The Module Registry stores onchain security attestations made by independent auditors. When installing a new module on the account, the Module Registry Adapter queries the Module Registry and checks that pre-set security thresholds have been met. |
+| Scheduled Transfers              | Allows for automated transfers to be triggered on a smart account. The user can create a schedule on which a relayer will execute the transfers based on some parameters, like frequency or number of repetitions.                                                                                                                                                 |
+| Scheduled Orders                 | Allows for automated token swaps to be triggered on a smart account. The user can create a schedule on which a relayer will execute the swaps based on some parameters, like frequency or number of repetitions.                                                                                                                                                   |
+| Auto Save                        | This is a more opinionated version of the Schedule Transfer module. It allows a user to automatically transfer a set percentage of any received token to a target ERC-4626 yield-bearing vault.                                                                                                                                                                    |
+| Deadman Switch                   | Recover an account after a specified inactive period. The user sets the target recovery address (this could be another smart account or a typical EOA wallet) along with the required period of inactivity.                                                                                                                                                        |
+| Ownable Executor                 | Create a hierarchy ownership structure across smart accounts. This module allows one smart account to have execution rights on another smart account. The execution rights can trigger any transaction with the owner account paying for gas. This can enable automated relationships between DAOs and sub-DAOs or main accounts to sub-accounts.                  |
+| Cold Storage Hook                | Creates timelock and transfer restrictions. It restricts execution on the account in two ways: 1) a timelock period and 2) transfers are limited to just one address.                                                                                                                                                                                              |
+| Flash Loan                       | A module base found in [ModuleKit](/modulekit) allows developers to easily create executor modules that tap into flash loan capabilities, as described in ERC-3156. This could be used to create a peer-to-peer rental system without needing an escrow contract or over-collateralization.                                                                        |
+| Hook Multiplexer                 | An opinionated router for combining multiple hook modules. Hooks are modules that are triggered before or after execution and can be used to enforce certain smart account behavior. Some examples of hooks include spending limits, white/blacklists, and more. This is an important module for accounts with only one global hook slot.                          |
 
 ## Useful starting resources
 

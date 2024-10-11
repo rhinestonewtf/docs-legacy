@@ -5,17 +5,17 @@ Create an Automation client to interact with the automation service.
 ## Usage
 
 ```typescript copy
-import { createAutomationClient } from "@rhinestone/automations-sdk";
+import { createAutomationClient } from '@rhinestone/automations-sdk'
 
 const automationClient = createAutomationClient({
-  account: "0x...",
-  accountType: 'SAFE',  // 'SAFE', 'KERNEL',
-  apiKey: "YOUR_API_KEY",
-  accountInitCode: "0x",
+  account: '0x...',
+  accountType: 'SAFE', // 'SAFE', 'KERNEL',
+  apiKey: 'YOUR_API_KEY',
+  accountInitCode: '0x',
   network: 11155111,
-  validator: "0x...",
-  permissionId: '0xabcd...'
-});
+  validator: '0x...',
+  permissionId: '0xabcd...',
+})
 ```
 
 ## Parameters

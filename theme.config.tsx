@@ -1,22 +1,22 @@
-import React from "react";
-import { DocsThemeConfig } from "nextra-theme-docs";
-import { SiFarcaster } from "react-icons/si";
-import { BsTwitterX } from "react-icons/bs";
-import { useRouter } from "next/router";
-import { Separator } from "./components/Separator";
-import { Logo } from "./components/Logo";
+import React from 'react'
+import { useRouter } from 'next/router'
+import { Logo } from './components/Logo'
+import { BsTwitterX } from 'react-icons/bs'
+import { SiFarcaster } from 'react-icons/si'
+import { Separator } from './components/Separator'
+import { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
   useNextSeoProps: () => {
-    const { asPath } = useRouter();
-    if (asPath !== "/") {
+    const { asPath } = useRouter()
+    if (asPath !== '/') {
       return {
-        titleTemplate: "%s – Rhinestone Docs",
-      };
+        titleTemplate: '%s – Rhinestone Docs',
+      }
     } else {
       return {
-        titleTemplate: "Rhinestone Docs",
-      };
+        titleTemplate: 'Rhinestone Docs',
+      }
     }
   },
   head: (
@@ -36,7 +36,7 @@ const config: DocsThemeConfig = {
     </>
   ),
   project: {
-    link: "https://github.com/rhinestonewtf",
+    link: 'https://github.com/rhinestonewtf',
   },
   navbar: {
     // extraContent: (
@@ -53,10 +53,10 @@ const config: DocsThemeConfig = {
   sidebar: {
     defaultMenuCollapseLevel: 2,
     titleComponent({ title, type }) {
-      if (type === "separator") {
-        return <Separator title={title} />;
+      if (type === 'separator') {
+        return <Separator title={title} />
       }
-      return <div className="-my-[2px]">{title}</div>;
+      return <div className="-my-[2px]">{title}</div>
     },
   },
   primaryHue: {
@@ -67,12 +67,12 @@ const config: DocsThemeConfig = {
     light: 72.8,
     dark: 74,
   },
-  docsRepositoryBase: "https://github.com/rhinestonewtf/docs/",
+  docsRepositoryBase: 'https://github.com/rhinestonewtf/docs/',
   footer: {
     text: (
       <div className="flex flex-row justify-between w-full">
         <span>
-          Copyright {new Date().getFullYear()}{" "}
+          Copyright {new Date().getFullYear()}{' '}
           <a href="https://rhinestone.wtf" target="_blank">
             Rhinestone
           </a>
@@ -95,6 +95,6 @@ const config: DocsThemeConfig = {
     ),
   },
   editLink: { component: null },
-};
+}
 
-export default config;
+export default config

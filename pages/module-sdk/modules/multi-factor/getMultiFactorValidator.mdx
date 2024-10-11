@@ -10,16 +10,16 @@ const multiFactorValidator = getMultiFactorValidator({
   validators: [
     {
       packedValidatorAndId: encodePacked(
-        ["bytes12", "address"],
+        ['bytes12', 'address'],
         [
-          "0x000000000000000000000000",
-          "0xf83d07238a7c8814a48535035602123ad6dbfa63",
-        ]
+          '0x000000000000000000000000',
+          '0xf83d07238a7c8814a48535035602123ad6dbfa63',
+        ],
       ),
-      data: "0x123...",
+      data: '0x123...',
     },
   ],
-});
+})
 ```
 
 ## Parameters

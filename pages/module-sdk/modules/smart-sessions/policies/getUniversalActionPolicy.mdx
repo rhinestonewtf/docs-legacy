@@ -5,19 +5,19 @@ Get the universal action policy.
 ## Usage
 
 ```typescript copy
- const universalActionPolicy = getUniversalActionPolicy({
-      paramRules: {
-        length: 1,
-        rules: new Array(16).fill({
-          condition: ParamCondition.EQUAL,
-          isLimited: false,
-          offset: 0,
-          ref: toHex(toBytes('0x', { size: 32 })),
-          usage: { limit: BigInt(0), used: BigInt(0) },
-        }),
-      },
-      valueLimitPerUse: BigInt(100),
-    })
+const universalActionPolicy = getUniversalActionPolicy({
+  paramRules: {
+    length: 1,
+    rules: new Array(16).fill({
+      condition: ParamCondition.EQUAL,
+      isLimited: false,
+      offset: 0,
+      ref: toHex(toBytes('0x', { size: 32 })),
+      usage: { limit: BigInt(0), used: BigInt(0) },
+    }),
+  },
+  valueLimitPerUse: BigInt(100),
+})
 ```
 
 ## Parameters

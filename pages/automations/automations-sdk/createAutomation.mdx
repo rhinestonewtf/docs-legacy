@@ -6,25 +6,25 @@ Create an automation for an account using one of the existing triggers.
 
 ```typescript copy
 const automation = await automationClient.createAutomation({
-  type: "time-based",
+  type: 'time-based',
   data: {
     trigger: {
       triggerData: {
-        cronExpression: "*/60 * * * * *",
+        cronExpression: '*/60 * * * * *',
         startDate: new Date().getTime(),
       },
     },
     actions: [
       {
-        type: "static",
-        target: "0x503b54Ed1E62365F0c9e4caF1479623b08acbe77",
+        type: 'static',
+        target: '0x503b54Ed1E62365F0c9e4caF1479623b08acbe77',
         value: 100,
-        callData: "0x",
+        callData: '0x',
       },
     ],
     maxNumberOfExecutions: 10,
   },
-});
+})
 ```
 
 ## Parameters

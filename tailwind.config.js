@@ -3,24 +3,24 @@ const makePrimaryColor =
   ({ opacityValue }) => {
     return (
       `hsl(var(--nextra-primary-hue) var(--nextra-primary-saturation) ${l}%` +
-      (opacityValue ? ` / ${opacityValue})` : ")")
-    );
-  };
+      (opacityValue ? ` / ${opacityValue})` : ')')
+    )
+  }
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ["class"],
+  darkMode: ['class'],
   content: [
-    "./app/**/*.{js,ts,jsx,tsx,md,mdx}",
-    "./pages/**/*.{js,ts,jsx,tsx,md,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,md,mdx}",
-    "./theme.config.tsx",
+    './app/**/*.{js,ts,jsx,tsx,md,mdx}',
+    './pages/**/*.{js,ts,jsx,tsx,md,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,md,mdx}',
+    './theme.config.tsx',
   ],
   theme: {
     extend: {
       fontFamily: {
-        favorit: ["var(--font-ABCFavoritBook)"],
-        favoritMono: ["var(--font-ABCFavoritMonoRegular)"],
+        favorit: ['var(--font-ABCFavoritBook)'],
+        favoritMono: ['var(--font-ABCFavoritMonoRegular)'],
       },
       colors: {
         primary: {
@@ -40,4 +40,4 @@ module.exports = {
     },
   },
   plugins: [],
-};
+}

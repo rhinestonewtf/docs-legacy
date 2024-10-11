@@ -5,21 +5,21 @@ Get encoded smart session signature.
 ## Usage
 
 ```typescript copy
- const encodedSig = encodeSmartSessionSignature({
-    mode: SmartSessionMode.ENABLE,
-    permissionId: '0xabcd...',
-    signature: '0x1234...',
-    enableSessionData: {
-       enableSession: {
-          chainDigestIndex: 0,
-          hashesAndChainIds,
-          sessionToEnable,
-          permissionEnableSig,
-        },
-        validator: OWNABLE_VALIDATOR_ADDRESS,
-        accountType: account.type,
-    }
-  })
+const encodedSig = encodeSmartSessionSignature({
+  mode: SmartSessionMode.ENABLE,
+  permissionId: '0xabcd...',
+  signature: '0x1234...',
+  enableSessionData: {
+    enableSession: {
+      chainDigestIndex: 0,
+      hashesAndChainIds,
+      sessionToEnable,
+      permissionEnableSig,
+    },
+    validator: OWNABLE_VALIDATOR_ADDRESS,
+    accountType: account.type,
+  },
+})
 ```
 
 ## Parameters
@@ -55,4 +55,3 @@ The data needed to enable a session in an account.
 - Type: `Hex`
 
 The encoded smart session signature.
-

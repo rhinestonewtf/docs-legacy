@@ -1,4 +1,4 @@
-import { Steps } from "nextra/components";
+import { Steps } from 'nextra/components'
 
 # How to use session keys using Smart Sessions
 
@@ -16,9 +16,30 @@ First, install the required packages. We use the latest version of module sdk, p
 npm i viem @rhinestone/module-sdk permissionless
 ```
 
-### Import the required functions and constants 
+### Import the required functions and constants
 
 ```typescript copy
+import { getAccountNonce } from 'permissionless/actions'
+import { createSmartAccountClient } from 'permissionless'
+import { toSafeSmartAccount } from 'permissionless/accounts'
+import { erc7579Actions } from 'permissionless/actions/erc7579'
+import { createPimlicoClient } from 'permissionless/clients/pimlico'
+import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts'
+import {
+  encodeAbiParameters,
+  toHex,
+  toBytes,
+  Address,
+  Hex,
+  createPublicClient,
+  http,
+} from 'viem'
+import {
+  entryPoint07Address,
+  getUserOperationHash,
+  paymasterActions,
+  createPaymasterClient,
+} from 'viem/account-abstraction'
 import {
   getSmartSessionsValidator,
   OWNABLE_VALIDATOR_ADDRESS,
@@ -40,28 +61,7 @@ import {
   getTrustAttestersAction,
   encodeValidatorNonce,
   getOwnableValidator,
-} from "@rhinestone/module-sdk";
-import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
-import {
-  encodeAbiParameters,
-  toHex,
-  toBytes,
-  Address,
-  Hex,
-  createPublicClient,
-  http,
-} from "viem";
-import { createSmartAccountClient } from "permissionless";
-import { erc7579Actions } from "permissionless/actions/erc7579";
-import { createPimlicoClient } from "permissionless/clients/pimlico";
-import {
-  entryPoint07Address,
-  getUserOperationHash,
-  paymasterActions,
-  createPaymasterClient,
-} from "viem/account-abstraction";
-import { toSafeSmartAccount } from "permissionless/accounts";
-import { getAccountNonce } from "permissionless/actions";
+} from '@rhinestone/module-sdk'
 ```
 
 ### Create the clients
@@ -70,21 +70,21 @@ Create the smart account client, the bundler client and the paymaster client. Yo
 
 ```typescript copy
 const publicClient = createPublicClient({
-    transport: http(rpcUrl),
-    chain: chain,
-  });
+  transport: http(rpcUrl),
+  chain: chain,
+})
 
-  const pimlicoClient = createPimlicoClient({
-    transport: http(bundlerUrl),
-    entryPoint: {
-      address: entryPoint07Address,
-      version: "0.7",
-    },
-  });
+const pimlicoClient = createPimlicoClient({
+  transport: http(bundlerUrl),
+  entryPoint: {
+    address: entryPoint07Address,
+    version: '0.7',
+  },
+})
 
-  const paymasterClient = createPaymasterClient({
-    transport: http(paymasterUrl),
-  });
+const paymasterClient = createPaymasterClient({
+  transport: http(paymasterUrl),
+})
 ```
 
 ### Create the signer
@@ -94,97 +94,97 @@ The Safe account will need to have a signer to sign user operations. In permissi
 For example, to create a signer based on a private key:
 
 ```typescript copy
-const owner = privateKeyToAccount(generatePrivateKey());
+const owner = privateKeyToAccount(generatePrivateKey())
 ```
 
-### Create the initial validator 
+### Create the initial validator
 
 We will also create and add an initial validator. We are using the Ownable Validator which can be used to verify UserOperations using one or more EOA owners. In this guide, we are installing the validator to then recover it using social recovery.
 
 ```typescript copy
-  const ownableValidator = getOwnableValidator({
-    owners: [
-      "0x2DC2fb2f4F11DeE1d6a2054ffCBf102D09b62bE2",
-      "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
-    ],
-    threshold: 2,
-  });
+const ownableValidator = getOwnableValidator({
+  owners: [
+    '0x2DC2fb2f4F11DeE1d6a2054ffCBf102D09b62bE2',
+    '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045',
+  ],
+  threshold: 2,
+})
 ```
 
 ### Create the Safe account
 
-Create the Safe account object using the signer. Note that you should only use the `MockAttester` on testnets. 
+Create the Safe account object using the signer. Note that you should only use the `MockAttester` on testnets.
 
 ```typescript copy
 const safeAccount = await toSafeSmartAccount({
-    client: publicClient,
-    owners: [owner],
-    version: "1.4.1",
-    entryPoint: {
-      address: entryPoint07Address,
-      version: "0.7",
+  client: publicClient,
+  owners: [owner],
+  version: '1.4.1',
+  entryPoint: {
+    address: entryPoint07Address,
+    version: '0.7',
+  },
+  safe4337ModuleAddress: '0x3Fdb5BC686e861480ef99A6E3FaAe03c0b9F32e2', // These are not meant to be used in production as of now.
+  erc7579LaunchpadAddress: '0xEBe001b3D534B9B6E2500FB78E67a1A137f561CE',
+  attesters: [
+    RHINESTONE_ATTESTER_ADDRESS, // Rhinestone Attester
+    MOCK_ATTESTER_ADDRESS, // Mock Attester - do not use in production
+  ],
+  attestersThreshold: 1,
+  validators: [
+    {
+      address: ownableValidator.address,
+      context: ownableValidator.initData,
     },
-    safe4337ModuleAddress: "0x3Fdb5BC686e861480ef99A6E3FaAe03c0b9F32e2", // These are not meant to be used in production as of now.
-    erc7579LaunchpadAddress: "0xEBe001b3D534B9B6E2500FB78E67a1A137f561CE",
-    attesters: [
-      RHINESTONE_ATTESTER_ADDRESS, // Rhinestone Attester
-      MOCK_ATTESTER_ADDRESS, // Mock Attester - do not use in production
-    ],
-    attestersThreshold: 1,
-    validators: [
-      {
-        address: ownableValidator.address,
-        context: ownableValidator.initData,
-      },
-    ],
-  });
+  ],
+})
 ```
 
 ### Create the smart account client
 
-The smart account client is used to interact with the smart account. You will need to add your own bundler url and the chain that you are using. 
+The smart account client is used to interact with the smart account. You will need to add your own bundler url and the chain that you are using.
 
 ```typescript copy
 const smartAccountClient = createSmartAccountClient({
-    account: safeAccount,
-    chain: chain,
-    bundlerTransport: http(bundlerUrl),
-    paymaster: paymasterClient,
-    userOperation: {
-      estimateFeesPerGas: async () => {
-        return (await pimlicoClient.getUserOperationGasPrice()).fast;
-      },
+  account: safeAccount,
+  chain: chain,
+  bundlerTransport: http(bundlerUrl),
+  paymaster: paymasterClient,
+  userOperation: {
+    estimateFeesPerGas: async () => {
+      return (await pimlicoClient.getUserOperationGasPrice()).fast
     },
-  }).extend(erc7579Actions());
+  },
+}).extend(erc7579Actions())
 ```
 
 ### Set the trusted attesters
 
-As permissionless currently does not use the production Registry, we will also need to set the attesters there. 
+As permissionless currently does not use the production Registry, we will also need to set the attesters there.
 
 ```typescript copy
 const trustAttestersAction = getTrustAttestersAction({
-    threshold: 1,
-    attesters: [
-      RHINESTONE_ATTESTER_ADDRESS, // Rhinestone Attester
-      MOCK_ATTESTER_ADDRESS, // Mock Attester - do not use in production
-    ],
-  });
+  threshold: 1,
+  attesters: [
+    RHINESTONE_ATTESTER_ADDRESS, // Rhinestone Attester
+    MOCK_ATTESTER_ADDRESS, // Mock Attester - do not use in production
+  ],
+})
 
-  const userOpHash1 = await smartAccountClient.sendUserOperation({
-    account: safeAccount,
-    calls: [
-      {
-        to: trustAttestersAction.target,
-        value: BigInt(0),
-        data: trustAttestersAction.callData,
-      },
-    ],
-  });
+const userOpHash1 = await smartAccountClient.sendUserOperation({
+  account: safeAccount,
+  calls: [
+    {
+      to: trustAttestersAction.target,
+      value: BigInt(0),
+      data: trustAttestersAction.callData,
+    },
+  ],
+})
 
-  await pimlicoClient.waitForUserOperationReceipt({
-    hash: userOpHash1,
-  });
+await pimlicoClient.waitForUserOperationReceipt({
+  hash: userOpHash1,
+})
 ```
 
 ### Install the Smart Sessions Module
@@ -193,14 +193,14 @@ Next, we will install the Smart Sessions Module on the account. We could pass it
 
 ```typescript copy
 const smartSessions = getSmartSessionsValidator({
-    sessions: [],
-  });
+  sessions: [],
+})
 
-  const opHash = await smartAccountClient.installModule(smartSessions);
+const opHash = await smartAccountClient.installModule(smartSessions)
 
 await pimlicoClient.waitForUserOperationReceipt({
-    hash: opHash,
-  });
+  hash: opHash,
+})
 ```
 
 ### Create the session to enable
@@ -208,40 +208,40 @@ await pimlicoClient.waitForUserOperationReceipt({
 Now we will create a new session to enable. This session will be scoped to allow a single action, to the specified target and with the (in this case empty) target selector. For this action, we install the `SudoPolicy` which will always allow this action.
 
 ```typescript copy
-const sessionOwner = privateKeyToAccount(generatePrivateKey());
+const sessionOwner = privateKeyToAccount(generatePrivateKey())
 
-  const session: Session = {
-    sessionValidator: OWNABLE_VALIDATOR_ADDRESS,
-    sessionValidatorInitData: encodeAbiParameters(
-      [
-        {
-          type: "uint256",
-        },
-        {
-          type: "address[]",
-        },
-      ],
-      [BigInt(1), [sessionOwner.address]],
-    ),
-    salt: toHex(toBytes("41414141", { size: 32 })),
-    userOpPolicies: [],
-    erc7739Policies: {
-      allowedERC7739Content: [],
-      erc1271Policies: [],
-    },
-    actions: [
+const session: Session = {
+  sessionValidator: OWNABLE_VALIDATOR_ADDRESS,
+  sessionValidatorInitData: encodeAbiParameters(
+    [
       {
-        actionTarget: "0xa564cB165815937967a7d018B7F34B907B52fcFd" as Address, // an address as the target of the session execution
-        actionTargetSelector: "0x00000000" as Hex, // function selector to be used in the execution, in this case no function selector is used
-        actionPolicies: [
-          {
-            policy: getSudoPolicy().address,
-            initData: getSudoPolicy().initData,
-          },
-        ],
+        type: 'uint256',
+      },
+      {
+        type: 'address[]',
       },
     ],
-  };
+    [BigInt(1), [sessionOwner.address]],
+  ),
+  salt: toHex(toBytes('41414141', { size: 32 })),
+  userOpPolicies: [],
+  erc7739Policies: {
+    allowedERC7739Content: [],
+    erc1271Policies: [],
+  },
+  actions: [
+    {
+      actionTarget: '0xa564cB165815937967a7d018B7F34B907B52fcFd' as Address, // an address as the target of the session execution
+      actionTargetSelector: '0x00000000' as Hex, // function selector to be used in the execution, in this case no function selector is used
+      actionPolicies: [
+        {
+          policy: getSudoPolicy().address,
+          initData: getSudoPolicy().initData,
+        },
+      ],
+    },
+  ],
+}
 ```
 
 ### Get the session data
@@ -252,23 +252,23 @@ First we get the permission id (the identifier of the session) so that we can te
 
 ```typescript copy
 const account = getAccount({
-    address: safeAccount.address,
-    type: "safe",
-  });
+  address: safeAccount.address,
+  type: 'safe',
+})
 
-  const newClient = getClient({
-    rpcUrl,
-  });
+const newClient = getClient({
+  rpcUrl,
+})
 
-  const permissionId = getPermissionId({
-    session,
-  });
+const permissionId = getPermissionId({
+  session,
+})
 
-  const sessionNonce = await getSessionNonce({
-    client: newClient,
-    account,
-    permissionId,
-  });
+const sessionNonce = await getSessionNonce({
+  client: newClient,
+  account,
+  permissionId,
+})
 ```
 
 ### Get the digests and hash to sign
@@ -277,34 +277,34 @@ Next, we will get various digests in order to formaute the hash to sign. The sig
 
 ```typescript copy
 const sessionDigest = await getSessionDigest({
-    client: newClient,
-    account,
-    session,
-    mode: SmartSessionMode.ENABLE,
-    permissionId,
-  });
+  client: newClient,
+  account,
+  session,
+  mode: SmartSessionMode.ENABLE,
+  permissionId,
+})
 
-  const chainDigests = [
-    {
-      chainId: BigInt(chain.id), // or your current chain
-      sessionDigest,
+const chainDigests = [
+  {
+    chainId: BigInt(chain.id), // or your current chain
+    sessionDigest,
+  },
+]
+
+const chainSessions: ChainSession[] = [
+  {
+    chainId: BigInt(chain.id),
+    session: {
+      ...session,
+      account: account.address,
+      smartSession: SMART_SESSIONS_ADDRESS,
+      mode: 1,
+      nonce: sessionNonce,
     },
-  ];
+  },
+]
 
-  const chainSessions: ChainSession[] = [
-    {
-      chainId: BigInt(chain.id),
-      session: {
-        ...session,
-        account: account.address,
-        smartSession: SMART_SESSIONS_ADDRESS,
-        mode: 1,
-        nonce: sessionNonce,
-      },
-    },
-  ];
-
-  const permissionEnableHash = hashChainSessions(chainSessions);
+const permissionEnableHash = hashChainSessions(chainSessions)
 ```
 
 ### Have the user sign the enable signature
@@ -315,8 +315,8 @@ In this case, we will assume that an ownable validator is already installed on t
 
 ```typescript copy
 const permissionEnableSig = await owner.signMessage({
-    message: { raw: permissionEnableHash },
-  });
+  message: { raw: permissionEnableHash },
+})
 ```
 
 ### Create the UserOperation to execute
@@ -325,62 +325,28 @@ Now that we have the session set up, we can create the UserOperation. Since we s
 
 ```typescript copy
 const nonce = await getAccountNonce(publicClient, {
-    address: safeAccount.address,
-    entryPointAddress: entryPoint07Address,
-    key: encodeValidatorNonce({
-      account,
-      validator: smartSessions,
-    }),
-  });
+  address: safeAccount.address,
+  entryPointAddress: entryPoint07Address,
+  key: encodeValidatorNonce({
+    account,
+    validator: smartSessions,
+  }),
+})
 
-  const userOperation = await smartAccountClient.prepareUserOperation({
-    account: safeAccount,
-    calls: [
-      {
-        to: session.actions[0].actionTarget,
-        value: BigInt(0),
-        data: session.actions[0].actionTargetSelector,
-      },
-    ],
-    nonce,
-    signature: encodeSmartSessionSignature({
-      mode: SmartSessionMode.ENABLE,
-      permissionId,
-      signature: getOwnableValidatorMockSignature({ threshold: 1 }),
-      enableSessionData: {
-        enableSession: {
-          chainDigestIndex: 0,
-          hashesAndChainIds: chainDigests,
-          sessionToEnable: session,
-          permissionEnableSig,
-        },
-        validator: OWNABLE_VALIDATOR_ADDRESS,
-        accountType: "safe",
-      },
-    }),
-  });
-```
-
-### Create the session key signature 
-
-Next, we will use the session key to sign the UserOperation.
-
-```typescript copy
-const userOpHashToSign = getUserOperationHash({
-    chainId: chain.id,
-    entryPointAddress: entryPoint07Address,
-    entryPointVersion: "0.7",
-    userOperation,
-  });
-
-  const signature = await sessionOwner.signMessage({
-    message: { raw: userOpHashToSign },
-  });
-
-  userOperation.signature = encodeSmartSessionSignature({
+const userOperation = await smartAccountClient.prepareUserOperation({
+  account: safeAccount,
+  calls: [
+    {
+      to: session.actions[0].actionTarget,
+      value: BigInt(0),
+      data: session.actions[0].actionTargetSelector,
+    },
+  ],
+  nonce,
+  signature: encodeSmartSessionSignature({
     mode: SmartSessionMode.ENABLE,
     permissionId,
-    signature: signature,
+    signature: getOwnableValidatorMockSignature({ threshold: 1 }),
     enableSessionData: {
       enableSession: {
         chainDigestIndex: 0,
@@ -389,9 +355,43 @@ const userOpHashToSign = getUserOperationHash({
         permissionEnableSig,
       },
       validator: OWNABLE_VALIDATOR_ADDRESS,
-      accountType: "safe",
+      accountType: 'safe',
     },
-  });
+  }),
+})
+```
+
+### Create the session key signature
+
+Next, we will use the session key to sign the UserOperation.
+
+```typescript copy
+const userOpHashToSign = getUserOperationHash({
+  chainId: chain.id,
+  entryPointAddress: entryPoint07Address,
+  entryPointVersion: '0.7',
+  userOperation,
+})
+
+const signature = await sessionOwner.signMessage({
+  message: { raw: userOpHashToSign },
+})
+
+userOperation.signature = encodeSmartSessionSignature({
+  mode: SmartSessionMode.ENABLE,
+  permissionId,
+  signature: signature,
+  enableSessionData: {
+    enableSession: {
+      chainDigestIndex: 0,
+      hashesAndChainIds: chainDigests,
+      sessionToEnable: session,
+      permissionEnableSig,
+    },
+    validator: OWNABLE_VALIDATOR_ADDRESS,
+    accountType: 'safe',
+  },
+})
 ```
 
 ### Execute the UserOperation
@@ -399,11 +399,11 @@ const userOpHashToSign = getUserOperationHash({
 Finally, we can execute the UserOperation to recover the account.
 
 ```typescript copy
-const userOpHash = await smartAccountClient.sendUserOperation(userOperation);
+const userOpHash = await smartAccountClient.sendUserOperation(userOperation)
 
-  const receipt = await pimlicoClient.waitForUserOperationReceipt({
-    hash: userOpHash,
-  });
+const receipt = await pimlicoClient.waitForUserOperationReceipt({
+  hash: userOpHash,
+})
 ```
 
 </Steps>

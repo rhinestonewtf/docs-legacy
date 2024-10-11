@@ -1,4 +1,4 @@
-import { Steps } from "nextra/components";
+import { Steps } from 'nextra/components'
 
 # How to setup the account with a validator to use Rhinestone Automations
 
@@ -23,18 +23,18 @@ Next, we will first need to install the validator for the automations service. W
 If you use another account SDK, you can use the equivalent method to install the module and pass the `ownableValidator.type`, `ownableValidator.module`, and `ownableValidator.data` to the `installModule` method.
 
 ```typescript copy
-import { getOwnableValidator } from "@rhinestone/module-sdk";
+import { getOwnableValidator } from '@rhinestone/module-sdk'
 
 const ownableValidator = getOwnableValidator({
-  owners: ["0x2DC2fb2f4F11DeE1d6a2054ffCBf102D09b62bE2"],
+  owners: ['0x2DC2fb2f4F11DeE1d6a2054ffCBf102D09b62bE2'],
   threshold: 1,
-});
+})
 
 const opHash = await smartAccountClient.installModule({
   type: ownableValidator.type,
   address: ownableValidator.module,
   context: ownableValidator.data,
-});
+})
 ```
 
 </Steps>

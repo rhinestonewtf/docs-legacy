@@ -1,4 +1,4 @@
-import { Steps } from "nextra/components";
+import { Steps } from 'nextra/components'
 
 # How to build a custom dynamic calldata builder
 
@@ -19,25 +19,25 @@ You can find an example of such a service in the [reference implementation](http
 Next, you will need to create the logic that encodes the calldata. This logic should be able to take the JSON object from the response of the dynamic calldata service and encode it into a hex string that can be used as the calldata for the automation execution. An example is below:
 
 ```typescript copy
-import { encodeFunctionData } from "viem";
+import { encodeFunctionData } from 'viem'
 
-app.post("/call-data-builder", (req: Request, res: Response) => {
-  const data = req.body;
+app.post('/call-data-builder', (req: Request, res: Response) => {
+  const data = req.body
 
   const calldata = encodeFunctionData({
-    functionName: "setSomeState",
+    functionName: 'setSomeState',
     abi: [
       {
-        type: "function",
-        name: "setSomeState",
-        inputs: [{ type: "uint256" }],
+        type: 'function',
+        name: 'setSomeState',
+        inputs: [{ type: 'uint256' }],
       },
     ],
     args: [BigInt(data.someState)],
-  });
+  })
 
   // return the calldata as a hex string
-});
+})
 ```
 
 ### Host the dynamic calldata builder
@@ -51,18 +51,18 @@ Now, you can create an automation. For a full tutorial, check out the [tutorial 
 ```typescript copy
 const actions = [
   {
-    type: "dynamic",
-    target: "0x123...",
+    type: 'dynamic',
+    target: '0x123...',
     value: 0,
-    callDataBuilderUrl: "https://your-dynamic-calldata-builder-url.com",
-    functionSelector: "0x5bf67475", // setSomeState(uint256)
+    callDataBuilderUrl: 'https://your-dynamic-calldata-builder-url.com',
+    functionSelector: '0x5bf67475', // setSomeState(uint256)
     params: {
       static: {
         someState: 100,
       },
     },
   },
-];
+]
 ```
 
 </Steps>

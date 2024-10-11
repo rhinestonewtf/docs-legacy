@@ -6,13 +6,13 @@ Get the encoded signature for the WebAuthn validator.
 
 ```typescript copy
 const signature = getWebauthnValidatorSignature({
-  authenticatorData: "0x123...",
-  clientDataJSON: "{data:...}",
+  authenticatorData: '0x123...',
+  clientDataJSON: '{data:...}',
   responseTypeLocation: 0,
   r: 10,
   s: 5,
   usePrecompiled: true,
-});
+})
 ```
 
 ## Parameters

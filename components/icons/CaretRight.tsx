@@ -1,11 +1,11 @@
 export const CaretRight = ({
   width,
   height,
-  color = "#fff",
+  color = '#fff',
 }: {
-  width: number;
-  height: number;
-  color?: string;
+  width: number
+  height: number
+  color?: string
 }) => {
   return (
     <svg
@@ -17,5 +17,5 @@ export const CaretRight = ({
     >
       <path d="M1 1L4.5 4.5L1 8" stroke={color} />
     </svg>
-  );
-};
+  )
+}

@@ -5,14 +5,14 @@ Encodes a hash to be signed with ERC-1271 by an account. Note that while you sho
 ## Usage
 
 ```typescript copy
-const unformattedHash = keccak256(toHex("hash"));
+const unformattedHash = keccak256(toHex('hash'))
 
 const formattedHash = encode1271Hash({
-  account: "0x1234...",
+  account: '0x1234...',
   chainId: 1,
   validator: OWNABLE_VALIDATOR_ADDRESS,
   hash: unformattedHash,
-});
+})
 ```
 
 ## Parameters

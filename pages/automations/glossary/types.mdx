@@ -10,25 +10,25 @@ The `Action` object is used for the actions to be executed when the automation i
 
 ```typescript
 type StaticAction = {
-  type: "static";
-  target: Address;
-  value: number;
-  callData: Hex;
-};
+  type: 'static'
+  target: Address
+  value: number
+  callData: Hex
+}
 
 type DynamicAction = {
-  type: "dynamic";
-  target: Address;
-  value: number;
-  callDataBuilderUrl: string;
-  functionSelector: Hex;
+  type: 'dynamic'
+  target: Address
+  value: number
+  callDataBuilderUrl: string
+  functionSelector: Hex
   params?: {
-    static?: Record<string, any>;
-    dynamic?: Record<string, any>;
-  };
-};
+    static?: Record<string, any>
+    dynamic?: Record<string, any>
+  }
+}
 
-type Action = StaticAction | DynamicAction;
+type Action = StaticAction | DynamicAction
 ```
 
 ### Properties
@@ -83,26 +83,26 @@ The `Automation` object is used to create an automation.
 
 ```typescript
 type CreateTimeBasedTriggerParams = {
-  trigger: TimeBasedTrigger;
-  actions: Action[];
-  maxNumberOfExecutions: number;
-};
+  trigger: TimeBasedTrigger
+  actions: Action[]
+  maxNumberOfExecutions: number
+}
 
 type CreateEventBasedTriggerParams = {
-  trigger: EventBasedTrigger;
-  actions: Action[];
-  maxNumberOfExecutions: number;
-};
+  trigger: EventBasedTrigger
+  actions: Action[]
+  maxNumberOfExecutions: number
+}
 
 type Automation =
   | {
-      type: "time-based";
-      data: CreateTimeBasedTriggerParams;
+      type: 'time-based'
+      data: CreateTimeBasedTriggerParams
     }
   | {
-      type: "event-based";
-      data: CreateEventBasedTriggerParams;
-    };
+      type: 'event-based'
+      data: CreateEventBasedTriggerParams
+    }
 ```
 
 ### Properties
@@ -133,10 +133,10 @@ The `CreateEventBasedTriggerParams` struct is used to create an event based trig
 
 ```typescript
 type CreateEventBasedTriggerParams = {
-  trigger: EventBasedTrigger;
-  actions: Action[];
-  maxNumberOfExecutions: number;
-};
+  trigger: EventBasedTrigger
+  actions: Action[]
+  maxNumberOfExecutions: number
+}
 ```
 
 ### Properties
@@ -167,10 +167,10 @@ The `CreateTimeBasedTriggerParams` struct is used to create a time based trigger
 
 ```typescript
 type CreateTimeBasedTriggerParams = {
-  trigger: TimeBasedTrigger;
-  actions: Action[];
-  maxNumberOfExecutions: number;
-};
+  trigger: TimeBasedTrigger
+  actions: Action[]
+  maxNumberOfExecutions: number
+}
 ```
 
 ### Properties
@@ -202,9 +202,9 @@ The `EventBasedTrigger` object is used to create an event based trigger.
 ```typescript
 type EventBasedTrigger = {
   triggerData: {
-    query: string;
-  };
-};
+    query: string
+  }
+}
 ```
 
 ### Properties
@@ -224,10 +224,10 @@ The `TimeBasedTrigger` object is used to create a time based trigger.
 ```typescript
 type TimeBasedTrigger = {
   triggerData: {
-    cronExpression: string;
-    startDate: number;
-  };
-};
+    cronExpression: string
+    startDate: number
+  }
+}
 ```
 
 ### Properties

@@ -1,19 +1,19 @@
-import localFont from "next/font/local";
+import localFont from 'next/font/local'
 
 export const favorit = localFont({
   src: [
     {
-      path: "../public/fonts/ABCFavorit-Book.woff",
+      path: '../public/fonts/ABCFavorit-Book.woff',
     },
   ],
-  variable: "--font-ABCFavoritBook",
-});
+  variable: '--font-ABCFavoritBook',
+})
 
 export const favoritMono = localFont({
   src: [
     {
-      path: "../public/fonts/ABCFavoritMono-Regular.woff",
+      path: '../public/fonts/ABCFavoritMono-Regular.woff',
     },
   ],
-  variable: "--font-ABCFavoritMonoRegular",
-});
+  variable: '--font-ABCFavoritMonoRegular',
+})

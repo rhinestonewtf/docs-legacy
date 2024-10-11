@@ -10,11 +10,11 @@ The object representing an account in ModuleSDK.
 
 ```typescript
 type Account = {
-  address: Address;
-  initCode?: Hex;
-  type: AccountType;
-  deployedOnChains: Number[];
-};
+  address: Address
+  initCode?: Hex
+  type: AccountType
+  deployedOnChains: Number[]
+}
 ```
 
 ### Properties
@@ -50,7 +50,7 @@ The type of the account.
 ### Definition
 
 ```typescript
-type AccountType = "erc7579-implementation" | "kernel" | "safe" | "nexus";
+type AccountType = 'erc7579-implementation' | 'kernel' | 'safe' | 'nexus'
 ```
 
 ### Properties
@@ -74,12 +74,12 @@ The object representing an action in ModuleSDK.
 
 ```typescript
 type Action = {
-  to: Address;
-  target: Address;
-  value: BigInt;
-  data: Hex;
-  callData: Hex;
-};
+  to: Address
+  target: Address
+  value: BigInt
+  data: Hex
+  callData: Hex
+}
 ```
 
 ### Properties
@@ -170,13 +170,13 @@ The object representing a module in ModuleSDK.
 
 ```typescript
 type Module = {
-address: Address
+  address: Address
   module: Address
   initData: Hex
   deInitData: Hex
   additionalContext: Hex
   type: ModuleType
-};
+}
 ```
 
 ### Properties
@@ -224,7 +224,7 @@ The type of the module.
 ### Definition
 
 ```typescript
-type ModuleType = "validators" | "executors" | "hooks" | "fallbacks";
+type ModuleType = 'validators' | 'executors' | 'hooks' | 'fallbacks'
 ```
 
 ### Properties
@@ -295,7 +295,6 @@ A list of erc7739 policies.
 - Type: [`ActionData[]`](/module-sdk/glossary/types#actionData)
 
 A list of action policies.
-
 
 ## `PolicyData`
 
@@ -392,11 +391,10 @@ The mode of the session.
 ### Definition
 
 ```typescript
-type SmartSessionMode = 
-      '0x00' // USE mode: If the USE mode was selected, no futher policies have to be enabled.
-    | '0x01' // ENABLE mode: If the ENABLE mode was selected, the userOp.signature will contain the EnableSession data This data will be used to enable policies and validator for the session
-    | '0x02' // UNSAFE_ENABLE
-
+type SmartSessionMode =
+  | '0x00' // USE mode: If the USE mode was selected, no futher policies have to be enabled.
+  | '0x01' // ENABLE mode: If the ENABLE mode was selected, the userOp.signature will contain the EnableSession data This data will be used to enable policies and validator for the session
+  | '0x02' // UNSAFE_ENABLE
 ```
 
 ## `SessionEIP712`
@@ -587,7 +585,7 @@ The object representing a decoded session data in ModuleSDK.
 export type DecodedSessionData = {
   mode: SmartSessionMode
   permssionId: Hex
-  signature: Hex,
+  signature: Hex
   enableSessionData: EnableSessionData
 }
 ```
@@ -654,7 +652,7 @@ The deinit data of the policy.
 
 ## `TokenWithLimit`
 
-Token with limit object. 
+Token with limit object.
 
 ### Definition
 
@@ -678,7 +676,6 @@ The address of the token.
 - Type: `bigint`
 
 The limit of the token.
-
 
 ## `ActionConfig`
 
@@ -733,7 +730,6 @@ The length of the rules.
 - Type: [`ParamRule[]`](/module-sdk/glossary/types#paramrule)
 
 The parameter rules.
-
 
 ## `ParamRule`
 
@@ -809,7 +805,6 @@ The limit of the usage.
 - Type: `bigint`
 
 The used limit.
-
 
 ## `ParamCondition`
 

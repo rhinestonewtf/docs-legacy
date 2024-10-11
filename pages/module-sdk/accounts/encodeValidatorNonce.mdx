@@ -6,10 +6,10 @@ Encodes the validator address in the nonce key to use in ERC-7579 accounts.
 
 ```typescript copy
 const nonce = await getAccountNonce(publicClient, {
-    address: account.address,
-    entryPointAddress: entryPoint07Address,
-    key: encodeValidatorNonce({ account, validator: validatorModule }),
-  });
+  address: account.address,
+  entryPointAddress: entryPoint07Address,
+  key: encodeValidatorNonce({ account, validator: validatorModule }),
+})
 ```
 
 ## Parameters

@@ -1,10 +1,10 @@
-import { Steps } from "nextra/components";
+import { Steps } from 'nextra/components'
 
-# How to secure and recovery an account using the Deadman Switch Module 
+# How to secure and recovery an account using the Deadman Switch Module
 
 The Deadman Switch Module allows users to specify an inactivity period and a nominee. If the period of time expires without the account owner doing a transaction, the nominee will be able to take over the account. This guide will show you how to install and use the Deadman Switch module on a Safe smart account using the permissionless.js SDK. You can also check out the [entire code](https://github.com/rhinestonewtf/module-sdk-tutorials/blob/main/src/deadman-switch/permissionless-safe.ts) of the guide.
 
-We will first set up the smart account, install the Deadman Switch Module, and then take over the account with the guardian. 
+We will first set up the smart account, install the Deadman Switch Module, and then take over the account with the guardian.
 
 <Steps>
 
@@ -16,9 +16,21 @@ First, install the required packages. We use the latest version of module sdk, p
 npm i viem @rhinestone/module-sdk permissionless
 ```
 
-### Import the required functions and constants 
+### Import the required functions and constants
 
 ```typescript copy
+import { createPublicClient, Hex, http } from 'viem'
+import { getAccountNonce } from 'permissionless/actions'
+import { createSmartAccountClient } from 'permissionless'
+import { toSafeSmartAccount } from 'permissionless/accounts'
+import { erc7579Actions } from 'permissionless/actions/erc7579'
+import { createPimlicoClient } from 'permissionless/clients/pimlico'
+import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts'
+import {
+  createPaymasterClient,
+  entryPoint07Address,
+  getUserOperationHash,
+} from 'viem/account-abstraction'
 import {
   RHINESTONE_ATTESTER_ADDRESS,
   MOCK_ATTESTER_ADDRESS,
@@ -29,19 +41,7 @@ import {
   getTrustAttestersAction,
   encodeModuleInstallationData,
   encodeValidatorNonce,
-} from "@rhinestone/module-sdk";
-import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
-import { createPublicClient, Hex, http } from "viem";
-import { createSmartAccountClient } from "permissionless";
-import { erc7579Actions } from "permissionless/actions/erc7579";
-import { createPimlicoClient } from "permissionless/clients/pimlico";
-import {
-  createPaymasterClient,
-  entryPoint07Address,
-  getUserOperationHash,
-} from "viem/account-abstraction";
-import { toSafeSmartAccount } from "permissionless/accounts";
-import { getAccountNonce } from "permissionless/actions";
+} from '@rhinestone/module-sdk'
 ```
 
 ### Create the clients
@@ -50,21 +50,21 @@ Create the smart account client, the bundler client and the paymaster client. Yo
 
 ```typescript copy
 const publicClient = createPublicClient({
-    transport: http(rpcUrl),
-    chain: chain,
-  });
+  transport: http(rpcUrl),
+  chain: chain,
+})
 
-  const pimlicoClient = createPimlicoClient({
-    transport: http(bundlerUrl),
-    entryPoint: {
-      address: entryPoint07Address,
-      version: "0.7",
-    },
-  });
+const pimlicoClient = createPimlicoClient({
+  transport: http(bundlerUrl),
+  entryPoint: {
+    address: entryPoint07Address,
+    version: '0.7',
+  },
+})
 
-  const paymasterClient = createPaymasterClient({
-    transport: http(paymasterUrl),
-  });
+const paymasterClient = createPaymasterClient({
+  transport: http(paymasterUrl),
+})
 ```
 
 ### Create the signer
@@ -74,50 +74,49 @@ The Safe account will need to have a signer to sign user operations. In permissi
 For example, to create a signer based on a private key:
 
 ```typescript copy
-const owner = privateKeyToAccount(generatePrivateKey());
+const owner = privateKeyToAccount(generatePrivateKey())
 ```
 
 ### Create the Safe account
 
-Create the Safe account object using the signer. Note that you should only use the `MockAttester` on testnets. 
+Create the Safe account object using the signer. Note that you should only use the `MockAttester` on testnets.
 
 ```typescript copy
 const safeAccount = await toSafeSmartAccount({
-    client: publicClient,
-    owners: [owner],
-    version: "1.4.1",
-    entryPoint: {
-      address: entryPoint07Address,
-      version: "0.7",
-    },
-    safe4337ModuleAddress: "0x3Fdb5BC686e861480ef99A6E3FaAe03c0b9F32e2", // These are not meant to be used in production as of now.
-    erc7579LaunchpadAddress: "0xEBe001b3D534B9B6E2500FB78E67a1A137f561CE",
-    attesters: [
-      RHINESTONE_ATTESTER_ADDRESS, // Rhinestone Attester
-      MOCK_ATTESTER_ADDRESS, // Mock Attester - do not use in production
-    ],
-    attestersThreshold: 1,
-  });
+  client: publicClient,
+  owners: [owner],
+  version: '1.4.1',
+  entryPoint: {
+    address: entryPoint07Address,
+    version: '0.7',
+  },
+  safe4337ModuleAddress: '0x3Fdb5BC686e861480ef99A6E3FaAe03c0b9F32e2', // These are not meant to be used in production as of now.
+  erc7579LaunchpadAddress: '0xEBe001b3D534B9B6E2500FB78E67a1A137f561CE',
+  attesters: [
+    RHINESTONE_ATTESTER_ADDRESS, // Rhinestone Attester
+    MOCK_ATTESTER_ADDRESS, // Mock Attester - do not use in production
+  ],
+  attestersThreshold: 1,
+})
 ```
 
 ### Create the smart account client
 
-The smart account client is used to interact with the smart account. You will need to add your own bundler url and the chain that you are using. 
+The smart account client is used to interact with the smart account. You will need to add your own bundler url and the chain that you are using.
 
 ```typescript copy
 const smartAccountClient = createSmartAccountClient({
-    account: safeAccount,
-    chain: chain,
-    bundlerTransport: http(bundlerUrl),
-    paymaster: paymasterClient,
-    userOperation: {
-      estimateFeesPerGas: async () => {
-        return (await pimlicoClient.getUserOperationGasPrice()).fast;
-      },
+  account: safeAccount,
+  chain: chain,
+  bundlerTransport: http(bundlerUrl),
+  paymaster: paymasterClient,
+  userOperation: {
+    estimateFeesPerGas: async () => {
+      return (await pimlicoClient.getUserOperationGasPrice()).fast
     },
-  }).extend(erc7579Actions());
+  },
+}).extend(erc7579Actions())
 ```
-
 
 ### Install the Deadman Switch Module
 
@@ -125,48 +124,48 @@ Next, we will install the Deadman Switch Module on the Safe account. This requir
 
 ```typescript copy
 const nominee = privateKeyToAccount(
-    "0xc171c45f3d35fad832c53cade38e8d21b8d5cc93d1887e867fac626c1c0d6be7",
-  );
+  '0xc171c45f3d35fad832c53cade38e8d21b8d5cc93d1887e867fac626c1c0d6be7',
+)
 
-  const account = getAccount({
-    address: safeAccount.address,
-    type: "safe",
-  });
+const account = getAccount({
+  address: safeAccount.address,
+  type: 'safe',
+})
 
-  const client = getClient({
-    rpcUrl,
-  });
+const client = getClient({
+  rpcUrl,
+})
 
-  const deadmanSwitch = await getDeadmanSwitch({
+const deadmanSwitch = await getDeadmanSwitch({
+  account,
+  client,
+  nominee: nominee.address,
+  timeout: 1,
+  moduleType: 'validator',
+})
+
+const opHash1 = await smartAccountClient.installModule(deadmanSwitch)
+
+await pimlicoClient.waitForUserOperationReceipt({
+  hash: opHash1,
+})
+
+const opHash2 = await smartAccountClient.installModule({
+  type: 'hook',
+  address: deadmanSwitch.module,
+  context: encodeModuleInstallationData({
     account,
-    client,
-    nominee: nominee.address,
-    timeout: 1,
-    moduleType: "validator",
-  });
+    module: {
+      ...deadmanSwitch,
+      initData: '0x',
+      type: 'hook',
+    },
+  }),
+})
 
-  const opHash1 = await smartAccountClient.installModule(deadmanSwitch);
-
-  await pimlicoClient.waitForUserOperationReceipt({
-    hash: opHash1,
-  });
-
-  const opHash2 = await smartAccountClient.installModule({
-    type: "hook",
-    address: deadmanSwitch.module,
-    context: encodeModuleInstallationData({
-      account,
-      module: {
-        ...deadmanSwitch,
-        initData: "0x",
-        type: "hook",
-      },
-    }),
-  });
-
-  await pimlicoClient.waitForUserOperationReceipt({
-    hash: opHash2,
-  });
+await pimlicoClient.waitForUserOperationReceipt({
+  hash: opHash2,
+})
 ```
 
 ### Wait for the timeout to expire
@@ -174,7 +173,7 @@ const nominee = privateKeyToAccount(
 Since we set our timeout to 1 second, we can wait for the timeout to expire. In a production environment, setting a low timeout will mean that it will be easier for a hostile nominee to take over the account.
 
 ```typescript copy
-await new Promise((resolve) => setTimeout(resolve, 10000));
+await new Promise((resolve) => setTimeout(resolve, 10000))
 ```
 
 ### Create the takeover UserOperation
@@ -183,24 +182,24 @@ Now, we will create a UserOperation from the nominee. The calldata, in this case
 
 ```typescript copy
 const nonce = await getAccountNonce(publicClient, {
-    address: safeAccount.address,
-    entryPointAddress: entryPoint07Address,
-    key: encodeValidatorNonce({ account, validator: deadmanSwitch }),
-  });
+  address: safeAccount.address,
+  entryPointAddress: entryPoint07Address,
+  key: encodeValidatorNonce({ account, validator: deadmanSwitch }),
+})
 
-  const trustAttestersAction = getTrustAttestersAction({
-    threshold: 1,
-    attesters: [
-      RHINESTONE_ATTESTER_ADDRESS, // Rhinestone Attester
-    ],
-  });
+const trustAttestersAction = getTrustAttestersAction({
+  threshold: 1,
+  attesters: [
+    RHINESTONE_ATTESTER_ADDRESS, // Rhinestone Attester
+  ],
+})
 
-  const userOperation = await smartAccountClient.prepareUserOperation({
-    account: safeAccount,
-    calls: [trustAttestersAction],
-    nonce: nonce,
-    signature: getDeadmanSwitchValidatorMockSignature() as Hex,
-  });
+const userOperation = await smartAccountClient.prepareUserOperation({
+  account: safeAccount,
+  calls: [trustAttestersAction],
+  nonce: nonce,
+  signature: getDeadmanSwitchValidatorMockSignature() as Hex,
+})
 ```
 
 ### Sign the taekover UserOperation
@@ -209,15 +208,15 @@ Next, the nominee will have to sign the recovery UserOperation.
 
 ```typescript copy
 const userOpHashToSign = getUserOperationHash({
-    chainId: chain.id,
-    entryPointAddress: entryPoint07Address,
-    entryPointVersion: "0.7",
-    userOperation,
-  });
+  chainId: chain.id,
+  entryPointAddress: entryPoint07Address,
+  entryPointVersion: '0.7',
+  userOperation,
+})
 
-  userOperation.signature = await nominee.signMessage({
-    message: { raw: userOpHashToSign },
-  });
+userOperation.signature = await nominee.signMessage({
+  message: { raw: userOpHashToSign },
+})
 ```
 
 ### Execute the takeover UserOperation
@@ -225,11 +224,11 @@ const userOpHashToSign = getUserOperationHash({
 Finally, we can execute the UserOperation to take over the account.
 
 ```typescript copy
-const userOpHash = await smartAccountClient.sendUserOperation(userOperation);
+const userOpHash = await smartAccountClient.sendUserOperation(userOperation)
 
-  const receipt = await pimlicoClient.waitForUserOperationReceipt({
-    hash: userOpHash,
-  });
+const receipt = await pimlicoClient.waitForUserOperationReceipt({
+  hash: userOpHash,
+})
 ```
 
 </Steps>

@@ -5,5 +5,5 @@ export const Separator = ({ title }: { title: string }) => {
         {title}
       </div>
     </div>
-  );
-};
+  )
+}
