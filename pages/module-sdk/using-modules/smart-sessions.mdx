@@ -19,27 +19,6 @@ npm i viem @rhinestone/module-sdk permissionless
 ### Import the required functions and constants
 
 ```typescript copy
-import { getAccountNonce } from 'permissionless/actions'
-import { createSmartAccountClient } from 'permissionless'
-import { toSafeSmartAccount } from 'permissionless/accounts'
-import { erc7579Actions } from 'permissionless/actions/erc7579'
-import { createPimlicoClient } from 'permissionless/clients/pimlico'
-import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts'
-import {
-  encodeAbiParameters,
-  toHex,
-  toBytes,
-  Address,
-  Hex,
-  createPublicClient,
-  http,
-} from 'viem'
-import {
-  entryPoint07Address,
-  getUserOperationHash,
-  paymasterActions,
-  createPaymasterClient,
-} from 'viem/account-abstraction'
 import {
   getSmartSessionsValidator,
   OWNABLE_VALIDATOR_ADDRESS,
@@ -61,7 +40,27 @@ import {
   getTrustAttestersAction,
   encodeValidatorNonce,
   getOwnableValidator,
-} from '@rhinestone/module-sdk'
+} from "@rhinestone/module-sdk";
+import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
+import {
+  encodeAbiParameters,
+  toHex,
+  toBytes,
+  Address,
+  Hex,
+  createPublicClient,
+  http,
+} from "viem";
+import { createSmartAccountClient } from "permissionless";
+import { erc7579Actions } from "permissionless/actions/erc7579";
+import { createPimlicoClient } from "permissionless/clients/pimlico";
+import {
+  entryPoint07Address,
+  getUserOperationHash,
+  createPaymasterClient,
+} from "viem/account-abstraction";
+import { toSafeSmartAccount } from "permissionless/accounts";
+import { getAccountNonce } from "permissionless/actions";
 ```
 
 ### Create the clients
@@ -192,9 +191,7 @@ await pimlicoClient.waitForUserOperationReceipt({
 Next, we will install the Smart Sessions Module on the account. We could pass it a new session to create when installing, but in this guide we will instead demonstrate the "enable" flow of smart sessions.
 
 ```typescript copy
-const smartSessions = getSmartSessionsValidator({
-  sessions: [],
-})
+const smartSessions = getSmartSessionsValidator({})
 
 const opHash = await smartAccountClient.installModule(smartSessions)
 
