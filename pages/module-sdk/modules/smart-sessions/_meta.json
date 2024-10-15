@@ -2,6 +2,7 @@
   "getSmartSessionsValidator": "getSmartSessionsValidator",
   "getEnableSessionsAction": "getEnableSessionsAction",
   "getRemoveSessionAction": "getRemoveSessionAction",
+  "getEnableSessionDetails": "getEnableSessionDetails",
   "getEnableUserOpPoliciesAction": "getEnableUserOpPoliciesAction",
   "getDisableUserOpPoliciesAction": "getDisableUserOpPoliciesAction",
   "getEnableERC1271PoliciesAction": "getEnableERC1271PoliciesAction",

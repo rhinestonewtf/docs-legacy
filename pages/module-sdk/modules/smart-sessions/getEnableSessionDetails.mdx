@@ -1,0 +1,116 @@
+# getEnableSessionDetails
+
+This method is used to get the details for a new session to enable through the `enable` flow. It abstracts away the different steps required and makes to easier when wanting to enable a new session without custom logic.
+
+## Usage
+
+```typescript copy
+const session: Session = {
+  ..., // Session details
+}
+
+const sessionDetails = await getEnableSessionDetails({
+  sessions: [session],
+  account,
+  client: publicClient,
+})
+
+sessionDetails.enableSessionData.enableSession.permissionEnableSig = await signer.signMessage({
+  message: { raw: sessionDetails.permissionEnableHash },
+})
+
+
+sessionDetails.signature = await signer.signMessage({
+  message: { raw: userOpHash },
+})
+
+const userOpSignature = encodeSmartSessionSignature(sessionDetails)
+```
+
+## Parameters
+
+### sessions
+
+- Type: [`Session[]`](/module-sdk/glossary/types#session)
+
+An array of sessions to enable. Note that these can be on multiple chains. A user will sign over this array once and when enabling the session on each chain, the index pointing to the right session to enable out of this array will be provided.
+
+### account
+
+- Type: [`Account`](/module-sdk/glossary/types#account)
+
+The account to enable the session for.
+
+### client
+
+- Type: `PublicClient`
+
+The public client to use to interact with the smart sessions validator.
+
+### sessionIndex (optional)
+
+- Type `number`
+
+When enabling more than one session and the session to enable on this particular chain is not the first item in the array (index 0), then this is used to provide the index of the session to enable.
+
+## Returns
+
+### enableSessionData.permissionEnableHash
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The hash to sign with a validator on the account in order to enable the session.
+
+### enableSessionData.mode
+
+- Type: [`SmartSessionMode`](/module-sdk/glossary/types#smartsessionmode)
+
+The mode of the smart session, in this case `Enable`.
+
+### enableSessionData.permissionId
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The permission ID of the session to enable.
+
+### enableSessionData.signature
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The signature to use the session, made with the session key over the `UserOpHash`. Note that this will be empty and needs to be set.
+
+### enableSessionData.enableSessionData.enableSession.chainDigestIndex
+
+- Type: `number`
+
+The index of the chain digest to use for the session.
+
+### enableSessionData.enableSessionData.enableSession.hashesAndChainIds
+
+- Type: [`ChainDigest[]`](/module-sdk/glossary/types#chaindigest)
+
+The chain digests to use for the session.
+
+### enableSessionData.enableSessionData.enableSession.sessionToEnable
+
+- Type: [`Session`](/module-sdk/glossary/types#session)
+
+The session to enable in this specific UserOperation.
+
+### enableSessionData.enableSessionData.enableSession.permissionEnableSig
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The signature to enable the session, validated by the validator provided. Note that this field is empty and needs to be set.
+
+### enableSessionData.enableSessionData.validator
+
+- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
+
+The address of the validator to use for the session. This is used to verify the `permissionEnableSig`.
+
+### enableSessionData.enableSessionData.accountType
+
+- Type: [`AccountType`](/module-sdk/glossary/types#accounttype)
+
+The type of the account to enable the session for. This is required since accounts format the signature differently.

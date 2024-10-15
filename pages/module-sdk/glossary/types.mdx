@@ -254,6 +254,7 @@ export type Session = {
   userOpPolicies: PolicyData[]
   erc7739Policies: ERC7739Data
   actions: ActionData[]
+  chainId: bigint
 }
 ```
 
@@ -295,6 +296,12 @@ A list of erc7739 policies.
 - Type: [`ActionData[]`](/module-sdk/glossary/types#actionData)
 
 A list of action policies.
+
+#### chainId
+
+- Type: `bigint`
+
+The chain id of the session.
 
 ## `PolicyData`
 
@@ -624,15 +631,21 @@ The object representing a smart session policy in ModuleSDK.
 
 ```typescript
 export type Policy = {
+  policy: Address
   address: Address
   initData: Hex
-  deInitData: Hex
 }
 ```
 
 ### Properties
 
-#### address
+#### policy
+
+- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
+
+The address of the policy.
+
+#### address (deprecated)
 
 - Type: [`Address`](https://viem.sh/docs/glossary/types#address)
 
@@ -643,12 +656,6 @@ The address of the policy.
 - Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
 
 The init data of the policy.
-
-#### deInitData
-
-- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
-
-The deinit data of the policy.
 
 ## `TokenWithLimit`
 

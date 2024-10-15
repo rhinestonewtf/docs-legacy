@@ -8,16 +8,16 @@ This function leverages [ERC-7715](https://github.com/ethereum/ERCs/pull/436/) a
 const permissions = getPermissions({
   permissions: [
     {
-      type: "erc20-token-transfer",
+      type: 'erc20-token-transfer',
       data: {
-        address: "0x1234...", // token address
-        allowance: "0x1", // allowance
-      }
-    }
-  ]
+        address: '0x1234...', // token address
+        allowance: '0x1', // allowance
+      },
+    },
+  ],
 })
 
-const session:Session = {
+const session: Session = {
   ...permissions,
   sessionValidator: OWNABLE_VALIDATOR_ADDRESS,
   sessionValidatorInitData: encodeValidationData({
