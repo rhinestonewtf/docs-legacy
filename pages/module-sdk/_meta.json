@@ -18,8 +18,9 @@
     "title": "Reference"
   },
   "modules": "Modules",
-  "accounts": "Accounts",
   "registry": "Registry",
+  "experimental": "Experimental",
+  "accounts": "Accounts",
   "utilities": "Utilites",
   "glossary": "Glossary"
 }
