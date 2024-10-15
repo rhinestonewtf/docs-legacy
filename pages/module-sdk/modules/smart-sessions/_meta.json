@@ -1,5 +1,6 @@
 {
   "getSmartSessionsValidator": "getSmartSessionsValidator",
+  "getPermissions": "getPermissions",
   "getEnableSessionsAction": "getEnableSessionsAction",
   "getRemoveSessionAction": "getRemoveSessionAction",
   "getEnableSessionDetails": "getEnableSessionDetails",

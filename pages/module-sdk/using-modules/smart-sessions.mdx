@@ -26,13 +26,13 @@ import { erc7579Actions } from 'permissionless/actions/erc7579'
 import { createPimlicoClient } from 'permissionless/clients/pimlico'
 import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts'
 import {
-  encodeAbiParameters,
   toHex,
-  toBytes,
   Address,
   Hex,
   createPublicClient,
   http,
+  Chain,
+  toBytes,
 } from 'viem'
 import {
   entryPoint07Address,
@@ -44,22 +44,17 @@ import {
   OWNABLE_VALIDATOR_ADDRESS,
   getSudoPolicy,
   Session,
-  getSessionDigest,
-  SMART_SESSIONS_ADDRESS,
-  hashChainSessions,
   getClient,
   getAccount,
-  getPermissionId,
-  getSessionNonce,
   encodeSmartSessionSignature,
-  SmartSessionMode,
-  ChainSession,
   getOwnableValidatorMockSignature,
   RHINESTONE_ATTESTER_ADDRESS,
   MOCK_ATTESTER_ADDRESS,
   getTrustAttestersAction,
   encodeValidatorNonce,
   getOwnableValidator,
+  encodeValidationData,
+  getEnableSessionDetails,
 } from '@rhinestone/module-sdk'
 ```
 
@@ -98,15 +93,12 @@ const owner = privateKeyToAccount(generatePrivateKey())
 
 ### Create the initial validator
 
-We will also create and add an initial validator. We are using the Ownable Validator which can be used to verify UserOperations using one or more EOA owners. In this guide, we are installing the validator to then recover it using social recovery.
+We will also create and add an initial validator. In this guide, we will use the ownable validator to create the signature to enable the session on the user's account.
 
 ```typescript copy
 const ownableValidator = getOwnableValidator({
-  owners: [
-    '0x2DC2fb2f4F11DeE1d6a2054ffCBf102D09b62bE2',
-    '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045',
-  ],
-  threshold: 2,
+  owners: [owner.address],
+  threshold: 1,
 })
 ```
 
@@ -209,18 +201,11 @@ const sessionOwner = privateKeyToAccount(generatePrivateKey())
 
 const session: Session = {
   sessionValidator: OWNABLE_VALIDATOR_ADDRESS,
-  sessionValidatorInitData: encodeAbiParameters(
-    [
-      {
-        type: 'uint256',
-      },
-      {
-        type: 'address[]',
-      },
-    ],
-    [BigInt(1), [sessionOwner.address]],
-  ),
-  salt: toHex(toBytes('41414141', { size: 32 })),
+  sessionValidatorInitData: encodeValidationData({
+    threshold: 1,
+    owners: [sessionOwner.address],
+  }),
+  salt: toHex(toBytes('0', { size: 32 })),
   userOpPolicies: [],
   erc7739Policies: {
     allowedERC7739Content: [],
@@ -230,22 +215,16 @@ const session: Session = {
     {
       actionTarget: '0xa564cB165815937967a7d018B7F34B907B52fcFd' as Address, // an address as the target of the session execution
       actionTargetSelector: '0x00000000' as Hex, // function selector to be used in the execution, in this case no function selector is used
-      actionPolicies: [
-        {
-          policy: getSudoPolicy().address,
-          initData: getSudoPolicy().initData,
-        },
-      ],
+      actionPolicies: [getSudoPolicy()],
     },
   ],
+  chainId: BigInt(chain.id),
 }
 ```
 
-### Get the session data
+### Get the session details
 
-Now that we have created the session object, we will get some data that we will need for enabling the session.
-
-First we get the permission id (the identifier of the session) so that we can tell the smart sessions module which session we want to use. Then, we get the sessionNonce that we will sign over for replay protection.
+Now that we have the session, we will generate the details to enable the session. For this, we will need to pass an account and client object. These details include the correctly formulated data about the exact session to encode. However, all of this is abstracted away and you can just use the function below to easily get these details and then use them to enable a new session.
 
 ```typescript copy
 const account = getAccount({
@@ -253,55 +232,15 @@ const account = getAccount({
   type: 'safe',
 })
 
-const newClient = getClient({
+const client = getClient({
   rpcUrl,
 })
 
-const permissionId = getPermissionId({
-  session,
-})
-
-const sessionNonce = await getSessionNonce({
-  client: newClient,
+const sessionDetails = await getEnableSessionDetails({
+  sessions: [session],
   account,
-  permissionId,
+  client,
 })
-```
-
-### Get the digests and hash to sign
-
-Next, we will get various digests in order to formaute the hash to sign. The signature over this hash is what allows the new session to be enabled.
-
-```typescript copy
-const sessionDigest = await getSessionDigest({
-  client: newClient,
-  account,
-  session,
-  mode: SmartSessionMode.ENABLE,
-  permissionId,
-})
-
-const chainDigests = [
-  {
-    chainId: BigInt(chain.id), // or your current chain
-    sessionDigest,
-  },
-]
-
-const chainSessions: ChainSession[] = [
-  {
-    chainId: BigInt(chain.id),
-    session: {
-      ...session,
-      account: account.address,
-      smartSession: SMART_SESSIONS_ADDRESS,
-      mode: 1,
-      nonce: sessionNonce,
-    },
-  },
-]
-
-const permissionEnableHash = hashChainSessions(chainSessions)
 ```
 
 ### Have the user sign the enable signature
@@ -311,14 +250,15 @@ Next, the user will need to sign the `permissionEnableHash`. How exactly this is
 In this case, we will assume that an ownable validator is already installed on the account, so we can use the users' EOA to sign the hash.
 
 ```typescript copy
-const permissionEnableSig = await owner.signMessage({
-  message: { raw: permissionEnableHash },
-})
+sessionDetails.enableSessionData.enableSession.permissionEnableSig =
+  await owner.signMessage({
+    message: { raw: sessionDetails.permissionEnableHash },
+  })
 ```
 
 ### Create the UserOperation to execute
 
-Now that we have the session set up, we can create the UserOperation. Since we scope this session for a specific target and seletor, we will use those to create the calldata for the UserOperation.
+Now that we have the session set up, we can create the UserOperation. Since we scope this session for a specific target and selector, we will use those to create the calldata for the UserOperation.
 
 ```typescript copy
 const nonce = await getAccountNonce(publicClient, {
@@ -328,6 +268,10 @@ const nonce = await getAccountNonce(publicClient, {
     account,
     validator: smartSessions,
   }),
+})
+
+sessionDetails.signature = getOwnableValidatorMockSignature({
+  threshold: 1,
 })
 
 const userOperation = await smartAccountClient.prepareUserOperation({
@@ -340,21 +284,7 @@ const userOperation = await smartAccountClient.prepareUserOperation({
     },
   ],
   nonce,
-  signature: encodeSmartSessionSignature({
-    mode: SmartSessionMode.ENABLE,
-    permissionId,
-    signature: getOwnableValidatorMockSignature({ threshold: 1 }),
-    enableSessionData: {
-      enableSession: {
-        chainDigestIndex: 0,
-        hashesAndChainIds: chainDigests,
-        sessionToEnable: session,
-        permissionEnableSig,
-      },
-      validator: OWNABLE_VALIDATOR_ADDRESS,
-      accountType: 'safe',
-    },
-  }),
+  signature: encodeSmartSessionSignature(sessionDetails),
 })
 ```
 
@@ -370,25 +300,11 @@ const userOpHashToSign = getUserOperationHash({
   userOperation,
 })
 
-const signature = await sessionOwner.signMessage({
+sessionDetails.signature = await sessionOwner.signMessage({
   message: { raw: userOpHashToSign },
 })
 
-userOperation.signature = encodeSmartSessionSignature({
-  mode: SmartSessionMode.ENABLE,
-  permissionId,
-  signature: signature,
-  enableSessionData: {
-    enableSession: {
-      chainDigestIndex: 0,
-      hashesAndChainIds: chainDigests,
-      sessionToEnable: session,
-      permissionEnableSig,
-    },
-    validator: OWNABLE_VALIDATOR_ADDRESS,
-    accountType: 'safe',
-  },
-})
+userOperation.signature = encodeSmartSessionSignature(sessionDetails)
 ```
 
 ### Execute the UserOperation
