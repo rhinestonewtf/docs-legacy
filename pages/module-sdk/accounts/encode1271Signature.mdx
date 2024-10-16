@@ -6,7 +6,7 @@ Encodes a 1271 signature for the account type. This is the signature that should
 
 ```typescript copy
 const signature = encode1271Signature({
-  accoutn: '0x1234...',
+  account: getAccount({address: '0x1234...', type: "safe"}),
   validator: OWNABLE_VALIDATOR_ADDRESS,
   signature: '0xabcd...',
 })
@@ -16,7 +16,7 @@ const signature = encode1271Signature({
 
 ### account
 
-- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
+- Type: [`Account`](/module-sdk/glossary/types#account)
 
 The address of the account to validate the 1271 signature.
 

@@ -8,7 +8,7 @@ Encodes a hash to be signed with ERC-1271 by an account. Note that while you sho
 const unformattedHash = keccak256(toHex('hash'))
 
 const formattedHash = encode1271Hash({
-  account: '0x1234...',
+  account: getAccount({address: '0x1234...', type: "safe"}),
   chainId: 1,
   validator: OWNABLE_VALIDATOR_ADDRESS,
   hash: unformattedHash,
@@ -19,8 +19,7 @@ const formattedHash = encode1271Hash({
 
 ### account
 
-- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
-
+- Type: [`Account`](/module-sdk/glossary/types#account)
 The address of the account to validate the 1271 signature.
 
 ### chainId
