@@ -8,33 +8,127 @@ For this guide, we will use permissionless.js but any other account SDK can be u
 
 <Steps>
 
-### Install Module SDK
+### Install the packages
 
-First, install the Module SDK:
+First, install the required packages. We use the latest version of module sdk and automations  sdk, permissionless ^0.2 and viem ^2.21.
 
 ```sh npm2yarn
-npm i viem @rhinestone/module-sdk
+npm i viem @rhinestone/module-sdk @rhinestone/automations-sdk permissionless
 ```
 
-### Install the validator
-
-Next, we will first need to install the validator for the automations service. We use the `smartAccountClient` to install the module, as created in the [permissionless.js guide](/module-sdk/account-sdks/permissionless).
-
-If you use another account SDK, you can use the equivalent method to install the module and pass the `ownableValidator.type`, `ownableValidator.module`, and `ownableValidator.data` to the `installModule` method.
+### Import the required functions and constants
 
 ```typescript copy
-import { getOwnableValidator } from '@rhinestone/module-sdk'
+import {
+  RHINESTONE_ATTESTER_ADDRESS,
+  MOCK_ATTESTER_ADDRESS,
+ getOwnableValidator,
+ from "@rhinestone/module-sdk";
+import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
+import {
+  Chain,
+  createPublicClient,
+  http,
+} from "viem";
+import { createSmartAccountClient } from "permissionless";
+import { erc7579Actions } from "permissionless/actions/erc7579";
+import { createPimlicoClient } from "permissionless/clients/pimlico";
+import {
+  createPaymasterClient,
+  entryPoint07Address,
+} from "viem/account-abstraction";
+import { toSafeSmartAccount } from "permissionless/accounts";
+```
 
+### Create the clients
+
+Create the smart account client, the bundler client and the paymaster client. You will need to add your own urls here.
+
+```typescript copy
+const publicClient = createPublicClient({
+  transport: http(rpcUrl),
+  chain: chain,
+})
+
+const pimlicoClient = createPimlicoClient({
+  transport: http(bundlerUrl),
+  entryPoint: {
+    address: entryPoint07Address,
+    version: '0.7',
+  },
+})
+
+const paymasterClient = createPaymasterClient({
+  transport: http(paymasterUrl),
+})
+```
+
+### Create the signer
+
+The Safe account will need to have a signer to sign user operations. In permissionless.js, the default Safe account validates ECDSA signatures.
+
+For example, to create a signer based on a private key:
+
+```typescript copy
+const owner = privateKeyToAccount(generatePrivateKey())
+```
+
+### Create the initial validator
+
+We are also going to add the initial validator. We will use this validator to both install the module and prove ownership of the account as well as giving the automations service the permission to make automations. The first owner address is that of the automations service.
+
+```typescript copy
 const ownableValidator = getOwnableValidator({
-  owners: ['0x2DC2fb2f4F11DeE1d6a2054ffCBf102D09b62bE2'],
+  owners: ["0x2DC2fb2f4F11DeE1d6a2054ffCBf102D09b62bE2", owner.address],
   threshold: 1,
-})
+});
+```
 
-const opHash = await smartAccountClient.installModule({
-  type: ownableValidator.type,
-  address: ownableValidator.module,
-  context: ownableValidator.data,
+### Create the Safe account
+
+Create the Safe account object using the signer. Note that you should only use the `MockAttester` on testnets.
+
+```typescript copy
+const safeAccount = await toSafeSmartAccount({
+  client: publicClient,
+  owners: [owner],
+  version: '1.4.1',
+  entryPoint: {
+    address: entryPoint07Address,
+    version: '0.7',
+  },
+  safe4337ModuleAddress: '0x3Fdb5BC686e861480ef99A6E3FaAe03c0b9F32e2', // These are not meant to be used in production as of now.
+  erc7579LaunchpadAddress: '0xEBe001b3D534B9B6E2500FB78E67a1A137f561CE',
+  attesters: [
+    RHINESTONE_ATTESTER_ADDRESS, // Rhinestone Attester
+    MOCK_ATTESTER_ADDRESS, // Mock Attester - do not use in production
+  ],
+  attestersThreshold: 1,
+  validators: [
+    {
+      address: ownableValidator.address,
+      context: ownableValidator.initData,
+    },
+  ],
 })
+```
+
+### Create the smart account client
+
+The smart account client is used to interact with the smart account. You will need to add your own bundler url and the chain that you are using.
+
+```typescript copy
+const smartAccountClient = createSmartAccountClient({
+  account: safeAccount,
+  chain: chain,
+  bundlerTransport: http(bundlerUrl),
+  paymaster: paymasterClient,
+  userOperation: {
+    estimateFeesPerGas: async () => {
+      return (await pimlicoClient.getUserOperationGasPrice()).fast
+    },
+  },
+}).extend(erc7579Actions())
 ```
 
 </Steps>
