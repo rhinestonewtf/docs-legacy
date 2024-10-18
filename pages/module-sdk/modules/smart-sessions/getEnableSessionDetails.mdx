@@ -12,7 +12,7 @@ const session: Session = {
 const sessionDetails = await getEnableSessionDetails({
   sessions: [session],
   account,
-  client: publicClient,
+  clients: [publicClient],
 })
 
 sessionDetails.enableSessionData.enableSession.permissionEnableSig = await signer.signMessage({
@@ -41,11 +41,11 @@ An array of sessions to enable. Note that these can be on multiple chains. A use
 
 The account to enable the session for.
 
-### client
+### clients
 
-- Type: `PublicClient`
+- Type: `PublicClient[]`
 
-The public client to use to interact with the smart sessions validator.
+The public clients to use to interact with the smart sessions validator. Note that one client needs to be provided for each chain on which a session is enabled.
 
 ### sessionIndex (optional)
 
