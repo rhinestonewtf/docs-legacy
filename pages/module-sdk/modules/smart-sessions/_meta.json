@@ -1,4 +1,5 @@
 {
+  "policies": "Policies",
   "getSmartSessionsValidator": "getSmartSessionsValidator",
   "getPermissions": "getPermissions",
   "getEnableSessionsAction": "getEnableSessionsAction",
@@ -19,6 +20,5 @@
   "encodeSmartSessionSignature": "encodeSmartSessionSignature",
   "encodeUseOrEnableSmartSessionSignature": "encodeUseOrEnableSmartSessionSignature",
   "decodeSmartSessionSignature": "decodeSmartSessionSignature",
-  "SMART_SESSIONS_ADDRESS": "SMART_SESSIONS_ADDRESS",
-  "policies": "Policies"
+  "SMART_SESSIONS_ADDRESS": "SMART_SESSIONS_ADDRESS"
 }
