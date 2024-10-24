@@ -1,0 +1,16 @@
+{
+  "useSession": "useSession",
+  "addSession": "addSession",
+  "removeSession": "removeSession",
+  "isSessionEnabled": "isSessionEnabled",
+  "isPermissionEnabled": "isPermissionEnabled",
+  "getPermissionId": "getPermissionId",
+  "getSessionDigest": "getSessionDigest",
+  "getSessionNonce": "getSessionNonce",
+  "makeMultiChainEnableData": "makeMultiChainEnableData",
+  "encodeHashesAndChainIds": "encodeHashesAndChainIds",
+  "encodeSignature": "encodeSignature",
+  "encodeSignatureUseMode": "encodeSignatureUseMode",
+  "encodeSignatureEnableMode": "encodeSignatureEnableMode",
+  "encodeSignatureUnsafeEnableMode": "encodeSignatureUnsafeEnableMode"
+}
