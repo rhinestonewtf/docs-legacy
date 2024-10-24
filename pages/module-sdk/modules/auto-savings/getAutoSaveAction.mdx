@@ -5,7 +5,7 @@ Get the action to execute when the auto-save event is triggered. Note that this 
 ## Usage
 
 ```typescript copy
-const autoSaveAction = await getAutoSaveAction({
+const autoSaveAction = getAutoSaveAction({
   token: '0x123...',
   amountReceived: 1000000,
 })
@@ -29,6 +29,6 @@ The amount of the token received.
 
 ### action
 
-- Type: [`Promise<Action>`](/module-sdk/glossary/types#action)
+- Type: [`Action`](/module-sdk/glossary/types#action)
 
 The action to execute to trigger the auto-save.
