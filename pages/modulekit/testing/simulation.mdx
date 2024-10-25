@@ -7,6 +7,16 @@ The ModuleKit is integrated with the [ERC-4337 Validation library](/erc4337-vali
 
 <Steps>
 
+### Update your configuration
+
+To use simulation, you will need to update your `foundry.toml` file as follows:
+
+```solidity copy
+gas_limit = "18446744073709551615"
+memory_limit = 2147483648
+verbosity = 3
+```
+
 ### Write your tests
 
 When you write your tests, you can use the `makeAccountInstance` function to create an account instance. Then, you can use this `instance` to execute transactions, for example:
