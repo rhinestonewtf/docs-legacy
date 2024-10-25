@@ -1,10 +1,11 @@
-# addSession
+# getPermissionId 
 
-description
+Get the permission id of a session.
 
 ## Usage
 
 ```solidity copy
+PermissionId permissionId = instance.getPermissionId(session);
 ```
 
 ## Parameters
@@ -15,4 +16,15 @@ description
 
 The instance of the account used for testing.
 
+
+### session
+
+- Type: [`Session`](/modulekit/glossary/types#session) 
+
+The session to get the permission id from.
+
 ## Returns
+
+- Type: `PermissionId | bytes32`
+
+The permission id of the session.

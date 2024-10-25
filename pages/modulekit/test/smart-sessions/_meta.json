@@ -8,9 +8,5 @@
   "getSessionDigest": "getSessionDigest",
   "getSessionNonce": "getSessionNonce",
   "makeMultiChainEnableData": "makeMultiChainEnableData",
-  "encodeHashesAndChainIds": "encodeHashesAndChainIds",
-  "encodeSignature": "encodeSignature",
-  "encodeSignatureUseMode": "encodeSignatureUseMode",
-  "encodeSignatureEnableMode": "encodeSignatureEnableMode",
-  "encodeSignatureUnsafeEnableMode": "encodeSignatureUnsafeEnableMode"
+  "encodeSignature": "encodeSignature"
 }

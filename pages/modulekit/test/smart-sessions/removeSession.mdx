@@ -1,10 +1,11 @@
-# addSession
+# removeSession 
 
-description
+Remove an existing session from smart sessions.
 
 ## Usage
 
 ```solidity copy
+instance.removeSession(permissionId);
 ```
 
 ## Parameters
@@ -15,4 +16,12 @@ description
 
 The instance of the account used for testing.
 
+### permissionId
+
+- Type: `PermissionId | bytes32`
+
+The id of the session to remove. 
+
 ## Returns
+
+None

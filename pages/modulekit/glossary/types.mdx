@@ -53,6 +53,10 @@ Auxiliary data for the account.
 
 The default validator that is used when no validator is specified by the user.
 
+#### sessionValidator
+
+The default session validator to use.
+
 #### salt
 
 - Type: `bytes32`
@@ -108,6 +112,40 @@ The Nexus account.
 
 A custom account type that a developer can define.
 
+## `ActionData`
+
+The action policies of a session.
+
+### Definition
+
+```solidity
+struct ActionData {
+    bytes4 actionTargetSelector;
+    address actionTarget;
+    PolicyData[] actionPolicies;
+}
+```
+
+### Properties
+
+#### actionTargetSelector
+
+- Type: `bytes4`
+
+The selector of the action target.
+
+#### actionTarget
+
+- Type: `address`
+
+The address of the action target.
+
+#### actionPolicies
+
+- Type: [`PolicyData[]`](#policydata)
+
+The policies of the action.
+
 ## `Auxiliary`
 
 Auxiliary data for an account.
@@ -148,6 +186,102 @@ The registry used for the account.
 - Type: `MockFactory`
 
 A factory used to deploy mock periphery contracts like a Mock Swap Router.
+
+## `ChainDigest`
+
+The chain digest data.
+
+### Definition
+
+```solidity
+struct ChainDigest {
+    uint64 chainId;
+    bytes32 sessionDigest;
+}
+```
+
+### Properties
+
+#### chainId
+
+- Type: `uint64`
+
+The chain id.
+
+#### sessionDigest
+
+- Type: `bytes32`
+
+The session digest.
+
+## `EnableSession`
+
+The data required to enable a session.
+
+### Definition
+
+```solidity
+struct EnableSession {
+    uint8 chainDigestIndex;
+    ChainDigest[] hashesAndChainIds;
+    Session sessionToEnable;
+    bytes permissionEnableSig;
+}
+```
+
+### Properties
+
+#### chainDigestIndex
+
+- Type: `uint8`
+
+The index of the chain digest in the array.
+
+#### hashesAndChainIds
+
+- Type: [`ChainDigest[]`](#chaindigest)
+
+An array of chain digests.
+
+#### sessionToEnable
+
+- Type: [`Session`](#session)
+
+The session to enable.
+
+#### permissionEnableSig
+
+- Type: `bytes`
+
+The signature to enable the session.
+
+## `ERC7739Data`
+
+The data of the ERC-7739 policies.
+
+### Definition
+
+```solidity
+struct ERC7739Data {
+    string[] allowedERC7739Content;
+    PolicyData[] erc1271Policies;
+}
+```
+
+### Properties
+
+#### allowedERC7739Content
+
+- Type: `string[]`
+
+An array of allowed ERC-7739 content.
+
+#### erc1271Policies
+
+- Type: [`PolicyData[]`](#policydata)
+
+An array of ERC-1271 policies.
+
 
 ## `Execution`
 
@@ -209,6 +343,88 @@ The type of the module.
 - Type: `address`
 
 The address of the module.
+
+## `PolicyData`
+
+The data of a policy.
+
+### Definition
+
+```solidity
+struct PolicyData {
+    address policy;
+    bytes initData;
+}
+```
+
+### Properties
+
+#### policy
+
+- Type: `address`
+
+The address of the policy contract.
+
+#### initData
+
+- Type: `bytes`
+
+The data to initialize the policy with.
+
+## `Session`
+
+A session object for smart sessions.
+
+### Definition
+
+```solidity
+struct Session {
+    ISessionValidator sessionValidator;
+    bytes sessionValidatorInitData;
+    bytes32 salt;
+    PolicyData[] userOpPolicies;
+    ERC7739Data erc7739Policies;
+    ActionData[] actions;
+}
+```
+
+### Properties
+
+#### sessionValidator
+
+- Type: `ISessionValidator`
+
+The stateless validator to use for validating the session.
+
+#### sessionValidatorInitData
+
+- Type: `bytes`
+
+The data to send to the stateless validtor for verification (eg owners).
+
+#### salt
+
+- Type: `bytes32`
+
+The salt used to create the session to allow for multiple sessions with the same parameters.
+
+#### userOpPolicies
+
+- Type: [`PolicyData[]`](#policydata)
+
+An array of UserOp policies.
+
+#### erc7739Policies
+
+- Type: [`ERC7739Data`](#erc7739data)
+
+The ERC-7739 policies.
+
+#### actions
+
+- Type: [`ActionData[]`](#actiondata)
+
+The action policies of the session.
 
 ## `UserOpData`
 
