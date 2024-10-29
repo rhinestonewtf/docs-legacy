@@ -1,5 +1,8 @@
 {
   "getSudoPolicy": "getSudoPolicy",
   "getSpendingLimitsPolicy": "getSpendingLimitsPolicy",
-  "getUniversalActionPolicy": "getUniversalActionPolicy"
+  "getUniversalActionPolicy": "getUniversalActionPolicy",
+  "getTimeFramePolicy": "getTimeFramePolicy",
+  "getUsageLimitPolicy": "getUsageLimitPolicy",
+  "getValueLimitPolicy": "getValueLimitPolicy"
 }
