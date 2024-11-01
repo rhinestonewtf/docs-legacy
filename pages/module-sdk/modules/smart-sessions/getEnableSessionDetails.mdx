@@ -53,6 +53,19 @@ The public clients to use to interact with the smart sessions validator. Note th
 
 When enabling more than one session and the session to enable on this particular chain is not the first item in the array (index 0), then this is used to provide the index of the session to enable.
 
+
+### enableMode (optional)
+
+- Type: [`SmartSessionMode`](/module-sdk/glossary/types#smartsessionmode)
+
+The mode of the smart session, in this case either `ENABLE` OR `UNSAFE_ENABLE`. The default is `ENABLE`.
+
+### enableValidatorAddress (optional)
+
+- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
+
+The address of the validator to validate the `permissionEnableSig`. When not provided, the `session.sessionValidator` is used.
+
 ## Returns
 
 ### enableSessionData.permissionEnableHash
