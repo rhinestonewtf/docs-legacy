@@ -3,5 +3,6 @@
   "log4337Gas": "log4337Gas",
   "deployAccount": "deployAccount",
   "simulateUserOp": "simulateUserOp",
-  "setAccountEnv": "setAccountEnv"
+  "setAccountEnv": "setAccountEnv",
+  "withModuleStorageClearValidation": "withModuleStorageClearValidation"
 }
