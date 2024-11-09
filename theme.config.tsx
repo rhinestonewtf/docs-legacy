@@ -7,18 +7,18 @@ import { Separator } from './components/Separator'
 import { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
-  useNextSeoProps: () => {
-    const { asPath } = useRouter()
-    if (asPath !== '/') {
-      return {
-        titleTemplate: '%s – Rhinestone Docs',
-      }
-    } else {
-      return {
-        titleTemplate: 'Rhinestone Docs',
-      }
-    }
-  },
+  // useNextSeoProps: () => {
+  //   const { asPath } = useRouter()
+  //   if (asPath !== '/') {
+  //     return {
+  //       titleTemplate: '%s – Rhinestone Docs',
+  //     }
+  //   } else {
+  //     return {
+  //       titleTemplate: 'Rhinestone Docs',
+  //     }
+  //   }
+  // },
   head: (
     <>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -52,24 +52,26 @@ const config: DocsThemeConfig = {
   },
   sidebar: {
     defaultMenuCollapseLevel: 2,
-    titleComponent({ title, type }) {
-      if (type === 'separator') {
-        return <Separator title={title} />
-      }
-      return <div className="-my-[2px]">{title}</div>
+    // titleComponent({ title, type }) {
+    //   if (type === 'separator') {
+    //     return <Separator title={title} />
+    //   }
+    //   return <div className="-my-[2px]">{title}</div>
+    // },
+  },
+  color: {
+    hue: {
+      light: 244.83,
+      dark: 245,
     },
-  },
-  primaryHue: {
-    light: 244.83,
-    dark: 245,
-  },
-  primarySaturation: {
-    light: 72.8,
-    dark: 74,
+    saturation: {
+      light: 72.8,
+      dark: 74,
+    },
   },
   docsRepositoryBase: 'https://github.com/rhinestonewtf/docs/',
   footer: {
-    text: (
+    content: (
       <div className="flex flex-row justify-between w-full">
         <span>
           Copyright {new Date().getFullYear()}{' '}
