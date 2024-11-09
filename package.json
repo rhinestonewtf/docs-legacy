@@ -19,7 +19,7 @@
     "next": "^13.5.6",
     "next-themes": "^0.2.1",
     "nextra": "^2.13.3",
-    "nextra-theme-docs": "https://github.com/rhinestonewtf/rhinestone-theme-docs.git",
+    "nextra-theme-docs": "github:rhinestonewtf/rhinestone-theme-docs#8886a7811069a09a8870346653b1b4c1c2e1be31",
     "prettier": "^3.3.3",
     "prettier-plugin-sort-imports-desc": "^1.0.0",
     "react": "^18.2.0",
