@@ -1,0 +1,22 @@
+export default {
+  index: {
+    title: 'Why Rhinestone',
+  },
+  'getting-started': 'Getting started',
+  '-': {
+    type: 'separator',
+    title: 'Learn more',
+  },
+  tooling: 'Tooling overview',
+  'rhinestone-infrastructure': 'Rhinestone Infrastructure',
+  modules: 'Modules explained',
+  '--': {
+    type: 'separator',
+    title: 'Resources',
+  },
+  'account-abstraction': 'Account Abstraction',
+  'erc-7484': 'ERC-7484',
+  'erc-7579': 'ERC-7579',
+  'address-book': 'Address book',
+  audits: 'Audits',
+}

@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Cards, Card } from 'nextra-theme-docs'
+import { Cards} from 'nextra-theme-docs'
 import { ModuleSDKBanner } from '../../components/banners'
 
 # ModuleSDK
@@ -20,7 +20,7 @@ The Module SDK is split into two components:
 Current accounts supported by the Module SDK include:
 
 <Cards>
-  <Card
+  <Cards.Card
     title="ERC-7579"
     href="https://erc7579.com/"
     icon={
@@ -33,7 +33,7 @@ Current accounts supported by the Module SDK include:
       />
     }
   />
-  <Card
+  <Cards.Card
     title="Safe"
     href="https://safe.global/"
     icon={
@@ -46,7 +46,7 @@ Current accounts supported by the Module SDK include:
       />
     }
   />
-  <Card
+  <Cards.Card
     title="Kernel (v3)"
     href="https://zerodev.app/"
     icon={
@@ -59,7 +59,7 @@ Current accounts supported by the Module SDK include:
       />
     }
   />
-  <Card
+  <Cards.Card
     title="Biconomy (v3)"
     href="https://biconomy.io/"
     icon={
