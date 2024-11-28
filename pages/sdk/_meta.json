@@ -1,4 +1,28 @@
 {
   "index": "Overview",
-  "getting-started": "Getting started"
+  "getting-started": "Getting started",
+  "-": {
+    "type": "separator",
+    "title": "Core"
+  },
+  "--": {
+    "type": "separator",
+    "title": "Advanced"
+  },
+  "---": {
+    "type": "separator",
+    "title": "Smart Sessions"
+  },
+  "----": {
+    "type": "separator",
+    "title": "Chain Abstraction"
+  },
+  "-----": {
+    "type": "separator",
+    "title": "Automations"
+  },
+  "------": {
+    "type": "separator",
+    "title": "ModuleSDK (standalone)"
+  }
 }

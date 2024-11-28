@@ -1,3 +1,20 @@
 {
-  "index": "Overview"
+  "index": "Overview",
+  "getting-started": "Getting started",
+  "-": {
+    "type": "separator",
+    "title": "Modules"
+  },
+  "--": {
+    "type": "separator",
+    "title": "Module Registry"
+  },
+  "---": {
+    "type": "separator",
+    "title": "Modules"
+  },
+  "----": {
+    "type": "separator",
+    "title": "ERC-4337 Utilities"
+  }
 }
