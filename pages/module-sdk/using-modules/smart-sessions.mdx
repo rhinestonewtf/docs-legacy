@@ -232,14 +232,10 @@ const account = getAccount({
   type: 'safe',
 })
 
-const client = getClient({
-  rpcUrl,
-})
-
 const sessionDetails = await getEnableSessionDetails({
   sessions: [session],
   account,
-  clients: [client],
+  clients: [publicClient],
 })
 ```
 
