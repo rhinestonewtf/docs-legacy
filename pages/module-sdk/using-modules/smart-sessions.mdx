@@ -19,12 +19,22 @@ npm i viem @rhinestone/module-sdk permissionless
 ### Import the required functions and constants
 
 ```typescript copy
-import { getAccountNonce } from 'permissionless/actions'
-import { createSmartAccountClient } from 'permissionless'
-import { toSafeSmartAccount } from 'permissionless/accounts'
-import { erc7579Actions } from 'permissionless/actions/erc7579'
-import { createPimlicoClient } from 'permissionless/clients/pimlico'
-import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts'
+import {
+  getSmartSessionsValidator,
+  OWNABLE_VALIDATOR_ADDRESS,
+  getSudoPolicy,
+  Session,
+  getAccount,
+  encodeSmartSessionSignature,
+  getOwnableValidatorMockSignature,
+  RHINESTONE_ATTESTER_ADDRESS,
+  MOCK_ATTESTER_ADDRESS,
+  encodeValidatorNonce,
+  getOwnableValidator,
+  encodeValidationData,
+  getEnableSessionDetails,
+} from "@rhinestone/module-sdk";
+import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import {
   toHex,
   Address,
@@ -33,29 +43,17 @@ import {
   http,
   Chain,
   toBytes,
-} from 'viem'
+} from "viem";
+import { createSmartAccountClient } from "permissionless";
+import { erc7579Actions } from "permissionless/actions/erc7579";
+import { createPimlicoClient } from "permissionless/clients/pimlico";
 import {
   entryPoint07Address,
   getUserOperationHash,
   createPaymasterClient,
-} from 'viem/account-abstraction'
-import {
-  getSmartSessionsValidator,
-  OWNABLE_VALIDATOR_ADDRESS,
-  getSudoPolicy,
-  Session,
-  getClient,
-  getAccount,
-  encodeSmartSessionSignature,
-  getOwnableValidatorMockSignature,
-  RHINESTONE_ATTESTER_ADDRESS,
-  MOCK_ATTESTER_ADDRESS,
-  getTrustAttestersAction,
-  encodeValidatorNonce,
-  getOwnableValidator,
-  encodeValidationData,
-  getEnableSessionDetails,
-} from '@rhinestone/module-sdk'
+} from "viem/account-abstraction";
+import { toSafeSmartAccount } from "permissionless/accounts";
+import { getAccountNonce } from "permissionless/actions";
 ```
 
 ### Create the clients
@@ -147,35 +145,6 @@ const smartAccountClient = createSmartAccountClient({
     },
   },
 }).extend(erc7579Actions())
-```
-
-### Set the trusted attesters
-
-As permissionless currently does not use the production Registry, we will also need to set the attesters there.
-
-```typescript copy
-const trustAttestersAction = getTrustAttestersAction({
-  threshold: 1,
-  attesters: [
-    RHINESTONE_ATTESTER_ADDRESS, // Rhinestone Attester
-    MOCK_ATTESTER_ADDRESS, // Mock Attester - do not use in production
-  ],
-})
-
-const userOpHash1 = await smartAccountClient.sendUserOperation({
-  account: safeAccount,
-  calls: [
-    {
-      to: trustAttestersAction.target,
-      value: BigInt(0),
-      data: trustAttestersAction.callData,
-    },
-  ],
-})
-
-await pimlicoClient.waitForUserOperationReceipt({
-  hash: userOpHash1,
-})
 ```
 
 ### Install the Smart Sessions Module
