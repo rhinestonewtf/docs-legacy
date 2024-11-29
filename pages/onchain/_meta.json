@@ -11,10 +11,6 @@
   },
   "---": {
     "type": "separator",
-    "title": "Modules"
-  },
-  "----": {
-    "type": "separator",
     "title": "ERC-4337 Utilities"
   }
 }
