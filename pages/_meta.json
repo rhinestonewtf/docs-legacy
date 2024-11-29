@@ -1,6 +1,8 @@
 {
   "index": {
-    "display": "hidden"
+    "title": "Overview",
+    "display": "hidden",
+    "type": "page"
   },
   "overview": {
     "title": "Overview",
