@@ -1,0 +1,92 @@
+# getDepositToAcrossAction
+
+Get the action to deposit funds to across on the source chain. This is done after a target execution has been successfully completed.
+
+## Usage
+
+```typescript copy
+const action = getDepositToAcrossAction({
+  account: "0xf003346C11bF3F1Fd3780E8F66164B6CFEc2fEf4",
+  userSignature: '0x',
+  orchestratorSignature: '0x',
+  order: {
+    settlementContract: '0x5c7bcd6e7de5423a257d81b442095a1a6ced35c5',
+    swapper: '0x122B68D0E84d33F1Af7F1C0D332851AcaD0d457E',
+    nonce: BigInt(1),
+    originChainId: 1,
+    initiateDeadline: Date.now() + 1000,
+    fillDeadline: Date.now() + 2000,
+    orderData: '0x',
+  },
+});
+```
+
+## Parameters
+
+### account
+
+- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
+
+The address of the account to deposit funds from.
+
+### userSignature
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The user signature for the order.
+
+### orchestratorSignature
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The orchestrator signature for the order.
+
+### order.settlementContract
+
+- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
+
+The address of the settlement contract, in this case the Across SpokePool.
+
+### order.swapper
+
+- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
+
+The address of the swapper contract.
+
+### order.nonce
+
+- Type: `bigint`
+
+The nonce of the order.
+
+### order.originChainId
+
+- Type: `number`
+
+The chain ID of the origin chain.
+
+### order.initiateDeadline
+
+- Type: `number`
+
+The deadline for initiating the order.
+
+### order.fillDeadline
+
+- Type: `number`
+
+The deadline for filling the order.
+
+### order.orderData
+
+- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
+
+The executions that were performed on the target chain.
+
+## Returns
+
+### action
+
+- Type: [`Action`](https://viem.sh/docs/glossary/types#action)
+
+The action to execute on the account.

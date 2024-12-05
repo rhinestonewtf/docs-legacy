@@ -4,6 +4,7 @@
   "webauthn-validator": "WebAuthn Validator",
   "social-recovery": "Social Recovery",
   "multi-factor": "Multi Factor",
+  "omni-account": "Omni Account",
   "registry-hook": "Registry Hook",
   "scheduled-transfers": "Scheduled Transfers",
   "scheduled-orders": "Scheduled Orders",
