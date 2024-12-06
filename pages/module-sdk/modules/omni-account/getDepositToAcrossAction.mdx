@@ -75,7 +75,7 @@ The address of the orchestrator.
 
 - Type: [`Address`](https://viem.sh/docs/glossary/types#address)
 
-The address of the recipient of the settlement, which is the solver.
+The address of the recipient of funds on the target chain, usually the user.
 
 ### originModulePayload.order.settlement.settlementContract
 
@@ -129,7 +129,7 @@ The chainId of the origin chain.
 
 - Type: `bigint`
 
-The deadline for the fill to happen by.
+The deadline for the deposit to happen by on the source chain.
 
 ### originModulePayload.order.acrossTransfer.maxFee
 
@@ -183,7 +183,7 @@ The hash of the Execution.
 
 - Type: `bigint`
 
-The index of the digest to use for settling on a specific chain.
+The index of the current source chain in the chain data digests.
 
 ### originModulePayload.order.smartDigests.acrossTransferDigests.chainDataDigests
 
