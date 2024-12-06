@@ -6,11 +6,9 @@ Get the action to unlock funds on the source chain. This is done if a user wants
 
 ```typescript copy
 const action = getUnlockFundsAction({
-  account: "0xf003346C11bF3F1Fd3780E8F66164B6CFEc2fEf4",
-  userSignature: '0x',
   orchestratorSignature: '0x',
   request: {
-    timestamp: Date.now(),
+    timestamp: Math.floor(Date.now() / 1000), // Current timestamp in seconds
     tokenAddress: '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238',
     orchestrator: '0x122B68D0E84d33F1Af7F1C0D332851AcaD0d457E',
     amount: BigInt(100),
@@ -20,18 +18,6 @@ const action = getUnlockFundsAction({
 ```
 
 ## Parameters
-
-### account
-
-- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
-
-The address of the account to unlock funds from.
-
-### userSignature
-
-- Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
-
-The user signature for the unlock.
 
 ### orchestratorSignature
 
@@ -49,7 +35,7 @@ The timestamp of the unlock request.
 
 - Type: [`Address`](https://viem.sh/docs/glossary/types#address)
 
-The address of the token to unlock.
+The address of the token to unlock. If the token is the native token, the address is `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE`.
 
 ### request.orchestrator
 
