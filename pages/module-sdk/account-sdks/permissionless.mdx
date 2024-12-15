@@ -133,10 +133,6 @@ With this module object, we can now install it on the smart account.
 
 ```typescript copy
 const opHash = await smartAccountClient.installModule(socialRecovery)
-
-await pimlicoClient.waitForUserOperationReceipt({
-  hash: opHash,
-})
 ```
 
 ### Wait for the UserOperation to be confirmed
@@ -144,9 +140,8 @@ await pimlicoClient.waitForUserOperationReceipt({
 Let's wait until the UserOperation is confirmed, after which the module will be installed.
 
 ```typescript copy
-await bundlerClientV07.waitForUserOperationReceipt({
+await pimlicoClient.waitForUserOperationReceipt({
   hash: opHash,
-  timeout: 100000,
 })
 ```
 
