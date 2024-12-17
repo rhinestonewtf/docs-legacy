@@ -65,6 +65,10 @@
         "title": "Safe7579",
         "href": "/safe7579"
       },
+      "orchestrator": {
+        "title": "Orchestrator",
+        "href": "/orchestrator"
+      },
       "automations": {
         "title": "Automations",
         "href": "/automations"
@@ -78,6 +82,11 @@
   },
   "safe7579": {
     "title": "Safe7579",
+    "type": "page",
+    "display": "hidden"
+  },
+  "orchestrator": {
+    "title": "Orchestrator",
     "type": "page",
     "display": "hidden"
   },
