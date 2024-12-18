@@ -4,12 +4,12 @@
 
 This migration guide assumes you have already migrated to `^0.4.0` and are now migrating to `0.5.0`.
 
-### Integrated Module Bases
+### Integrated [module-bases](https://github.com/rhinestonewtf/module-bases) 
 
-The module bases repository has been integrated within modulekit and is no longer required as a dependency. You should:
+The [module-bases](https://github.com/rhinestonewtf/module-bases) repository has been integrated within modulekit and is no longer required as a dependency. You should:
 
-1. Remove the module-bases dependency if using modulekit and module bases in the same project
-2. Update imports to reference module bases from `src/module-bases`
+1. Remove the module-bases dependency if using modulekit and module-bases in the same project
+2. Update imports to reference module-bases from `src/module-bases`
 
 ```diff
 - import { ERC7579ValidatorBase } from "module-bases/ERC7579ValidatorBase.sol"
@@ -19,9 +19,9 @@ The module bases repository has been integrated within modulekit and is no longe
 ### Deprecated Account Dependencies 
 
 Dependencies to the following smart account repositories have been removed:
-- safe7579
-- erc7579  
-- kernel
+- [safe7579](https://github.com/rhinestonewtf/safe7579)
+- [erc7579 reference implementation](https://github.com/erc7579/erc7579-implementation)
+- [kernel](https://github.com/zerodevapp/kernel)
 
 All required interfaces and libraries are now located within `src/accounts/` where each account has a specific folder with its own implementations.
 
@@ -49,7 +49,7 @@ All contracts imported from the ERC7579 reference implementation have been remov
 ```
 
 Major interfaces now imported:
-- `IERC7579Account` (common erc7579 interface)  
+- `IERC7579Account` (common ERC7579 interface)  
 - `IMSA` (ERC7579 reference implementation)
 - `IKernelAccount` (Kernel)
 - `ISafe7579` (Safe7579)
@@ -74,4 +74,4 @@ Since module-bases is now integrated, the imports in these files come from local
 - `src/Mocks.sol` 
 - `src/Modules.sol`
 
-If you are using module bases as an external dependency in conjunction with modulekit, this could cause compiler issues. We recommend removing the module bases dependency and only using modulekit.
+If you are using module-bases as an external dependency in conjunction with modulekit, this could cause compiler issues. We recommend removing the module-bases dependency and only using modulekit.
