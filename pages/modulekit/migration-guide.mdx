@@ -44,7 +44,7 @@ All contracts imported from the ERC7579 reference implementation have been remov
 `Accounts.sol` no longer imports `Execution` from `external/ERC7579.sol`. It now imports all smart account interfaces directly:
 
 ```diff
-- import { Execution } from "./external/ERC7579.sol"
+- import { Execution } from "modulekit/external/ERC7579.sol"
 + import { Execution } from "modulekit/accounts/common/interfaces/IERC7579Account.sol"
 ```
 
