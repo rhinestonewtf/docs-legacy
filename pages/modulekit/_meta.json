@@ -13,6 +13,7 @@
   },
   "testing": "Testing",
   "deploying": "Deploying",
+  "migration-guide": "Migration Guide",
   "---": {
     "type": "separator",
     "title": "Reference"
