@@ -2,7 +2,7 @@ import { Steps } from 'nextra/components'
 
 # Tutorial 1: Building a Muti-Owner Validator
 
-In this tutorial, we will walk you through building a simple validator module, in this case, a multi-owner validator. This validator module allows multiple owners to sign transactions using an EOA. Before getting started, make sure you have [ModuleKit](./getting-started) installed and have set up a repo to work from.
+In this tutorial, we will walk you through building a simple validator module, in this case, a multi-owner validator. This validator module allows multiple owners to sign transactions using an EOA. Before getting started, make sure you have [ModuleKit](/getting-started) installed and have set up a repo to work from.
 
 <Steps>
 
@@ -36,7 +36,7 @@ contract MultiOwnerValidator is ERC7579ValidatorBase {
 }
 ```
 
-We set up a mapping to store the owners and their accounts, and another mapping to store the number of owners for each account. Note that we use a mapping for gas efficiency. Although it seems a bit counterintuitive, we need to use the `ownerId` key first in order to be compliant with the [ERC-4337 restrictions](../build/validators.mdx). We also use the `SignatureCheckerLib` to check the signatures of the owners.
+We set up a mapping to store the owners and their accounts, and another mapping to store the number of owners for each account. Note that we use a mapping for gas efficiency. Although it seems a bit counterintuitive, we need to use the `ownerId` key first in order to be compliant with the [ERC-4337 restrictions(/erc4337-validation). We also use the `SignatureCheckerLib` to check the signatures of the owners.
 
 Then, we add the config logic of the module:
 
