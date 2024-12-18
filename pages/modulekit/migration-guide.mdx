@@ -6,7 +6,7 @@ This migration guide assumes you have already migrated to `^0.4.0` and are now m
 
 ### Integrated Module Bases
 
-The module bases repository has been integrated within module-kit and is no longer required as a dependency. You should:
+The module bases repository has been integrated within modulekit and is no longer required as a dependency. You should:
 
 1. Remove the module-bases dependency if using modulekit and module bases in the same project
 2. Update imports to reference module bases from `src/module-bases`
@@ -23,7 +23,7 @@ Dependencies to the following smart account repositories have been removed:
 - erc7579  
 - kernel
 
-All required interfaces and libraries are now located within `src/accounts` where each account has a specific folder with its own implementations.
+All required interfaces and libraries are now located within `src/accounts/` where each account has a specific folder with its own implementations.
 
 Example updating imports:
 
@@ -60,20 +60,18 @@ Major interfaces now imported:
 
 ### Changed `src/Helpers.sol`
 
-Helper changes include:
-- All account helpers consolidated in `Helpers.sol`
-- `ecdsaSign` moved to `src/test/utils/ECDSA.sol`
+`sign` is no longer imported within `Helpers.sol`. It has been moved to `src/test/utils/ECDSA.sol`. All account helpers are now consolidated in `Helpers.sol`
 
 ```diff
 - import { sign } from "./external/Vm.sol"
 + import { ecdsaSign } from "./test/utils/ECDSA.sol" 
 ```
 
-### Changed Interface and Mock Files
+### Changed `src/Interface.sol`, `src/Mocks.sol`, `src/Modules.sol`
 
 Since module-bases is now integrated, the imports in these files come from local files:
 - `src/Interfaces.sol`
 - `src/Mocks.sol` 
 - `src/Modules.sol`
 
-If using module bases as an external dependency with modulekit, this could cause compiler issues. We recommend removing the module bases dependency and only using modulekit.
+If you are using module bases as an external dependency in conjunction with modulekit, this could cause compiler issues. We recommend removing the module bases dependency and only using modulekit.
