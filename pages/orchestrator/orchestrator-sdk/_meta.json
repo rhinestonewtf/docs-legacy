@@ -1,0 +1,11 @@
+{
+  "modules": "Modules",
+  "getOrchestrator": "getOrchestrator",
+  "createUserAccount": "createUserAccount",
+  "getUserId": "getUserId",
+  "getPortfolio": "getPortfolio",
+  "getOrderPath": "getOrderPath",
+  "postSignedOrderBundle": "postSignedOrderBundle",
+  "getBundleStatus": "getBundleStatus",
+  "getSolverClaimPayload": "getSolverClaimPayload"
+}

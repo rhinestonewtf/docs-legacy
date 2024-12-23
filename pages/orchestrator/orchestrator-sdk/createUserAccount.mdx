@@ -1,0 +1,34 @@
+# createUserAccount
+
+Creates a new user account for a specified address and list of chains. 
+
+## Usage
+
+```typescript copy
+const userId = await orchestrator.createUserAccount(
+  "0x1234567890123456789012345678901234567890",
+  [8453],
+)
+```
+
+## Parameters
+
+### accountAddress
+
+- Type: [`Address`](https://viem.sh/docs/glossary/types#address)
+
+The address of the account to create.
+
+### chains
+
+- Type: `number[]`
+
+The list of chain IDs to create the account on.
+
+## Returns
+
+### userId
+
+- Type: `Promise<string>`
+
+The ID of the created user account.

@@ -1,0 +1,25 @@
+# getSolverClaimPayload 
+
+Allows solvers to get the payload required to claim their funds back on the source chains.
+
+## Usage
+
+```typescript copy
+const claimPayload = orchestrator.getSolverClaimPayload(bundleId)
+```
+
+## Parameters
+
+### bundleId
+
+- Type: `string`
+
+The ID of the bundle to get the claim payload for.
+
+## Returns
+
+### claimPayload
+
+- Type: `Promise<SolverClaimPayload>`
+
+The payload to submit on the source chains.
