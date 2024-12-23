@@ -20,12 +20,12 @@ The address of the account to get the user id for.
 
 - Type: `number`
 
-The chain ID to get the user id for. If not provided, the user id will be returned for the first chain the account is found on.
+The chain ID to get the user id for. If not provided, returns the user id for all chains.
 
 ## Returns
 
 ### userId
 
-- Type: `Promise<string>`
+- Type: `Promise<{ userId: string; chainId: number }[]>`
 
-The user id for the account.
+The user id for the account with the respective chain id.
