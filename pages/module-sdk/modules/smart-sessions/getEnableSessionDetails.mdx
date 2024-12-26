@@ -66,6 +66,24 @@ The mode of the smart session, in this case either `ENABLE` OR `UNSAFE_ENABLE`. 
 
 The address of the validator to validate the `permissionEnableSig`. When not provided, the `session.sessionValidator` is used.
 
+### permitGenericPolicy (optional)
+
+- Type: `boolean`
+
+When enabling a session with a generic policy, this flag should be set to `true`. The default is `false`. Setting this to true allows for the installation of a "fallback" action policy.
+
+### permitAdminAccess (optional)
+
+- Type: `boolean`
+
+When enabling a session with admin access, this flag should be set to `true`. The default is `false`. Setting this to true allows a session to modify itself and create other sessions.
+
+### ignoreSecurityAttestations (optional)
+
+- Type: `boolean`
+
+When enabling a session without ensuring policies are attested, this flag should be set to `true`. The default is `false`. 
+
 ## Returns
 
 ### enableSessionData.permissionEnableHash

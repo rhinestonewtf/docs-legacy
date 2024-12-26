@@ -28,6 +28,7 @@ const module = getSmartSessionsValidator({
           ],
         },
       ],
+      permitERC4337Paymaster: false,
     },
   ],
 })
@@ -40,6 +41,12 @@ const module = getSmartSessionsValidator({
 - Type: [`Session[]`](/module-sdk/glossary/types#session)
 
 List of sessions to enable in the smart sessions validator.
+
+### useRegistry (optional)
+
+- Type: `boolean`
+
+Defaults to true. When installing the module during account creation, it could be the case that the account, such as Safe7579 or Nexus, installs the module before setting their trusted attesters on the Registry. In this case, the flag should be set to false.
 
 ### hook (optional)
 

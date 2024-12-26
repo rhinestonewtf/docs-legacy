@@ -8,7 +8,10 @@ Get the action to disable ERC1271 policies for a specific session in the smart s
 const action = await getDisableERC1271PoliciesAction({
   permissionId: '0x1234...',
   policies: ['0xabcd...'],
-  contents: ['0x1234...'],
+  contents: [{
+    appDomainSeparator: '0x1234...',
+    contentName: ['abc']
+  }],
 })
 ```
 
@@ -28,9 +31,9 @@ A list of ERC1271 policies addresses.
 
 ### contents
 
-- Type: `string[]`
+- Type: `ERC7739Context[]`
 
-The list of ERC-7739 contents used by the policies.
+The list of ERC-7739 contexts used by the policies.
 
 ## Returns
 

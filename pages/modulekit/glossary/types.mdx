@@ -263,7 +263,7 @@ The data of the ERC-7739 policies.
 
 ```solidity
 struct ERC7739Data {
-    string[] allowedERC7739Content;
+    ERC7739Context[] allowedERC7739Content;
     PolicyData[] erc1271Policies;
 }
 ```
@@ -272,7 +272,7 @@ struct ERC7739Data {
 
 #### allowedERC7739Content
 
-- Type: `string[]`
+- Type: `ERC7739Context[]`
 
 An array of allowed ERC-7739 content.
 
@@ -281,6 +281,33 @@ An array of allowed ERC-7739 content.
 - Type: [`PolicyData[]`](#policydata)
 
 An array of ERC-1271 policies.
+
+## `ERC7739Context`
+
+The context of the ERC-7739 policies.
+
+### Definition
+
+```solidity
+struct ERC7739Context {
+    bytes32 appDomainSeparator;
+    string[] contentName;
+}
+```
+
+### Properties
+
+#### appDomainSeparator
+
+- Type: `bytes32`
+
+The app domain separator.
+
+#### contentName
+
+- Type: `string[]`
+
+The content names.
 
 
 ## `Execution`
@@ -385,6 +412,7 @@ struct Session {
     PolicyData[] userOpPolicies;
     ERC7739Data erc7739Policies;
     ActionData[] actions;
+    bool permitERC4337Paymaster;
 }
 ```
 
@@ -425,6 +453,12 @@ The ERC-7739 policies.
 - Type: [`ActionData[]`](#actiondata)
 
 The action policies of the session.
+
+#### permitERC4337Paymaster
+
+- Type: `bool`
+
+Whether to permit the usage of an ERC-4337 paymaster.
 
 ## `UserOpData`
 
