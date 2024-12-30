@@ -1,7 +1,7 @@
 import { Steps } from 'nextra/components'
 import { Callout } from 'nextra/components'
 
-# How to use ModuleKit to test for ERC-7579 compliance 
+# How to use ModuleKit to test for ERC-7579 compliance
 
 The ModuleKit has some helpers to automatically test for ERC-7579 compliance. Currently, we have the following checks:
 
@@ -9,7 +9,7 @@ The ModuleKit has some helpers to automatically test for ERC-7579 compliance. Cu
 
 <Steps>
 
-### Uninstall the module at the end of every test 
+### Uninstall the module at the end of every test
 
 When you write your tests, ensure that you call uninstall on the module at the end of each test.
 
@@ -19,7 +19,7 @@ instance.uninstallModule({ moduleTypeId: MODULE_TYPE_VALIDATOR, module: module, 
 
 ### Use the `withModuleStorageClearValidation` modifier
 
-To do this, add the modifier to all the tests. 
+To do this, add the modifier to all the tests.
 
 ```solidity copy
 function test_foo() public withModuleStorageClearValidation(instance, module) {...}

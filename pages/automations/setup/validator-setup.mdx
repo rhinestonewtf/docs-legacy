@@ -10,7 +10,7 @@ For this guide, we will use permissionless.js but any other account SDK can be u
 
 ### Install the packages
 
-First, install the required packages. We use the latest version of module sdk and automations  sdk, permissionless ^0.2 and viem ^2.21.
+First, install the required packages. We use the latest version of module sdk and automations sdk, permissionless ^0.2 and viem ^2.21.
 
 ```sh npm2yarn
 npm i viem @rhinestone/module-sdk @rhinestone/automations-sdk permissionless
@@ -79,9 +79,9 @@ We are also going to add the initial validator. We will use this validator to bo
 
 ```typescript copy
 const ownableValidator = getOwnableValidator({
-  owners: ["0x2DC2fb2f4F11DeE1d6a2054ffCBf102D09b62bE2", owner.address],
+  owners: ['0x2DC2fb2f4F11DeE1d6a2054ffCBf102D09b62bE2', owner.address],
   threshold: 1,
-});
+})
 ```
 
 ### Create the Safe account
@@ -97,7 +97,7 @@ const safeAccount = await toSafeSmartAccount({
     address: entryPoint07Address,
     version: '0.7',
   },
-  safe4337ModuleAddress: '0x7579EE8307284F293B1927136486880611F20002', 
+  safe4337ModuleAddress: '0x7579EE8307284F293B1927136486880611F20002',
   erc7579LaunchpadAddress: '0x7579011aB74c46090561ea277Ba79D510c6C00ff',
   attesters: [
     RHINESTONE_ATTESTER_ADDRESS, // Rhinestone Attester

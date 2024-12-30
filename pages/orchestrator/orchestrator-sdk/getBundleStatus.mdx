@@ -1,11 +1,14 @@
-# getBundleStatus 
+# getBundleStatus
 
 Get the status of a bundle, ie cross chain intents.
 
 ## Usage
 
 ```typescript copy
-const bundleStatus = await orchestrator.getBundleStatus('d6f64241-a62c-4542-bb23-e78d7e1e0cd6', bundleId)
+const bundleStatus = await orchestrator.getBundleStatus(
+  'd6f64241-a62c-4542-bb23-e78d7e1e0cd6',
+  bundleId,
+)
 ```
 
 ## Parameters
@@ -28,4 +31,4 @@ The ID of the bundle to get the status for.
 
 - Type: `Promise<BundleIdStatus>`
 
-The status of the bundle. 
+The status of the bundle.

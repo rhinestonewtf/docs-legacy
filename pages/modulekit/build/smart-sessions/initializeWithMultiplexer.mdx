@@ -8,11 +8,11 @@ A virtual function called when the session is created. Overwrites from `ERC7579P
 function initializeWithMultiplexer(
         address account,
         ConfigId id,
-        bytes calldata initData 
+        bytes calldata initData
     )
         external
         virtual {
-    // set any configuration needed for the policy 
+    // set any configuration needed for the policy
 }
 ```
 
@@ -24,13 +24,13 @@ function initializeWithMultiplexer(
 
 The address of the account that is using smart sessions.
 
-### id 
+### id
 
 - Type: `ConfigId | bytes32`
 
 The id of the configuration that is part of the session.
 
-### initData 
+### initData
 
 - Type: `bytes`
 

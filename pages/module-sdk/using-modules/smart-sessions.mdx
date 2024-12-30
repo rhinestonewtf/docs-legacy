@@ -19,6 +19,26 @@ npm i viem @rhinestone/module-sdk permissionless
 ### Import the required functions and constants
 
 ```typescript copy
+import { getAccountNonce } from 'permissionless/actions'
+import { createSmartAccountClient } from 'permissionless'
+import { toSafeSmartAccount } from 'permissionless/accounts'
+import { erc7579Actions } from 'permissionless/actions/erc7579'
+import { createPimlicoClient } from 'permissionless/clients/pimlico'
+import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts'
+import {
+  toHex,
+  Address,
+  Hex,
+  createPublicClient,
+  http,
+  Chain,
+  toBytes,
+} from 'viem'
+import {
+  entryPoint07Address,
+  getUserOperationHash,
+  createPaymasterClient,
+} from 'viem/account-abstraction'
 import {
   getSmartSessionsValidator,
   OWNABLE_VALIDATOR_ADDRESS,
@@ -33,27 +53,7 @@ import {
   getOwnableValidator,
   encodeValidationData,
   getEnableSessionDetails,
-} from "@rhinestone/module-sdk";
-import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
-import {
-  toHex,
-  Address,
-  Hex,
-  createPublicClient,
-  http,
-  Chain,
-  toBytes,
-} from "viem";
-import { createSmartAccountClient } from "permissionless";
-import { erc7579Actions } from "permissionless/actions/erc7579";
-import { createPimlicoClient } from "permissionless/clients/pimlico";
-import {
-  entryPoint07Address,
-  getUserOperationHash,
-  createPaymasterClient,
-} from "viem/account-abstraction";
-import { toSafeSmartAccount } from "permissionless/accounts";
-import { getAccountNonce } from "permissionless/actions";
+} from '@rhinestone/module-sdk'
 ```
 
 ### Create the clients
@@ -113,7 +113,7 @@ const safeAccount = await toSafeSmartAccount({
     address: entryPoint07Address,
     version: '0.7',
   },
-  safe4337ModuleAddress: '0x7579EE8307284F293B1927136486880611F20002', 
+  safe4337ModuleAddress: '0x7579EE8307284F293B1927136486880611F20002',
   erc7579LaunchpadAddress: '0x7579011aB74c46090561ea277Ba79D510c6C00ff',
   attesters: [
     RHINESTONE_ATTESTER_ADDRESS, // Rhinestone Attester

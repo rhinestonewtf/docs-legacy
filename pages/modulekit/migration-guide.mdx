@@ -4,7 +4,7 @@
 
 This migration guide assumes you have already migrated to `^0.4.0` and are now migrating to `^0.5.0`.
 
-### Integrated `module-bases` 
+### Integrated `module-bases`
 
 The [module-bases](https://github.com/rhinestonewtf/module-bases) repository has been integrated within ModuleKit and is no longer required as a dependency. You should:
 
@@ -16,9 +16,10 @@ The [module-bases](https://github.com/rhinestonewtf/module-bases) repository has
 + import { ERC7579ValidatorBase } from "modulekit/module-bases/ERC7579ValidatorBase.sol"
 ```
 
-### Deprecated Account Dependencies 
+### Deprecated Account Dependencies
 
 Dependencies to the following smart account repositories have been removed:
+
 - [safe7579](https://github.com/rhinestonewtf/safe7579)
 - [erc7579 reference implementation](https://github.com/erc7579/erc7579-implementation)
 - [kernel](https://github.com/zerodevapp/kernel)
@@ -49,7 +50,8 @@ All contracts imported from the ERC7579 reference implementation have been remov
 ```
 
 Major interfaces now imported:
-- `IERC7579Account` (common ERC7579 interface)  
+
+- `IERC7579Account` (common ERC7579 interface)
 - `IMSA` (ERC7579 reference implementation)
 - `IKernelAccount` (Kernel)
 - `ISafe7579` (Safe7579)
@@ -64,14 +66,15 @@ Major interfaces now imported:
 
 ```diff
 - import { sign } from "./external/Vm.sol"
-+ import { ecdsaSign } from "./test/utils/ECDSA.sol" 
++ import { ecdsaSign } from "./test/utils/ECDSA.sol"
 ```
 
 ### Changed `src/Interface.sol`, `src/Mocks.sol`, `src/Modules.sol`
 
 Since module-bases is now integrated, the imports in these files come from local files:
+
 - `src/Interfaces.sol`
-- `src/Mocks.sol` 
+- `src/Mocks.sol`
 - `src/Modules.sol`
 
 If you are using module-bases as an external dependency in conjunction with ModuleKit, this could cause compiler issues. We recommend removing the module-bases dependency and only using ModuleKit.

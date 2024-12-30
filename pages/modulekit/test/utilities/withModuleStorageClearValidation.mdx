@@ -1,4 +1,4 @@
-# withModuleStorageClearValidation 
+# withModuleStorageClearValidation
 
 Ensure that the module storage is cleared correctly when a module is uninstalled. Note that you will also need to set the flag `COMPLIANCE=true` when running the test command, such as `forge test`.
 
@@ -10,7 +10,7 @@ function test_withModuleStorageClearValidation()
   withModuleStorageClearValidation(instance, module)
 {
   module = address(new MockK1Validator());
-  
+
   instance.installModule({
     moduleTypeId: MODULE_TYPE_VALIDATOR,
     module: module,
@@ -29,7 +29,7 @@ function test_withModuleStorageClearValidation()
 
 The instance of the account used for testing.
 
-### module 
+### module
 
 - Type: `address`
 

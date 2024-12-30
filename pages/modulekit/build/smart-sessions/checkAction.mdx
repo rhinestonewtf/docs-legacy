@@ -1,4 +1,4 @@
-# checkAction 
+# checkAction
 
 A virtual function called when the session is being used to verify the individual calls of a UserOperation. Overwrites from `ERC7579ActionPolicy`.
 
@@ -10,7 +10,7 @@ function checkAction(
         address account,
         address target,
         uint256 value,
-        bytes calldata data 
+        bytes calldata data
     )
         external
         view
@@ -22,7 +22,7 @@ function checkAction(
 
 ## Parameters
 
-### id 
+### id
 
 - Type: `ConfigId | bytes32`
 
@@ -54,7 +54,7 @@ The calldata of the transaction.
 
 ## Returns
 
-### validationData 
+### validationData
 
 - Type: `uint256`
 

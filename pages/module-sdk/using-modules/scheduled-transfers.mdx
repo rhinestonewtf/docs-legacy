@@ -1,6 +1,6 @@
 import { Steps } from 'nextra/components'
 
-# How to use scheduled transfers with the Automations SDK 
+# How to use scheduled transfers with the Automations SDK
 
 The Scheduled Transfers Executor allows users to schedule token transfers that are executed at set intervals. Using [Rhinestone Automations](/automations), these transfers will be executed automatically, securely and without giving up custody of the account or assets. This guide will walk you through installing and using scheduled transfers.
 
@@ -10,7 +10,7 @@ You will need to set up the smart account, install the scheduled transfers modul
 
 ### Install the packages
 
-First, install the required packages. We use the latest version of module sdk and automations  sdk, permissionless ^0.2 and viem ^2.21.
+First, install the required packages. We use the latest version of module sdk and automations sdk, permissionless ^0.2 and viem ^2.21.
 
 ```sh npm2yarn
 npm i viem @rhinestone/module-sdk @rhinestone/automations-sdk permissionless
@@ -19,6 +19,24 @@ npm i viem @rhinestone/module-sdk @rhinestone/automations-sdk permissionless
 ### Import the required functions and constants
 
 ```typescript copy
+import { createSmartAccountClient } from 'permissionless'
+import { toSafeSmartAccount } from 'permissionless/accounts'
+import { erc7579Actions } from 'permissionless/actions/erc7579'
+import { createAutomationClient } from '@rhinestone/automations-sdk'
+import { createPimlicoClient } from 'permissionless/clients/pimlico'
+import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts'
+import {
+  createPaymasterClient,
+  entryPoint07Address,
+} from 'viem/account-abstraction'
+import {
+  Address,
+  Chain,
+  createPublicClient,
+  encodeFunctionData,
+  http,
+  parseAbi,
+} from 'viem'
 import {
   RHINESTONE_ATTESTER_ADDRESS,
   MOCK_ATTESTER_ADDRESS,
@@ -30,25 +48,7 @@ import {
   encode1271Signature,
   getAccount,
   encode1271Hash,
-} from "@rhinestone/module-sdk";
-import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
-import {
-  Address,
-  Chain,
-  createPublicClient,
-  encodeFunctionData,
-  http,
-  parseAbi,
-} from "viem";
-import { createSmartAccountClient } from "permissionless";
-import { erc7579Actions } from "permissionless/actions/erc7579";
-import { createPimlicoClient } from "permissionless/clients/pimlico";
-import {
-  createPaymasterClient,
-  entryPoint07Address,
-} from "viem/account-abstraction";
-import { toSafeSmartAccount } from "permissionless/accounts";
-import { createAutomationClient } from "@rhinestone/automations-sdk";
+} from '@rhinestone/module-sdk'
 ```
 
 ### Create the clients
@@ -90,9 +90,9 @@ We are also going to add the initial validator. We will use this validator to bo
 
 ```typescript copy
 const ownableValidator = getOwnableValidator({
-  owners: ["0x2DC2fb2f4F11DeE1d6a2054ffCBf102D09b62bE2", owner.address],
+  owners: ['0x2DC2fb2f4F11DeE1d6a2054ffCBf102D09b62bE2', owner.address],
   threshold: 1,
-});
+})
 ```
 
 ### Create the Safe account
@@ -108,7 +108,7 @@ const safeAccount = await toSafeSmartAccount({
     address: entryPoint07Address,
     version: '0.7',
   },
-  safe4337ModuleAddress: '0x7579EE8307284F293B1927136486880611F20002', 
+  safe4337ModuleAddress: '0x7579EE8307284F293B1927136486880611F20002',
   erc7579LaunchpadAddress: '0x7579011aB74c46090561ea277Ba79D510c6C00ff',
   attesters: [
     RHINESTONE_ATTESTER_ADDRESS, // Rhinestone Attester
@@ -149,21 +149,21 @@ First, we will create the scheduled transfer before adding this to both the modu
 We will create a scheduled transfer to send 1 usdc every 60 seconds for two times and with the defined recipient address.
 
 ```typescript copy
-const executeInterval = 60; // in seconds
-const numberOfExecutions = 2;
-const startDate = Date.now(); // UNIX timestamp
+const executeInterval = 60 // in seconds
+const numberOfExecutions = 2
+const startDate = Date.now() // UNIX timestamp
 
 const scheduledTransfer = {
   startDate: startDate,
   repeatEvery: executeInterval,
   numberOfRepeats: numberOfExecutions,
   token: {
-    token_address: "0x8034e69FAFEd6588cc36ff3400AFE5c049a3B92E" as Address, // Mock USDC
+    token_address: '0x8034e69FAFEd6588cc36ff3400AFE5c049a3B92E' as Address, // Mock USDC
     decimals: 6,
   },
   amount: 1,
-  recipient: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045" as Address,
-};
+  recipient: '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045' as Address,
+}
 ```
 
 ### Install the scheduled transfer module
@@ -171,23 +171,22 @@ const scheduledTransfer = {
 Next, we will install the scheduled transfer module. This module will store all our scheduled transfers and make sure that they can only be executed when the scheduled is met.
 
 ```typescript copy
-  const executionData = getScheduledTransferData({
-    scheduledTransfer,
-  });
+const executionData = getScheduledTransferData({
+  scheduledTransfer,
+})
 
-  const scheduledTransfers = getScheduledTransfersExecutor({
-    executeInterval,
-    numberOfExecutions,
-    startDate,
-    executionData,
-  });
+const scheduledTransfers = getScheduledTransfersExecutor({
+  executeInterval,
+  numberOfExecutions,
+  startDate,
+  executionData,
+})
 
-  const opHash = await smartAccountClient.installModule(scheduledTransfers);
+const opHash = await smartAccountClient.installModule(scheduledTransfers)
 
-  await pimlicoClient.waitForUserOperationReceipt({
-    hash: opHash,
-  });
-
+await pimlicoClient.waitForUserOperationReceipt({
+  hash: opHash,
+})
 ```
 
 ### Mint the mock tokens
@@ -195,111 +194,109 @@ Next, we will install the scheduled transfer module. This module will store all 
 In this tutorial, we use a Mock USDC token for demonstration purposes. We will now mint some tokens to the created smart account in order to be able to transfer them.
 
 ```typescript copy
-  await smartAccountClient.sendTransaction({
-    to: scheduledTransfer.token.token_address,
-    data: encodeFunctionData({
-      abi: parseAbi(["function mint(address to, uint256 amount) external"]),
-      functionName: "mint",
-      args: [safeAccount.address, BigInt(10)],
-    }),
-  });
+await smartAccountClient.sendTransaction({
+  to: scheduledTransfer.token.token_address,
+  data: encodeFunctionData({
+    abi: parseAbi(['function mint(address to, uint256 amount) external']),
+    functionName: 'mint',
+    args: [safeAccount.address, BigInt(10)],
+  }),
+})
 ```
 
-  ### Get the automation client
+### Get the automation client
 
-  Next, we will create the automation client using the Automations SDK. This client will be used to interact with the automations service.
+Next, we will create the automation client using the Automations SDK. This client will be used to interact with the automations service.
 
-  To use this client, we will pass our api key as well as the validator we use, the account address and type and the network, in this case sepolia.
+To use this client, we will pass our api key as well as the validator we use, the account address and type and the network, in this case sepolia.
 
-  ```typescript copy
-  const automationClient = createAutomationClient({
-    account: safeAccount.address,
-    accountType: "SAFE",
-    apiKey: automationsApiKey,
-    accountInitCode: "0x",
-    network: 11155111,
-    validator: OWNABLE_VALIDATOR_ADDRESS,
-  });
-  ```
+```typescript copy
+const automationClient = createAutomationClient({
+  account: safeAccount.address,
+  accountType: 'SAFE',
+  apiKey: automationsApiKey,
+  accountInitCode: '0x',
+  network: 11155111,
+  validator: OWNABLE_VALIDATOR_ADDRESS,
+})
+```
 
-  ### Create the automation
+### Create the automation
 
-  Next, we will create the automation on the automation service. This matches what is stored on the module and will allow the automation service to trigger the automations at the right times and with the required calldata.
+Next, we will create the automation on the automation service. This matches what is stored on the module and will allow the automation service to trigger the automations at the right times and with the required calldata.
 
-  ```typescript copy
-  const executeScheduledTranferAction = getExecuteScheduledTransferAction({
-    jobId: 0, // since this is our first automation on the module
-  });
+```typescript copy
+const executeScheduledTranferAction = getExecuteScheduledTransferAction({
+  jobId: 0, // since this is our first automation on the module
+})
 
-  const actions = [
-    {
-      type: "static" as const,
-      target: executeScheduledTranferAction.target,
-      value: Number(executeScheduledTranferAction.value),
-      callData: executeScheduledTranferAction.callData,
+const actions = [
+  {
+    type: 'static' as const,
+    target: executeScheduledTranferAction.target,
+    value: Number(executeScheduledTranferAction.value),
+    callData: executeScheduledTranferAction.callData,
+  },
+]
+
+const triggerData = {
+  cronExpression: '* * * * *',
+  startDate: startDate,
+}
+
+const automation = await automationClient.createAutomation({
+  type: 'time-based',
+  data: {
+    trigger: {
+      triggerData,
     },
-  ];
+    actions,
+    maxNumberOfExecutions: numberOfExecutions,
+  },
+})
+```
 
-  const triggerData = {
-    cronExpression: "* * * * *",
-    startDate: startDate,
-  };
+### Activate the automation
 
-  const automation = await automationClient.createAutomation({
-    type: "time-based",
-    data: {
-      trigger: {
-        triggerData,
-      },
-      actions,
-      maxNumberOfExecutions: numberOfExecutions,
-    },
-  });
-  ```
+Our automation has now been created but is not active yet. The reason for this is that anyone could create an automation on behalf of other smart accounts. To prevent this, we require a signature from the smart account to verify that the owner actually wants to create this automation.
 
-  ### Activate the automation
-
-  Our automation has now been created but is not active yet. The reason for this is that anyone could create an automation on behalf of other smart accounts. To prevent this, we require a signature from the smart account to verify that the owner actually wants to create this automation.
-
-  ```typescript copy
+```typescript copy
 const account = getAccount({
-    address: safeAccount.address,
-    type: "safe",
-  });
+  address: safeAccount.address,
+  type: 'safe',
+})
 
-  const formattedHash = encode1271Hash({
-    account,
-    validator: OWNABLE_VALIDATOR_ADDRESS,
-    chainId: chain.id,
-    hash: automation.hash,
-  });
+const formattedHash = encode1271Hash({
+  account,
+  validator: OWNABLE_VALIDATOR_ADDRESS,
+  chainId: chain.id,
+  hash: automation.hash,
+})
 
-  const signature = await owner.signMessage({
-    message: { raw: formattedHash },
-  });
+const signature = await owner.signMessage({
+  message: { raw: formattedHash },
+})
 
-  const formattedSignature = encode1271Signature({
-    account,
-    validator: OWNABLE_VALIDATOR_ADDRESS,
-    signature,
-  });
+const formattedSignature = encode1271Signature({
+  account,
+  validator: OWNABLE_VALIDATOR_ADDRESS,
+  signature,
+})
 
-  await automationClient.signAutomation({
-    automationId: automation.id,
-    signature: formattedSignature,
-  });
+await automationClient.signAutomation({
+  automationId: automation.id,
+  signature: formattedSignature,
+})
 ```
 
 ### Wait for the automations
 
-  Finally our automation is created and activated. We can now wait for them to happen, such as with a timeout. Then, we can query the logs to see all our executed automations.
+Finally our automation is created and activated. We can now wait for them to happen, such as with a timeout. Then, we can query the logs to see all our executed automations.
 
-  ```typescript copy
-await new Promise((resolve) => setTimeout(resolve, 10000));
+```typescript copy
+await new Promise((resolve) => setTimeout(resolve, 10000))
 
-  const automationLogs = await automationClient.getAutomationLogs(
-    automation.id,
-  );
+const automationLogs = await automationClient.getAutomationLogs(automation.id)
 ```
 
 </Steps>
