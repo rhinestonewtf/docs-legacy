@@ -31,13 +31,13 @@ const userOpSignature = encodeSmartSessionSignature(sessionDetails)
 
 ### sessions
 
-- Type: [`Session[]`](/module-sdk/glossary/types#session)
+- Type: [`Session[]`](/module-sdk/glossary/types.mdx#session)
 
 An array of sessions to enable. Note that these can be on multiple chains. A user will sign over this array once and when enabling the session on each chain, the index pointing to the right session to enable out of this array will be provided.
 
 ### account
 
-- Type: [`Account`](/module-sdk/glossary/types#account)
+- Type: [`Account`](/module-sdk/glossary/types.mdx#account)
 
 The account to enable the session for.
 
@@ -56,7 +56,7 @@ When enabling more than one session and the session to enable on this particular
 
 ### enableMode (optional)
 
-- Type: [`SmartSessionMode`](/module-sdk/glossary/types#smartsessionmode)
+- Type: [`SmartSessionMode`](/module-sdk/glossary/types.mdx#smartsessionmode)
 
 The mode of the smart session, in this case either `ENABLE` OR `UNSAFE_ENABLE`. The default is `ENABLE`.
 
@@ -94,7 +94,7 @@ The hash to sign with a validator on the account in order to enable the session.
 
 ### enableSessionData.mode
 
-- Type: [`SmartSessionMode`](/module-sdk/glossary/types#smartsessionmode)
+- Type: [`SmartSessionMode`](/module-sdk/glossary/types.mdx#smartsessionmode)
 
 The mode of the smart session, in this case `Enable`.
 
@@ -118,13 +118,13 @@ The index of the chain digest to use for the session.
 
 ### enableSessionData.enableSessionData.enableSession.hashesAndChainIds
 
-- Type: [`ChainDigest[]`](/module-sdk/glossary/types#chaindigest)
+- Type: [`ChainDigest[]`](/module-sdk/glossary/types.mdx#chaindigest)
 
 The chain digests to use for the session.
 
 ### enableSessionData.enableSessionData.enableSession.sessionToEnable
 
-- Type: [`Session`](/module-sdk/glossary/types#session)
+- Type: [`Session`](/module-sdk/glossary/types.mdx#session)
 
 The session to enable in this specific UserOperation.
 
@@ -142,6 +142,6 @@ The address of the validator to use for the session. This is used to verify the 
 
 ### enableSessionData.enableSessionData.accountType
 
-- Type: [`AccountType`](/module-sdk/glossary/types#accounttype)
+- Type: [`AccountType`](/module-sdk/glossary/types.mdx#accounttype)
 
 The type of the account to enable the session for. This is required since accounts format the signature differently.
