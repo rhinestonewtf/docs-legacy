@@ -68,10 +68,6 @@
       "orchestrator": {
         "title": "Orchestrator",
         "href": "/orchestrator"
-      },
-      "automations": {
-        "title": "Automations",
-        "href": "/automations"
       }
     }
   },
@@ -87,11 +83,6 @@
   },
   "orchestrator": {
     "title": "Orchestrator",
-    "type": "page",
-    "display": "hidden"
-  },
-  "automations": {
-    "title": "Automations",
     "type": "page",
     "display": "hidden"
   }
