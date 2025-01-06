@@ -17,8 +17,8 @@ pragma solidity ^0.8.23;
 import { ERC7579ValidatorBase } from "modulekit/Modules.sol";
 import { PackedUserOperation } from "modulekit/external/ERC4337.sol";
 
-import { SignatureCheckerLib } from "solady/src/utils/SignatureCheckerLib.sol";
-import { ECDSA } from "solady/src/utils/ECDSA.sol";
+import { SignatureCheckerLib } from "solady/utils/SignatureCheckerLib.sol";
+import { ECDSA } from "solady/utils/ECDSA.sol";
 
 contract MultiOwnerValidator is ERC7579ValidatorBase {}
 ```
@@ -237,7 +237,7 @@ import {
 } from "modulekit/ModuleKit.sol";
 import { MODULE_TYPE_VALIDATOR } from "modulekit/external/ERC7579.sol";
 import { MultiOwnerValidator } from "src/MultiOwnerValidator.sol";
-import { ECDSA } from "solady/src/utils/ECDSA.sol";
+import { ECDSA } from "solady/utils/ECDSA.sol";
 
 contract MultiOwnerValidatorTest is RhinestoneModuleKit, Test {}
 ```
