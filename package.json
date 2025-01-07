@@ -11,7 +11,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "prettier:write": "prettier --write ."
+    "prettier:write": "prettier --write .",
+    "check:links": "lychee . -v --base ./pages/ --fallback-extensions mdx --include-fragments"
   },
   "dependencies": {
     "clsx": "^2.1.0",
