@@ -5,49 +5,57 @@ Get the encoded signature for the WebAuthn validator.
 ## Usage
 
 ```typescript copy
-const signature = getWebauthnValidatorSignature({
-  authenticatorData: '0x123...',
-  clientDataJSON: '{data:...}',
-  responseTypeLocation: 0,
-  r: 10,
-  s: 5,
+const webauthn = {
+  authenticatorData: toHex('authenticatorData'),
+  clientDataJSON: 'clientDataHash',
+  typeIndex: 0,
+}
+
+const signature = {
+  r: 10n,
+  s: 5n,
+}
+
+const validatorSignature = getWebauthnValidatorSignature({
+  webauthn,
+  signature,
   usePrecompiled: true,
 })
 ```
 
 ## Parameters
 
-### authenticatorData
+### webauthn.authenticatorData
 
 - Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
 
 The authenticator data formatted as a hex string.
 
-### clientDataJSON
+### webauthn.clientDataJSON
 
 - Type: `string`
 
 The JSON object of the client data that was signed.
 
-### responseTypeLocation
+### webauthn.typeIndex
 
 - Type: `number`
 
 The location of the response type in the client data JSON.
 
-### r
+### signature.r
 
 - Type: `number`
 
 The `r` value of the signature.
 
-### s
+### signature.s
 
 - Type: `number`
 
 The `s` value of the signature.
 
-### usePrecompiled
+### usePrecompiled (optional)
 
 - Type: `boolean`
 

@@ -16,17 +16,11 @@ const module = getWebAuthnValidator({
 
 ## Parameters
 
-### webAuthnCredential.pubKeyX
+### webAuthnCredential.pubKey
 
-- Type: `number`
+- Type: `PublicKey | Hex | Uint8Array`
 
-The x-coordinate of the public key.
-
-### webAuthnCredential.pubKeyY
-
-- Type: `number`
-
-The y-coordinate of the public key.
+Either the hex string, a `Uint8Array` or the public key object, which consists of `x`, `y` and an optional `prefix`.
 
 ### webAuthnCredential.authenticatorId
 
