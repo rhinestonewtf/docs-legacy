@@ -21,10 +21,25 @@ npm i viem @rhinestone/module-sdk permissionless
 ```typescript copy
 import { createSmartAccountClient } from 'permissionless'
 import { toSafeSmartAccount } from 'permissionless/accounts'
-import { createPublicClient, http, encodePacked } from 'viem'
+import {
+  Account,
+  Address,
+  Chain,
+  createPublicClient,
+  encodeFunctionData,
+  Hex,
+  http,
+  parseAbi,
+  toBytes,
+  toHex,
+  Transport,
+  zeroAddress,
+} from "viem";
 import { erc7579Actions } from 'permissionless/actions/erc7579'
 import { createPimlicoClient } from 'permissionless/clients/pimlico'
-import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts'
+import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
+import { signAuthorization } from "viem/experimental";
+import { writeContract } from "viem/actions";
 import {
   createPaymasterClient,
   entryPoint07Address,
