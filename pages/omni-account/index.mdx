@@ -8,7 +8,7 @@ import { Cards, Card } from 'nextra-theme-docs'
 
 The strategy to scale Ethereum horizontally has fragmented liquidity and the application layer across many L2s. This introduces a new UX challenge: Users must know about the underlying networks and how to access and utilize their assets.
 
-Ethereum’s transition to Smart Accounts to improve UX with features like gas abstraction and batching has also had adverse side effects regarding cross-chain UX. Specifically, it introduces problems with smart contract state sync in the account layer. Unlike EOAs, Smart Accounts are not guaranteed the same address across different EVM chains, and their configuration is not natively synced between L2s.
+Ethereum’s [transition](https://vitalik.eth.limo/general/2023/06/09/three_transitions.html) to Smart Accounts to improve UX with features like gas abstraction and batching has also had adverse side effects regarding cross-chain UX. Specifically, it introduces problems with smart contract state sync in the account layer. Unlike EOAs, Smart Accounts are not guaranteed the same address across different EVM chains, and their configuration is not natively synced between L2s.
 
 Omni Account is the answer to Ethereum’s fragmented liquidity and account layer. It provides developers with a complete Chain Abstraction stack, including balance abstraction, cross-chain key management, and module config sync.  
 
@@ -23,7 +23,7 @@ Omni Account consists of two core components: 1) the **Resource Lock Hook** to e
 ## Key Features
 
 - **Instant and atomic cross-chain intents. No bridge. No gas.** All cross-chain transactions from an Omni Account are propagated to a solver network to complete these actions on behalf of the user. 
-- **Supports EIP-7702 for chain abstracting EOAs.** Data structures and interfaces natively support The Compact, an open-source escrow contract for cross-chain intents, enabling EIP-7702 support.
+- **Supports EIP-7702 for chain abstracting EOAs.** Data structures and interfaces natively support [The Compact](https://github.com/Uniswap/the-compact), an open-source escrow contract for cross-chain intents, enabling EIP-7702 support.
 - **Any arbitrary calldata can be appended to the cross-chain intent.** This enables destination chain userops or any other smart contract interaction to be bundled into one atomic cross-chain intent. 
 - **Intent atomicity and deterministic token transfers.** Token transfers to the destination chain have a deterministic output, allowing batched executions to be appended to the transfer with guaranteed and atomic completion. 
 - **Solver-based swaps.** A solver-based swap fills the intent if the destination chain output token differs from the origin chain input token. If the swap token is unsupported, destination chain swaps through an injected execution provide a fallback.
@@ -44,10 +44,10 @@ Play with the demo to experience instant cross-chain swaps between Arbitrum and 
 ## Components
 
 - **Smart Account:** Initially supporting Safe, Biconomy’s Nexus, and Magic’s Newton.
-- **Omni Account Modules:** A set of ERC-7579 modules that enforce resource locks and set verifiable execution pathways for the Orchestrator to the integrated Settlement Layers.
-- **Orchestrator:** An offchain entity that tracks ongoing intents to ensure locked funds cannot be double spent.
-- **Solver Network:** Integrated solvers who manage inventory, fill executions and settle via the integrated Settlement Layers.
-- **Settlement Layer:** An execution layer with sophisticated actors performing executions on the user’s behalf.
+- [**Omni Account](/omni-account/architecture/omni-account) Modules:** A set of ERC-7579 modules that enforce resource locks and set verifiable execution pathways for the Orchestrator to the integrated Settlement Layers.
+- [**Orchestrator:**](/omni-account/architecture/orchestrator) An offchain entity that tracks ongoing intents to ensure locked funds cannot be double spent.
+- [**Solver Network:**](/omni-account/architecture/solvers) Integrated solvers who manage inventory, fill executions and settle via the integrated Settlement Layers.
+- [**Settlement Layer:**](/omni-account/architecture/settlement-layer) An execution layer with sophisticated actors performing executions on the user’s behalf.
 
 ## Vision for Omni Account
 
@@ -55,4 +55,4 @@ Play with the demo to experience instant cross-chain swaps between Arbitrum and 
 
 From debit card integrations to offchain order books, Omni Account’s architecture is designed to make resource locks fully open and composable to any developer. One single balance with infinite possibilities—everything **everywhere, all at once.** 
 
-The underlying substrate between these application-specific Orchestrators, of which Chain Abstraction is one, is a single source of truth for intents in flight and the sequencing. If you’re interested in learning more and becoming a design partner for the Orchestration Layer, please reach out.
+The underlying substrate between these application-specific Orchestrators, of which Chain Abstraction is one, is a single source of truth for intents in flight and the sequencing. If you’re interested in learning more and becoming a design partner for the Orchestration Layer, [please reach out](mailto:kurt@rhinestone.wtf).

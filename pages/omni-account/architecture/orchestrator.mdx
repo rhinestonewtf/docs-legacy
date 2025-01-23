@@ -2,7 +2,7 @@
 
 The Orchestrator acts as a trusted entity to enforce resource locks. It listens to user intents, propagates them to a solver network, creates resource lock allocations for counterparties (e.g., the Across Relayers), and facilitates the claim process via the chosen settlement layer (e.g., Across).
 
-The Orchestrator is **trustless from the end user’s perspective**. It can only interact with the Smart Account via the Settlement Executors, providing onchain verifiable execution paths. The Settlement Executors utilize the Across Protocol as the sole settlement layer, inheriting Across’ battle-tested optimistic proof system.
+The Orchestrator is **trustless from the end user’s perspective**. It can only interact with the Smart Account via the [Settlement Executors](/omni-account/architecture/settlement-layer), providing onchain verifiable execution paths. The Settlement Executors utilize the Across Protocol as the sole settlement layer, inheriting Across’ battle-tested optimistic proof system.
 
 The Orchestrator does not present a liveness and censorship risk to users. An onchain escape hatch can be activated through an onchain call without a dependency on Rhinestone or the Orchestrator.
 
@@ -25,4 +25,4 @@ The Orchestrator does not present a liveness and censorship risk to users. An on
 
 The Orchestrator only co-signs transactions involving locked funds (unlike a co-signer approach that requires signing every Smart Account interaction), making the system significantly more straightforward to operate and maintain. This reduced complexity creates a more efficient path toward solving the second challenge of verifiably correct sequencing and security checks. The Orchestrator has been built in Rust, and zkVM is being explored to provide a verifiable and trusted computing environment. Our mission is to make the Orchestration layer open and permissionless, and we’ll be publishing research and diving into this with early partners building on resource locks.
 
-Please reach out if you’re interested in becoming an Orchestration Layer design partner.
+Please reach out if you’re interested in becoming an [Orchestration Layer design partner](mailto:kurt@rhinestone.wtf).
