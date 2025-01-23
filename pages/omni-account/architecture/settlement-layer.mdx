@@ -1,0 +1,15 @@
+# Settlement Layer 
+
+## Why Across?
+
+- **Existing Solver Network and Liquidity**: Across has a mature marketplace of solvers (or Relayers) that can be used to scale this new form of cross-chain intents.
+- **Integrated Solver Netting**: Across supports automatic solver netting by allowing fillers to claim funds using liquidity provider (LP) funds on any chain. LP yields are regulated based on the net assets entering and leaving a chain, ensuring efficient use of available liquidity.
+- **Trustless Settlement Process**: Across already has a mature infrastructure that utilizes optimistic proofs to secure the settlement process in a trustless way. 
+- **Support for Arbitrary Calls on Target Chain**: Across allows intents to encode message data with the fill transaction, which can be used to make arbitrary calls on the target chain. Our system uses this feature to call the appropriate functions on the user’s target chain Smart Account. It also allows the solvers to provide gas abstraction services and act as independent ERC-4337 bundlers (if the call is made to an entrypoint contract). 
+- **Exclusive Relayers**: Across allows intents to specify exclusive relayers while depositing. This allows our system to use any preferred solver auction while benefiting from exclusive relayers. We can select our solvers through our auction process while leveraging Across for settlement. This flexibility ensures that we maintain control over the selection of solvers while benefiting from Across’ robust settlement infrastructure.
+
+For more details on Across, [visit their docs](https://docs.across.to/introduction/what-is-across).
+
+## Future Settlement Layers
+
+Omni Account can support multiple Settlement Layers per Resource-Locked balance. If you operate a Settlement Layer and are looking for a partner in the Permission Layer, please contact us. 

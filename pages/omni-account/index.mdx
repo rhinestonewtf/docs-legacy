@@ -1,0 +1,58 @@
+import Image from 'next/image'
+import { Callout } from 'nextra/components'
+import { Cards, Card } from 'nextra-theme-docs'
+
+# Omni Account 
+
+## Why Omni Account?
+
+The strategy to scale Ethereum horizontally has fragmented liquidity and the application layer across many L2s. This introduces a new UX challenge: Users must know about the underlying networks and how to access and utilize their assets.
+
+Ethereum’s transition to Smart Accounts to improve UX with features like gas abstraction and batching has also had adverse side effects regarding cross-chain UX. Specifically, it introduces problems with smart contract state sync in the account layer. Unlike EOAs, Smart Accounts are not guaranteed the same address across different EVM chains, and their configuration is not natively synced between L2s.
+
+Omni Account is the answer to Ethereum’s fragmented liquidity and account layer. It provides developers with a complete Chain Abstraction stack, including balance abstraction, cross-chain key management, and module config sync.  
+
+## What is it?
+
+Omni Account is a system that employs Smart Account Modules to chain abstract ERC-7579-compliant Smart Accounts. It supports the Safe, Nexus, and Magic’s Newton, with more account implementations coming.
+
+At launch, Omni Account will offer balance abstraction through cross-chain intents built on Across as the settlement layer. This will transform the user’s assets into one unified balance that can be instantly spent on any chain. 
+
+Omni Account consists of two core components: 1) the **Resource Lock Hook** to enable irrevocable onchain guarantees to offchain entities through a single signature, and 2) the **Orchestrator**, an offchain entity that sequences transactions and ensures users cannot break their onchain guarantees.
+
+## Key Features
+
+- **Instant and atomic cross-chain intents. No bridge. No gas.** All cross-chain transactions from an Omni Account are propagated to a solver network to complete these actions on behalf of the user. 
+- **Supports EIP-7702 for chain abstracting EOAs.** Data structures and interfaces natively support The Compact, an open-source escrow contract for cross-chain intents, enabling EIP-7702 support.
+- **Any arbitrary calldata can be appended to the cross-chain intent.** This enables destination chain userops or any other smart contract interaction to be bundled into one atomic cross-chain intent. 
+- **Intent atomicity and deterministic token transfers.** Token transfers to the destination chain have a deterministic output, allowing batched executions to be appended to the transfer with guaranteed and atomic completion. 
+- **Solver-based swaps.** A solver-based swap fills the intent if the destination chain output token differs from the origin chain input token. If the swap token is unsupported, destination chain swaps through an injected execution provide a fallback.
+- **M-to-1 chains to destination chain and M-to-n input tokens to output tokens.** Use an arbitrary number of origin chains and tokens to fund a single intent on a single destination chain. 
+- **Supports same-chain intents, a faster and cheaper alternative to ERC-4337.** Use Omni Account's underlying intent system to perform same-chain intents with solvers sponsoring gas and performing swaps. 
+- **Lazy deployment to enable cross-chain intents even if the user has no account on the target chain.** Omni Account is “everything everywhere all at once” for the user. In the background, Rhinestone’s infrastructure abstracts away the complexity of executing transactions on new chains whilst ensuring assets moved to the new chain are instantly spendable on any other chain.
+
+Core Propositions of Omni Account
+
+- **Account-native resource locking with no asset separation.** Rhinestone uses the Resource Lock Hook to enable onchain guarantees without the user first transferring to a new contract. This ensures compatibility with existing token primitives for balance tracking, yield, rebasing, and airdrop payouts.
+- **Trustless and completely self-custodial.** The user has complete control over their funds at all times, with minimized liveness or censorship threat due to our unique onchain design that is true to the philosophy behind Smart Accounts. 
+- **Composable and interoperable**: Omni Account’s approach to resource locking is minimal in terms of how it affects the functionality of Modular Smart Accounts. Add existing Smart Account Modules or build your own to level up your Omni Account to your needs. 
+
+Check out our blog for a deeper understanding of our Resource Lock Hook Module. 
+
+Play with the demo to experience instant cross-chain swaps between Arbitrum and Base.
+
+## Components
+
+- **Smart Account:** Initially supporting Safe, Biconomy’s Nexus, and Magic’s Newton.
+- **Omni Account Modules:** A set of ERC-7579 modules that enforce resource locks and set verifiable execution pathways for the Orchestrator to the integrated Settlement Layers.
+- **Orchestrator:** An offchain entity that tracks ongoing intents to ensure locked funds cannot be double spent.
+- **Solver Network:** Integrated solvers who manage inventory, fill executions and settle via the integrated Settlement Layers.
+- **Settlement Layer:** An execution layer with sophisticated actors performing executions on the user’s behalf.
+
+## Vision for Omni Account
+
+**The vision for Omni Account goes beyond solving Ethereum’s fragmented liquidity.** Omni Account allows users to express any intent to a specialized execution layer without the strict requirement of atomized settlement. Our vision is to enable application-specific Orchestrators to plug into Omni Account and process intents against a single resource-locked balance per user. 
+
+From debit card integrations to offchain order books, Omni Account’s architecture is designed to make resource locks fully open and composable to any developer. One single balance with infinite possibilities—everything **everywhere, all at once.** 
+
+The underlying substrate between these application-specific Orchestrators, of which Chain Abstraction is one, is a single source of truth for intents in flight and the sequencing. If you’re interested in learning more and becoming a design partner for the Orchestration Layer, please reach out.

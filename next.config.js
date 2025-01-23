@@ -13,7 +13,7 @@ module.exports = {
     return [
       {
         source: '/',
-        destination: '/omniaccount',
+        destination: '/omni-account',
         permanent: true,
       },
     ]

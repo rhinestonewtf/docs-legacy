@@ -3,8 +3,8 @@
     "title": "Overview",
     "type": "page"
   },
-  "omniaccount": {
-    "title": "OmniAccount",
+  "omni-account": {
+    "title": "Omni Account",
     "type": "page"
   },
   "module-sdk": { "title": "SDK", "type": "page" },
