@@ -1,0 +1,25 @@
+# getInstalledModules
+
+Gets a list of all installed modules for an account. Note, this feature is still experimental as some accounts are not correctly reporting module installations.
+
+## Usage
+
+```solidity copy
+InstalledModule[] memory installedModules = instance.getInstalledModules();
+```
+
+## Parameters
+
+### instance
+
+- Type: [`AccountInstance`](/modulekit/glossary/types.mdx#accountinstance)
+
+The instance of the account used for testing.
+
+## Returns
+
+### installedModules
+
+- Type: [`InstalledModule[]`](/modulekit/glossary/types.mdx#installedmodule)
+
+The list of installed modules.

@@ -1,0 +1,40 @@
+# makeMultiChainEnableData
+
+Gets the data required to enable a session.
+
+## Usage
+
+```solidity copy
+EnableSession memory enableData = instance.makeMultiChainEnableData({
+  session: session,
+  mode: SmartSessionMode.ENABLE,
+});
+```
+
+## Parameters
+
+### instance
+
+- Type: [`AccountInstance`](/modulekit/glossary/types.mdx#accountinstance)
+
+The instance of the account used for testing.
+
+### session
+
+- Type: [`Session`](/modulekit/glossary/types.mdx#session)
+
+The session to enable.
+
+### mode
+
+- Type: `SmartSessionMode`
+
+The mode of enabling the session, either `USE`, `ENABLE` or `UNSAFE_ENABLE`.
+
+## Returns
+
+### enableData
+
+- Type: [`EnableSession`](/modulekit/glossary/types.mdx#enablesession)
+
+The data required to enable the session.

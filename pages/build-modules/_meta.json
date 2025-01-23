@@ -1,0 +1,28 @@
+{
+  "index": "Overview",
+  "getting-started": "Getting Started",
+  "-": {
+    "type": "separator",
+    "title": "Tutorials"
+  },
+  "tutorial-1": "1: Multi-Owner Validator",
+  "tutorial-2": "2: Auto-Swap Executor",
+  "--": {
+    "type": "separator",
+    "title": "Guides"
+  },
+  "testing": "Testing",
+  "deploying": "Deploying",
+  "migration-guide": "Migration Guide",
+  "---": {
+    "type": "separator",
+    "title": "Reference"
+  },
+  "build": "Building",
+  "checknsignatures": "CheckNSignatures",
+  "erc4337-data-libs": "ERC4337 Data Libs",
+  "erc4337-validation": "ERC4337 Validation",
+  "test": "Testing",
+  "deploy": "Deploying",
+  "glossary": "Glossary"
+}

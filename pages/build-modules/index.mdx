@@ -1,0 +1,140 @@
+import Image from 'next/image'
+import { Cards, Card } from 'nextra-theme-docs'
+import { ModuleKitBanner } from '../../components/banners'
+import { ComponentCard } from '../../components/ComponentCard'
+import {
+  ValidatorsIcon,
+  ExecutorsIcon,
+  HooksIcon,
+  FallbacksIcon,
+} from '../../components/icons'
+
+# ModuleKit
+
+**A development kit for building smart account modules**
+
+ModuleKit aims to make it simple for any developer to build a module that works across all ERC-7579 compliant accounts, including Safe, ZeroDev’s Kernel V3, Biconomy’s Nexus, and many more.
+
+<div className="my-8">
+  <ModuleKitBanner width={1000} height={400} />
+</div>
+
+ModuleKit has several tools to help during the development lifecycle of a module:
+
+**Build**
+
+- **Standardized interfaces and templates**: These ensure that your module is compatible with all the major account implementations and that it's extremely easy to get started.
+- **Third-party integrations**: ModuleKit has a library of integrations and pre-built conditions for execution to make building powerful modules seamless.
+
+**Test**
+
+- **Testing frameworks**: These are out-of-the-box testing setups with in-built unit and integration tests. They allow developers to easily test modules against different account implementations and abstract away the complexities of the entire ERC-4337 flow.
+- **Helper utilities**: These utilities improve the developer experience, such as calculating gas consumption (including on L2s) and validating that a module conforms to the ERC-4337 rules.
+
+**Deploy**
+
+- **Deployment script**: The ModuleKit comes with a helper contract that allows you to easily deploy a module and register it in the Module Registry.
+
+### Supported Accounts
+
+<Cards>
+  <Card
+    title="ERC-7579"
+    href="https://erc7579.com/"
+    icon={
+      <Image
+        src="/logos/erc7579.png"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: '5px' }}
+      />
+    }
+  />
+  <Card
+    title="Safe"
+    href="https://safe.global/"
+    icon={
+      <Image
+        src="/logos/safe.png"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: '5px' }}
+      />
+    }
+  />
+  <Card
+    title="Kernel (v3)"
+    href="https://zerodev.app/"
+    icon={
+      <Image
+        src="/logos/zerodev.png"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: '5px' }}
+      />
+    }
+  />
+  <Card
+    title="Biconomy (v3)"
+    href="https://biconomy.io/"
+    icon={
+      <Image
+        src="/logos/biconomy.jpeg"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: '5px' }}
+      />
+    }
+  />
+</Cards>
+
+### Supported Module Types
+
+<Cards className="gap-x-[15px]">
+<ComponentCard
+  component={{
+    icon: (<ValidatorsIcon width={48} height={48}/>),
+    title: "Validators",
+    description:
+      "Determine whether a transaction is valid and should be executed",
+  }}
+/>
+
+<ComponentCard
+  component={{
+    icon: <ExecutorsIcon width={48} height={48} />,
+    title: 'Executors',
+    description: 'Create executions on the account with custom logic',
+  }}
+/>
+
+<ComponentCard
+  component={{
+    icon: (<HooksIcon width={48} height={48}/>),
+    title: "Hooks",
+    description:
+      "Enforce conditions or execute logic pre- or post-execution",
+  }}
+/>
+<ComponentCard
+  component={{
+    icon: (<FallbacksIcon width={48} height={48}/>),
+    title: "Fallbacks",
+    description:
+      "Extend the account logic to add more functionality into the account",
+  }}
+/>
+</Cards>
+
+## Useful starting resources
+
+- Blog: [Introducing ModuleKit](https://blog.rhinestone.wtf/introducing-modulekit-b5a0737e228e)
+- Blog: [ModuleKit deep dive](https://blog.rhinestone.wtf/modulekit-deep-dive-ad84ee0797c6)
+- [Module examples](https://github.com/rhinestonewtf/core-modules)
+- List of open-source modules and resources: [awesome-modular-accounts repo](https://github.com/rhinestonewtf/awesome-modular-accounts)
+- Learn more about [modules](/overview/modules)
+- To use existing modules, check out the [Module SDK](/module-sdk)
