@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { Callout } from 'nextra/components'
 import { Cards, Card } from 'nextra-theme-docs'
 
-# Omni Account 
+# Omni Account
 
 ## Why Omni Account?
 
@@ -31,7 +31,7 @@ Omni Account consists of two core components: 1) the **Resource Lock Hook** to e
 - **Supports same-chain intents, a faster and cheaper alternative to ERC-4337.** Use Omni Account's underlying intent system to perform same-chain intents with solvers sponsoring gas and performing swaps. 
 - **Lazy deployment to enable cross-chain intents even if the user has no account on the target chain.** Omni Account is “everything everywhere all at once” for the user. In the background, Rhinestone’s infrastructure abstracts away the complexity of executing transactions on new chains whilst ensuring assets moved to the new chain are instantly spendable on any other chain.
 
-Core Propositions of Omni Account
+## Core Propositions of Omni Account
 
 - **Account-native resource locking with no asset separation.** Rhinestone uses the Resource Lock Hook to enable onchain guarantees without the user first transferring to a new contract. This ensures compatibility with existing token primitives for balance tracking, yield, rebasing, and airdrop payouts.
 - **Trustless and completely self-custodial.** The user has complete control over their funds at all times, with minimized liveness or censorship threat due to our unique onchain design that is true to the philosophy behind Smart Accounts. 
@@ -44,7 +44,7 @@ Play with the demo to experience instant cross-chain swaps between Arbitrum and 
 ## Components
 
 - **Smart Account:** Initially supporting Safe, Biconomy’s Nexus, and Magic’s Newton.
-- [**Omni Account](/omni-account/architecture/omni-account) Modules:** A set of ERC-7579 modules that enforce resource locks and set verifiable execution pathways for the Orchestrator to the integrated Settlement Layers.
+- [**Omni Account Modules:**](/omni-account/architecture/omni-account) A set of ERC-7579 modules that enforce resource locks and set verifiable execution pathways for the Orchestrator to the integrated Settlement Layers.
 - [**Orchestrator:**](/omni-account/architecture/orchestrator) An offchain entity that tracks ongoing intents to ensure locked funds cannot be double spent.
 - [**Solver Network:**](/omni-account/architecture/solvers) Integrated solvers who manage inventory, fill executions and settle via the integrated Settlement Layers.
 - [**Settlement Layer:**](/omni-account/architecture/settlement-layer) An execution layer with sophisticated actors performing executions on the user’s behalf.

@@ -7,7 +7,7 @@
   },
   "architecture": "Architecture",
   "meta-intents": "Meta Intents",
-  "use-cases": "Use Cases",
+  "use-cases": "Further Use Cases",
   "--": {
     "type": "separator",
     "title": "Tutorials"

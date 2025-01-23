@@ -1,6 +1,6 @@
 # Architecture 
 
-## Omni Account V1 is built on Across
+## Across Provides the First Settlement Layer
 
 For more on why we choose Across, visit the [Settlement Layer section](/omni-account/architecture/settlement-layer).
 
@@ -8,7 +8,7 @@ For more on why we choose Across, visit the [Settlement Layer section](/omni-acc
 
 Omni Account sits squarely in the permission layer of the Chain Abstraction Stack, allowing users to express intents, orchestrating resource locks, and permissioning solvers to execute these intents. The Across ecosystem currently covers the solver, clearing, and settlement layers. Across Relayers listen to our [Meta Intents](/omni-account/meta-intents), fill, settle, and rebalance via the [Across Settlement Layer](/omni-account/architecture/settlement-layer). 
 
-## Chain Abstraction Architecture via Across
+## High-level Across Flow Diagram
 
 1. The user interacts with an onchain app, which sends a [Meta Intent](/omni-account/meta-intent) to the Orchestrator
 2. The Orchestrator propagates the Meta Intent to a solver network (Across Relayers)
