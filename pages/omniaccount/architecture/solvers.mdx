@@ -1,0 +1,29 @@
+# Solvers 
+
+Solvers are entities that hold token inventory on each supported chain and fill Meta Intents on behalf of the user. In the Across ecosystem, Solvers are referred to as Relayers. Other chain abstraction systems refer to solvers as “Fillers” or onchain “Market Makers.” 
+
+The Omni Account system is built on Across with similar data structures and endpoints to reduce integration complexity for existing Across Relayers. To get started with the integration, see our Solver Quickstart. 
+
+Features facilitated by Omni Account Solver include:
+
+- Same chain intents 
+- Solver-based swaps
+- Deterministic and atomic cross-chain intents
+
+## Same-chain Intents
+
+A cheaper and faster way to sponsor same-chain transactions, no matter whether the account is an ERC-4337 or an EIP-7702 account. Developers only need one integration to access instant cross-chain and same-chain transactions.
+
+[Example Meta Intent – link to Orchestrator SDK]
+
+## Solver-based Swaps
+
+Whenever a swap is required in an optimal intent path, we consume quotes from OmniRelayers with swapping enabled (including the default Rhinestone Relayer) and choose based on price.
+
+[Example Meta Intent – link to Orchestrator SDK]
+
+## Deterministic and atomic cross-chain intents
+
+Given that the system is intent-based, all actions string from the output token value provide a deterministic outcome on the destination chain and allow follow-on actions to happen with certainty – i.e., no failed destination chain transaction post “bridge” due to slippage.
+
+Omni Account utilizes a Peripheral Spokepool contract, which consumes the complete order bundle that makes up the meta intent, checks the user signature, and guarantees onchain that the multi-call made to Across is complete, atomic, and sequenced correctly. 

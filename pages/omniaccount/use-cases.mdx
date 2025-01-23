@@ -1,0 +1,40 @@
+# Omni Account Use Cases Beyond Chain Abstraction
+
+## Debit Card Integration
+
+Like chain-abstracted balances, fiat debit systems linked to on-chain assets require credible commitments that funds will be available for settlement. This ensures that after supplying fiat via traditional payment rails, onchain assets are accessible for settlement.
+
+## Margin Accounts  
+
+Create margin accounts with collateral management, borrowing, and risk reduction features. By integrating onchain credit systems, users can leverage their collateral without moving funds into third-party contracts, reducing risk exposure and improving capital efficiency.
+
+## Credit Systems
+
+- Offchain Credit
+  - Without resource locking, collateral must be placed in an escrow contract, which must be actively managed to prevent liquidation or meet interest payments.
+  - With resource locking, collateral stays within the existing Smart Account, offering:
+  - Higher capital management efficiency.
+  - Removal of shared bad debt risk.
+  - Protection from protocol hacks.
+  - Greater flexibility in how collateral can be used (within defined boundaries).
+- Onchain Credit
+  - It provides the same benefits as offchain credit systems, but all transactions and collateral management remain on-chain. This creates transparent, trustless credit systems.
+
+## Offchain Order Books
+
+- Funds are resource-locked in the user's Smart Account while trades are placed in an offchain order book. Settlement happens on-chain, allowing trading at Web2 speeds while ensuring the assets are available for on-chain settlement when needed.
+- With Margin Features: Combine offchain order book trading with onchain credit, enabling more complex financial products like margin trading without moving assets to third-party contracts.
+
+## Advanced access controls and permissions
+- Lock assets in a Smart Account without segregating them into different wallets. This provides high security, allowing assets to be frozen or limited in terms of withdrawal while still keeping them in a single account.
+- Implement spending limits with advanced conditions (e.g., spending under X requires a passkey; above X requires multisig authorization).
+- Prevent certain assets, like NFT-backed tokens, from leaving the wallet without strict conditions.
+- Create accounts with specific access rights to certain tokens and balances, allowing for unique governance setups (e.g., subDAOs, multisig, DApps, or third-party integrations).
+
+## Locking Funds for Protocol Use
+
+Lock funds directly in a Smart Account for use in specific decentralized protocols, such as zkP2P lending or other decentralized liquidity markets. This ensures that funds remain secure and available for protocol needs without moving them to external contracts.
+
+## DEXs / DeFi Protocols Accessing Cross-Chain Liquidity
+
+A DEX or DeFi protocol built on one chain can request a Smart Account to install resource lock modules. This enables the app to access liquidity from all the user’s accounts across multiple chains without moving funds or opening new accounts.

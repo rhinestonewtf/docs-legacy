@@ -1,0 +1,22 @@
+# Architecture 
+
+## Omni Account V1 is built on Across
+
+For more on why we choose Across, visit the Settlement Layer section.
+
+## Side-by-Side the “Chain Abstraction Stack”
+
+Omni Account sits squarely in the permission layer of the Chain Abstraction Stack, allowing users to express intents, orchestrating resource locks, and permissioning solvers to execute these intents. The Across ecosystem currently covers the solver, clearing, and settlement layers. Across Relayers listen to our Meta Intents, fill, settle, and rebalance via the Across Settlement Layer. 
+
+## Chain Abstraction Architecture via Across
+
+1. The user interacts with an onchain app, which sends a Meta Intent to the Orchestrator
+2. The Orchestrator propagates the Meta Intent to a solver network (Across Relayers)
+3. The winning Relayer (X) fills the Meta Intent via the Across (destination chain) Spokepool
+4. Destination Spokepool sends funds and (optionally) makes an execution via the Omni Account on the destination chain 
+
+At this point, the user experience ends, yet funds have not been withdrawn from the origin chain Omni Account. The second half of the flow is the claim event:
+
+5. Relayer triggers the claim event on the origin chain Omni Account 
+6. Omni Account releases funds to the Across (origin chain) Spokepool
+7. Across settles with the Relayer after matching the origin chain deposit event with the correct destination chain fill event.  

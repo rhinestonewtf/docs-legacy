@@ -3,13 +3,20 @@
   "getting-started": "Getting Started",
   "-": {
     "type": "separator",
+    "title": "Conceptual"
+  },
+  "architecture": "Architecture",
+  "meta-intents": "Meta Intents",
+  "use-cases": "Use Cases",
+  "--": {
+    "type": "separator",
     "title": "Tutorials"
   },
-  "--": {
+  "---": {
     "type": "separator",
     "title": "Guides"
   },
-  "---": {
+  "----": {
     "type": "separator",
     "title": "Reference"
   },

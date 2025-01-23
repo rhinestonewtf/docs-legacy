@@ -1,0 +1,28 @@
+## Orchestrator 
+
+The Orchestrator acts as a trusted entity to enforce resource locks. It listens to user intents, propagates them to a solver network, creates resource lock allocations for counterparties (e.g., the Across Relayers), and facilitates the claim process via the chosen settlement layer (e.g., Across).
+
+The Orchestrator is trustless from the end user’s perspective. It can only interact with the Smart Account via the Settlement Executors, providing onchain verifiable execution paths. The Settlement Executors utilize the Across Protocol as the sole settlement layer, inheriting Across’ battle-tested optimistic proof system.
+
+The Orchestrator does not present a liveness and censorship risk to users. An onchain escape hatch can be activated through an onchain call without a dependency on Rhinestone or the Orchestrator.
+
+## Orchestrator Features
+
+- Creates and maintains (Omni) Account Clusters for the user. There are two types of user accounts in the Orchestrator; 1) chain accounts, a tuple of chainID and address, that represents a user on one particular chain, and 2) a user account, which is a group of chain accounts assigned to a unique user ID. 
+- Provides API endpoints for coordination between users, applications, and solvers.  
+- Performs resource lock accounting and intent queuing to ensure users can not overspend or double-spend a locked balance.
+- Provides the optimal routes for cross-chain intents, including optimal origin chain, input tokens, and swap routes. This can be upgraded to consume optimal paths from the client or solver.
+- Performs security checks on the Smart Account to ensure the code is not malicious. These security checks include verifying the Smart Account is a compatible implementation, has the right modules installed, has not triggered the onchain escape hatch, and is not using an unknown proxy contract.
+- Injected execution for any onchain action to be appended to a cross-chain intent. This enables destination chain userops or any other smart contract interaction (such as a swap via the Li.Fi API). 
+
+## Orchestrator Trust
+
+Currently, solvers are the only party that must trust the Orchestrator. They must trust that the accounting and security checks are performed correctly, preventing users from double spending the system. 
+
+The solver does not need to trust the Orchestrator for liveness and settlement guarantees. When the Meta Intent is passed to an Across Relayer, they also receive a co-signed claim request within the same payload. Any Relayer can trigger the claim process via the origin chain Omni Account, but only the Relayer with a matching fill event on the Across Protocol can be repaid and receive the fees.   
+
+## Path to Decentralization
+
+The Orchestrator only co-signs transactions involving locked funds (unlike a co-signer approach that requires signing every Smart Account interaction), making the system significantly more straightforward to operate and maintain. This reduced complexity creates a more efficient path toward solving the second challenge of verifiably correct sequencing and security checks. The Orchestrator has been built in Rust, and zkVM is being explored to provide a verifiable and trusted computing environment. Our mission is to make the Orchestration layer open and permissionless, and we’ll be publishing research and diving into this with early partners building on resource locks.
+
+Please reach out if you’re interested in becoming an Orchestration Layer design partner.
