@@ -24,19 +24,19 @@ const module = getUniversalEmailRecoveryExecutor({
 
 - Type: [`Address`](https://viem.sh/docs/glossary/types#address)
 
-The address of the validator contract that will verify email signatures.
+The address of the validator contract that will be initially configured for recovery.
 
 ### isInstalledContext
 
 - Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
 
-Context data used to check if the module is installed.
+Additional context that may be required to determine if the module is installed.
 
 ### initialSelector
 
 - Type: [`Hex`](https://viem.sh/docs/glossary/types#hex)
 
-The initial function selector for the recovery process.
+The function selector to allow when executing recovery for the specified module.
 
 ### guardians
 

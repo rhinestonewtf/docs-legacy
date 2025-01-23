@@ -18,4 +18,4 @@ None
 
 - Type: `number`
 
-The cooldown period that prevents a guardian from initiating another recovery request after their previous request expired.
+Returns the cooldown period after which a subsequent recovery attempt can be initiated by the same guardian. This helps prevent guardians threatening the liveness of recovery attempts by submitting malicious recovery hashes before honest guardians correctly submit theirs.
