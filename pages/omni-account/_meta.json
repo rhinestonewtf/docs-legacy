@@ -12,10 +12,14 @@
     "type": "separator",
     "title": "Tutorials"
   },
+  "tutorial-1": "1: Create a new Omni Account",
+  "tutorial-2": "2: Turn an existing account into an Omni Account",
   "---": {
     "type": "separator",
     "title": "Guides"
   },
+  "token-preference": "Token Preference",
+  "fee-calculations": "Fee Calculations",
   "----": {
     "type": "separator",
     "title": "Reference"
