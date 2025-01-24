@@ -1,31 +1,140 @@
 import Image from 'next/image'
-import { Cards } from 'nextra-theme-docs'
+import { Cards, Card } from 'nextra-theme-docs'
 import { ComponentCard } from '../../components/ComponentCard'
-import { ModuleKitIcon, SDKIcon, LogoIcon } from '../../components/icons'
+import { ModuleKitIcon, SDKIcon, LogoIcon, OmniAccountIcon } from '../../components/icons'
 
-# Why Rhinestone?
+# Welcome
 
-Rhinestone provides infrastructure and tooling for building products with modular smart accounts. Our technology stack is smart account-agnostic (compatible with Safe, Biconomy, ZeroDev, and any [ERC-7579](https://erc7579.com) compliant account) and ERC-4337 infrastructure-agnostic (compatible with all leading account abstraction SDKs and bundlers).
+Rhinestone is a programmable and open platform for chain-abstracted Smart Accounts. [ERC-7579](https://erc7579.com/), the leading shared standard for Modular Smart Accounts, underpins our infrastructure and tooling, making it the only account vendor-agnostic smart wallet platform. ERC-7579 is now supported by all significant Smart Accounts, including Safe, Biconomy Nexus, ZeroDev Kernel, Magic’s Newton, Thirdweb, Trust Wallet, OKX, and many more. With [EIP-7702](https://eips.ethereum.org/EIPS/eip-7702) around the corner (via [Pectra](https://eips.ethereum.org/EIPS/eip-7600)) EOAs will soon be welcomed to the Rhinestone platform.
 
-Rhinestone is specifically focused on smart account modules. Modules are self-contained smart contracts that extend the feature set of any smart account. Our infrastructure and tooling support the full lifecycle of a module, from development to deployment, through audits, and to usage at the application layer.
+Build with Rhinestone to maximize distribution, ensure broader ecosystem interoperability, and significantly enhance your product UX with the [deepest library](/module-sdk) of Smart Account features ([Modules](/overview/modules)) and native intent-based chain abstraction.
 
-Reasons to build with Rhinestone:
+<Cards>
+    <Card
+    title="Safe"
+    href="https://safe.global/"
+    icon={
+      <Image
+        src="/logos/safe.png"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: '5px' }}
+      />
+    }
+  />
+  <Card
+    title="ZeroDev Kernel" 
+    href="https://zerodev.app/"
+    icon={
+      <Image
+        src="/logos/zerodev.png"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: '5px' }}
+      />
+    }
+  />
+  <Card
+    title="Biconomy Nexus"
+    href="https://biconomy.io/"
+    icon={
+      <Image
+        src="/logos/biconomy.jpeg"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: '5px' }}
+      />
+    }
+  />
+<Card
+    title="Magic Newton"
+    href="https://magic.link/"
+    icon={
+      <Image
+        src="/logos/magic.png"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: '5px' }}
+      />
+    }
+  />
+<Card
+    title="Thirdweb"
+    href="https://thirdweb.com/"
+    icon={
+      <Image
+        src="/logos/thirdweb.jpg"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: '5px' }}
+      />
+    }
+  />
+<Card
+    title="OKX"
+    href="https://www.okx.com/"
+    icon={
+      <Image
+        src="/logos/okx.png"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: '5px' }}
+      />
+    }
+  />
+<Card
+    title="Trust Wallet"
+    href="https://trustwallet.com/"
+    icon={
+      <Image
+        src="/logos/trust.png"
+        width={50}
+        height={50}
+        alt=""
+        style={{ marginRight: '5px' }}
+      />
+    }
+  />
 
-- Level up your product with a library of modules that are ready to be used within your application
-- Develop the module you need to power an advanced smart account-native product or service
-- Develop a product that works with any [ERC-7579](https://erc7579.com) account (incl. Safe, Biconomy’s Nexus, ZeroDev’s Kernel, OKX smart wallet, and many more)
+</Cards>
+
+## Chain Abstraction
+
+Rhinestone’s chain abstraction system utilizes Smart Account Modules and an intent-based settlement layer built on Across to chain abstract any ERC-7579 smart account and Smart EOAs. This system prioritizes programmability, interoperability, and self-sovereignty. 
+
+Dive into a deeper overview of [Omni Account](/omni-account). 
+
+## Modular Smart Accounts
+
+Smart Accounts are the future of Ethereum. They drastically enhance application UX with features like gas abstraction, batching, and passkeys. They also provide critical security features to enable any user to be truly self-sovereign, including recovery, multi-sig, and more. 
+
+The power of Smart Accounts lies in their programmability. Rhinestone is a leader in Modular Smart Accounts and has played an integral role in building and defining key technical primitives to unlock smart accounts as the next open platform for innovation. [Rhinestone’s infrastructure](https://blog.rhinestone.wtf/rhinestone-protocol-1-0-hits-mainnet-695469dce425) enables anyone to extend the feature set of any ERC-7579 account. 
 
 ## Our stack
 
-We aim to make building onchain applications with smart account modules as simple and accessible as possible. Our approach to achieving this spans three primary focus areas:
-
 <Cards className="gap-x-[15px]">
+<ComponentCard
+  component={{
+    icon: <OmniAccountIcon width={48} height={48} />,
+    title: "Omni Account",
+    description:
+      "An intent-powered system that transforms any ERC-7579 accounts (and EOAs) into chain abstracted accounts",
+href: "/omni-account",
+}}
+/>
+
 <ComponentCard
   component={{
     icon: <SDKIcon width={48} height={48} />,
     title: "ModuleSDK",
     description:
-      "A TypeScript library for using smart account modules in applications. The ModuleSDK supports Safe and any ERC-7579 account, and is built to be used with existing AA SDKs.",
+      "A TypeScript library for using Smart Account Modules. The ModuleSDK supports any ERC-7579 account and is built to be used with existing AA SDKs.",
 href: "/module-sdk",
 }}
 />
@@ -35,36 +144,10 @@ href: "/module-sdk",
     icon: <ModuleKitIcon width={48} height={48} />,
     title: 'ModuleKit',
     description:
-      'The fastest way to start building a smart account module is by using ModuleKit, a development kit for building and testing account-agnostic modules',
+      'The fastest way to start building a smart account module is by using ModuleKit, a development kit for building and testing account-agnostic modules.',
     href: '/modulekit',
-  }}
-/>
-
-<ComponentCard
-  component={{
-    icon: (<LogoIcon width={48} height={48}/>),
-    title: "Orchestrator",
-    description:
-      "An offchain service for coordinating cross-chain intents",
-      href: "/orchestrator",
   }}
 />
 </Cards>
 
-## The problem that got us started
 
-Today, there are significant barriers to developing products that utilize the full potential of smart accounts: developer complexity, security, and a lack of simple feature customization, which leads to vendor lock-in and ecosystem fragmentation.
-
-These challenges paint a picture of a homogenous smart account ecosystem where building novel features is costly, expensive audits disincentivize experimentation, and high switching costs increase user adoption risk.
-
-We envision a world where smart accounts are simple (from a DevEx perspective), extensible, portable, and secure. Our unique modular smart account infrastructure and tooling achieve this. We transform the smart account into an open platform where any third-party developer can develop self-contained features (in the form of modules) that can be installed and used by any application developer or user.
-
-## Build with existing tools
-
-The best tools improve the developer's life and don’t require a steep learning curve. For this reason, we designed the ModuleSDK to leverage [viem](https://viem.sh), one of the most popular libraries for Ethereum developers, and to be compatible as a companion tool with all existing account abstraction SDKs (including [permissionless.js](https://docs.pimlico.io/permissionless), [Biconomy SDK](https://docs.biconomy.io/quickstart), [ZeroDev SDK](https://docs.zerodev.app/), and [userop.js](https://docs.stackup.sh/docs/useropjs)).
-
-ModuleKit has been developed on top of Foundry and aims to abstract away as many complexities as possible when it comes to building and testing modules. It provides templates to get you started, module bases for common functions, and frameworks that allow you to test your module against multiple smart account implementations through one single variable change.
-
-## Avoid vendor lock-in
-
-Our tools, modules, and services are built to be smart account-agnostic and 4337 infrastructure-agnostic. We led the development of [ERC-7579](https://erc7579.com), the leading standard for modular smart accounts, to increase the interoperability of modules across smart accounts. This serves two purposes: one, it ensures developers need only build once to maximize their audience, and two, it ensures our developers are not locked into one single provider or ecosystem.
