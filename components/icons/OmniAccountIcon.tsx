@@ -17,10 +17,10 @@ export const OmniAccountIcon = ({
   useEffect(() => {
     switch (resolvedTheme) {
       case 'light':
-        setSrc('/icons/sdk_light.png')
+        setSrc('/icons/omniaccount_light.png')
         break
       case 'dark':
-        setSrc('/icons/sdk_dark.png')
+        setSrc('/icons/omniaccount_dark.png')
         break
     }
   }, [resolvedTheme])

@@ -5,18 +5,18 @@
   "getting-started": "Getting started",
   "-": {
     "type": "separator",
-    "title": "Learn more"
-  },
-  "tooling": "Tooling overview",
-  "rhinestone-infrastructure": "Rhinestone Infrastructure",
-  "modules": "Modules explained",
-  "--": {
-    "type": "separator",
     "title": "Resources"
   },
   "account-abstraction": "Account Abstraction",
-  "erc-7484": "ERC-7484",
+  "modules": "Modules explained",
   "erc-7579": "ERC-7579",
+  "erc-7484": "ERC-7484",
   "address-book": "Address book",
-  "audits": "Audits"
+  "audits": "Audits",
+  "rhinestone-infrastructure": {
+    "type": "hidden"
+  },
+  "tooling": {
+    "type": "hidden"
+  }
 }

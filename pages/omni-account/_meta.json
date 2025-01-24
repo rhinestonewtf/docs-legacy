@@ -20,6 +20,8 @@
   },
   "token-preference": "Token Preference",
   "fee-calculations": "Fee Calculations",
+  "same-chain-intents": "Same Chain Intents",
+  "using-unlocked-funds": "Using Unlocked Funds",
   "----": {
     "type": "separator",
     "title": "Reference"
