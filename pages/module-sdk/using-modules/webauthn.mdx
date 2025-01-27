@@ -189,7 +189,7 @@ const userOpHashToSign = getUserOperationHash({
 Next, the nominee will have to sign the recovery UserOperation.
 
 ```typescript copy
- const cred = await sign({
+const { metadata: webauthn, signature } = await sign({
   credentialId: credential.id,
   challenge: userOpHashToSign,
 });
@@ -201,8 +201,8 @@ Finally, we will encode the signature and add it to the UserOperation.
 
 ```typescript copy
 const encodedSignature = getWebauthnValidatorSignature({
-  webauthn: cred.metadata,
-  signature: cred.signature,
+  webauthn,
+  signature,
   usePrecompiled: false,
 });
 
