@@ -1,0 +1,20 @@
+# Calculating the gas fees for an intent
+
+The way that fees work in the Meta Intent flow is that any fees required by the solvers, such as to cover gas on the target chain, is added to the source token transfers. For example, if a user wants 100 USDC on the target chain and has USDC on the source chain, then the actual source chain transfer will be higher than 100 USDC, such as 100.5 USDC, depending on the solver, chains used and other variables.
+
+Hence, to calculate the fees for the user, you need to get the sum of all target transfers in a single currency, like USD, and the sum of all source transfers and then find the difference. Here is an example for this logic:
+
+```typescript copy
+export  const  getIntentGasEstimate = async (
+  orderBundle: OrderBundle
+) => {
+  // sum up the target transfers
+  const targetTotal = 0;
+
+  // sum up the source transfers
+  const sourceTotal = 0;
+
+  // return the difference
+  return targetTotal - sourceTotal;
+}
+```
