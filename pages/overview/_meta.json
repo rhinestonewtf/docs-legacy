@@ -14,9 +14,9 @@
   "address-book": "Address book",
   "audits": "Audits",
   "rhinestone-infrastructure": {
-    "type": "hidden"
+    "display": "hidden"
   },
   "tooling": {
-    "type": "hidden"
+    "display": "hidden"
   }
 }

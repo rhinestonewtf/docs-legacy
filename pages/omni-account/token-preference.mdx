@@ -1,0 +1,18 @@
+# Specifying a token preference
+
+In the normal Meta Intent flow, the Orchestrator will find the best path when called to get the bundle path. However, there could be cases in which a user wants the Orchestrator to only use certain assets, maybe because they want to continue holding others. 
+
+The way that this can be done is by supplying an optional `accountAccessList` field in the `MetaIntent` object. This field looks as follows:
+
+```typescript
+type MetaIntent = {
+  ...
+  accountAccessList?: {
+    accountAddress: Address
+    chainId: number
+    tokenAddress: Address
+  }[]
+}
+```
+
+As you can tell, this field is an array of token objectes, consisting of the chain id and token address as well as the account address. The latter is useful since an account cluster could have multiple accounts that a user can pull funds from.
