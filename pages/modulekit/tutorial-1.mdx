@@ -231,11 +231,10 @@ import { Test } from "forge-std/Test.sol";
 import {
     RhinestoneModuleKit,
     ModuleKitHelpers,
-    ModuleKitUserOp,
     AccountInstance,
     UserOpData
 } from "modulekit/ModuleKit.sol";
-import { MODULE_TYPE_VALIDATOR } from "modulekit/external/ERC7579.sol";
+import { MODULE_TYPE_VALIDATOR } from "modulekit/accounts/common/interfaces/IERC7579Module.sol";
 import { MultiOwnerValidator } from "src/MultiOwnerValidator.sol";
 import { ECDSA } from "solady/utils/ECDSA.sol";
 
@@ -251,7 +250,6 @@ Next, we will set up the test:
 
 contract MultiOwnerValidatorTest is RhinestoneModuleKit, Test {
     using ModuleKitHelpers for *;
-    using ModuleKitUserOp for *;
     using ECDSA for bytes32;
 
     // account and modules
@@ -284,7 +282,7 @@ contract MultiOwnerValidatorTest is RhinestoneModuleKit, Test {
 }
 ```
 
-We use the `ModuleKitHelpers` and `ModuleKitUserOp` to help with the integration testing and the `ECDSA` library to help with the signatures. We then set up the test by creating the account instance, validator and owners. During `setUp`, we create the account instance, owners and install the validator.
+We use the `ModuleKitHelpers` to help with the integration testing and the `ECDSA` library to help with the signatures. We then set up the test by creating the account instance, validator and owners. During `setUp`, we create the account instance, owners and install the validator.
 
 Next, we will test the validator:
 
