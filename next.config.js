@@ -14,7 +14,7 @@ module.exports = {
       {
         source: '/',
         destination: '/omni-account',
-        permanent: true,
+        permanent: false,
       },
     ]
   },
