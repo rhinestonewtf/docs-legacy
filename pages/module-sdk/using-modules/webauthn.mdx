@@ -71,7 +71,9 @@ const pimlicoClient = createPimlicoClient({
 
 ### Create the signer
 
-The Safe account will need to have a signer to sign user operations. In this case, since we are developing this code in a frontend, we can use wagmi to access the connected wallet signer.
+The Safe account will need to have a signer to sign user operations. In permissionless.js, the default Safe account validates ECDSA signatures.
+
+For example, to create a signer based on a private key:
 
 ```typescript copy
 const owner = privateKeyToAccount(generatePrivateKey());
