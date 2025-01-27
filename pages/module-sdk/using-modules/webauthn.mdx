@@ -23,8 +23,7 @@ import {
   toSafeSmartAccount,
   ToSafeSmartAccountReturnType,
 } from "permissionless/accounts";
-import { Chain, http, Transport } from "viem";
-import { Erc7579Actions } from "permissionless/actions/erc7579";
+import { http, Transport } from "viem";
 import { createSmartAccountClient, SmartAccountClient } from "permissionless";
 import {
   createWebAuthnCredential,
@@ -123,6 +122,7 @@ const smartAccountClient = createSmartAccountClient({
 Next, we will create a Webauthn Credential. This will be used to sign the UserOperation.
 
 ```typescript copy
+// You could also use the `createCredential` function from the `ox` package to create the credential.
 const credential = await createWebAuthnCredential({
   name: "Wallet Owner",
 });
