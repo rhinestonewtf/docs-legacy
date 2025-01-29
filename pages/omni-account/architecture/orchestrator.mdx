@@ -1,3 +1,5 @@
+import { OmniAccount8 } from '../../../components/banners'
+
 ## Orchestrator 
 
 The Orchestrator acts as a trusted entity to enforce resource locks. It listens to user intents, propagates them to a solver network, creates resource lock allocations for counterparties (e.g., the Across Relayers), and facilitates the claim process via the chosen settlement layer (e.g., Across).
@@ -5,6 +7,11 @@ The Orchestrator acts as a trusted entity to enforce resource locks. It listens 
 The Orchestrator is **trustless from the end user’s perspective**. It can only interact with the Smart Account via the [Settlement Executors](/omni-account/architecture/settlement-layer), providing onchain verifiable execution paths. The Settlement Executors utilize the Across Protocol as the sole settlement layer, inheriting Across’ battle-tested optimistic proof system.
 
 The Orchestrator does not present a liveness and censorship risk to users. An onchain escape hatch can be activated through an onchain call without a dependency on Rhinestone or the Orchestrator.
+
+<div className="my-8">
+  <OmniAccount8 width={1000} height={400} />
+</div>
+
 
 ## Orchestrator Features
 

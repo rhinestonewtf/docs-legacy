@@ -1,6 +1,12 @@
+import { OmniAccount4, OmniAccount5,OmniAccount6 } from '../../../components/banners';
+
 # Architecture 
 
 ## High Level Components
+
+<div className="my-8">
+  <OmniAccount4 width={1000} height={400} />
+</div>
 
 The Omni Account system has integrated the Across Protocol as the first Settlement Layer. The Omni Account intent data structure mirrors Across, making it dead easy for Across Relayers to integrate. For more on why we choose Across, visit the [Settlement Layer section](/omni-account/architecture/settlement-layer).
 
@@ -8,7 +14,15 @@ The Omni Account system has integrated the Across Protocol as the first Settleme
 
 Omni Account sits squarely in the permission layer of the Chain Abstraction Stack, allowing users to express intents, orchestrating resource locks, and permissioning solvers to execute these intents. The Across ecosystem currently covers the solver, clearing, and settlement layers. Across Relayers listen to our [Meta Intents](/omni-account/meta-intents), fill, settle, and rebalance via the [Across Settlement Layer](/omni-account/architecture/settlement-layer). 
 
+<div className="my-8">
+  <OmniAccount6 width={1000} height={400} />
+</div>
+
 ## High-level Across Flow Diagram
+
+<div className="my-8">
+  <OmniAccount5 width={1000} height={400} />
+</div>
 
 1. The user interacts with an onchain app, which sends a [Meta Intent](/omni-account/meta-intents) to the Orchestrator
 2. The Orchestrator propagates the Meta Intent to a solver network (Across Relayers)

@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { Callout } from 'nextra/components'
 import { Cards, Card } from 'nextra-theme-docs'
+import {OmniAccount2, OmniAccount3} from '../../components/banners'
 
 # Omni Account
 
@@ -21,6 +22,10 @@ Omni Account consists of two core components:
 1) The **Resource Lock Hook** to enable irrevocable onchain guarantees to offchain entities through a single signature, and 
 2) The **Orchestrator**, an offchain entity that sequences transactions and ensures users cannot break their onchain guarantees.
 
+<div className="my-8">
+  <OmniAccount2 width={1000} height={400} />
+</div>
+
 ## Core Propositions of Omni Account
 
 - **Account-native resource locking with no asset separation.** Rhinestone uses the Resource Lock Hook to enable onchain guarantees without the user first transferring to a new contract. This ensures compatibility with existing token primitives for balance tracking, yield, rebasing, and airdrop payouts.
@@ -38,6 +43,10 @@ Play with the [demo](https://wallet.rhinestone.wtf/) to experience instant cross
 - [**Orchestrator:**](/omni-account/architecture/orchestrator) An offchain entity that tracks ongoing intents to ensure locked funds cannot be double spent.
 - [**Solver Network:**](/omni-account/architecture/solvers) Integrated solvers who manage inventory, fill executions and settle via the integrated Settlement Layers.
 - [**Settlement Layer:**](/omni-account/architecture/settlement-layer) An execution layer with sophisticated actors performing executions on the user’s behalf.
+
+<div className="my-8">
+  <OmniAccount3 width={1000} height={400} />
+</div>
 
 ## Key Features
 
