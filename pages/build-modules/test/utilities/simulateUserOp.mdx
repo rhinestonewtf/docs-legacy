@@ -1,0 +1,27 @@
+# simulateUserOp
+
+Simulate a specific UserOperation without needing to simulate the UserOperations in the entire test suite.
+
+## Usage
+
+```solidity copy
+instance.simulateUserOp(true);
+```
+
+## Parameters
+
+### instance
+
+- Type: [`AccountInstance`](/modulekit/glossary/types.mdx#accountinstance)
+
+The instance of the account used for testing.
+
+### value
+
+- Type: `bool`
+
+Should be true to simulate the UserOperation.
+
+## Returns
+
+None

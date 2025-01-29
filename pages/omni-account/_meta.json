@@ -1,0 +1,36 @@
+{
+  "index": "Overview",
+  "getting-started": "Getting Started",
+  "-": {
+    "type": "separator",
+    "title": "Conceptual"
+  },
+  "architecture": "Architecture",
+  "meta-intents": "Meta Intents",
+  "use-cases": "Further Use Cases",
+  "--": {
+    "type": "separator",
+    "title": "Tutorials"
+  },
+  "tutorial-1": "1: Create a new Omni Account",
+  "tutorial-2": "2: Send your first intent",
+  "tutorial-3": "3: Turn an existing account into an Omni Account",
+  "---": {
+    "type": "separator",
+    "title": "Guides"
+  },
+  "executor-flow": "Executor Flow",
+  "token-preference": "Token Preference",
+  "fee-calculations": { "title": "Fee Calculations", "display": "hidden" },
+  "same-chain-intents": { "title": "Same Chain Intents", "display": "hidden" },
+  "using-unlocked-funds": {
+    "title": "Using Unlocked Funds",
+    "display": "hidden"
+  },
+  "----": {
+    "type": "separator",
+    "title": "Reference"
+  },
+  "orchestrator-sdk": "Orchestrator SDK",
+  "glossary": "Glossary"
+}

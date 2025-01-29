@@ -1,0 +1,31 @@
+# getNext
+
+Get the next entry in the list.
+
+## Usage
+
+```solidity copy
+bytes32 next = list.getNext(bytes32(keccak256("entry")));
+```
+
+## Parameters
+
+### self
+
+- Type: `LinkedBytes32`
+
+The storage pointer of the list.
+
+### entry
+
+- Type: `bytes32`
+
+The data to get the next entry from.
+
+## Returns
+
+### next
+
+- Type: `bytes32`
+
+The next entry in the list.

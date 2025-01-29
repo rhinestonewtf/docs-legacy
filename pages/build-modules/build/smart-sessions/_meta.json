@@ -1,0 +1,6 @@
+{
+  "initializeWithMultiplexer": "initializeWithMultiplexer",
+  "checkAction": "checkAction",
+  "checkUserOp": "checkUserOp",
+  "check1271SignedAction": "check1271SignedAction"
+}
