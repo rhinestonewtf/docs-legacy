@@ -13,11 +13,13 @@
     "title": "Tutorials"
   },
   "tutorial-1": "1: Create a new Omni Account",
-  "tutorial-2": "2: Turn an existing account into an Omni Account",
+  "tutorial-2": "2: Send your first intent",
+  "tutorial-3": "3: Turn an existing account into an Omni Account",
   "---": {
     "type": "separator",
     "title": "Guides"
   },
+  "executor-flow": "Executor Flow",
   "token-preference": "Token Preference",
   "fee-calculations": "Fee Calculations",
   "same-chain-intents": { "title": "Same Chain Intents", "display": "hidden" },

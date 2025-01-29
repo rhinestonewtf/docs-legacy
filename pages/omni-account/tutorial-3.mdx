@@ -1,10 +1,10 @@
 import { Steps } from 'nextra/components'
 
-# Tutorial 1: Send your first intent
+# Tutorial 2: Turn an existing account into an Omni Account
 
-In this tutorial, we will walk through creating a new Omni Account. What this means is that you will create a smart account, in this case a Safe with the Safe7579 module, and add the required modules to transform it into an Omni Account. This will enable the user to lock funds and instantly spend them on any other chain.
+In this tutorial, we will walk through turning an existing smart account into an Omni Account. For the sake of this tutorial, we will still create the smart account but the core part is how to create intents when the account is already deployed on the target chain and has the modules installed. In that case, we can use the more efficient executor flow rather than needing to rely on UserOperations.
 
-For this tutorial, we are using `@rhinestone/module-sdk` at the latest version to set up the required modules. We are also using `@rhinestone/orchestrator-sdk` to interact with the Omni Account modules and the backend service, the Orchestrator. Finally, we use `permissionless@^0.2.22` and `viem@^2.21.51` for their account abstraction features. See the full source code for this tutorial in our [module-sdk-tutorials repo](https://github.com/rhinestonewtf/module-sdk-tutorials/blob/main/src/orchestrator-sdk/new-account.ts).
+For this tutorial, we are using `@rhinestone/module-sdk` at the latest version to set up the required modules. We are also using `@rhinestone/orchestrator-sdk` to interact with the Omni Account modules and the backend service, the Orchestrator. Finally, we use `permissionless@^0.2.22` and `viem@^2.21.51` for their account abstraction features. See the full source code for this tutorial in our [module-sdk-tutorials repo](https://github.com/rhinestonewtf/module-sdk-tutorials/blob/main/src/orchestrator-sdk/existing-account.ts).
 
 <Steps>
 
@@ -21,7 +21,6 @@ npm i @rhinestone/module-sdk @rhinestone/orchestrator-sdk permissionless viem
 ```typescript copy
 import {
   getOwnableValidator,
-  getOwnableValidatorMockSignature,
   RHINESTONE_ATTESTER_ADDRESS,
 } from "@rhinestone/module-sdk";
 import { createSmartAccountClient } from "permissionless";
@@ -36,17 +35,11 @@ import {
   erc20Abi,
   Hex,
   http,
-  keccak256,
-  pad,
   zeroAddress,
   zeroHash,
 } from "viem";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
-import {
-  entryPoint07Address,
-  getUserOperationHash,
-  toPackedUserOperation,
-} from "viem/account-abstraction";
+import { entryPoint07Address } from "viem/account-abstraction";
 import {
   getOrchestrator,
   getOrderBundleHash,
@@ -57,7 +50,6 @@ import {
 } from "@rhinestone/orchestrator-sdk";
 import { erc7579Actions } from "permissionless/actions/erc7579";
 import { createPimlicoClient } from "permissionless/clients/pimlico";
-import { getAccountNonce } from "permissionless/actions";
 ```
 ### Create the owner for the smart account
 
@@ -314,9 +306,35 @@ const targetSmartAccountClient = createSmartAccountClient({
 }).extend(erc7579Actions());
 ```
 
+### Deploy the account on the target chain
+
+Now, we will deploy the account on the target chain. As mentioned above, this is for the reproducability of this tutorial but in most real cases, this account would already be deployed for some reason, such as because of following the previous tutorial.
+
+```typescript copy
+// do a transaction to deploy the account on the target chain and install the modules
+const deployUserOpHash = await targetSmartAccountClient.sendUserOperation({
+  account: targetSafeAccount,
+  calls: [
+    {
+      to: getTokenAddress("USDC", targetChain.id),
+      value: BigInt(0),
+      data: encodeFunctionData({
+        abi: erc20Abi,
+        functionName: "balanceOf",
+        args: [targetSafeAccount.address],
+      }),
+    },
+  ],
+});
+
+await targetPimlicoClient.waitForUserOperationReceipt({
+  hash: deployUserOpHash,
+});
+```
+
 ### Create the meta intent
 
-To send an intent that spends the funds from source chain on the target chain, we will first need to create a MetaIntent and the corresponding token transfers. The token transfers tells the relayer which tokens a user wants on the target chain. The remaining fields (except target chain id and account address) can be left empty for now as they will be filled in later.
+To send an intent that spends the funds from source chain on the target chain, we will first need to create a MetaIntent and the corresponding token transfers. The token transfers tells the relayer which tokens a user wants on the target chain. We also add the actions that the user wants to do into the `targetExecutions` field, in our case the transfer of the USDC out to another address.
 
 ```typescript copy
 const tokenTransfers = [
@@ -331,7 +349,17 @@ const metaIntent: MetaIntent = {
   targetChainId: targetChain.id,
   tokenTransfers: tokenTransfers,
   targetAccount: targetSafeAccount.address,
-  targetExecutions: [],
+  targetExecutions: [
+    {
+      target: getTokenAddress("USDC", targetChain.id),
+      value: 0n,
+      callData: encodeFunctionData({
+        abi: erc20Abi,
+        functionName: "transfer",
+        args: ["0xd8da6bf26964af9d7eed9e03e53415d37aa96045", 2n],
+      }),
+    },
+  ],
   userOp: {
     sender: zeroAddress,
     nonce: 0n,
@@ -364,106 +392,11 @@ const orderPath = await fetch(
 ).then((res) => res.json());
 
 const { orderBundle, injectedExecutions } = orderPath;
-```
 
-### Create the target chain UserOperation
-
-Now we will create the UserOperation for the target chain. This UserOperation defines what will be executed on the target chain. In this tutorial it is required to use a UserOperation on the target chain since the account is not deployed there yet. However, after an account is deployed, the more efficient executor flow can be used (see the next tutorial).
-
-To create the UserOperation, we will first of all encode the right nonce and define the actions a user wants to execute. These can be arbitrarily complex, but in our case we just transfer the USDC out to an address. Finally, we will also need to provide a set of state overrides. This is so that when the UserOperation is simulated, we can pretend that the USDC is already there even though it will only be there just in time when the transaction is filled by the solver.
-
-```typescript copy
-const nonce = await getAccountNonce(targetPublicClient, {
-  address: targetSafeAccount.address,
-  entryPointAddress: entryPoint07Address,
-  key: BigInt(
-    pad(ownableValidator.address, {
-      dir: "right",
-      size: 24,
-    }) || 0,
-  ),
-});
-
-const userOpActions = [
-  ...injectedExecutions.slice(1),
-  {
-    to: getTokenAddress("USDC", targetChain.id),
-    data: encodeFunctionData({
-      abi: erc20Abi,
-      functionName: "transfer",
-      args: ["0xd8da6bf26964af9d7eed9e03e53415d37aa96045", 2n],
-    }),
-  },
+metaIntent.targetExecutions = [
+  ...injectedExecutions,
+  ...metaIntent.targetExecutions,
 ];
-
-const balanceSlot = keccak256(
-  encodeAbiParameters(
-    [{ type: "address" }, { type: "uint256" }],
-    [targetSafeAccount.address, 9n],
-  ),
-);
-
-const userOp = await targetSmartAccountClient.prepareUserOperation({
-  account: targetSafeAccount,
-  calls: userOpActions,
-  nonce: nonce,
-  signature: getOwnableValidatorMockSignature({ threshold: 1 }),
-  stateOverride: [
-    {
-      address: getTokenAddress("USDC", targetChain.id),
-      stateDiff: [
-        {
-          slot: balanceSlot,
-          value: pad("0xa"),
-        },
-      ],
-    },
-  ],
-});
-```
-
-### Modify the UserOperation after simulation
-
-After the simulation is complete, we will need to modify it. The reason this needs to be done after simulation is that due to the way that the simulation works, it would revert with the first injected execution, which is a callback to a trampoline contract that ensures the correct filling of the user intent. Hence, we simulate the UserOperation first and calculate the gas before manually adding this injected execution back in.
-
-```typescript copy
-const injectedExecutionsMapped = [
-  // callback action is always the first action in injectedExecutions
-  ...(injectedExecutions?.[0] ? [injectedExecutions[0]] : []),
-].map((action) => ({
-  to: action.target,
-  value: BigInt(Number(action.value)),
-  data: action.callData || "0x",
-}));
-
-// add the callback
-userOp.callData = await targetSafeAccount.encodeCalls([
-  ...injectedExecutionsMapped,
-  ...userOpActions,
-]);
-
-// manually increase gas
-userOp.callGasLimit += BigInt(100000);
-```
-
-### Sign the UserOperation
-
-Next, we will sign the UserOperation to be verified on the target chain.
-
-```typescript copy
-const userOpHash = getUserOperationHash({
-  userOperation: userOp,
-  chainId: targetChain.id,
-  entryPointAddress: entryPoint07Address,
-  entryPointVersion: "0.7",
-});
-
-userOp.signature = await owner.signMessage({
-  message: { raw: userOpHash },
-});
-
-// add userOperation into metaIntent
-metaIntent.userOp = toPackedUserOperation(userOp);
 ```
 
 ### Sign the MetaIntent
@@ -489,7 +422,6 @@ const signedOrderBundle: SignedOrderBundle = {
   })),
   targetExecutionSignature:
     orderBundle.userOp.sender !== zeroAddress ? "0x" : packedSig,
-  userOp: orderBundle.userOp,
 };
 ```
 

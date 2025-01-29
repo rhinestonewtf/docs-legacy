@@ -1,0 +1,60 @@
+# Using the executor flow
+
+Natively, Omni Account can be used with ERC-4337, meaning that the target chain execution will happen through a UserOperation. This has the upside of being easily compatible with existing smart accounts and that even undeployed accounts can be used for target executions. Because of this, when an account is undeployed on the target chain, the "UserOperation flow" has to be used, as shown in [tutorial 2](/omni-account/tutorial-1).
+
+However, when an account is already deployed and has the target executor installed, there is a more efficient way of doing target chain executions, namely through the "executor flow". This flow cuts out the ERC-4337 middleware, namely the EntryPoint and thus reduces execution gas significantly. Instead, the execution path will now be through the target executor which can call into the ERC-7579 account. 
+
+This guide briefly shows the difference for a client of Omni Account when using the executor flow. As mentioned before, the upside of using this flow is that the execution gas is lower and that the user only needs to make a single signature, over the `OrderBundle`.
+
+## The executor flow
+
+Before being able to use the executor flow, the target executor has to be installed on the target chain. This is also needed in the UserOp flow so if you've sent an intent before then this should already be the case. Otherwise, you can use the helper function in the [ModuleSDK](/module-sdk) to get the target executor: 
+
+```typescript copy
+const targetExecutor = getAccountLockerTargetExecutor();
+```
+
+Then, you can use the account abstraction sdk of your choice to install this module.
+
+The main difference to the UserOp flow is that when constructing the `MetaIntent`, you should supply the target chain executions in the `targetExecutions` array and the `userOp` field remains unused:
+
+```typescript copy
+const metaIntent: MetaIntent = {
+  targetChainId: targetChain.id,
+  tokenTransfers: tokenTransfers,
+  targetAccount: targetSafeAccount.address,
+  targetExecutions: [
+    {
+      target: getTokenAddress("USDC", targetChain.id),
+      value: 0n,
+      callData: encodeFunctionData({
+        abi: erc20Abi,
+        functionName: "transfer",
+        args: ["0xd8da6bf26964af9d7eed9e03e53415d37aa96045", 2n],
+      }),
+    },
+  ],
+  userOp: {
+    sender: zeroAddress,
+    nonce: 0n,
+    initCode: "0x",
+    callData: "0x",
+    accountGasLimits: zeroHash,
+    preVerificationGas: 0n,
+    gasFees: zeroHash,
+    paymasterAndData: "0x",
+    signature: "0x",
+  },
+};
+```
+
+This is also true when adding the injected executions, who should be added like so:
+
+```typescript copy
+metaIntent.targetExecutions = [
+  ...injectedExecutions,
+  ...metaIntent.targetExecutions,
+];
+```
+
+Apart from this, everything else remains the same. For the full code of this guide, check out the [tutorial](https://github.com/rhinestonewtf/module-sdk-tutorials/blob/main/src/orchestrator-sdk/new-account.ts)
