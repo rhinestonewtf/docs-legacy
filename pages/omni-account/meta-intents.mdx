@@ -1,4 +1,4 @@
-import { OmniAccount7 } from '../../components/banners'
+import { OmniAccount7, OmniAccount9 } from '../../components/banners'
 
 # Meta Intents 
 
@@ -10,7 +10,6 @@ Omni Account employs an ERC-712 signature envelope to encode complex cross-chain
   <OmniAccount7 width={1000} height={400} />
 </div>
 
-
 1. The user interacts with an application / wallet to make a transaction. This Meta Intent is sent to the Orchestrator, which responds with an Order Bundle and any required injected executions.
 2. The user signs the Order Bundle (and any injected executions), which is posted to the Orchestrator.
 3. The Orchestrator propagates the signed Order Bundle and the Claim Payload (collectively the “Omni Payload” in the chart) to the solver network (Across Relayers).
@@ -20,16 +19,6 @@ Omni Account employs an ERC-712 signature envelope to encode complex cross-chain
 7. The Across Relayer sends the Claim Payload to the Omni Account on the Origin Chain
 8. Origin Chain Omni Account releases funds to the Origin Chain Spokepool.
 9. Across Protocol matches the origin chain deposit event with the destination chain prefill event.
-
-## Lazy Deployment Flow Diagram
-
-If Ethereum’s horizontal scaling strategy plays out as expected, the first time a user interacts with an onchain app will likely be their first interaction with a new chain. Therefore, a scalable Chain Abstraction system must enable instant cross-chain intents even if the user does not have an account on the destination chain. Omni Account provides this functionality with a just-in-time deployment flow via the ERC-4337 entrypoint contract. With one signature, the user authorizes the intent and the deployment of the Omni Account. **The solver fronts the gas for deployment and fills the intent all in one!**
-
-
-
-Omni Account enables instant and atomic cross-chain intents, even when the user does not have a Smart Account on the destination chain. When the Relayer fills the Meta Intent, a userOp payload is included, which is handled by a trampoline contract that deploys the account via the ERC-4337 EntryPoint contract.
-
-When the user’s Smart Account is deployed on the new destination chain, the Omni Account Modules are initialized, and the injected execution is executed. This initialization ensures that any assets held on the new chain are also Chain Abstracted and ready to be used on any other network.  
 
 ## Examples
 
@@ -124,3 +113,16 @@ const signedOrderBundle: SignedOrderBundle = {
   targetExecutionSignature: '0x',
 }
  ```
+
+## Lazy Deployment Flow Diagram
+
+If Ethereum’s horizontal scaling strategy plays out as expected, the first time a user interacts with an onchain app will likely be their first interaction with a new chain. Therefore, a scalable Chain Abstraction system must enable instant cross-chain intents even if the user does not have an account on the destination chain. Omni Account provides this functionality with a just-in-time deployment flow via the ERC-4337 entrypoint contract. With one signature, the user authorizes the intent and the deployment of the Omni Account. **The solver fronts the gas for deployment and fills the intent all in one!**
+
+<div className="my-8">
+  <OmniAccount9 width={1000} height={400} />
+</div>
+
+Omni Account enables instant and atomic cross-chain intents, even when the user does not have a Smart Account on the destination chain. When the Relayer fills the Meta Intent, a userOp payload is included, which is handled by a trampoline contract that deploys the account via the ERC-4337 EntryPoint contract.
+
+When the user’s Smart Account is deployed on the new destination chain, the Omni Account Modules are initialized, and the injected execution is executed. This initialization ensures that any assets held on the new chain are also Chain Abstracted and ready to be used on any other network.  
+
