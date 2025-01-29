@@ -9,3 +9,5 @@ Features facilitated by Omni Account Solver include:
 - **Same chain intents**: Across Relayers can act as paymasters, providing a cheaper and faster alternative to ERC-4337 infrastructure. Omni Account allows developers to transact on any chain with one integration.
 - **Solver-based swaps**: If the input token does not equal the output token, the Omni Account system instructs Solvers to provide a swap quote and execution, or the destination chain swap is injected into the Meta Intent.
 - **Deterministic and atomic cross-chain intents**: Omni Account Solvers provide deterministic prefills on the destination chain with zero slippage. Atomicity is guaranteed through peripheral contracts that ensure the Solver prefills meet the requirements of the Meta Intent.    
+
+To view a reference implementation of a solver, check out our [Rhinestone Relayer repository](https://github.com/rhinestonewtf/rhinestone-relayer). The solver is a simple Across solver that has been adapted to be able to fill Omni Account intents. Note that this repo is still a work in progress and better documentation will follow soon.
