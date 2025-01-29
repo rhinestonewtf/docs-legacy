@@ -21,7 +21,7 @@
   },
   "executor-flow": "Executor Flow",
   "token-preference": "Token Preference",
-  "fee-calculations": "Fee Calculations",
+  "fee-calculations": { "title": "Fee Calculations", "display": "hidden" },
   "same-chain-intents": { "title": "Same Chain Intents", "display": "hidden" },
   "using-unlocked-funds": {
     "title": "Using Unlocked Funds",
