@@ -2,7 +2,7 @@ import { Steps } from 'nextra/components'
 
 # Tutorial 1: Create a new Omni Account
 
-In this tutorial, we will walk through creating a new Omni Account. What this means is that you will create a smart account, in this case a Safe with the Safe7579 module, and add the required modules to transform it into an Omni Account. This will enable the user to lock funds and instantly spend them on any other chain.
+In this tutorial, we will walk through creating a new Omni Account. What this means is that you will create a smart account, in this case a Safe with the Safe7579 module, and add the required modules to transform it into an Omni Account. This will enable the user to lock funds and instantly spend them on any other chain. To send the first intent, check out [tutorial 2](/omni-account/tutorial-2).
 
 For this tutorial, we are using `@rhinestone/module-sdk` at the latest version to set up the required modules. We are also using `@rhinestone/orchestrator-sdk` to interact with the Omni Account modules and the backend service, the Orchestrator. Finally, we use `permissionless@^0.2.22` and `viem@^2.21.51` for their account abstraction features. See the full source code for this tutorial in our [module-sdk-tutorials repo](https://github.com/rhinestonewtf/module-sdk-tutorials/blob/main/src/orchestrator-sdk/new-account.ts).
 
@@ -20,45 +20,36 @@ npm i @rhinestone/module-sdk @rhinestone/orchestrator-sdk permissionless viem
 
 ```typescript copy
 import {
+  encodeModuleInstallationData,
+  getAccount,
+  getAccountLockerHook,
+  getAccountLockerSourceExecutor,
+  getAccountLockerTargetExecutor,
   getOwnableValidator,
-  getOwnableValidatorMockSignature,
   RHINESTONE_ATTESTER_ADDRESS,
 } from "@rhinestone/module-sdk";
 import { createSmartAccountClient } from "permissionless";
-import { toSafeSmartAccount } from "permissionless/accounts";
+import {
+  toSafeSmartAccount,
+  ToSafeSmartAccountParameters,
+} from "permissionless/accounts";
 import {
   Chain,
   createPublicClient,
   createWalletClient,
-  encodeAbiParameters,
   encodeFunctionData,
-  encodePacked,
   erc20Abi,
   Hex,
   http,
-  keccak256,
-  pad,
   zeroAddress,
-  zeroHash,
 } from "viem";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
-import {
-  entryPoint07Address,
-  getUserOperationHash,
-  toPackedUserOperation,
-} from "viem/account-abstraction";
-import {
-  getOrchestrator,
-  getOrderBundleHash,
-  getTokenAddress,
-  MetaIntent,
-  ORCHESTRATOR_URL,
-  SignedOrderBundle,
-} from "@rhinestone/orchestrator-sdk";
+import { entryPoint07Address } from "viem/account-abstraction";
+import { getOrchestrator, getTokenAddress } from "@rhinestone/orchestrator-sdk";
 import { erc7579Actions } from "permissionless/actions/erc7579";
 import { createPimlicoClient } from "permissionless/clients/pimlico";
-import { getAccountNonce } from "permissionless/actions";
 ```
+
 ### Create the owner for the smart account
 
 Before creating a new smart account, we will set up the owner. In this example, we just generate a new private key and use the Ownable Validator, but you could use an existing user account, for example using wagmi, or a different authentication method such as passkeys through the Webauthn Validator.
@@ -227,289 +218,6 @@ await sourcePimlicoClient.waitForUserOperationReceipt({
   });
 ```
 
-### Create the clients for the target chain
-
-Next, we will create the clients required to interact with the target chain.
-
-```typescript copy
-const targetPublicClient = createPublicClient({
-  chain: targetChain,
-  transport: http(),
-});
-
-const targetPimlicoClient = createPimlicoClient({
-  transport: http(
-    `https://api.pimlico.io/v2/${targetChain.id}/rpc?apikey=${pimlicoApiKey}`,
-  ),
-  entryPoint: {
-    address: entryPoint07Address,
-    version: "0.7",
-  },
-});
-```
-
-### Create the target chain smart account client
-
-Just like on the source chain side, we will create the smart account client on the target chain. This is required since permissionless uses the rpc url passed to the client, for example to determine if an account is already deployed. Make sure to pass the exact same arguments for the initial modules to this client as otherwise the address would be different, leading to this tutorial not working.
-
-```typescript copy
-const targetSafeAccount = await toSafeSmartAccount({
-  client: targetPublicClient,
-  owners: [owner],
-  version: "1.4.1",
-  entryPoint: {
-    address: entryPoint07Address,
-    version: "0.7",
-  },
-  safe4337ModuleAddress: "0x7579EE8307284F293B1927136486880611F20002",
-  erc7579LaunchpadAddress: "0x7579011aB74c46090561ea277Ba79D510c6C00ff",
-  attesters: [
-    RHINESTONE_ATTESTER_ADDRESS, // Rhinestone Attester
-    "0x8a310b9085faF5d9464D84C3d9a7BE3b28c94531", // Mock attester for omni account
-  ],
-  attestersThreshold: 1,
-  validators: [
-    {
-      address: ownableValidator.address,
-      context: ownableValidator.initData,
-    },
-  ],
-  executors: [
-    {
-      address: "0xE1058634834E01038CadbaE8208BFfF81B1Ede51",
-      context: "0x",
-    },
-    {
-      address: "0xA90F831363708B32a3f1502165253E0210cf680d",
-      context: "0x",
-    },
-  ],
-  fallbacks: [
-    {
-      address: "0xA90F831363708B32a3f1502165253E0210cf680d",
-      context: encodeAbiParameters(
-        [
-          { name: "selector", type: "bytes4" },
-          { name: "flags", type: "bytes1" },
-          { name: "data", type: "bytes" },
-        ],
-        ["0x3a5be8cb", "0x00", "0x"],
-      ),
-    },
-  ],
-});
-
-const targetSmartAccountClient = createSmartAccountClient({
-  account: targetSafeAccount,
-  chain: targetChain,
-  bundlerTransport: http(
-    `https://api.pimlico.io/v2/${targetChain.id}/rpc?apikey=${pimlicoApiKey}`,
-  ),
-  paymaster: targetPimlicoClient,
-  userOperation: {
-    estimateFeesPerGas: async () => {
-      return (await targetPimlicoClient.getUserOperationGasPrice()).fast;
-    },
-  },
-}).extend(erc7579Actions());
-```
-
-### Create the meta intent
-
-To send an intent that spends the funds from source chain on the target chain, we will first need to create a MetaIntent and the corresponding token transfers. The token transfers tells the relayer which tokens a user wants on the target chain. The remaining fields (except target chain id and account address) can be left empty for now as they will be filled in later.
-
-```typescript copy
-const tokenTransfers = [
-  {
-    tokenAddress: getTokenAddress("USDC", targetChain.id),
-    amount: 2n,
-  },
-];
-
-// create the meta intent
-const metaIntent: MetaIntent = {
-  targetChainId: targetChain.id,
-  tokenTransfers: tokenTransfers,
-  targetAccount: targetSafeAccount.address,
-  targetExecutions: [],
-  userOp: {
-    sender: zeroAddress,
-    nonce: 0n,
-    initCode: "0x",
-    callData: "0x",
-    accountGasLimits: zeroHash,
-    preVerificationGas: 0n,
-    gasFees: zeroHash,
-    paymasterAndData: "0x",
-    signature: "0x",
-  },
-};
-```
-
-### Get the order path
-
-Next, we will get the order path from the orchestrator. What this means is that we get the completed order bundle and a set of injected executions. These executions allow for the orchestrator to inject a set of executions, for example to guarantee the atomicity of the fill. In this step, the orchestrator also figures out where exactly to pull the required funds from (which is easy in this tutorial). Because of this, the user signature only happens after getting the order path so that the user is able to see and needs to confirm (by signing) that they want those tokens to be used.
-
-```typescript copy
-const orderPath = await fetch(
-  `${ORCHESTRATOR_URL}/users/${userId}/bundles/path`,
-  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": orchestratorApiKey,
-    },
-    body: JSON.stringify(metaIntent),
-  },
-).then((res) => res.json());
-
-const { orderBundle, injectedExecutions } = orderPath;
-```
-
-### Create the target chain UserOperation
-
-Now we will create the UserOperation for the target chain. This UserOperation defines what will be executed on the target chain. In this tutorial it is required to use a UserOperation on the target chain since the account is not deployed there yet. However, after an account is deployed, the more efficient executor flow can be used (see the next tutorial).
-
-To create the UserOperation, we will first of all encode the right nonce and define the actions a user wants to execute. These can be arbitrarily complex, but in our case we just transfer the USDC out to an address. Finally, we will also need to provide a set of state overrides. This is so that when the UserOperation is simulated, we can pretend that the USDC is already there even though it will only be there just in time when the transaction is filled by the solver.
-
-```typescript copy
-const nonce = await getAccountNonce(targetPublicClient, {
-  address: targetSafeAccount.address,
-  entryPointAddress: entryPoint07Address,
-  key: BigInt(
-    pad(ownableValidator.address, {
-      dir: "right",
-      size: 24,
-    }) || 0,
-  ),
-});
-
-const userOpActions = [
-  ...injectedExecutions.slice(1),
-  {
-    to: getTokenAddress("USDC", targetChain.id),
-    data: encodeFunctionData({
-      abi: erc20Abi,
-      functionName: "transfer",
-      args: ["0xd8da6bf26964af9d7eed9e03e53415d37aa96045", 2n],
-    }),
-  },
-];
-
-const balanceSlot = keccak256(
-  encodeAbiParameters(
-    [{ type: "address" }, { type: "uint256" }],
-    [targetSafeAccount.address, 9n],
-  ),
-);
-
-const userOp = await targetSmartAccountClient.prepareUserOperation({
-  account: targetSafeAccount,
-  calls: userOpActions,
-  nonce: nonce,
-  signature: getOwnableValidatorMockSignature({ threshold: 1 }),
-  stateOverride: [
-    {
-      address: getTokenAddress("USDC", targetChain.id),
-      stateDiff: [
-        {
-          slot: balanceSlot,
-          value: pad("0xa"),
-        },
-      ],
-    },
-  ],
-});
-```
-
-### Modify the UserOperation after simulation
-
-After the simulation is complete, we will need to modify it. The reason this needs to be done after simulation is that due to the way that the simulation works, it would revert with the first injected execution, which is a callback to a trampoline contract that ensures the correct filling of the user intent. Hence, we simulate the UserOperation first and calculate the gas before manually adding this injected execution back in.
-
-```typescript copy
-const injectedExecutionsMapped = [
-  // callback action is always the first action in injectedExecutions
-  ...(injectedExecutions?.[0] ? [injectedExecutions[0]] : []),
-].map((action) => ({
-  to: action.target,
-  value: BigInt(Number(action.value)),
-  data: action.callData || "0x",
-}));
-
-// add the callback
-userOp.callData = await targetSafeAccount.encodeCalls([
-  ...injectedExecutionsMapped,
-  ...userOpActions,
-]);
-
-// manually increase gas
-userOp.callGasLimit += BigInt(100000);
-```
-
-### Sign the UserOperation
-
-Next, we will sign the UserOperation to be verified on the target chain.
-
-```typescript copy
-const userOpHash = getUserOperationHash({
-  userOperation: userOp,
-  chainId: targetChain.id,
-  entryPointAddress: entryPoint07Address,
-  entryPointVersion: "0.7",
-});
-
-userOp.signature = await owner.signMessage({
-  message: { raw: userOpHash },
-});
-
-// add userOperation into metaIntent
-metaIntent.userOp = toPackedUserOperation(userOp);
-```
-
-### Sign the MetaIntent
-
-Next, we will also need to sign the entire Meta Intent. This ensures that the solver cannot do anything that the user does not want, such as using a specific set of funds.
-
-```typescript copy
-const orderBundleHash = await getOrderBundleHash(orderBundle);
-
-const bundleSignature = await owner.signMessage({
-  message: { raw: orderBundleHash },
-});
-const packedSig = encodePacked(
-  ["address", "bytes"],
-  [ownableValidator.address, bundleSignature],
-);
-
-const signedOrderBundle: SignedOrderBundle = {
-  ...orderBundle,
-  acrossTransfers: orderBundle.acrossTransfers.map((transfer: any) => ({
-    ...transfer,
-    userSignature: packedSig,
-  })),
-  targetExecutionSignature:
-    orderBundle.userOp.sender !== zeroAddress ? "0x" : packedSig,
-  userOp: orderBundle.userOp,
-};
-```
-
-### Send the MetaIntent
-
-Finally, we will send the MetaIntent to the orchestrator. This will broadcast the intent to the solvers, who will then fill the transaction on the target chain.
-
-```typescript copy
-const bundleId = await orchestrator.postSignedOrderBundle(
-  signedOrderBundle,
-  userId,
-);
-```
-
-### Check the status of the MetaIntent
-
-To ensure everything went well, we can check the status of the Meta Intent. Initially, this should be `RECEIVED` but then it will move to `FILLED` when the target chain fill has been completed and `COMPLETED` when the solver has recouped their funds on the source chain.
-
-```typescript copy
-const bundleStatus = await orchestrator.getBundleStatus(userId, bundleId);
-````
+Now that the resource lock hook is installed, the account can use any funds on the source chain instantly on a different chain. In the [next tutorial](/omni-account/tutorial-2), we will send the first intent.
 
 </Steps>

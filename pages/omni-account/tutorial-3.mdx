@@ -1,8 +1,8 @@
 import { Steps } from 'nextra/components'
 
-# Tutorial 2: Turn an existing account into an Omni Account
+# Tutorial 3: Turn an existing account into an Omni Account
 
-In this tutorial, we will walk through turning an existing smart account into an Omni Account. For the sake of this tutorial, we will still create the smart account but the core part is how to create intents when the account is already deployed on the target chain and has the modules installed. In that case, we can use the more efficient executor flow rather than needing to rely on UserOperations.
+In this tutorial, we will walk through turning an existing smart account into an Omni Account. This will require installing the relevant modules on all the source chains, in this case we will only use a single source chain.
 
 For this tutorial, we are using `@rhinestone/module-sdk` at the latest version to set up the required modules. We are also using `@rhinestone/orchestrator-sdk` to interact with the Omni Account modules and the backend service, the Orchestrator. Finally, we use `permissionless@^0.2.22` and `viem@^2.21.51` for their account abstraction features. See the full source code for this tutorial in our [module-sdk-tutorials repo](https://github.com/rhinestonewtf/module-sdk-tutorials/blob/main/src/orchestrator-sdk/existing-account.ts).
 
@@ -19,17 +19,13 @@ npm i @rhinestone/module-sdk @rhinestone/orchestrator-sdk permissionless viem
 ### Import the required functions and constants
 
 ```typescript copy
-import {
-  getOwnableValidator,
-  RHINESTONE_ATTESTER_ADDRESS,
-} from "@rhinestone/module-sdk";
 import { createSmartAccountClient } from "permissionless";
-import { toSafeSmartAccount } from "permissionless/accounts";
+import {
+  toSafeSmartAccount,
+} from "permissionless/accounts";
 import {
   Chain,
   createPublicClient,
-  createWalletClient,
-  encodeAbiParameters,
   encodeFunctionData,
   encodePacked,
   erc20Abi,
@@ -38,190 +34,20 @@ import {
   zeroAddress,
   zeroHash,
 } from "viem";
-import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import { entryPoint07Address } from "viem/account-abstraction";
 import {
-  getOrchestrator,
   getOrderBundleHash,
   getTokenAddress,
   MetaIntent,
-  ORCHESTRATOR_URL,
   SignedOrderBundle,
 } from "@rhinestone/orchestrator-sdk";
 import { erc7579Actions } from "permissionless/actions/erc7579";
 import { createPimlicoClient } from "permissionless/clients/pimlico";
 ```
-### Create the owner for the smart account
-
-Before creating a new smart account, we will set up the owner. In this example, we just generate a new private key and use the Ownable Validator, but you could use an existing user account, for example using wagmi, or a different authentication method such as passkeys through the Webauthn Validator.
-
-```typescript copy
-const owner = privateKeyToAccount(generatePrivateKey());
-
-const ownableValidator = getOwnableValidator({
-  owners: [owner.address],
-  threshold: 1,
-});
-```
-
-### Create the source chain clients
-
-Next, we will create the source chain clients. Since we are interacting with multiple chains, we need to create clients for each of them. First, we will create some for the source chain, ie the chains on which the funds will reside.
-
-```typescript copy
-const sourcePublicClient = createPublicClient({
-  chain: sourceChain,
-  transport: http(),
-});
-
-const sourcePimlicoClient = createPimlicoClient({
-  transport: http(
-    `https://api.pimlico.io/v2/${sourceChain.id}/rpc?apikey=${pimlicoApiKey}`,
-  ),
-  entryPoint: {
-    address: entryPoint07Address,
-    version: "0.7",
-  },
-});
-```
-
-### Create the source chain smart account client
-
-Now we will create the smart account client for the source chain. This client will be used to interact with the smart account on the source chain and calculates the counterfactual address.
-
-When creating the smart account, we pass a few initial modules. The first of these is the Ownable Validator that we set up before. The remaining ones are the executors and fallback required for Omni Account. In the future, this will be moved into the sdk, but for now we do it manually.
-
-```typescript copy
-const sourceSafeAccount = await toSafeSmartAccount({
-  client: sourcePublicClient,
-  owners: [owner],
-  version: "1.4.1",
-  entryPoint: {
-    address: entryPoint07Address,
-    version: "0.7",
-  },
-  safe4337ModuleAddress: "0x7579EE8307284F293B1927136486880611F20002",
-  erc7579LaunchpadAddress: "0x7579011aB74c46090561ea277Ba79D510c6C00ff",
-  attesters: [
-    RHINESTONE_ATTESTER_ADDRESS, // Rhinestone Attester
-    "0x8a310b9085faF5d9464D84C3d9a7BE3b28c94531", // Mock attester for omni account
-  ],
-  attestersThreshold: 1,
-  validators: [
-    {
-      address: ownableValidator.address,
-      context: ownableValidator.initData,
-    },
-  ],
-  executors: [
-    {
-      address: "0xE1058634834E01038CadbaE8208BFfF81B1Ede51",
-      context: "0x",
-    },
-    {
-      address: "0xA90F831363708B32a3f1502165253E0210cf680d",
-      context: "0x",
-    },
-  ],
-  fallbacks: [
-    {
-      address: "0xA90F831363708B32a3f1502165253E0210cf680d",
-      context: encodeAbiParameters(
-        [
-          { name: "selector", type: "bytes4" },
-          { name: "flags", type: "bytes1" },
-          { name: "data", type: "bytes" },
-        ],
-        ["0x3a5be8cb", "0x00", "0x"],
-      ),
-    },
-  ],
-});
-
-const sourceSmartAccountClient = createSmartAccountClient({
-  account: sourceSafeAccount,
-  chain: sourceChain,
-  bundlerTransport: http(
-    `https://api.pimlico.io/v2/${sourceChain.id}/rpc?apikey=${pimlicoApiKey}`,
-  ),
-  paymaster: sourcePimlicoClient,
-  userOperation: {
-    estimateFeesPerGas: async () => {
-      return (await sourcePimlicoClient.getUserOperationGasPrice()).fast;
-    },
-  },
-}).extend(erc7579Actions());
-```
-
-### Create the orchestrator client and account cluster
-
-Next, we will create a client to interact with the Orchestrator service that will receive the intents and broadcast them to solvers. Then, we will create an "account cluster". This is the set of accounts that can use the same funds. In our case, this will just be the created smart account address and the two chains we interact with, source and target, but it can be more chains and even multiple smart accounts that pull from the same funds.
-
-```typescript copy
-const orchestrator = getOrchestrator(orchestratorApiKey);
-
-const userId = await orchestrator.createUserAccount(
-  sourceSafeAccount.address,
-  [sourceChain.id, targetChain.id],
-);
-```
-
-### Fund the smart account on the source chain
-
-Now we will fund the smart account on the source chain. In our case, we will use USDC. Later, we will use the funds from source chain to instantly spend on the target chain.
-
-```typescript copy
-const fundingAccount = privateKeyToAccount(fundingPrivateKey);
-const sourceWalletClient = createWalletClient({
-  chain: sourceChain,
-  transport: http(),
-});
-
-const fundingTxHash = await sourceWalletClient.sendTransaction({
-  account: fundingAccount,
-  to: getTokenAddress("USDC", sourceChain.id),
-  data: encodeFunctionData({
-    abi: erc20Abi,
-    functionName: "transfer",
-    args: [sourceSafeAccount.address, 2n],
-  }),
-});
-
-await sourcePublicClient.waitForTransactionReceipt({
-  hash: fundingTxHash,
-});
-```
-
-### Install the resource lock hook
-
-Finally, we need to install the resource lock hook on the source chain. This ensures that the funds in the users wallet are locked so that when a solver comes to reclaim them they will still be there. Note that like the other modules, this will be abstracted into the sdk in the future.
-
-```typescript copy
-const opHash = await sourceSmartAccountClient.installModule({
-  address: "0x29BDcBc36e344061393f8AB58D2D6AABaedeAaAE",
-  initData: encodeAbiParameters(
-    [
-      { name: "hookType", type: "uint256" },
-      { name: "hookId", type: "bytes4" },
-      { name: "data", type: "bytes" },
-    ],
-    [
-      0n,
-      "0x00000000",
-      encodeAbiParameters([{ name: "value", type: "bool" }], [true]),
-    ],
-  ),
-  type: "hook",
-});
-
-await sourcePimlicoClient.waitForUserOperationReceipt({
-  hash: opHash,
-  });
-```
 
 ### Create the clients for the target chain
 
-Next, we will create the clients required to interact with the target chain.
+First, we will create the clients required to interact with the target chain.
 
 ```typescript copy
 const targetPublicClient = createPublicClient({
@@ -242,10 +68,11 @@ const targetPimlicoClient = createPimlicoClient({
 
 ### Create the target chain smart account client
 
-Just like on the source chain side, we will create the smart account client on the target chain. This is required since permissionless uses the rpc url passed to the client, for example to determine if an account is already deployed. Make sure to pass the exact same arguments for the initial modules to this client as otherwise the address would be different, leading to this tutorial not working.
+Next, we will create the target chain smart account client. Since the account already exists, we can just add the address and don't need the initial parameters.
 
 ```typescript copy
 const targetSafeAccount = await toSafeSmartAccount({
+  address: accountAddress,
   client: targetPublicClient,
   owners: [owner],
   version: "1.4.1",
@@ -255,40 +82,6 @@ const targetSafeAccount = await toSafeSmartAccount({
   },
   safe4337ModuleAddress: "0x7579EE8307284F293B1927136486880611F20002",
   erc7579LaunchpadAddress: "0x7579011aB74c46090561ea277Ba79D510c6C00ff",
-  attesters: [
-    RHINESTONE_ATTESTER_ADDRESS, // Rhinestone Attester
-    "0x8a310b9085faF5d9464D84C3d9a7BE3b28c94531", // Mock attester for omni account
-  ],
-  attestersThreshold: 1,
-  validators: [
-    {
-      address: ownableValidator.address,
-      context: ownableValidator.initData,
-    },
-  ],
-  executors: [
-    {
-      address: "0xE1058634834E01038CadbaE8208BFfF81B1Ede51",
-      context: "0x",
-    },
-    {
-      address: "0xA90F831363708B32a3f1502165253E0210cf680d",
-      context: "0x",
-    },
-  ],
-  fallbacks: [
-    {
-      address: "0xA90F831363708B32a3f1502165253E0210cf680d",
-      context: encodeAbiParameters(
-        [
-          { name: "selector", type: "bytes4" },
-          { name: "flags", type: "bytes1" },
-          { name: "data", type: "bytes" },
-        ],
-        ["0x3a5be8cb", "0x00", "0x"],
-      ),
-    },
-  ],
 });
 
 const targetSmartAccountClient = createSmartAccountClient({
@@ -306,29 +99,15 @@ const targetSmartAccountClient = createSmartAccountClient({
 }).extend(erc7579Actions());
 ```
 
-### Deploy the account on the target chain
+### Install the target executor (optional)
 
-Now, we will deploy the account on the target chain. As mentioned above, this is for the reproducability of this tutorial but in most real cases, this account would already be deployed for some reason, such as because of following the previous tutorial.
+If the target executor is not already installed, you can proceed in two ways. The first is by directly installing it through a UserOperation. The second is by doing it inside an intent flow. For brevity, we will go with the former but if you want to do the latter, then you can follow [tutorial 1](/omni-account/tutorial-1) to see how the UserOp flow works. In the UserOperation, you would add another batched call to install the target executor.
 
 ```typescript copy
-// do a transaction to deploy the account on the target chain and install the modules
-const deployUserOpHash = await targetSmartAccountClient.sendUserOperation({
-  account: targetSafeAccount,
-  calls: [
-    {
-      to: getTokenAddress("USDC", targetChain.id),
-      value: BigInt(0),
-      data: encodeFunctionData({
-        abi: erc20Abi,
-        functionName: "balanceOf",
-        args: [targetSafeAccount.address],
-      }),
-    },
-  ],
-});
+const opHash = await targetSmartAccountClient.installModule(getAccountLockerTargetExecutor());
 
-await targetPimlicoClient.waitForUserOperationReceipt({
-  hash: deployUserOpHash,
+await sourcePimlicoClient.waitForUserOperationReceipt({
+  hash: opHash,
 });
 ```
 
