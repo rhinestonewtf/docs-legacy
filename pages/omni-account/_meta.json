@@ -1,6 +1,10 @@
 {
   "index": "Overview",
   "getting-started": "Getting Started",
+  "demo": {
+    "title": "Omni Account Demo",
+    "href": "https://wallet.rhinestone.wtf"
+  },
   "-": {
     "type": "separator",
     "title": "Conceptual"
