@@ -35,49 +35,8 @@ Just like on the source chain side, we will create the smart account client on t
 
 ```typescript copy
 const targetSafeAccount = await toSafeSmartAccount({
+  ...smartAccountConfig,
   client: targetPublicClient,
-  owners: [owner],
-  version: "1.4.1",
-  entryPoint: {
-    address: entryPoint07Address,
-    version: "0.7",
-  },
-  safe4337ModuleAddress: "0x7579EE8307284F293B1927136486880611F20002",
-  erc7579LaunchpadAddress: "0x7579011aB74c46090561ea277Ba79D510c6C00ff",
-  attesters: [
-    RHINESTONE_ATTESTER_ADDRESS, // Rhinestone Attester
-    "0x8a310b9085faF5d9464D84C3d9a7BE3b28c94531", // Mock attester for omni account
-  ],
-  attestersThreshold: 1,
-  validators: [
-    {
-      address: ownableValidator.address,
-      context: ownableValidator.initData,
-    },
-  ],
-  executors: [
-    {
-      address: "0xE1058634834E01038CadbaE8208BFfF81B1Ede51",
-      context: "0x",
-    },
-    {
-      address: "0xA90F831363708B32a3f1502165253E0210cf680d",
-      context: "0x",
-    },
-  ],
-  fallbacks: [
-    {
-      address: "0xA90F831363708B32a3f1502165253E0210cf680d",
-      context: encodeAbiParameters(
-        [
-          { name: "selector", type: "bytes4" },
-          { name: "flags", type: "bytes1" },
-          { name: "data", type: "bytes" },
-        ],
-        ["0x3a5be8cb", "0x00", "0x"],
-      ),
-    },
-  ],
 });
 
 const targetSmartAccountClient = createSmartAccountClient({
@@ -132,19 +91,10 @@ const metaIntent: MetaIntent = {
 Next, we will get the order path from the orchestrator. What this means is that we get the completed order bundle and a set of injected executions. These executions allow for the orchestrator to inject a set of executions, for example to guarantee the atomicity of the fill. In this step, the orchestrator also figures out where exactly to pull the required funds from (which is easy in this tutorial). Because of this, the user signature only happens after getting the order path so that the user is able to see and needs to confirm (by signing) that they want those tokens to be used.
 
 ```typescript copy
-const orderPath = await fetch(
-  `${ORCHESTRATOR_URL}/users/${userId}/bundles/path`,
-  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": orchestratorApiKey,
-    },
-    body: JSON.stringify(metaIntent),
-  },
-).then((res) => res.json());
-
-const { orderBundle, injectedExecutions } = orderPath;
+const { orderBundle, injectedExecutions } = await orchestrator.getOrderPath(
+  metaIntent,
+  userId,
+);
 ```
 
 ### Create the target chain UserOperation
@@ -166,7 +116,11 @@ const nonce = await getAccountNonce(targetPublicClient, {
 });
 
 const userOpActions = [
-  ...injectedExecutions.slice(1),
+...injectedExecutions.slice(1).map((execution: any) => ({
+    to: execution.target,
+    value: BigInt(Number(execution.value)),
+    data: execution.callData || "0x",
+  })),
   {
     to: getTokenAddress("USDC", targetChain.id),
     data: encodeFunctionData({
@@ -270,7 +224,7 @@ const signedOrderBundle: SignedOrderBundle = {
   })),
   targetExecutionSignature:
     orderBundle.userOp.sender !== zeroAddress ? "0x" : packedSig,
-  userOp: orderBundle.userOp,
+  userOp: metaIntent.userOp,
 };
 ```
 

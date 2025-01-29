@@ -158,19 +158,10 @@ const metaIntent: MetaIntent = {
 Next, we will get the order path from the orchestrator. What this means is that we get the completed order bundle and a set of injected executions. These executions allow for the orchestrator to inject a set of executions, for example to guarantee the atomicity of the fill. In this step, the orchestrator also figures out where exactly to pull the required funds from (which is easy in this tutorial). Because of this, the user signature only happens after getting the order path so that the user is able to see and needs to confirm (by signing) that they want those tokens to be used.
 
 ```typescript copy
-const orderPath = await fetch(
-  `${ORCHESTRATOR_URL}/users/${userId}/bundles/path`,
-  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": orchestratorApiKey,
-    },
-    body: JSON.stringify(metaIntent),
-  },
-).then((res) => res.json());
-
-const { orderBundle, injectedExecutions } = orderPath;
+const { orderBundle, injectedExecutions } = await orchestrator.getOrderPath(
+  metaIntent,
+  userId,
+);
 
 metaIntent.targetExecutions = [
   ...injectedExecutions,
