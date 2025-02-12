@@ -198,7 +198,7 @@ userOp.signature = await owner.signMessage({
 });
 
 // add userOperation into metaIntent
-metaIntent.userOp = toPackedUserOperation(userOp);
+orderBundle.userOp = toPackedUserOperation(userOp);
 ```
 
 ### Sign the MetaIntent
@@ -224,7 +224,6 @@ const signedOrderBundle: SignedOrderBundle = {
   })),
   targetExecutionSignature:
     orderBundle.userOp.sender !== zeroAddress ? "0x" : packedSig,
-  userOp: metaIntent.userOp,
 };
 ```
 
