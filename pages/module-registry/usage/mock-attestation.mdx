@@ -35,7 +35,7 @@ To attest to your module in a forge script, you can use the [`mockAttestToModule
 If you are using cast, you can use the following command:
 
 ```shell
-cast send 0xA4C777199658a41688E9488c4EcbD7a2925Cc23A "attest(address,bytes32,(address,uint48,bytes,uint256[]))" 0x000000000069E2a187AEFFb852bF3cCdC95151B2 0x93d46fcca4ef7d66a413c7bde08bb1ff14bacbd04c4069bb24cd7c21729d7bf1 "(MODULE_ADDRESS, 0, ATTESTATION_DATA, MODDULE_TYPES)" --rpc-url RPC_URL --private-key PRIVATE_KEY
+cast send 0xaed4d8baa80948d54d33de041513d30124e1ae3f "attest(address,bytes32,(address,uint48,bytes,uint256[]))" 0x000000000069E2a187AEFFb852bF3cCdC95151B2 0x93d46fcca4ef7d66a413c7bde08bb1ff14bacbd04c4069bb24cd7c21729d7bf1 "(MODULE_ADDRESS, 0, ATTESTATION_DATA, MODDULE_TYPES)" --rpc-url RPC_URL --private-key PRIVATE_KEY
 ```
 
 You will need to replace `MODULE_ADDRESS`, `ATTESTATION_DATA`, `MODDULE_TYPES`, `RPC_URL`, and `PRIVATE_KEY` with the appropriate values. Note that `ATTESTATION_DATA` can be empty (`0x`) or a random data string since this is for mock purposes only. `MODULE_TYPES` is an array of the types of the module, such as `[1,2]` for a module that is a validator and an executor.
@@ -47,15 +47,15 @@ Your module should now be attested to. In order to check this using the forge sc
 If you are using cast, you can use the following command:
 
 ```shell
-cast call 0x000000000069E2a187AEFFb852bF3cCdC95151B2 "findAttestation(address,address)" MODULE_ADDRESS 0xA4C777199658a41688E9488c4EcbD7a2925Cc23A --rpc-url RPC_URL
+cast call 0x000000000069E2a187AEFFb852bF3cCdC95151B2 "findAttestation(address,address)" MODULE_ADDRESS 0xaed4d8baa80948d54d33de041513d30124e1ae3f --rpc-url RPC_URL
 ```
 
 You will need to replace `MODULE_ADDRESS` and `RPC_URL` with the appropriate values. If the module is attested, the output will non-zero data. Otherwise, it will be all zeros.
 
 ### Setting up the account
 
-Now that you have deployed, registered, and attested to your module, you can use it on testnet as if it were attested. The final step you will need to do is to set up your account to trust the mock attester: `0xA4C777199658a41688E9488c4EcbD7a2925Cc23A`.
+Now that you have deployed, registered, and attested to your module, you can use it on testnet as if it were attested. The final step you will need to do is to set up your account to trust the mock attester: `0xaed4d8baa80948d54d33de041513d30124e1ae3f`.
 
-How exactly you set this up will depend on the account used, but most accounts have a way to supply trusted attesters on account initialization. You can also set this up manually by calling the `trustAttesters` function on the Module Registry. To do this, you can create a new UserOperation with the target as the Module Registry (`0x000000000069E2a187AEFFb852bF3cCdC95151B2`) and the call data as the `trustAttesters` function (`trustAttesters(uint8 threshold, address[] calldata attesters)`). In this case, you would use a threshold of 1 and the attester address being `0xA4C777199658a41688E9488c4EcbD7a2925Cc23A`.
+How exactly you set this up will depend on the account used, but most accounts have a way to supply trusted attesters on account initialization. You can also set this up manually by calling the `trustAttesters` function on the Module Registry. To do this, you can create a new UserOperation with the target as the Module Registry (`0x000000000069E2a187AEFFb852bF3cCdC95151B2`) and the call data as the `trustAttesters` function (`trustAttesters(uint8 threshold, address[] calldata attesters)`). In this case, you would use a threshold of 1 and the attester address being `0xaed4d8baa80948d54d33de041513d30124e1ae3f`.
 
 </Steps>
