@@ -31,15 +31,14 @@ import {
   erc20Abi,
   Hex,
   http,
-  zeroAddress,
-  zeroHash,
 } from "viem";
 import { entryPoint07Address } from "viem/account-abstraction";
 import {
   getOrderBundleHash,
   getTokenAddress,
   MetaIntent,
-  SignedOrderBundle,
+  PostOrderBundleResult,
+  SignedMultiChainCompact,
 } from "@rhinestone/orchestrator-sdk";
 import { erc7579Actions } from "permissionless/actions/erc7579";
 import { createPimlicoClient } from "permissionless/clients/pimlico";
@@ -71,17 +70,9 @@ const targetPimlicoClient = createPimlicoClient({
 Next, we will create the target chain smart account client. Since the account already exists, we can just add the address and don't need the initial parameters.
 
 ```typescript copy
-const targetSafeAccount = await toSafeSmartAccount({
-  address: accountAddress,
+ const targetSafeAccount = await toSafeSmartAccount({
+  ...smartAccountConfig,
   client: targetPublicClient,
-  owners: [owner],
-  version: "1.4.1",
-  entryPoint: {
-    address: entryPoint07Address,
-    version: "0.7",
-  },
-  safe4337ModuleAddress: "0x7579EE8307284F293B1927136486880611F20002",
-  erc7579LaunchpadAddress: "0x7579011aB74c46090561ea277Ba79D510c6C00ff",
 });
 
 const targetSmartAccountClient = createSmartAccountClient({
@@ -99,15 +90,28 @@ const targetSmartAccountClient = createSmartAccountClient({
 }).extend(erc7579Actions());
 ```
 
-### Install the target executor (optional)
+### Deploy the target account (optional)
 
-If the target executor is not already installed, you can proceed in two ways. The first is by directly installing it through a UserOperation. The second is by doing it inside an intent flow. For brevity, we will go with the former but if you want to do the latter, then you can follow [tutorial 1](/omni-account/tutorial-1) to see how the UserOp flow works. In the UserOperation, you would add another batched call to install the target executor.
+This tutorial assumes that the target account is already deployed. But for the sake of this demo, we will deploy the target account. 
 
 ```typescript copy
-const opHash = await targetSmartAccountClient.installModule(getAccountLockerTargetExecutor());
+const deployUserOpHash = await targetSmartAccountClient.sendUserOperation({
+  account: targetSafeAccount,
+  calls: [
+    {
+      to: getTokenAddress("USDC", targetChain.id),
+      value: BigInt(0),
+      data: encodeFunctionData({
+        abi: erc20Abi,
+        functionName: "balanceOf",
+        args: [targetSafeAccount.address],
+      }),
+    },
+  ],
+});
 
-await sourcePimlicoClient.waitForUserOperationReceipt({
-  hash: opHash,
+await targetPimlicoClient.waitForUserOperationReceipt({
+  hash: deployUserOpHash,
 });
 ```
 
@@ -130,26 +134,15 @@ const metaIntent: MetaIntent = {
   targetAccount: targetSafeAccount.address,
   targetExecutions: [
     {
-      target: getTokenAddress("USDC", targetChain.id),
+      to: getTokenAddress("USDC", targetChain.id),
       value: 0n,
-      callData: encodeFunctionData({
+      data: encodeFunctionData({
         abi: erc20Abi,
         functionName: "transfer",
-        args: ["0xd8da6bf26964af9d7eed9e03e53415d37aa96045", 2n],
+        args: ["0xd8da6bf26964af9d7eed9e03e53415d37aa96045", 1n],
       }),
     },
   ],
-  userOp: {
-    sender: zeroAddress,
-    nonce: 0n,
-    initCode: "0x",
-    callData: "0x",
-    accountGasLimits: zeroHash,
-    preVerificationGas: 0n,
-    gasFees: zeroHash,
-    paymasterAndData: "0x",
-    signature: "0x",
-  },
 };
 ```
 
@@ -158,13 +151,13 @@ const metaIntent: MetaIntent = {
 Next, we will get the order path from the orchestrator. What this means is that we get the completed order bundle and a set of injected executions. These executions allow for the orchestrator to inject a set of executions, for example to guarantee the atomicity of the fill. In this step, the orchestrator also figures out where exactly to pull the required funds from (which is easy in this tutorial). Because of this, the user signature only happens after getting the order path so that the user is able to see and needs to confirm (by signing) that they want those tokens to be used.
 
 ```typescript copy
-const { orderBundle, injectedExecutions } = await orchestrator.getOrderPath(
+const orderPath = await orchestrator.getOrderPath(
   metaIntent,
-  userId,
+  targetSafeAccount.address,
 );
 
-metaIntent.targetExecutions = [
-  ...injectedExecutions,
+orderPath[0].orderBundle.segments[0].witness.execs = [
+  ...orderPath[0].injectedExecutions,
   ...metaIntent.targetExecutions,
 ];
 ```
@@ -174,7 +167,7 @@ metaIntent.targetExecutions = [
 Next, we will also need to sign the entire Meta Intent. This ensures that the solver cannot do anything that the user does not want, such as using a specific set of funds.
 
 ```typescript copy
-const orderBundleHash = await getOrderBundleHash(orderBundle);
+const orderBundleHash = getOrderBundleHash(orderPath[0].orderBundle);
 
 const bundleSignature = await owner.signMessage({
   message: { raw: orderBundleHash },
@@ -184,14 +177,12 @@ const packedSig = encodePacked(
   [ownableValidator.address, bundleSignature],
 );
 
-const signedOrderBundle: SignedOrderBundle = {
-  ...orderBundle,
-  acrossTransfers: orderBundle.acrossTransfers.map((transfer: any) => ({
-    ...transfer,
-    userSignature: packedSig,
-  })),
-  targetExecutionSignature:
-    orderBundle.userOp.sender !== zeroAddress ? "0x" : packedSig,
+const signedOrderBundle: SignedMultiChainCompact = {
+  ...orderPath[0].orderBundle,
+  originSignatures: Array(orderPath[0].orderBundle.segments.length).fill(
+    packedSig,
+  ),
+  targetSignature: packedSig,
 };
 ```
 
@@ -200,10 +191,12 @@ const signedOrderBundle: SignedOrderBundle = {
 Finally, we will send the MetaIntent to the orchestrator. This will broadcast the intent to the solvers, who will then fill the transaction on the target chain.
 
 ```typescript copy
-const bundleId = await orchestrator.postSignedOrderBundle(
-  signedOrderBundle,
-  userId,
-);
+const bundleResults: PostOrderBundleResult =
+  await orchestrator.postSignedOrderBundle([
+    {
+      signedOrderBundle,
+    },
+  ]);
 ```
 
 ### Check the status of the MetaIntent
@@ -211,7 +204,9 @@ const bundleId = await orchestrator.postSignedOrderBundle(
 To ensure everything went well, we can check the status of the Meta Intent. Initially, this should be `RECEIVED` but then it will move to `FILLED` when the target chain fill has been completed and `COMPLETED` when the solver has recouped their funds on the source chain.
 
 ```typescript copy
-const bundleStatus = await orchestrator.getBundleStatus(userId, bundleId);
-````
+const bundleStatus = await orchestrator.getBundleStatus(
+  bundleResults[0].bundleId,
+);
+```
 
 </Steps>

@@ -8,6 +8,47 @@ For this tutorial, we are using `@rhinestone/module-sdk` at the latest version t
 
 <Steps>
 
+### Import the required functions and constants
+
+```typescript copy
+import {
+  getOwnableValidatorMockSignature,
+} from "@rhinestone/module-sdk";
+import { createSmartAccountClient } from "permissionless";
+import {
+  toSafeSmartAccount,
+} from "permissionless/accounts";
+import {
+  Chain,
+  createPublicClient,
+  encodeAbiParameters,
+  encodeFunctionData,
+  encodePacked,
+  erc20Abi,
+  Hex,
+  http,
+  keccak256,
+  pad,
+  parseEther,
+  toHex,
+} from "viem";
+import {
+  entryPoint07Address,
+  getUserOperationHash,
+} from "viem/account-abstraction";
+import {
+  getEmptyUserOp,
+  getOrderBundleHash,
+  getTokenAddress,
+  MetaIntent,
+  PostOrderBundleResult,
+  SignedMultiChainCompact,
+} from "@rhinestone/orchestrator-sdk";
+import { erc7579Actions } from "permissionless/actions/erc7579";
+import { createPimlicoClient } from "permissionless/clients/pimlico";
+import { getAccountNonce } from "permissionless/actions";
+```
+
 ### Create the clients for the target chain
 
 First, we will create the clients required to interact with the target chain.
@@ -45,7 +86,6 @@ const targetSmartAccountClient = createSmartAccountClient({
   bundlerTransport: http(
     `https://api.pimlico.io/v2/${targetChain.id}/rpc?apikey=${pimlicoApiKey}`,
   ),
-  paymaster: targetPimlicoClient,
   userOperation: {
     estimateFeesPerGas: async () => {
       return (await targetPimlicoClient.getUserOperationGasPrice()).fast;
@@ -61,6 +101,10 @@ To send an intent that spends the funds from source chain on the target chain, w
 ```typescript copy
 const tokenTransfers = [
   {
+    tokenAddress: getTokenAddress("WETH", targetChain.id),
+    amount: parseEther("0.001"),
+  },
+  {
     tokenAddress: getTokenAddress("USDC", targetChain.id),
     amount: 2n,
   },
@@ -71,18 +115,7 @@ const metaIntent: MetaIntent = {
   targetChainId: targetChain.id,
   tokenTransfers: tokenTransfers,
   targetAccount: targetSafeAccount.address,
-  targetExecutions: [],
-  userOp: {
-    sender: zeroAddress,
-    nonce: 0n,
-    initCode: "0x",
-    callData: "0x",
-    accountGasLimits: zeroHash,
-    preVerificationGas: 0n,
-    gasFees: zeroHash,
-    paymasterAndData: "0x",
-    signature: "0x",
-  },
+  userOp: getEmptyUserOp(),
 };
 ```
 
@@ -91,9 +124,9 @@ const metaIntent: MetaIntent = {
 Next, we will get the order path from the orchestrator. What this means is that we get the completed order bundle and a set of injected executions. These executions allow for the orchestrator to inject a set of executions, for example to guarantee the atomicity of the fill. In this step, the orchestrator also figures out where exactly to pull the required funds from (which is easy in this tutorial). Because of this, the user signature only happens after getting the order path so that the user is able to see and needs to confirm (by signing) that they want those tokens to be used.
 
 ```typescript copy
-const { orderBundle, injectedExecutions } = await orchestrator.getOrderPath(
+const orderPath = await orchestrator.getOrderPath(
   metaIntent,
-  userId,
+  targetSafeAccount.address,
 );
 ```
 
@@ -116,10 +149,10 @@ const nonce = await getAccountNonce(targetPublicClient, {
 });
 
 const userOpActions = [
-...injectedExecutions.slice(1).map((execution: any) => ({
-    to: execution.target,
-    value: BigInt(Number(execution.value)),
-    data: execution.callData || "0x",
+  ...orderPath[0].injectedExecutions.map((execution: any) => ({
+    to: execution.to,
+    value: BigInt(execution.value),
+    data: execution.data || "0x",
   })),
   {
     to: getTokenAddress("USDC", targetChain.id),
@@ -131,16 +164,23 @@ const userOpActions = [
   },
 ];
 
-const balanceSlot = keccak256(
+const usdcSlot = keccak256(
   encodeAbiParameters(
     [{ type: "address" }, { type: "uint256" }],
     [targetSafeAccount.address, 9n],
   ),
 );
 
+const wethSlot = keccak256(
+  encodeAbiParameters(
+    [{ type: "address" }, { type: "uint256" }],
+    [targetSafeAccount.address, 3n],
+  ),
+);
+
 const userOp = await targetSmartAccountClient.prepareUserOperation({
   account: targetSafeAccount,
-  calls: userOpActions,
+  calls: userOpActions.slice(1),
   nonce: nonce,
   signature: getOwnableValidatorMockSignature({ threshold: 1 }),
   stateOverride: [
@@ -148,8 +188,17 @@ const userOp = await targetSmartAccountClient.prepareUserOperation({
       address: getTokenAddress("USDC", targetChain.id),
       stateDiff: [
         {
-          slot: balanceSlot,
-          value: pad("0xa"),
+          slot: usdcSlot,
+          value: pad("0xaaaa"),
+        },
+      ],
+    },
+    {
+      address: getTokenAddress("WETH", targetChain.id),
+      stateDiff: [
+        {
+          slot: wethSlot,
+          value: pad(toHex(parseEther("0.01"))),
         },
       ],
     },
@@ -162,22 +211,14 @@ const userOp = await targetSmartAccountClient.prepareUserOperation({
 After the simulation is complete, we will need to modify it. The reason this needs to be done after simulation is that due to the way that the simulation works, it would revert with the first injected execution, which is a callback to a trampoline contract that ensures the correct filling of the user intent. Hence, we simulate the UserOperation first and calculate the gas before manually adding this injected execution back in.
 
 ```typescript copy
-const injectedExecutionsMapped = [
-  // callback action is always the first action in injectedExecutions
-  ...(injectedExecutions?.[0] ? [injectedExecutions[0]] : []),
-].map((action) => ({
-  to: action.target,
-  value: BigInt(Number(action.value)),
-  data: action.callData || "0x",
-}));
-
 // add the callback
 userOp.callData = await targetSafeAccount.encodeCalls([
-  ...injectedExecutionsMapped,
+  ...orderPath[0].injectedExecutions.slice(0, 1),
   ...userOpActions,
 ]);
 
 // manually increase gas
+userOp.verificationGasLimit += BigInt(100000);
 userOp.callGasLimit += BigInt(100000);
 ```
 
@@ -198,7 +239,7 @@ userOp.signature = await owner.signMessage({
 });
 
 // add userOperation into metaIntent
-orderBundle.userOp = toPackedUserOperation(userOp);
+orderPath[0].orderBundle.segments[0].witness.userOpHash = userOpHash;
 ```
 
 ### Sign the MetaIntent
@@ -206,7 +247,7 @@ orderBundle.userOp = toPackedUserOperation(userOp);
 Next, we will also need to sign the entire Meta Intent. This ensures that the solver cannot do anything that the user does not want, such as using a specific set of funds.
 
 ```typescript copy
-const orderBundleHash = await getOrderBundleHash(orderBundle);
+const orderBundleHash = getOrderBundleHash(orderPath[0].orderBundle);
 
 const bundleSignature = await owner.signMessage({
   message: { raw: orderBundleHash },
@@ -216,14 +257,12 @@ const packedSig = encodePacked(
   [ownableValidator.address, bundleSignature],
 );
 
-const signedOrderBundle: SignedOrderBundle = {
-  ...orderBundle,
-  acrossTransfers: orderBundle.acrossTransfers.map((transfer: any) => ({
-    ...transfer,
-    userSignature: packedSig,
-  })),
-  targetExecutionSignature:
-    orderBundle.userOp.sender !== zeroAddress ? "0x" : packedSig,
+const signedOrderBundle: SignedMultiChainCompact = {
+  ...orderPath[0].orderBundle,
+  originSignatures: Array(orderPath[0].orderBundle.segments.length).fill(
+    packedSig,
+  ),
+  targetSignature: packedSig,
 };
 ```
 
@@ -232,19 +271,22 @@ const signedOrderBundle: SignedOrderBundle = {
 Finally, we will send the MetaIntent to the orchestrator. This will broadcast the intent to the solvers, who will then fill the transaction on the target chain.
 
 ```typescript copy
-const bundleId = await orchestrator.postSignedOrderBundle(
-  signedOrderBundle,
-  userId,
-);
+const bundleResults: PostOrderBundleResult =
+  await orchestrator.postSignedOrderBundle([
+    {
+      signedOrderBundle,
+      userOp,
+    },
+  ]);
 ```
 
 ### Check the status of the MetaIntent
 
 To ensure everything went well, we can check the status of the Meta Intent. Initially, this should be `RECEIVED` but then it will move to `FILLED` when the target chain fill has been completed and `COMPLETED` when the solver has recouped their funds on the source chain.
 
-```typescript copy
-const bundleStatus = await orchestrator.getBundleStatus(userId, bundleId);
+```typescript  
+const bundleStatus = await orchestrator.getBundleStatus(
+  bundleResults[0].bundleId,
+);
 ````
-
-
 </Steps>
