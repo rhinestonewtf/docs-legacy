@@ -27,6 +27,14 @@ const config: DocsThemeConfig = {
       <link rel="icon" href="/favicon.ico" />
     </>
   ),
+  banner: {
+    key: 'new-docs-banner',
+    text: (
+      <a href="https://docs.rhinestone.dev" target="_blank" rel="noopener noreferrer">
+        Check out our new docs at docs.rhinestone.dev →
+      </a>
+    ),
+  },
   logo: (
     <>
       <Logo width={22} height={22} />
@@ -39,16 +47,16 @@ const config: DocsThemeConfig = {
     link: 'https://github.com/rhinestonewtf',
   },
   navbar: {
-    // extraContent: (
-    //   <div className="flex flex-row">
-    //     <a href="https://x.com/rhinestonewtf" target="_blank" className="mr-4">
-    //       <BsTwitterX size={24} />
-    //     </a>
-    //     <a href="https://warpcast.com/rhinestone" target="_blank" className="">
-    //       <SiFarcaster size={24} />
-    //     </a>
-    //   </div>
-    // ),
+    extraContent: (
+      <div className="flex flex-row items-center">
+        <a href="https://x.com/rhinestonewtf" target="_blank" rel="noopener noreferrer" className="mr-4">
+          <BsTwitterX size={24} />
+        </a>
+        <a href="https://warpcast.com/rhinestone" target="_blank" rel="noopener noreferrer" className='mr-4'>
+          <SiFarcaster size={24} />
+        </a>
+      </div>
+    ),
   },
   sidebar: {
     defaultMenuCollapseLevel: 1,
