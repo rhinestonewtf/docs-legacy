@@ -9,13 +9,4 @@ module.exports = {
   images: {
     unoptimized: true,
   },
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/omni-account',
-        permanent: false,
-      },
-    ]
-  },
 }
